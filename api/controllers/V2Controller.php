@@ -36,15 +36,15 @@ class V2Controller extends Controller
 //        return $response;
 //        $fileContents = file_get_contents('http://yurist.loc/helloWorld.docx');
 //        return $fileContents;
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-// Adding a section to the document
-        $section = $phpWord->addSection();
-        $section->addText('Hello World!');
-
-// Saving the document as a binary
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('hello_world.docx');
+//        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+//
+//// Adding a section to the document
+//        $section = $phpWord->addSection();
+//        $section->addText('Hello World!');
+//
+//// Saving the document as a binary
+//        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+//        $objWriter->save('hello_world.docx');
 
 // Reading the binary contents of the file
 //        $fileContents = file_get_contents('hello_world.docx');
