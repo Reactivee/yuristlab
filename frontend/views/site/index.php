@@ -276,25 +276,25 @@ $this->title = 'My Yii Application';
 
     // Load an existing document
 //    dd(Yii::getAlias('@frontend'));
-    $phpWord = IOFactory::load(Yii::getAlias('@frontend') . '/web/helloWorld.docx');
-
-    // Modify the document
-    $section = $phpWord->addSection();
-
-    $section->addText('Hello World!');
-
-    // Save the document
-
-    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-
-    $objWriter->save('modified.docx');
-
-    ?>
-
-
-    <?php
-
-    $script = <<<JS
-
-JS;
-    $this->registerJs($script); ?>
+//    $phpWord = IOFactory::load(Yii::getAlias('@frontend') . '/web/helloWorld.docx');
+//
+//    // Modify the document
+//    $section = $phpWord->addSection();
+//
+//    $section->addText('Hello World!');
+//
+//    // Save the document
+//
+//    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+//
+//    $objWriter->save('modified.docx');
+//
+//    ?>
+<!---->
+<!---->
+<!--    --><?php
+//
+//    $script = <<<JS
+//
+//JS;
+//    $this->registerJs($script); ?>
