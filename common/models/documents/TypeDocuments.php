@@ -3,6 +3,8 @@
 namespace common\models\documents;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "type_documents".
@@ -26,17 +28,24 @@ class TypeDocuments extends \yii\db\ActiveRecord
         return 'type_documents';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name_uz', 'name_ru', 'status', 'created_at'], 'required'],
+            [['status'], 'required'],
             [['category_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name_uz', 'name_ru', 'path'], 'string', 'max' => 255],
-            [['name_uz'], 'unique'],
-            [['name_ru'], 'unique'],
+//            [['name_uz'], 'unique'],
+//            [['name_ru'], 'unique'],
         ];
     }
 
@@ -55,5 +64,16 @@ class TypeDocuments extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'path' => 'Path',
         ];
+    }
+
+    public static function getTypeDoc()
+    {
+        $array = self::find()
+            ->where(['status' => 1])
+//            ->andWhere(['not', ['parent_id' => null]])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($array, 'id', 'name_ru');
     }
 }

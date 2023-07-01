@@ -3,6 +3,7 @@
 namespace common\models\documents;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "attached_document".
@@ -18,6 +19,8 @@ use Yii;
  */
 class AttachedDocument extends \yii\db\ActiveRecord
 {
+    public $generate_name;
+
     /**
      * {@inheritdoc}
      */
@@ -26,17 +29,25 @@ class AttachedDocument extends \yii\db\ActiveRecord
         return 'attached_document';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name_uz', 'name_ru', 'created_at'], 'required'],
+//            [['name_uz', 'name_ru',], 'required'],
             [['main_document_id', 'created_at', 'updated_at', 'created_by'], 'integer'],
-            [['name_uz', 'name_ru', 'path'], 'string', 'max' => 255],
-            [['name_uz'], 'unique'],
-            [['name_ru'], 'unique'],
+            [['name_uz', 'name_ru', 'path', 'generate_name'], 'string', 'max' => 255],
+//            [['name_uz'], 'unique'],
+//            [['name_ru'], 'unique'],
         ];
     }
 

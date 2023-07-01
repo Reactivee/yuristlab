@@ -1,0 +1,7 @@
+file<?php
+
+
+class DocsController
+{
+
+}

@@ -14,8 +14,8 @@ class m230518_064214_creat_documents extends Migration
     {
         $this->createTable('{{%group_documents}}', [
             'id' => $this->primaryKey(),
-            'name_uz' => $this->string()->notNull()->unique(),
-            'name_ru' => $this->string()->notNull()->unique(),
+            'name_uz' => $this->string(),
+            'name_ru' => $this->string(),
             'status' => $this->smallInteger()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer(),
@@ -23,8 +23,8 @@ class m230518_064214_creat_documents extends Migration
 
         $this->createTable('{{%category_documents}}', [
             'id' => $this->primaryKey(),
-            'name_uz' => $this->string()->notNull()->unique(),
-            'name_ru' => $this->string()->notNull()->unique(),
+            'name_uz' => $this->string(),
+            'name_ru' => $this->string(),
             'group_id' => $this->smallInteger(),
             'parent_id' => $this->smallInteger(),
             'status' => $this->smallInteger()->notNull(),
@@ -34,8 +34,8 @@ class m230518_064214_creat_documents extends Migration
 
         $this->createTable('{{%type_documents}}', [
             'id' => $this->primaryKey(),
-            'name_uz' => $this->string()->notNull()->unique(),
-            'name_ru' => $this->string()->notNull()->unique(),
+            'name_uz' => $this->string(),
+            'name_ru' => $this->string(),
             'category_id' => $this->smallInteger(),
             'status' => $this->smallInteger()->notNull(),
             'created_at' => $this->integer()->notNull(),
@@ -55,8 +55,8 @@ class m230518_064214_creat_documents extends Migration
 
         $this->createTable('{{%main_document}}', [
             'id' => $this->primaryKey(),
-            'name_uz' => $this->string()->notNull()->unique(),
-            'name_ru' => $this->string()->notNull()->unique(),
+            'name_uz' => $this->string(),
+            'name_ru' => $this->string(),
             'category_id' => $this->smallInteger(),
             'group_id' => $this->smallInteger(),
             'status' => $this->smallInteger()->notNull(),
@@ -81,8 +81,8 @@ class m230518_064214_creat_documents extends Migration
 
         $this->createTable('{{%attached_document}}', [
             'id' => $this->primaryKey(),
-            'name_uz' => $this->string()->notNull()->unique(),
-            'name_ru' => $this->string()->notNull()->unique(),
+            'name_uz' => $this->string(),
+            'name_ru' => $this->string(),
             'main_document_id' => $this->smallInteger(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer(),

@@ -4,18 +4,22 @@
 namespace api\controllers;
 
 
+use common\models\documents\AttachedDocument;
+use common\models\User;
 use Yii;
 
 use yii\rest\Controller;
 
 class V2Controller extends Controller
 {
+    public $token = 'asdasd';
 
     public function actionHack()
     {
+
 //        $cv_file_content=file_get_contents('http://yurist.loc/exam.doc'));
 //        $handle = fopen('http://yurist.loc/exam.doc', "r");
-//        return 'as';
+        return $this->token;
 //        return 'http://yurist.loc/exam.doc';
 //        return Yii::$app->request->post();
 
@@ -48,9 +52,9 @@ class V2Controller extends Controller
 
 // Reading the binary contents of the file
 //        $fileContents = file_get_contents('hello_world.docx');
-        return [
-            'asd'
-        ];
+//        return [
+//            'asd'
+//        ];
 
     }
 

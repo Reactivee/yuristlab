@@ -22,7 +22,7 @@ use yii\helpers\Html;
                 ['label' => 'Category', 'icon' => 'text_format', 'url' => ['/category-documents']],
                 ['label' => 'Group', 'icon' => 'text_format', 'url' => ['/group-documents']],
                 ['label' => 'Main Doc', 'icon' => 'text_format', 'url' => ['/main-document']],
-                ['label' => 'Type Category', 'icon' => 'text_format', 'url' => ['/type-documents']],
+                ['label' => 'Type Category', 'icon' => 'text_format', 'url' => ['/type-document']],
                 ['label' => 'Pages', 'icon' => 'text_format', 'items' => [
                     ['label' => 'Login', 'icon' => 'text_format', 'url' => ['/site/login']],
                     ['label' => 'Error', 'icon' => 'text_format', 'url' => ['/error']],

@@ -3,6 +3,7 @@
 namespace common\models\documents;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "group_documents".
@@ -23,18 +24,23 @@ class GroupDocuments extends \yii\db\ActiveRecord
     {
         return 'group_documents';
     }
-
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name_uz', 'name_ru', 'status', 'created_at'], 'required'],
+            [['status', ], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['name_uz', 'name_ru'], 'string', 'max' => 255],
-            [['name_uz'], 'unique'],
-            [['name_ru'], 'unique'],
+//            [['name_uz'], 'unique'],
+//            [['name_ru'], 'unique'],
         ];
     }
 
