@@ -98,7 +98,7 @@ class CreateController extends Controller
                 $path = '/uploads/docs/' . $generateName . '.' . $doc->extension;
                 $model->path = $path;
                 $model->status = MainDocument::NEW;
-                dd(Yii::$app->request->post());
+
             }
             if (!$model->save()) {
                 Yii::$app->session->setFlash('error', 'Xatolik');
