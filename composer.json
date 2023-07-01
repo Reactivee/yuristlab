@@ -20,7 +20,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=7.4.0",
-    "yiisoft/yii2": "~2.0.45",
+    "yiisoft/yii2": "2.0.48.1",
     "kartik-v/yii2-widget-growl": "*",
     "yiisoft/yii2-bootstrap4": "~2.0.2",
     "yiisoft/yii2-symfonymailer": "~2.0.3",
@@ -60,7 +60,9 @@
     "groupdocscloud/groupdocs-editor-cloud": "^22.5",
     "froala/yii2-froala-editor": "^2.6.0",
     "2amigos/yii2-ckeditor-widget" : "~2.1",
-    "gfrodriguez/yii2-ckeditor": "dev-master"
+    "gfrodriguez/yii2-ckeditor": "dev-master",
+    "google/apiclient": "^2.0",
+    "ramsey/uuid": "^4.2"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",
