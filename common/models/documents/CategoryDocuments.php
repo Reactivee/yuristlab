@@ -3,6 +3,10 @@
 namespace common\models\documents;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "category_documents".
@@ -26,17 +30,24 @@ class CategoryDocuments extends \yii\db\ActiveRecord
         return 'category_documents';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name_uz', 'name_ru', 'status', 'created_at'], 'required'],
+            [[ 'status',], 'required'],
             [['group_id', 'parent_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name_uz', 'name_ru'], 'string', 'max' => 255],
-            [['name_uz'], 'unique'],
-            [['name_ru'], 'unique'],
+//            [['name_uz'], 'unique'],
+//            [['name_ru'], 'unique'],
         ];
     }
 
@@ -55,5 +66,23 @@ class CategoryDocuments extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public static function getCategory()
+    {
+        $array = self::find()->where(['status' => 1, 'parent_id' => null])->asArray()->all();
+
+        return ArrayHelper::map($array, 'id', 'name_ru');
+    }
+
+    public static function subGetCategory()
+    {
+        $array = self::find()
+            ->where(['status' => 1])
+            ->andWhere(['not', ['parent_id' => null]])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($array, 'id', 'name_ru');
     }
 }

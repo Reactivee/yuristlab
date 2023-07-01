@@ -55,7 +55,7 @@ create.addEventListener('click', e => {
     }
 
     axios.post('https://api.enternaloptimist.com/docs/create', {title: doc_title.value}).then(data => {
-        console.log("new document ", data)
+
 
         setTimeout(async () => {
             getDocsOptions(await getDocsList())
@@ -126,6 +126,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
 });
 
 
-setInterval(async () => {
-    getDocsOptions(await getDocsList())
-}, 1000)
+// setInterval(async () => {
+//     getDocsOptions(await getDocsList())
+// }, 1000)

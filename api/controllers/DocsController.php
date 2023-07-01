@@ -26,11 +26,11 @@ class DocsController extends Controller
     {
         $request = \Yii::$app->request;
 
-        if
-        ($request->isGet) {
+        if ($request->isGet) {
             return 'GET request not found!';
-        } elseif
-        ($request->isPost) {
+        }
+
+        if ($request->isPost) {
             $rawData = Yii::$app->request->getRawBody();
             $jsonData = json_decode($rawData, true);
             $document_title = $jsonData['title'];
@@ -85,35 +85,32 @@ class DocsController extends Controller
                 'channelId' => $channelId,
                 'expiration' => $expiration
             ];
-        } else {
-            return 'This Request Method not found!';
         }
+
+        return 'This Request Method not found!';
     }
 
     public function actionEdit()
     {
         $request = \Yii::$app->request;
-        if
-        ($request->isGet) {
+        if ($request->isGet) {
             return 'GET request not found!';
-        } elseif
-        ($request->isPost) {
-            return 'POST Request Method not found!';
-        } else {
-            return 'This Request Method not found!';
         }
-
+        if ($request->isPost) {
+            return 'POST Request Method not found!';
+        }
+        return 'This Request Method not found!';
     }
 
     public function actionUpload()
     {
         $request = \Yii::$app->request;
 
-        if
-        ($request->isGet) {
+        if ($request->isGet) {
             return 'GET request not found!';
-        } elseif
-        ($request->isPost) {
+        }
+        
+        if ($request->isPost) {
             $file = UploadedFile::getInstanceByName('file');
             $savePathDocs = Yii::$app->params['savePathDocs'];;
             $savePathDocsUpload = Yii::$app->params['savePathDocsUpload'];
@@ -191,16 +188,16 @@ class DocsController extends Controller
             }
 
             return 'POST Request Method not found!';
-        } else {
-            return 'This Request Method not found!';
         }
+
+        return 'This Request Method not found!';
     }
 
     public function actionAll()
     {
         $request = \Yii::$app->request;
-        if
-        ($request->isGet) {
+
+        if ($request->isGet) {
             $savePathDocs = Yii::$app->params['savePathDocs'];;
             $savePathDocsUpload = Yii::$app->params['savePathDocsUpload'];
 
@@ -214,12 +211,13 @@ class DocsController extends Controller
             return $fileNames;
 
             return 'GET request not found!';
-        } elseif
-        ($request->isPost) {
-            return 'POST Request Method not found!';
-        } else {
-            return 'This Request Method not found!';
         }
+
+        if ($request->isPost) {
+            return 'POST Request Method not found!';
+        }
+
+        return 'This Request Method not found!';
     }
 
     public function actionNotification()
@@ -252,7 +250,9 @@ class DocsController extends Controller
             file_put_contents($localFilePath, $fileContent);
 
             return 'GET request processed!';
-        } elseif ($request->isPost) {
+        }
+
+        if ($request->isPost) {
             $queryParams = Yii::$app->request->get();
             $doc_id = Yii::$app->request->get('doc_id');
 
@@ -276,10 +276,9 @@ class DocsController extends Controller
             file_put_contents($localFilePath, $fileContent);
 
             return 'POST request processed!';
-        } else {
-
-
-            return 'Unsupported request method!';
         }
+
+
+        return 'Unsupported request method!';
     }
 }
