@@ -151,7 +151,7 @@ class DocsController extends Controller
             $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
             $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
             $client->setAccessToken($accessToken);
-
+//        dd($client);
             if ($file !== null) {
                 $fileName = uniqid() . '.' . $file->getExtension();
                 $fileSavePath = $savePathDocsUpload . $fileName;

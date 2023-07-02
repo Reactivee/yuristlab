@@ -73,6 +73,23 @@ class MainDocument extends \yii\db\ActiveRecord
         return $status ? $array[$status] : $array;
     }
 
+    public static function getStatusNameColored($status = null)
+    {
+        $array = [
+            self::NEW => '<div class="badge badge-outline-primary badge-pill">Yangi</div>',
+            self::EDITED => '<div class="badge badge-outline-info badge-pill">Korib chiqilmoqda</div>',
+            self::DELETED => '<div class="badge badge-outline-danger badge-pill">O\'chirilgan</div>',
+            self::NOTSEND => '<div class="badge badge-outline-warning badge-pill">Yuborilmagan</div>',
+            self::SUCCESS => '<div class="badge badge-outline-success badge-pill">Ijobiy xulosa</div>',
+            self::ERROR => '<div class="badge badge-outline-danger badge-pill">Salbiy xulosa</div>',
+            self::REJECTED => '<div class="badge badge-outline-info badge-pill">Rad etilgan</div>',
+            self::SIGNING => '<div class="badge badge-outline-primary badge-pill">Imzolashda</div>',
+            self::SIGNED => '<div class="badge badge-outline-success badge-pill">Imzolandi</div>',
+        ];
+
+        return $status ? $array[$status] : $array;
+    }
+
     public static function getStatusNameColor($status = null)
     {
         $array = [
@@ -172,6 +189,21 @@ class MainDocument extends \yii\db\ActiveRecord
         $main = MainDocument::find()->where(['status' => $key])->count();
         return $main;
 
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(CategoryDocuments::className(), ['id' => 'category_id']);
+    }
+
+    public function getGroup()
+    {
+        return $this->hasOne(GroupDocuments::className(), ['id' => 'group_id']);
+    }
+
+    public function getType()
+    {
+        return $this->hasOne(TypeDocuments::className(), ['id' => 'type_group_id']);
     }
 
 }
