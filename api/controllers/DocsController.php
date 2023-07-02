@@ -181,7 +181,7 @@ class DocsController extends Controller
                 $channel = new \Google_Service_Drive_Channel([
                     'id' => Uuid::uuid4()->toString(),
                     'type' => 'web_hook',
-                    'address' => 'https://demo.alfatechno/notification?doc_id=' . $fileId,
+                    'address' => 'https://demo.alfatechno/v2/docs/notification?doc_id=' . $fileId,
                 ]);
 
                 $watchRequest = $service->changes->watch($fileId, $channel);
@@ -243,7 +243,7 @@ class DocsController extends Controller
         if ($request->isGet) {
             $savePathDocs = Yii::$app->params['savePathDocs'];;
             $savePathDocsUpload = Yii::$app->params['savePathDocsUpload'];
-
+//        dd($savePathDocs);
             $files = FileHelper::findFiles($savePathDocs);
 
             $fileNames = [];

@@ -8,10 +8,10 @@ $domen = Url::base('https');
 ?>
 <div class="row">
     <div class="container-fluid px-5">
-        <button type="button" class="btn btn-outline-primary btn-icon-text my-3 ">
+        <a href="doc-view.php" type="button" class="btn btn-outline-primary btn-icon-text my-3 ">
             <i class="mdi mdi-file-check btn-icon-prepend"></i>
             Kengaytirilgan
-        </button>
+        </a>
 
         <?php
         echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
