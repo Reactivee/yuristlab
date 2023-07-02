@@ -56,7 +56,7 @@ $domen = Url::base('https');
             return alert('Error Document Title')
         }
 
-        axios.post(`${domain}/api/docs/create`, {title: doc_title.value}).then(data => {
+        axios.post(`/api/docs/create`, {title: doc_title.value}).then(data => {
             console.log("new document ", data)
 
             setTimeout(async () => {
@@ -77,7 +77,7 @@ $domen = Url::base('https');
 
 
     async function getDocsList() {
-        let response = await axios.get(`api/docs/all`)
+        let response = await axios.get(`/api/docs/all`)
         return response.data.docs
     }
 
@@ -105,7 +105,7 @@ $domen = Url::base('https');
 
         axios({
             method: "post",
-            url: `${domain}/api/docs/upload`,
+            url: `/api/docs/upload`,
             data: bodyFormData,
             headers: {"Content-Type": "multipart/form-data"},
         }).then(data => {
