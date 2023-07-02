@@ -188,4 +188,13 @@ class DocumentsController extends Controller
             'model' => $main
         ]);
     }
+
+    public function actionDocEdit($id = null)
+    {
+        $doc = MainDocument::findOne($id);
+
+        return $this->render('doc-view', [
+            'model' => $doc
+        ]);
+    }
 }

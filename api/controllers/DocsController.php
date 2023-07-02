@@ -129,7 +129,6 @@ class DocsController extends Controller
             $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
             $client->setAccessToken($accessToken);
 
-
             if ($file !== null) {
                 $fileName = uniqid() . '.' . $file->getExtension();
                 $fileSavePath = $savePathDocsUpload . $fileName;
@@ -159,7 +158,7 @@ class DocsController extends Controller
                 $channel = new \Google_Service_Drive_Channel([
                     'id' => Uuid::uuid4()->toString(),
                     'type' => 'web_hook',
-                    'address' => 'https://api.enternaloptimist.com/notification?yii_upload=' . $fileId,
+                    'address' => 'https://demo.alfatechno/notification?doc_id=' . $fileId,
                 ]);
 
                 $watchRequest = $service->changes->watch($fileId, $channel);
@@ -180,6 +179,7 @@ class DocsController extends Controller
                     'status' => 200,
                     'data' => 'UPLOAD_SUCCESSFULLY'
                 ];
+
             } else {
                 return [
                     'status' => 200,
