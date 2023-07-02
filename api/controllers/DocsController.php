@@ -17,7 +17,7 @@ use Google\Service\Drive\DriveFile;
 use Ramsey\Uuid\Uuid;
 use yii\web\UploadedFile;
 
-//use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Client as HttpClient;
 
 
 class DocsController extends Controller
@@ -79,6 +79,29 @@ class DocsController extends Controller
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
+
+            // Add Permission for All
+            $httpClient = new \GuzzleHttp\Client();
+            $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $documentId . ':batchUpdate';
+            $permissionRequestBody = [
+                'requests' => [
+                    [
+                        'createPermission' => [
+                            'role' => 'writer',
+                            'type' => 'anyone',
+                        ],
+                    ],
+                ],
+            ];
+            $httpClient->post($permissionUrl, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $accessToken,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $permissionRequestBody,
+            ]);
+
+
 
             return [
                 'id' => $documentId,
@@ -174,6 +197,26 @@ class DocsController extends Controller
                 // Save the file to a local directory
                 $localFilePath = $savePathFromDrive;
                 file_put_contents($localFilePath, $fileContent);
+
+                $httpClient = new \GuzzleHttp\Client();
+                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
+                $permissionRequestBody = [
+                    'requests' => [
+                        [
+                            'createPermission' => [
+                                'role' => 'writer',
+                                'type' => 'anyone',
+                            ],
+                        ],
+                    ],
+                ];
+                $httpClient->post($permissionUrl, [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $accessToken,
+                        'Content-Type' => 'application/json',
+                    ],
+                    'json' => $permissionRequestBody,
+                ]);
 
                 return [
                     'status' => 200,
