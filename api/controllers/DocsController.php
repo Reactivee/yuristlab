@@ -181,7 +181,7 @@ class DocsController extends Controller
                 $channel = new \Google_Service_Drive_Channel([
                     'id' => Uuid::uuid4()->toString(),
                     'type' => 'web_hook',
-                    'address' => 'https://demo.alfatechno/v2/docs/notification?doc_id=' . $fileId,
+                    'address' => 'https://demo.alfatechno/api/docs/notification?doc_id=' . $fileId,
                 ]);
 
                 $watchRequest = $service->changes->watch($fileId, $channel);
