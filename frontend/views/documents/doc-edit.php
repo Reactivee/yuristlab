@@ -115,8 +115,8 @@ $domen = Url::base('https');
                 getDocsOptions(await getDocsList())
             }, 1000)
             //
-            // iframe.src = `https://docs.google.com/document/d/${data.data.id}/edit?usp=sharing&amp;widget=true&amp;headers=false`
-            // iframe.style.display = 'block'
+            iframe.src = `https://docs.google.com/document/d/${data.data.id}/edit?usp=sharing&amp;widget=true&amp;headers=false`
+            iframe.style.display = 'block'
         }).catch(err => {
             alert('Create Document Failed')
         })
