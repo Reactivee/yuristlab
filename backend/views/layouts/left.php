@@ -23,13 +23,19 @@ use yii\helpers\Html;
                 ['label' => 'Group', 'icon' => 'text_format', 'url' => ['/group-documents']],
                 ['label' => 'Main Doc', 'icon' => 'text_format', 'url' => ['/main-document']],
                 ['label' => 'Type Category', 'icon' => 'text_format', 'url' => ['/type-document']],
+                ['label' => 'New cat', 'icon' => 'text_format', 'url' => ['/category-news']],
+                ['label' => 'New content', 'icon' => 'text_format', 'url' => ['/content-news']],
+                ['label' => 'Recommend category', 'icon' => 'text_format', 'url' => ['/category-recommendation']],
+                ['label' => 'Recommend content', 'icon' => 'text_format', 'url' => ['/content-recommendation']],
+
+
                 ['label' => 'Pages', 'icon' => 'text_format', 'items' => [
                     ['label' => 'Login', 'icon' => 'text_format', 'url' => ['/site/login']],
                     ['label' => 'Error', 'icon' => 'text_format', 'url' => ['/error']],
                     ['label' => 'Registration', 'icon' => 'text_format', 'items' => [
-                        ['label' => 'Login', 'icon' => 'text_format', 'url' => ['/site/login']],
-                        ['label' => 'Error', 'icon' => 'text_format', 'url' => ['/error']],
-                        ['label' => 'Registration', 'icon' => 'text_format', 'url' => ['/registration']],
+//                        ['label' => 'Login', 'icon' => 'text_format', 'url' => ['/site/login']],
+//                        ['label' => 'Error', 'icon' => 'text_format', 'url' => ['/error']],
+//                        ['label' => 'Registration', 'icon' => 'text_format', 'url' => ['/registration']],
                     ]],
                 ]],
             ]

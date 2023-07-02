@@ -56,6 +56,40 @@ class MainDocument extends \yii\db\ActiveRecord
         return $status ? $array[$status] : $array;
     }
 
+    public static function getStatusNameArr($status = null)
+    {
+        $array = [
+            self::NEW => 'Yangi',
+            self::EDITED => "Korib chiqilmoqda",
+            self::DELETED => "O'chirilgan",
+            self::NOTSEND => "Yuborilmagan",
+            self::SUCCESS => "Ijobiy xulosa",
+            self::ERROR => "Salbiy xulosa",
+            self::REJECTED => "Rad etilgan",
+            self::SIGNING => "Imzolashda",
+            self::SIGNED => "Imzolandi",
+        ];
+
+        return $status ? $array[$status] : $array;
+    }
+
+    public static function getStatusNameColor($status = null)
+    {
+        $array = [
+            self::NEW => 'btn btn-inverse-secondary btn-fw',
+            self::EDITED => "btn btn-inverse-primary btn-fw",
+            self::DELETED => "btn btn-inverse-danger  btn-fw",
+            self::NOTSEND => "btn btn-inverse-primary btn-fw",
+            self::SUCCESS => "btn btn-inverse-success btn-fw",
+            self::ERROR => "btn btn-inverse-warning btn-fw",
+            self::REJECTED => "btn btn-inverse-light btn-fw",
+            self::SIGNING => "btn btn-inverse-success btn-fw",
+            self::SIGNED => "btn btn-inverse-primary btn-fw",
+        ];
+
+        return $status ? $array[$status] : $array;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -78,7 +112,7 @@ class MainDocument extends \yii\db\ActiveRecord
     {
         return [
             [['status'], 'required'],
-            [['category_id', 'group_id', 'type_group_id',  'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
+            [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
             [['name_uz', 'name_ru',], 'string', 'max' => 255],
 //            [['name_uz'], 'unique'],
 //            [['name_ru'], 'unique'],
@@ -132,10 +166,12 @@ class MainDocument extends \yii\db\ActiveRecord
         return true;
     }
 
-    public function getStatus()
+    public static function getByStatusDocuments($key)
     {
-        $arr = [
-            self::NEW
-        ];
+
+        $main = MainDocument::find()->where(['status' => $key])->count();
+        return $main;
+
     }
+
 }

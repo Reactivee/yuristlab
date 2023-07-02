@@ -3,6 +3,9 @@
 namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
+use common\models\documents\CategoryNews;
+use common\models\documents\ContentNews;
+use common\models\documents\ContentNewsSearch;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 use common\models\forms\CreateDocForm;
@@ -26,7 +29,7 @@ use yii\web\UploadedFile;
 /**
  * Site controller
  */
-class DocumentsController extends Controller
+class NewsController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -82,13 +85,14 @@ class DocumentsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MainDocumentSearch();
+        $searchModel = new ContentNewsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        Yii::$app->session->setFlash('danger', 'Ochirildi');
-
+//        Yii::$app->session->setFlash('danger', 'Ochirildi');
+        $cats = CategoryNews::find()->where(['status' => 1])->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'category' => $cats
         ]);
 
 
