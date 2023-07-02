@@ -77,7 +77,7 @@ $domen = Url::base('https');
 
 
     async function getDocsList() {
-        let response = await axios.get(`${domain}/api/docs/all`)
+        let response = await axios.get(`api/docs/all`)
         return response.data.docs
     }
 
