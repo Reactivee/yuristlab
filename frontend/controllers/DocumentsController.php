@@ -193,7 +193,7 @@ class DocumentsController extends Controller
     {
         $doc = MainDocument::findOne($id);
 
-        return $this->render('doc-view', [
+        return $this->render('doc-edit', [
             'model' => $doc
         ]);
     }
