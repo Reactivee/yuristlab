@@ -198,25 +198,25 @@ class DocsController extends Controller
                 $localFilePath = $savePathFromDrive;
                 file_put_contents($localFilePath, $fileContent);
 
-//                $httpClient = new \GuzzleHttp\Client();
-//                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
-//                $permissionRequestBody = [
-//                    'requests' => [
-//                        [
-//                            'createPermission' => [
-//                                'role' => 'writer',
-//                                'type' => 'anyone',
-//                            ],
-//                        ],
-//                    ],
-//                ];
-//                $httpClient->post($permissionUrl, [
-//                    'headers' => [
-//                        'Authorization' => 'Bearer ' . $accessToken,
-//                        'Content-Type' => 'application/json',
-//                    ],
-//                    'json' => $permissionRequestBody,
-//                ]);
+                $httpClient = new \GuzzleHttp\Client();
+                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
+                $permissionRequestBody = [
+                    'requests' => [
+                        [
+                            'createPermission' => [
+                                'role' => 'writer',
+                                'type' => 'anyone',
+                            ],
+                        ],
+                    ],
+                ];
+                $httpClient->post($permissionUrl, [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $accessToken,
+                        'Content-Type' => 'application/json',
+                    ],
+                    'json' => $permissionRequestBody,
+                ]);
 
                 return [
                     'status' => 200,
