@@ -2,6 +2,7 @@
 
 namespace api\controllers;
 
+use common\widgets\TelegramBotErrorSender;
 use Google\Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PhpParser\Node\Expr\Array_;
@@ -80,27 +81,26 @@ class DocsController extends Controller
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
 
-            // Add Permission for All
-            $httpClient = new \GuzzleHttp\Client();
-            $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $documentId . ':batchUpdate';
-            $permissionRequestBody = [
-                'requests' => [
-                    [
-                        'createPermission' => [
-                            'role' => 'writer',
-                            'type' => 'anyone',
-                        ],
-                    ],
-                ],
-            ];
-            $httpClient->post($permissionUrl, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $accessToken,
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => $permissionRequestBody,
-            ]);
-
+//            // Add Permission for All
+//            $httpClient = new \GuzzleHttp\Client();
+//            $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $documentId . ':batchUpdate';
+//            $permissionRequestBody = [
+//                'requests' => [
+//                    [
+//                        'createPermission' => [
+//                            'role' => 'writer',
+//                            'type' => 'anyone',
+//                        ],
+//                    ],
+//                ],
+//            ];
+//            $httpClient->post($permissionUrl, [
+//                'headers' => [
+//                    'Authorization' => 'Bearer ' . $accessToken['access_token'],
+//                    'Content-Type' => 'application/json',
+//                ],
+//                'json' => $permissionRequestBody,
+//            ]);
 
 
             return [
@@ -132,16 +132,28 @@ class DocsController extends Controller
         if ($request->isGet) {
             return 'GET request not found!';
         }
-        
+
         if ($request->isPost) {
             $file = UploadedFile::getInstanceByName('file');
-            $savePathDocs = Yii::$app->params['savePathDocs'];;
-            $savePathDocsUpload = Yii::$app->params['savePathDocsUpload'];
+//            dd($file);
+//            $file = $this->request->post()['file'];
+
+            $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+            if (!file_exists($savePathDocs)) {
+                mkdir($savePathDocs, 0777, true);
+            }
+//            dd($savePathDocs);
+            $savePathDocsUpload = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
+
+            if (!file_exists($savePathDocsUpload)) {
+                mkdir($savePathDocsUpload, 0777, true);
+            }
 
             $fileCredentials = Yii::$app->params['fileCredentials'];
             $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
             $fileToken = Yii::$app->params['fileToken'];
             $fileTokenPath = Yii::$app->params['fileTokenPath'];
+
 
             $client = new Client();
             $client->setAuthConfig($fileCredentialsPath);
@@ -151,7 +163,7 @@ class DocsController extends Controller
             $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
             $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
             $client->setAccessToken($accessToken);
-//        dd($client);
+
             if ($file !== null) {
                 $fileName = uniqid() . '.' . $file->getExtension();
                 $fileSavePath = $savePathDocsUpload . $fileName;
@@ -175,20 +187,20 @@ class DocsController extends Controller
 
                 // Get the ID of the uploaded file
                 $fileId = $file->getId();
-                $fileSize = $file->getSize();
+//                $fileSize = $file->getSize();
 
                 // Watching create document to updating in server
                 $channel = new \Google_Service_Drive_Channel([
                     'id' => Uuid::uuid4()->toString(),
                     'type' => 'web_hook',
-                    'address' => 'https://demo.alfatechno/api/docs/notification?doc_id=' . $fileId,
+                    'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId,
                 ]);
 
                 $watchRequest = $service->changes->watch($fileId, $channel);
                 $channelId = $watchRequest->getId();
                 $expiration = $watchRequest->getExpiration();
 
-                // Download file from  drive
+                // Download file from  driv     e
                 $savePathFromDrive = $savePathDocs . $fileId . '.docx';
                 $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                 $exportFileContent = $service->files->export($fileId, $exportMimeType, array('alt' => 'media'));
@@ -198,26 +210,31 @@ class DocsController extends Controller
                 $localFilePath = $savePathFromDrive;
                 file_put_contents($localFilePath, $fileContent);
 
-                $httpClient = new \GuzzleHttp\Client();
-                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
-                $permissionRequestBody = [
-                    'requests' => [
-                        [
-                            'createPermission' => [
-                                'role' => 'writer',
-                                'type' => 'anyone',
-                            ],
-                        ],
-                    ],
-                ];
-                $httpClient->post($permissionUrl, [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $accessToken,
-                        'Content-Type' => 'application/json',
-                    ],
-                    'json' => $permissionRequestBody,
-                ]);
+//                $httpClient = new \GuzzleHttp\Client();
+//                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
+//                $permissionRequestBody = [
+//                    'requests' => [
+//                        [
+//                            'createPermission' => [
+//                                'role' => 'writer',
+//                                'type' => 'anyone',
+//                            ],
+//                        ],
+//                    ],
+//                ];
+//
+//                $httpClient->post($permissionUrl, [
+//                    'headers' => [
+//                        'Authorization' => 'Bearer ' . $accessToken['access_token'],
+//                        'Content-Type' => 'application/json',
+//                    ],
+//                    'json' => $permissionRequestBody,
+//                ]);
 
+                return [
+                    'id' => $fileId,
+                    'path' => $savePathFromDrive,
+                ];
                 return [
                     'status' => 200,
                     'data' => 'UPLOAD_SUCCESSFULLY'
@@ -268,6 +285,7 @@ class DocsController extends Controller
         $request = \Yii::$app->request;
         $savePathDocs = Yii::$app->params['savePathDocs'];;
         $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
+        TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
         if ($request->isGet) {
             $queryParams = Yii::$app->request->get();

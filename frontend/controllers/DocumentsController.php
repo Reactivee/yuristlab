@@ -10,6 +10,8 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\helpers\Url;
+use yii\httpclient\Client;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -191,10 +193,34 @@ class DocumentsController extends Controller
 
     public function actionDocEdit($id = null)
     {
-        $doc = MainDocument::findOne($id);
+        $model = new MainDocument();
+
+        if ($this->request->post()) {
+                        $file = UploadedFile::getInstanceByName('path');
+        dd($this->request->post());
+            $model->load($this->request->post());
+            $dir_path = Yii::getAlias('@frontend') . '/web';
+//            dd($dir_path);
+            $fileName = $dir_path . $model->path;
+            dd(file_get_contents($fileName));
+
+            if (file_exists($dir_path))
+
+//                return Yii::$app->getRequest()->sendFile($model->path, @file_get_contents($fileName));
+
+            $client = new Client(['baseUrl' => Url::base('http') . '/api/docs/upload']);
+
+
+            $newUserResponse = $client->post('', ['file' => file_get_contents($fileName)])->send();
+            dd($newUserResponse);
+            return $newUserResponse;
+//            if ($response->isOk) {
+//
+//            }
+        }
 
         return $this->render('doc-edit', [
-            'model' => $doc
+            'model' => $model
         ]);
     }
 }

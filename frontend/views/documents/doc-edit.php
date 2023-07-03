@@ -109,7 +109,7 @@ $domen = Url::base('https');
             data: bodyFormData,
             headers: {"Content-Type": "multipart/form-data"},
         }).then(data => {
-            console.log("new document ", data)
+            console.log(data)
 
             setTimeout(async () => {
                 getDocsOptions(await getDocsList())
