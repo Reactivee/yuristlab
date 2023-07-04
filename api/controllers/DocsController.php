@@ -317,31 +317,33 @@ class DocsController extends Controller
             return 'GET request processed!';
         }
 
-//        if ($request->isPost) {
-//            $queryParams = Yii::$app->request->get();
-//            $doc_id = Yii::$app->request->get('doc_id');
-//
-//            $client = new Client();
-//            $client->setAuthConfig($fileCredentialsPath);
-//            $client->addScope(Drive::DRIVE);
-//            $client->setAccessType('offline');
-//            $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
-//            $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
-//            $client->setAccessToken($accessToken);
-//
-//            $service = new Drive($client);
-//
-//            $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
-//            $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-//            $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
-//            $fileContent = $exportFileContent->getBody()->getContents();
-//
-//            // Save the file to a local directory
-//            $localFilePath = $savePathFromDrive;
-//            file_put_contents($localFilePath, $fileContent);
-//
-//            return 'POST request processed!';
-//        }
+        if ($request->isPost) {
+
+            $queryParams = Yii::$app->request->get();
+            $doc_id = Yii::$app->request->get('doc_id');
+            TelegramBotErrorSender::widget(['error' => $doc_id, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+            $client = new Client();
+            $client->setAuthConfig($fileCredentialsPath);
+            $client->addScope(Drive::DRIVE);
+            $client->setAccessType('offline');
+            $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
+            $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+            $client->setAccessToken($accessToken);
+
+            $service = new Drive($client);
+
+            $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
+            $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
+            $fileContent = $exportFileContent->getBody()->getContents();
+
+            // Save the file to a local directory
+            $localFilePath = $savePathFromDrive;
+            file_put_contents($localFilePath, $fileContent);
+
+            return 'POST request processed!';
+        }
 
 
         return 'Unsupported request method!';
@@ -415,7 +417,6 @@ class DocsController extends Controller
                     'type' => 'web_hook',
                     'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId,
                 ]);
-
                 $watchRequest = $service->changes->watch($fileId, $channel);
                 $channelId = $watchRequest->getId();
                 $expiration = $watchRequest->getExpiration();
@@ -425,7 +426,6 @@ class DocsController extends Controller
                 $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                 $exportFileContent = $service->files->export($fileId, $exportMimeType, array('alt' => 'media'));
                 $fileContent = $exportFileContent->getBody()->getContents();
-
                 // Save the file to a local directory
                 $localFilePath = $savePathFromDrive;
                 file_put_contents($localFilePath, $fileContent);
