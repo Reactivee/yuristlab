@@ -203,16 +203,13 @@ class DocsController extends Controller
                     'id' => $fileId,
                     'path' => $savePathFromDrive,
                 ];
-                return [
-                    'status' => 200,
-                    'data' => 'UPLOAD_SUCCESSFULLY'
-                ];
+//                return [
+//                    'status' => 200,
+//                    'data' => 'UPLOAD_SUCCESSFULLY'
+//                ];
 
             } else {
-                return [
-                    'status' => 200,
-                    'data' => 'FILE_INVALID'
-                ];
+                return false;
             }
 
             return 'POST Request Method not found!';
@@ -261,8 +258,20 @@ class DocsController extends Controller
     public function actionNotification()
     {
         $request = \Yii::$app->request;
-        $savePathDocs = Yii::$app->params['savePathDocs'];;
-        $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
+//        $savePathDocs = Yii::$app->params['savePathDocs'];;
+//        $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
+
+        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+        if (!file_exists($savePathDocs)) {
+            mkdir($savePathDocs, 0777, true);
+        }
+//            dd($savePathDocs);
+        $fileCredentialsPath = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
+
+        if (!file_exists($fileCredentialsPath)) {
+            mkdir($fileCredentialsPath, 0777, true);
+        }
+
         TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
         if ($request->isGet) {
