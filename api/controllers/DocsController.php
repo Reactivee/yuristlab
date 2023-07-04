@@ -258,22 +258,22 @@ class DocsController extends Controller
     public function actionNotification()
     {
         $request = \Yii::$app->request;
-//        $savePathDocs = Yii::$app->params['savePathDocs'];;
-//        $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
+        $savePathDocs = Yii::$app->params['savePathDocs'];;
+        $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
 
-        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
-        if (!file_exists($savePathDocs)) {
-            mkdir($savePathDocs, 0777, true);
-        }
+//        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+//        if (!file_exists($savePathDocs)) {
+//            mkdir($savePathDocs, 0777, true);
+//        }
 //            dd($savePathDocs);
-        $fileCredentialsPath = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads_notify/';
-
-        if (!file_exists($fileCredentialsPath)) {
-            mkdir($fileCredentialsPath, 0777, true);
-        }
+//        $fileCredentialsPath = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
+//
+//        if (!file_exists($fileCredentialsPath)) {
+//            mkdir($fileCredentialsPath, 0777, true);
+//        }
 
         TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
-
+//        dd($fileCredentialsPath);
         if ($request->isGet) {
             $queryParams = Yii::$app->request->get();
             $doc_id = Yii::$app->request->get('doc_id');
@@ -292,7 +292,7 @@ class DocsController extends Controller
             $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
             $fileContent = $exportFileContent->getBody()->getContents();
-
+        dd($fileContent);
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
