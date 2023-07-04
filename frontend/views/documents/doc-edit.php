@@ -12,6 +12,7 @@ $domen = Url::base('https');
         <button id="create">Create doc File</button>
 
         <select name="docs" id="docs">
+
         </select>
         <button id="edit">Edit doc File</button>
 
@@ -77,20 +78,28 @@ $domen = Url::base('https');
 
 
     async function getDocsList() {
-        let response = await axios.get(`/api/docs/all`)
+        let response = await axios.get(`https://api.enternaloptimist.com/docs/all`)
         return response.data.docs
     }
 
     function getDocsOptions(list) {
-        docs_select.innerHTML = ''
-        list.forEach(el => {
-            let html = `<option value="${el.split('.')[0]}">${el}</option>`
-            docs_select.insertAdjacentHTML('beforeend', html)
-        })
+
+        if (list) {
+            docs_select.innerHTML = ''
+            // console.log(list)
+
+            list.forEach(el => {
+
+                let html = `<option value="${el}">${el}</option>`
+                docs_select.insertAdjacentHTML('beforeend', html)
+            })
+
+        }
     }
 
 
     edit.addEventListener('click', e => {
+        // console.log(docs_select.value)
         iframe.src = `https://docs.google.com/document/d/${docs_select.value}/edit?usp=sharing&amp;widget=true&amp;headers=false`
         iframe.style.display = 'block'
     })
@@ -105,16 +114,16 @@ $domen = Url::base('https');
 
         axios({
             method: "post",
-            url: `/api/docs/upload`,
+            url: 'https://api.enternaloptimist.com/upload',
             data: bodyFormData,
             headers: {"Content-Type": "multipart/form-data"},
         }).then(data => {
-            console.log(data)
+            console.log(data.data)
 
             setTimeout(async () => {
                 getDocsOptions(await getDocsList())
             }, 1000)
-            //
+
             iframe.src = `https://docs.google.com/document/d/${data.data.id}/edit?usp=sharing&amp;widget=true&amp;headers=false`
             iframe.style.display = 'block'
         }).catch(err => {
@@ -129,6 +138,6 @@ $domen = Url::base('https');
 
     //
     // setInterval(async () => {
-    //     getDocsOptions(await getDocsList())
+    getDocsOptions(getDocsList())
     // }, 1000)
 </script>

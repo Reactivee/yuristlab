@@ -200,7 +200,7 @@ class DocsController extends Controller
                 $channelId = $watchRequest->getId();
                 $expiration = $watchRequest->getExpiration();
 
-                // Download file from  driv     e
+                // Download file from  drive
                 $savePathFromDrive = $savePathDocs . $fileId . '.docx';
                 $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                 $exportFileContent = $service->files->export($fileId, $exportMimeType, array('alt' => 'media'));
@@ -210,31 +210,32 @@ class DocsController extends Controller
                 $localFilePath = $savePathFromDrive;
                 file_put_contents($localFilePath, $fileContent);
 
-//                $httpClient = new \GuzzleHttp\Client();
-//                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
-//                $permissionRequestBody = [
-//                    'requests' => [
-//                        [
-//                            'createPermission' => [
-//                                'role' => 'writer',
-//                                'type' => 'anyone',
-//                            ],
-//                        ],
-//                    ],
-//                ];
-//
-//                $httpClient->post($permissionUrl, [
-//                    'headers' => [
-//                        'Authorization' => 'Bearer ' . $accessToken['access_token'],
-//                        'Content-Type' => 'application/json',
-//                    ],
-//                    'json' => $permissionRequestBody,
-//                ]);
+                $httpClient = new \GuzzleHttp\Client();
+                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
+                $permissionRequestBody = [
+                    'requests' => [
+                        [
+                            'createPermission' => [
+                                'role' => 'writer',
+                                'type' => 'anyone',
+                            ],
+                        ],
+                    ],
+                ];
+
+                $httpClient->post($permissionUrl, [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $accessToken['access_token'],
+                        'Content-Type' => 'application/json',
+                    ],
+                    'json' => $permissionRequestBody,
+                ]);
 
                 return [
                     'id' => $fileId,
                     'path' => $savePathFromDrive,
                 ];
+
                 return [
                     'status' => 200,
                     'data' => 'UPLOAD_SUCCESSFULLY'
@@ -258,9 +259,19 @@ class DocsController extends Controller
         $request = \Yii::$app->request;
 
         if ($request->isGet) {
-            $savePathDocs = Yii::$app->params['savePathDocs'];;
-            $savePathDocsUpload = Yii::$app->params['savePathDocsUpload'];
-//        dd($savePathDocs);
+
+            $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+            if (!file_exists($savePathDocs)) {
+                mkdir($savePathDocs, 0777, true);
+            }
+//            dd($savePathDocs);
+            $savePathDocsUpload = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
+
+            if (!file_exists($savePathDocsUpload)) {
+                mkdir($savePathDocsUpload, 0777, true);
+            }
+
+
             $files = FileHelper::findFiles($savePathDocs);
 
             $fileNames = [];
