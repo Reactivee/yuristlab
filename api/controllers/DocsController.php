@@ -288,12 +288,12 @@ class DocsController extends Controller
             $client->setAccessToken($accessToken);
 
             $service = new Drive($client);
+            dd($savePathDocs);
 
             $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
             $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
             $fileContent = $exportFileContent->getBody()->getContents();
-//        dd($fileContent);
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
