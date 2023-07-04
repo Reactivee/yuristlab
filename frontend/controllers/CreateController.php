@@ -100,8 +100,6 @@ class CreateController extends Controller
                 $generateName = Yii::$app->security->generateRandomString();
                 $path = $folder . $generateName . '.' . $doc->extension;
 
-
-
                 $doc->saveAs($path);
                 $path = '/uploads/docs/' . $generateName . '.' . $doc->extension;
                 $model->path = $path;

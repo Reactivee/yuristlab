@@ -36,7 +36,8 @@ use yii\helpers\Html;
 
 
     <?= Html::a('Xujjatni korish', ['doc-view', 'id' => $model->id]);
-//    $form->field($model, 'path')->textInput(['maxlength' => true]) ?>
+    echo $form->field($model, 'path')->textInput(['maxlength' => true]) ;
+    echo $form->field($model, 'path')->fileInput(['maxlength' => true]) ?>
 
     <!--    --><? //= $form->field($model, 'time_begin')->textInput() ?>
 

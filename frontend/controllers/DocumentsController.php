@@ -166,6 +166,7 @@ class DocumentsController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -202,10 +203,10 @@ class DocumentsController extends Controller
             $client = new Client();
             $response = $client->createRequest()
                 ->setMethod('POST')
-                ->setUrl(Url::base('http') . '/api/docs/upload')
+                ->setUrl(Url::base('http') . '/api/docs/uploadnew')
                 ->addFile('file', $dir_path . $model->path)
                 ->send();
-
+            return $response;
             if ($response->isOk) {
                 $doc = json_decode($response->content);
             }

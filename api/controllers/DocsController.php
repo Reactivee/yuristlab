@@ -131,10 +131,10 @@ class DocsController extends Controller
                 mkdir($savePathDocsUpload, 0777, true);
             }
 
-            $fileCredentials = Yii::$app->params['fileCredentials'];
+//            $fileCredentials = Yii::$app->params['fileCredentials'];
             $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
-            $fileToken = Yii::$app->params['fileToken'];
-            $fileTokenPath = Yii::$app->params['fileTokenPath'];
+//            $fileToken = Yii::$app->params['fileToken'];
+//            $fileTokenPath = Yii::$app->params['fileTokenPath'];
 
 
             $client = new Client();
@@ -146,9 +146,11 @@ class DocsController extends Controller
             $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
             $client->setAccessToken($accessToken);
 
+
             if ($file !== null) {
                 $fileName = uniqid() . '.' . $file->getExtension();
                 $fileSavePath = $savePathDocsUpload . $fileName;
+
                 $file->saveAs($fileSavePath);
                 $originalFileName = $file->baseName;
 
@@ -268,13 +270,14 @@ class DocsController extends Controller
 
 //            dd($savePathDocs);
 //        $fileCredentialsPath = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
-//
+
 //        if (!file_exists($fileCredentialsPath)) {
 //            mkdir($fileCredentialsPath, 0777, true);
 //        }
 
 //        TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 //        dd($fileCredentialsPath);
+
         if ($request->isGet) {
             $queryParams = Yii::$app->request->get();
             $doc_id = Yii::$app->request->get('doc_id');
@@ -286,52 +289,161 @@ class DocsController extends Controller
             $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
             $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
             $client->setAccessToken($accessToken);
-
             $service = new Drive($client);
 
             $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
+
             $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
+
             $fileContent = $exportFileContent->getBody()->getContents();
-
-
 
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
-            file_put_contents($localFilePath, $fileContent);
+            file_put_contents($savePathFromDrive, $fileContent);
+
             TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
             TelegramBotErrorSender::widget(['error' => $fileContent, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             return 'GET request processed!';
         }
 
+//        if ($request->isPost) {
+//            $queryParams = Yii::$app->request->get();
+//            $doc_id = Yii::$app->request->get('doc_id');
+//
+//            $client = new Client();
+//            $client->setAuthConfig($fileCredentialsPath);
+//            $client->addScope(Drive::DRIVE);
+//            $client->setAccessType('offline');
+//            $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
+//            $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+//            $client->setAccessToken($accessToken);
+//
+//            $service = new Drive($client);
+//
+//            $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
+//            $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+//            $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
+//            $fileContent = $exportFileContent->getBody()->getContents();
+//
+//            // Save the file to a local directory
+//            $localFilePath = $savePathFromDrive;
+//            file_put_contents($localFilePath, $fileContent);
+//
+//            return 'POST request processed!';
+//        }
+
+
+        return 'Unsupported request method!';
+    }
+
+    public function actionUploadnew()
+    {
+        $request = \Yii::$app->request;
+
+        if ($request->isGet) {
+            return 'GET request not found!';
+        }
+
         if ($request->isPost) {
-            $queryParams = Yii::$app->request->get();
-            $doc_id = Yii::$app->request->get('doc_id');
+            $file = UploadedFile::getInstanceByName('file');
+            $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+            if (!file_exists($savePathDocs)) {
+                mkdir($savePathDocs, 0777, true);
+            }
+
+            $savePathDocsUpload = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
+
+            if (!file_exists($savePathDocsUpload)) {
+                mkdir($savePathDocsUpload, 0777, true);
+            }
+
+//            $fileCredentials = Yii::$app->params['fileCredentials'];
+            $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
+//            $fileToken = Yii::$app->params['fileToken'];
+//            $fileTokenPath = Yii::$app->params['fileTokenPath'];
 
             $client = new Client();
             $client->setAuthConfig($fileCredentialsPath);
             $client->addScope(Drive::DRIVE);
+            $client->addScope(Docs::DOCUMENTS);
             $client->setAccessType('offline');
             $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
             $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
             $client->setAccessToken($accessToken);
 
-            $service = new Drive($client);
+            if ($file !== null) {
+//                $fileName = uniqid() . '.' . $file->getExtension();
+//                $fileSavePath = $savePathDocsUpload . $fileName;
+//
+//                $file->saveAs($fileSavePath);
+                $originalFileName = $file->baseName;
+                $originalFilePath = $savePathDocs . $originalFileName . "." . $file->getExtension();
 
-            $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
-            $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-            $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
-            $fileContent = $exportFileContent->getBody()->getContents();
+                // Create document
+                $service = new Drive($client);
+                $docsService = new Docs($client);
 
-            // Save the file to a local directory
-            $localFilePath = $savePathFromDrive;
-            file_put_contents($localFilePath, $fileContent);
+                $fileMetadata = new DriveFile([
+                    'name' => $originalFileName,
+                    'mimeType' => 'application/vnd.google-apps.document',
+                ]);
 
-            return 'POST request processed!';
+                // Upload the file to Google Drive
+                $file = $service->files->create($fileMetadata, [
+                    'data' => file_get_contents($originalFilePath),
+                    'uploadType' => 'multipart',
+                ]);
+
+                // Get the ID of the uploaded file
+                $fileId = $file->getId();
+//                $fileSize = $file->getSize();
+
+                // Watching create document to updating in server
+                $channel = new \Google_Service_Drive_Channel([
+                    'id' => Uuid::uuid4()->toString(),
+                    'type' => 'web_hook',
+                    'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId,
+                ]);
+
+                $watchRequest = $service->changes->watch($fileId, $channel);
+                $channelId = $watchRequest->getId();
+                $expiration = $watchRequest->getExpiration();
+
+                // Download file from  drive
+                $savePathFromDrive = $savePathDocs . $fileId . '.docx';
+                $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                $exportFileContent = $service->files->export($fileId, $exportMimeType, array('alt' => 'media'));
+                $fileContent = $exportFileContent->getBody()->getContents();
+
+                // Save the file to a local directory
+                $localFilePath = $savePathFromDrive;
+                file_put_contents($localFilePath, $fileContent);
+
+                // Add permissions
+                $permission = new Drive\Permission();
+                $permission->setRole('writer');
+                $permission->setType('anyone');
+
+                $service->permissions->create($fileId, $permission);
+
+                return [
+                    'id' => $fileId,
+                    'path' => $savePathFromDrive,
+                ];
+//                return [
+//                    'status' => 200,
+//                    'data' => 'UPLOAD_SUCCESSFULLY'
+//                ];
+
+            } else {
+                return false;
+            }
+
+            return 'POST Request Method not found!';
         }
 
-
-        return 'Unsupported request method!';
+        return 'This Request Method not found!';
     }
 }

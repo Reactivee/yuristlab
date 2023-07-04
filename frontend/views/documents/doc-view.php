@@ -14,27 +14,30 @@ $domen = Url::base('https');
     <div class="container-fluid px-5">
         <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'], 'action' => 'doc-edit']) ?>
 
-        <?= $form->field($model, 'path')->textInput() ?>
+        <?= $form->field($model, 'path')->hiddenInput()->label(false) ?>
 
-        <button type="submit" class="btn btn-outline-primary btn-icon-text my-3 ">Kengaytirilgan</button>
+        <button type="submit" class="btn btn-outline-primary btn-icon-text my-3
+        ">
+            <i class="mdi mdi-file-check btn-icon-prepend"></i>Tahrirlash
+        </button>
         <?
-//        echo $form->field($model, 'path')->widget(FileInput::classname(), [
-//
-//            'pluginOptions' => [
-//
-//                'initialPreview' =>
-//
-//                    Html::a("asd", '')
-//
-//            ]
-//
-//        ]);
+        //        echo $form->field($model, 'path')->widget(FileInput::classname(), [
+        //
+        //            'pluginOptions' => [
+        //
+        //                'initialPreview' =>
+        //
+        //                    Html::a("asd", '')
+        //
+        //            ]
+        //
+        //        ]);
         ?>
         <?php ActiveForm::end() ?>
-        <a href="doc-edit" type="button" class="btn btn-outline-primary btn-icon-text my-3 ">
-            <i class="mdi mdi-file-check btn-icon-prepend"></i>
-            Kengaytirilgan
-        </a>
+        <!--        <a href="doc-edit" type="button" class="btn btn-outline-primary btn-icon-text my-3 ">-->
+        <!--            <i class="mdi mdi-file-check btn-icon-prepend"></i>-->
+        <!--            Kengaytirilgan-->
+        <!--        </a>-->
 
         <?php
         echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
