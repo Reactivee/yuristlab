@@ -258,13 +258,14 @@ class DocsController extends Controller
     public function actionNotification()
     {
         $request = \Yii::$app->request;
-        $savePathDocs = Yii::$app->params['savePathDocs'];;
+//        $savePathDocs = Yii::$app->params['savePathDocs'];;
         $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
+        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+        if (!file_exists($savePathDocs)) {
+            mkdir($savePathDocs, 0777, true);
+        }
+//        dd($savePathDocs);
 
-//        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
-//        if (!file_exists($savePathDocs)) {
-//            mkdir($savePathDocs, 0777, true);
-//        }
 //            dd($savePathDocs);
 //        $fileCredentialsPath = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
 //
