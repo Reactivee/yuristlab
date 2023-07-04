@@ -81,27 +81,12 @@ class DocsController extends Controller
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
 
-//            // Add Permission for All
-//            $httpClient = new \GuzzleHttp\Client();
-//            $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $documentId . ':batchUpdate';
-//            $permissionRequestBody = [
-//                'requests' => [
-//                    [
-//                        'createPermission' => [
-//                            'role' => 'writer',
-//                            'type' => 'anyone',
-//                        ],
-//                    ],
-//                ],
-//            ];
-//            $httpClient->post($permissionUrl, [
-//                'headers' => [
-//                    'Authorization' => 'Bearer ' . $accessToken['access_token'],
-//                    'Content-Type' => 'application/json',
-//                ],
-//                'json' => $permissionRequestBody,
-//            ]);
+            // Add permissions
+            $permission = new Drive\Permission();
+            $permission->setRole('writer');
+            $permission->setType('anyone');
 
+            $service->permissions->create($documentId, $permission);
 
             return [
                 'id' => $documentId,
@@ -135,14 +120,11 @@ class DocsController extends Controller
 
         if ($request->isPost) {
             $file = UploadedFile::getInstanceByName('file');
-//            dd($file);
-//            $file = $this->request->post()['file'];
-
             $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
             if (!file_exists($savePathDocs)) {
                 mkdir($savePathDocs, 0777, true);
             }
-//            dd($savePathDocs);
+
             $savePathDocsUpload = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
 
             if (!file_exists($savePathDocsUpload)) {
@@ -210,26 +192,12 @@ class DocsController extends Controller
                 $localFilePath = $savePathFromDrive;
                 file_put_contents($localFilePath, $fileContent);
 
-//                $httpClient = new \GuzzleHttp\Client();
-//                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
-//                $permissionRequestBody = [
-//                    'requests' => [
-//                        [
-//                            'createPermission' => [
-//                                'role' => 'writer',
-//                                'type' => 'anyone',
-//                            ],
-//                        ],
-//                    ],
-//                ];
-//
-//                $httpClient->post($permissionUrl, [
-//                    'headers' => [
-//                        'Authorization' => 'Bearer ' . $accessToken['access_token'],
-//                        'Content-Type' => 'application/json',
-//                    ],
-//                    'json' => $permissionRequestBody,
-//                ]);
+                // Add permissions
+                $permission = new Drive\Permission();
+                $permission->setRole('writer');
+                $permission->setType('anyone');
+
+                $service->permissions->create($fileId, $permission);
 
                 return [
                     'id' => $fileId,
