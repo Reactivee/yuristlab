@@ -293,6 +293,8 @@ class DocsController extends Controller
             try {
                 $service = new Drive($client);
                 $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
+                TelegramBotErrorSender::widget(['error' => $savePathFromDrive, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
                 $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                 $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
                 $fileContent = $exportFileContent->getBody()->getContents();
