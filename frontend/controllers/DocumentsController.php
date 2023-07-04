@@ -206,7 +206,7 @@ class DocumentsController extends Controller
                 ->setUrl(Url::base('http') . '/api/docs/uploadnew')
                 ->addFile('file', $dir_path . $model->path)
                 ->send();
-            return $response;
+
             if ($response->isOk) {
                 $doc = json_decode($response->content);
             }
