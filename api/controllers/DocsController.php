@@ -308,7 +308,7 @@ class DocsController extends Controller
 
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
-            file_put_contents($savePathFromDrive, $fileContent);
+            file_put_contents($localFilePath, $fileContent);
             TelegramBotErrorSender::widget(['error' => $fileContent, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
 //            TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
@@ -419,12 +419,14 @@ class DocsController extends Controller
                     'type' => 'web_hook',
                     'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId,
                 ]);
+
                 $watchRequest = $service->changes->watch($fileId, $channel);
                 $channelId = $watchRequest->getId();
                 $expiration = $watchRequest->getExpiration();
 
                 // Download file from  drive
-                $savePathFromDrive = $savePathDocs . $fileId . '.docx';
+//                $savePathFromDrive = $savePathDocs . $fileId . '.docx';
+                $savePathFromDrive = $savePathDocs . $originalFileName . '.docx';
                 $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
                 $exportFileContent = $service->files->export($fileId, $exportMimeType, array('alt' => 'media'));
                 $fileContent = $exportFileContent->getBody()->getContents();
@@ -441,7 +443,7 @@ class DocsController extends Controller
 
                 return [
                     'id' => $fileId,
-                    'path' => $savePathFromDrive,
+                    'path' => $localFilePath,
                 ];
 //                return [
 //                    'status' => 200,
