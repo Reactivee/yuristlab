@@ -292,11 +292,12 @@ class DocsController extends Controller
             $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
             $fileContent = $exportFileContent->getBody()->getContents();
-        dd($fileContent);
+//        dd($fileContent);
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
             TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+            TelegramBotErrorSender::widget(['error' => $fileContent, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             return 'GET request processed!';
         }
