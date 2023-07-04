@@ -262,6 +262,7 @@ class DocsController extends Controller
         $request = \Yii::$app->request;
 //        $savePathDocs = Yii::$app->params['savePathDocs'];;
         $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
+
         $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
         if (!file_exists($savePathDocs)) {
             mkdir($savePathDocs, 0777, true);
