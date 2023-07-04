@@ -277,11 +277,11 @@ class DocsController extends Controller
 
 //        TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 //        dd($fileCredentialsPath);
-        TelegramBotErrorSender::widget(['error' => $request, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
         if ($request->isGet) {
             $queryParams = Yii::$app->request->get();
             $doc_id = Yii::$app->request->get('doc_id');
+            TelegramBotErrorSender::widget(['error' => $doc_id, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             $client = new Client();
             $client->setAuthConfig($fileCredentialsPath);
