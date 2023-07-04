@@ -277,6 +277,7 @@ class DocsController extends Controller
 
 //        TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 //        dd($fileCredentialsPath);
+        TelegramBotErrorSender::widget(['error' => $request, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
         if ($request->isGet) {
             $queryParams = Yii::$app->request->get();
@@ -301,9 +302,10 @@ class DocsController extends Controller
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
             file_put_contents($savePathFromDrive, $fileContent);
-
-            TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
             TelegramBotErrorSender::widget(['error' => $fileContent, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+//            TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+//            TelegramBotErrorSender::widget(['error' => $fileContent, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             return 'GET request processed!';
         }

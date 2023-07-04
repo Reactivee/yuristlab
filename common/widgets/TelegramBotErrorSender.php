@@ -22,7 +22,7 @@ class TelegramBotErrorSender extends Widget
         $user = Yii::$app->user->identity->username;
 
         $iError = json_encode($this->error);
-//        $iError .= '  #' . $this->where . ' line: ' . $this->line . ' ' . $user . ' ';
+        $iError .= '  #' . $this->line;
 //        $iError .= $this->id;
 
         self::sendNotify('admin', $iError, self::token['prizmalogsbot']);
