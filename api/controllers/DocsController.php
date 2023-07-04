@@ -272,7 +272,7 @@ class DocsController extends Controller
 //            mkdir($fileCredentialsPath, 0777, true);
 //        }
 
-        TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+//        TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 //        dd($fileCredentialsPath);
         if ($request->isGet) {
             $queryParams = Yii::$app->request->get();
