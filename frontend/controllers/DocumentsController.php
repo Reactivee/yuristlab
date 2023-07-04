@@ -194,55 +194,26 @@ class DocumentsController extends Controller
     public function actionDocEdit($id = null)
     {
         $model = new MainDocument();
-
+        $doc = '';
         if ($this->request->post()) {
             $model->load($this->request->post());
             $dir_path = Yii::getAlias('@frontend') . '/web';
 
-//            $client = new Client();
-//            $response = $client->createRequest()
-//                ->setMethod('POST')
-////                ->setUrl(Url::base('http') . '/api/docs/upload')
-//                ->setUrl('https://api.enternaloptimist.com/upload')
-//                ->setOptions([
-//                    'sslallow_self_signed' => false,
-//                    'sslverify_peer_name'     => false,
-//                ])
-//                ->addFile('file', $dir_path . $model->path)
-//                ->send();
-//            dd($response);
-//            if ($response->isOk) {
+            $client = new Client();
+            $response = $client->createRequest()
+                ->setMethod('POST')
+                ->setUrl(Url::base('http') . '/api/docs/upload')
+                ->addFile('file', $dir_path . $model->path)
+                ->send();
 
-//                dd($response->content);
-//            }
+            if ($response->isOk) {
+                $doc = json_decode($response->content);
+            }
 
-            $client = new \GuzzleHttp\Client(['verify' => false]);
-
-            $res = $client->request('POST', 'https://api.enternaloptimist.com/upload', [
-
-                'multipart' => [
-                    [
-                        'name' => 'file',
-                        'FileContents' => fopen($dir_path . $model->path, 'r'),
-                        'contents' => fopen($dir_path . $model->path, 'r'),
-//                        'FileInfo' => json_encode($fileinfo),
-                        'headers' => [
-                            'Accept' => 'application/json',
-                            'Content-Type' => 'multipart/form-data',
-//                            'Authorization'         => 'Bearer '. $userToken,
-                        ],
-                        // 'contents' => $resource,
-                    ]
-                ],
-            ]);
-
-//            if ($res->getStatusCode() != 200) exit("Something happened, could not retrieve data");
-
-            $response = json_decode($res->getBody());
-            dd($response);
         }
         return $this->render('doc-edit', [
-            'model' => $model
+            'model' => $model,
+            'doc' => $doc->id
         ]);
 
     }

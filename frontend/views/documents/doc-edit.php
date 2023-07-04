@@ -8,26 +8,26 @@ $domen = Url::base('https');
 ?>
 <div class="row">
     <div class="container-fluid px-5">
-        <input id='doc_title' type="text" placeholder="document title">
-        <button id="create">Create doc File</button>
-
-        <select name="docs" id="docs">
-
-        </select>
-        <button id="edit">Edit doc File</button>
-
-
-        <p>
-            <button id="close">Close doc File</button>
-        </p>
-
-        <p>
-            <input type="file" id="file">
-            <button id="upload">Upload doc File</button>
-        </p>
-
+<!--        <input id='doc_title' type="text" placeholder="document title">-->
+<!--        <button id="create">Create doc File</button>-->
+<!---->
+<!--        <select name="docs" id="docs">-->
+<!---->
+<!--        </select>-->
+<!--        <button id="edit">Edit doc File</button>-->
+<!---->
+<!---->
+<!--        <p>-->
+<!--            <button id="close">Close doc File</button>-->
+<!--        </p>-->
+<!---->
+<!--        <p>-->
+<!--            <input type="file" id="file">-->
+<!--            <button id="upload">Upload doc File</button>-->
+<!--        </p>-->
+<!--        --><?//= dd($doc)?>
         <iframe id="iframe" style="width: 100%; height: 700px; "
-                src="https://docs.google.com/document/d/1K79v0UaIw8FZXHBUTXAapEyO5lqe9as624R7iTw1VxM/edit?usp=sharing&amp;widget=true&amp;headers=false">
+                src="https://docs.google.com/document/d/<?= $doc?>/edit?usp=sharing&amp;widget=true&amp;headers=false">
 
 
         </iframe>
