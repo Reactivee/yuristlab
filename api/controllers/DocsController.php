@@ -342,6 +342,8 @@ class DocsController extends Controller
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
 
+            TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
             return 'POST request processed!';
         }
 
