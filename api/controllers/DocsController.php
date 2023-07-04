@@ -266,7 +266,7 @@ class DocsController extends Controller
             mkdir($savePathDocs, 0777, true);
         }
 //            dd($savePathDocs);
-        $fileCredentialsPath = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads/';
+        $fileCredentialsPath = Yii::getAlias('@frontend') . '/web/uploads/docs_uploads_notify/';
 
         if (!file_exists($fileCredentialsPath)) {
             mkdir($fileCredentialsPath, 0777, true);
@@ -296,6 +296,7 @@ class DocsController extends Controller
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
             file_put_contents($localFilePath, $fileContent);
+            TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             return 'GET request processed!';
         }
