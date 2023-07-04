@@ -290,14 +290,17 @@ class DocsController extends Controller
             $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
             $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
             $client->setAccessToken($accessToken);
-            $service = new Drive($client);
+            try {
+                $service = new Drive($client);
+                $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
+                $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
+                $fileContent = $exportFileContent->getBody()->getContents();
+            } catch (\Exception $e) {
+                TelegramBotErrorSender::widget(['error' => $e, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
-            $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
+            }
 
-            $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-            $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
-
-            $fileContent = $exportFileContent->getBody()->getContents();
 
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
