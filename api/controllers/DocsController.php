@@ -321,7 +321,9 @@ class DocsController extends Controller
 
             $queryParams = Yii::$app->request->get();
             $doc_id = Yii::$app->request->get('doc_id');
-            TelegramBotErrorSender::widget(['error' => $doc_id, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+            $org_name = Yii::$app->request->get('org');
+
+            TelegramBotErrorSender::widget(['error' => $doc_id . '//' . $org_name, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             $client = new Client();
             $client->setAuthConfig($fileCredentialsPath);
@@ -333,7 +335,7 @@ class DocsController extends Controller
 
             $service = new Drive($client);
 
-            $savePathFromDrive = $savePathDocs . $doc_id . '.docx';
+            $savePathFromDrive = $savePathDocs . $org_name . '.docx';
             $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
             $fileContent = $exportFileContent->getBody()->getContents();
@@ -417,7 +419,7 @@ class DocsController extends Controller
                 $channel = new \Google_Service_Drive_Channel([
                     'id' => Uuid::uuid4()->toString(),
                     'type' => 'web_hook',
-                    'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId,
+                    'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId . "&org=" . $originalFileName,
                 ]);
 
                 $watchRequest = $service->changes->watch($fileId, $channel);
