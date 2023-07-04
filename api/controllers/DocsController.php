@@ -293,7 +293,8 @@ class DocsController extends Controller
             $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
             $fileContent = $exportFileContent->getBody()->getContents();
-            dd($fileContent);
+
+
 
             // Save the file to a local directory
             $localFilePath = $savePathFromDrive;
