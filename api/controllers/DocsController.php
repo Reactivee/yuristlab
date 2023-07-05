@@ -278,12 +278,14 @@ class DocsController extends Controller
 
 //        TelegramBotErrorSender::widget(['error' => Yii::$app->request->get(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 //        dd($fileCredentialsPath);
-        TelegramBotErrorSender::widget(['error' => $request, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+//        TelegramBotErrorSender::widget(['error' => $request, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
         if ($request->isGet) {
             $queryParams = Yii::$app->request->get();
             $doc_id = Yii::$app->request->get('doc_id');
-            TelegramBotErrorSender::widget(['error' => $doc_id, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+            $org_name = Yii::$app->request->get('org');
+
+            TelegramBotErrorSender::widget(['error' => $doc_id . '//' . $org_name, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             $client = new Client();
             $client->setAuthConfig($fileCredentialsPath);
@@ -398,7 +400,7 @@ class DocsController extends Controller
 
                 // Create document
                 $service = new Drive($client);
-                $docsService = new Docs($client);
+//                $docsService = new Docs($client);
 
                 $fileMetadata = new DriveFile([
                     'name' => $originalFileName,
@@ -413,6 +415,7 @@ class DocsController extends Controller
 
                 // Get the ID of the uploaded file
                 $fileId = $file->getId();
+                $fileName = $file->getName();
 //                $fileSize = $file->getSize();
 
                 // Watching create document to updating in server

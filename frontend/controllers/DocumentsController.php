@@ -6,6 +6,7 @@ use common\helpers\HTML_TO_DOC;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 use common\models\forms\CreateDocForm;
+use common\widgets\TelegramBotErrorSender;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -209,6 +210,8 @@ class DocumentsController extends Controller
 //        return $response;
             if ($response->isOk) {
                 $doc = json_decode($response->content);
+                TelegramBotErrorSender::widget(['error' => $response->content, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
             }
 
         }
