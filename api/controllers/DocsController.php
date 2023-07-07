@@ -259,6 +259,8 @@ class DocsController extends Controller
 
     public function actionNotification()
     {
+//        return false;
+
         $request = \Yii::$app->request;
 //        $savePathDocs = Yii::$app->params['savePathDocs'];;
         $fileCredentialsPath = Yii::$app->params['fileCredentialsPath'];
@@ -418,16 +420,17 @@ class DocsController extends Controller
                 $fileName = $file->getName();
 //                $fileSize = $file->getSize();
 
-                // Watching create document to updating in server
-                $channel = new \Google_Service_Drive_Channel([
-                    'id' => Uuid::uuid4()->toString(),
-                    'type' => 'web_hook',
-                    'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId . "&org=" . $originalFileName,
-                ]);
+//                // Watching create document to updating in server
+//                $channel = new \Google_Service_Drive_Channel([
+//                    'id' => Uuid::uuid4()->toString(),
+//                    'type' => 'web_hook',
+//                    'address' => 'https://demo.alfatechno.uz/api/docs/notification?doc_id=' . $fileId . "&org=" . $originalFileName,
+//                ]);
+//
+//                $watchRequest = $service->changes->watch($fileId, $channel);
 
-                $watchRequest = $service->changes->watch($fileId, $channel);
-                $channelId = $watchRequest->getId();
-                $expiration = $watchRequest->getExpiration();
+//                $channelId = $watchRequest->getId();
+//                $expiration = $watchRequest->getExpiration();
 
                 // Download file from  drive
 //                $savePathFromDrive = $savePathDocs . $fileId . '.docx';

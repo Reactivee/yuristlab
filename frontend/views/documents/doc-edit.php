@@ -1,33 +1,40 @@
 <?
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var \common\models\documents\MainDocument $model */
 
 $domen = Url::base('https');
+$fileName = pathinfo($model->path, PATHINFO_FILENAME);
+
 ?>
 <div class="row">
     <div class="container-fluid px-5">
-<!--        <input id='doc_title' type="text" placeholder="document title">-->
-<!--        <button id="create">Create doc File</button>-->
-<!---->
-<!--        <select name="docs" id="docs">-->
-<!---->
-<!--        </select>-->
-<!--        <button id="edit">Edit doc File</button>-->
-<!---->
-<!---->
-<!--        <p>-->
-<!--            <button id="close">Close doc File</button>-->
-<!--        </p>-->
-<!---->
-<!--        <p>-->
-<!--            <input type="file" id="file">-->
-<!--            <button id="upload">Upload doc File</button>-->
-<!--        </p>-->
-<!--        --><?//= dd($doc)?>
+
+        <?=
+        Html::a('<i class="mdi mdi-file-check btn-icon-prepend"></i> Saqlash', ['drive', 'id' => $doc, 'path' => $fileName], ['class' => 'btn btn-outline-primary btn-icon-text my-4', 'target' => '_blank'])
+        ?>
+        <!--        <input id='doc_title' type="text" placeholder="document title">-->
+        <!--        <button id="create">Create doc File</button>-->
+        <!---->
+        <!--        <select name="docs" id="docs">-->
+        <!---->
+        <!--        </select>-->
+        <!--        <button id="edit">Edit doc File</button>-->
+        <!---->
+        <!---->
+        <!--        <p>-->
+        <!--            <button id="close">Close doc File</button>-->
+        <!--        </p>-->
+        <!---->
+        <!--        <p>-->
+        <!--            <input type="file" id="file">-->
+        <!--            <button id="upload">Upload doc File</button>-->
+        <!--        </p>-->
+        <!--        --><? //= dd($doc)?>
         <iframe id="iframe" style="width: 100%; height: 700px; "
-                src="https://docs.google.com/document/d/<?= $doc?>/edit?usp=sharing&amp;widget=true&amp;headers=false">
+                src="https://docs.google.com/document/d/<?= $doc ?>/edit?usp=sharing&amp;widget=true&amp;headers=false">
 
 
         </iframe>

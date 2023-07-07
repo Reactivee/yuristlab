@@ -9,6 +9,7 @@ use common\models\forms\CreateDocForm;
 use common\widgets\TelegramBotErrorSender;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use Google\Service\Drive;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\helpers\Url;
@@ -210,6 +211,7 @@ class DocumentsController extends Controller
 //        return $response;
             if ($response->isOk) {
                 $doc = json_decode($response->content);
+
                 TelegramBotErrorSender::widget(['error' => $response->content, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             }
@@ -220,5 +222,50 @@ class DocumentsController extends Controller
             'doc' => $doc->id
         ]);
 
+    }
+
+    public function actionDrive($id, $path)
+    {
+
+        $fileCredentialsPath = Yii::getAlias('@api') . '/config/creds.json';
+
+        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+        if (!file_exists($savePathDocs)) {
+            mkdir($savePathDocs, 0777, true);
+        }
+
+        $doc_id = $id;
+
+
+        TelegramBotErrorSender::widget(['error' => $doc_id, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        $client = new \Google\Client();
+        $client->setAuthConfig($fileCredentialsPath);
+        $client->addScope(Drive::DRIVE);
+        $client->setAccessType('offline');
+        $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
+        $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+        $client->setAccessToken($accessToken);
+
+        try {
+            $service = new Drive($client);
+            $savePathFromDrive = $savePathDocs . $path . '.docx';
+            $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
+            $fileContent = $exportFileContent->getBody()->getContents();
+
+        } catch (\Exception $e) {
+            TelegramBotErrorSender::widget(['error' => $e, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        }
+
+        // Save the file to a local directory
+        $localFilePath = $savePathFromDrive;
+        $res = file_put_contents($localFilePath, $fileContent);
+        if ($res) {
+            Yii::$app->session->setFlash('success', "Xujjat Saqlandi");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
     }
 }
