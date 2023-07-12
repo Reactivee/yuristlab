@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /** @var \common\models\documents\MainDocument $model */
 
 $domen = Url::base('https');
-    dd($model);
+
 ?>
 <div class="row">
     <div class="container-fluid px-5">
