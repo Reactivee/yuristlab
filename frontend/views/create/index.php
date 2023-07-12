@@ -35,7 +35,15 @@ $initialPreviewConfig = [];
 ?>
     <div class="container-fluid m-4 pr-5">
         <? $form = ActiveForm::begin(); ?>
-
+        <?php echo $form->field($main, 'files')->hiddenInput(['id' => 'images'])->label(false) ?>
+        <?php echo $form->field($main, 'deleted_files')->hiddenInput(['id' => 'deleted_images'])->label(false) ?>
+        <!--    --><?php //echo $form->field($main, 'sorted_images')->hiddenInput(['id' => 'sorted_images'])->label(false) ?>
+        <?php $this->registerJs("
+                    var uploadedImages = {}, deletedImages = [],
+                    uploaded = document.getElementById('images'),
+                    deleted = document.getElementById('deleted_images'),
+                    sorted = document.getElementById('sorted_images');")
+        ?>
         <div class="row">
             <div class="col-md-4">
                 <?
@@ -103,11 +111,11 @@ $initialPreviewConfig = [];
                                  alt="">
                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                               <span id="installment-btn"
-                                    class="text-center btn-installment fontSize14 w-100  btn  showInstallmentModal hvr-bounce-to-right"
+                                    class="showInstallmentModal"
                                     data-item="<?php echo $main->id ?>"
                                     data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
                                              <button type="submit"
-                                                     class="btn btn-success  btn-fw">Modal</button>
+                                                     class="btn btn-success">Xujjatni ko'rish</button>
                              </span>
 
 <!--                                --><?//= \yii\helpers\Html::a('Template', Url::to(['/installment/group/index', 'id' => $type_id,])) ?>
@@ -115,8 +123,8 @@ $initialPreviewConfig = [];
                                 <? //= $main->path ?><!--"-->
                                 <!--                               class=" mb-0">--><? //= $main->path ?><!-- </a>-->
 
-                                <p class="text-muted mb-1">0.5 mb</p>
-                                <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>
+                                <p class="text-muted mb-1">0.5 kb</p>
+<!--                                <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>-->
                             </div>
                         </div>
                     </div
@@ -140,8 +148,8 @@ $initialPreviewConfig = [];
 
                     'uploadUrl' => Url::to(['upload-docs']),
                     'deleteUrl' => Url::to(['delete-docs']),
-                    'allowedFileExtensions' => ['docx', 'doc', 'pdf', 'jpg', 'jpeg'],
-                    'browseClass' => 'btn browse-button',
+//                    'allowedFileExtensions' => ['docx', 'doc', 'pdf', 'jpg', 'jpeg'],
+                    'browseClass' => 'btn btn-success ',
                     'showCancel' => false,
                     'showClose' => false,
                     'showUpload' => true,
@@ -192,7 +200,7 @@ $initialPreviewConfig = [];
 
 
 <?php Modal::begin([
-    'title' => '<span class="modal-header-main">sdasdasd </span>',
+    'title' => '<span class="modal-header-main">Template </span>',
     'id' => 'modalInstallment',
     'size' => 'modal-dialog modal-xl',
     'headerOptions' => [

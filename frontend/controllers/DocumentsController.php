@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
+use common\models\documents\AttachedDocument;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 use common\models\documents\TypeDocuments;
@@ -139,6 +140,7 @@ class DocumentsController extends Controller
 
     protected function findModel($id)
     {
+
         if (($model = MainDocument::findOne(['id' => $id])) !== null) {
             return $model;
         }
@@ -164,6 +166,11 @@ class DocumentsController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -200,7 +207,7 @@ class DocumentsController extends Controller
         if (!$doc->path) return false;
 
         $templateFile = Yii::getAlias('@frontend') . '/web/' . $doc->path;
-        $fileName = uniqid() . '.' . $doc->path;
+//        $fileName = uniqid() . '.' . $doc->path;
         $fileName = pathinfo($templateFile, PATHINFO_FILENAME);
         $fileExt = pathinfo($templateFile, PATHINFO_EXTENSION);
         $newName = $fileName . uniqid() . "." . $fileExt;
@@ -231,9 +238,7 @@ class DocumentsController extends Controller
 
         $doc = TypeDocuments::findOne($id);
 
-
         if (!$doc->path) return false;
-
 
         return $this->renderAjax('doc-view-template', [
             'model' => $doc
@@ -354,6 +359,19 @@ class DocumentsController extends Controller
     public function actionDocTemplate($id)
     {
 
+        $doc = MainDocument::findOne($id);
+
+
+        return $this->render('doc-view', [
+            'model' => $doc
+        ]);
+
+
+    }
+
+    public function actionDocTemplate_old($id)
+    {
+
         $doc = TypeDocuments::findOne($id);
         $templateFile = Yii::getAlias('@frontend') . '/web/' . $doc->path;
         $fileName = uniqid() . '.' . $doc->path;
@@ -362,7 +380,6 @@ class DocumentsController extends Controller
         $newName = $fileName . uniqid() . "." . $fileExt;
         $content = file_get_contents($templateFile);
         $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
-
 
         try {
             $res_save = file_put_contents($savePathDocs, $content);
@@ -384,6 +401,19 @@ class DocumentsController extends Controller
 //        if ($res_save)
 //
 
+    }
+
+
+    public function actionDeleteDocs()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (Yii::$app->request->post()) {
+            $id = Yii::$app->request->post()['key'];
+            $files = AttachedDocument::findOne($id);
+
+            if ($files->delete()) return true;
+        }
     }
 
 

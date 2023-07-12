@@ -2,30 +2,22 @@
 
 namespace frontend\controllers;
 
-use common\helpers\HTML_TO_DOC;
+
 use common\models\documents\CategoryDocuments;
 use common\models\documents\MainDocument;
 use common\models\documents\TypeDocuments;
 use common\models\forms\CreateDocForm;
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
+
 use Google\Client;
 use Google\Service\Docs;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
 use Ramsey\Uuid\Uuid;
 use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
+
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
@@ -91,37 +83,50 @@ class CreateController extends Controller
         $form = new CreateDocForm();
         $model = new MainDocument();
 
-
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
 
-//            $doc = $model->path = UploadedFile::getInstance($model, 'path');
-            $doc = false;
-
+            $doc = $model->path;
             if ($doc) {
+
                 $folder = Yii::getAlias('@frontend') . '/web/uploads/docs/';
                 if (!file_exists($folder)) {
                     mkdir($folder, 0777, true);
                 }
-                $generateName = Yii::$app->security->generateRandomString();
-                $path = $folder . $generateName . '.' . $doc->extension;
+                $templateFile = Yii::getAlias('@frontend') . '/web' . $doc;
 
-                $doc->saveAs($path);
-                $path = '/uploads/docs/' . $generateName . '.' . $doc->extension;
-                $model->path = $path;
+                $content = file_get_contents($templateFile);
+
+                $generateName = Yii::$app->security->generateRandomString() . uniqid();
+
+//            $fileName = pathinfo($model->path, PATHINFO_FILENAME);
+                $fileExt = pathinfo($model->path, PATHINFO_EXTENSION);
+                $newName = $generateName . '.' . $fileExt;
+
+                $savePathDocs = $folder . $newName;
+
+                try {
+                    $res_save = file_put_contents($savePathDocs, $content);
+                    $model->path = '/uploads/docs/' . $newName;
+
+                } catch (\Exception $e) {
+                    Yii::$app->session->setFlash('error', $e->getMessage());
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+
             }
             $model->status = MainDocument::NEW;
-
             if (!$model->save()) {
 
                 Yii::$app->session->setFlash('error', 'Xatolik');
                 return $this->refresh();
 
             }
+
             $files = $model->saveFiles();
 
             if ($files) {
                 Yii::$app->session->setFlash('success', 'Yuborildi');
-                return $this->refresh();
+                return $this->redirect(['/documents/view/', 'id' => $model->id]);
 
             }
 
@@ -141,7 +146,8 @@ class CreateController extends Controller
 
     }
 
-    public function actionUploadDocs()
+    public
+    function actionUploadDocs()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $data = [];
@@ -173,7 +179,8 @@ class CreateController extends Controller
         return $data;
     }
 
-    public function actionUpload()
+    public
+    function actionUpload()
     {
         $request = \Yii::$app->request;
 
@@ -291,7 +298,8 @@ class CreateController extends Controller
         return 'This Request Method not found!';
     }
 
-    public function actionGetSubcategory()
+    public
+    function actionGetSubcategory()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (isset($_POST['depdrop_parents'])) {
@@ -311,7 +319,8 @@ class CreateController extends Controller
 
     }
 
-    public function actionGetTypes()
+    public
+    function actionGetTypes()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -332,7 +341,8 @@ class CreateController extends Controller
         return ['output' => '', 'selected' => ''];
     }
 
-    public function actionGetFile($id)
+    public
+    function actionGetFile($id)
     {
 ////        Yii::$app->response->format = Response::FORMAT_JSON;
         $doc = TypeDocuments::findOne($id);

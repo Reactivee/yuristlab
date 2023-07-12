@@ -39,6 +39,7 @@ $domen = Url::base('https');
         <!--        </a>-->
 
         <?php
+
         echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
             'url' => $domen . $model->path,//url на ваш документ
             'width' => '100%',

@@ -178,10 +178,8 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public function saveFiles($file = null)
     {
-        $docs = $file;
 
-        if (!$file)
-            $docs = json_decode($this->files, true);
+        $docs = json_decode($this->files, true);
 
         if (!empty($docs)) {
             foreach ($docs as $key => $item) {
