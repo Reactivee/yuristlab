@@ -12,7 +12,6 @@ $domen = Url::base('https');
 ?>
 <div class="row">
     <div class="container-fluid px-5">
-
         <?php
         echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
             'url' => $domen . $model->path,//url на ваш документ

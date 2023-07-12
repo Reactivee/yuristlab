@@ -235,7 +235,7 @@ class DocumentsController extends Controller
         if (!$doc->path) return false;
 
 
-        return $this->renderAjax('doc-view', [
+        return $this->renderAjax('doc-template', [
             'model' => $doc
         ]);
 
