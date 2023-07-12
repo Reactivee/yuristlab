@@ -65,7 +65,7 @@
     "ramsey/uuid": "^4.2",
     "yiisoft/yii2-httpclient": "~2.0.0",
     "marqu3s/yii2-summernote": "dev-master",
-    "simialbi/yii2-widget-toastr": "^1.0.0",
+    "simialbi/yii2-widget-toastr": "^1.0.0"
 
   },
   "require-dev": {
