@@ -43,7 +43,7 @@ class CategoryDocuments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'status',], 'required'],
+            [['status',], 'required'],
             [['group_id', 'parent_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name_uz', 'name_ru'], 'string', 'max' => 255],
 //            [['name_uz'], 'unique'],
@@ -82,6 +82,13 @@ class CategoryDocuments extends \yii\db\ActiveRecord
             ->andWhere(['not', ['parent_id' => null]])
             ->asArray()
             ->all();
+
+        return ArrayHelper::map($array, 'id', 'name_ru');
+    }
+
+    public static function getSubCategory()
+    {
+        $array = self::find()->where(['status' => 1])->andWhere(['not', ['parent_id' => null]])->asArray()->all();
 
         return ArrayHelper::map($array, 'id', 'name_ru');
     }

@@ -2,7 +2,9 @@
 
 namespace common\models\documents;
 
+use PhpParser\Node\Expr\Array_;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "content_news".
@@ -19,6 +21,11 @@ use Yii;
  */
 class ContentNews extends \yii\db\ActiveRecord
 {
+
+    const NEW = 1;
+    const EDITED = 2;
+    const DELETED = -1;
+
     /**
      * {@inheritdoc}
      */
@@ -33,10 +40,11 @@ class ContentNews extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['text_uz', 'text_ru', 'path'], 'string'],
+            [['path'], 'string'],
             [['status'], 'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'category_id'], 'integer'],
             [['title_uz', 'title_ru'], 'string', 'max' => 255],
+            [['text_uz', 'text_ru','sub_title_uz','sub_title_ru'], 'safe']
         ];
     }
 
@@ -56,5 +64,22 @@ class ContentNews extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
         ];
+    }
+
+    public function getStatusName($status = null)
+    {
+        $array = [
+            self::NEW => 'Yangi',
+            self::DELETED => "O'chirish",
+
+        ];
+
+        return $status ? $array[$status] : $array;
+    }
+
+    public function getCategory()
+    {
+        $cats = CategoryNews::find()->where(['status' => 1])->all();
+        return ArrayHelper::map($cats, 'id', 'name_uz');
     }
 }

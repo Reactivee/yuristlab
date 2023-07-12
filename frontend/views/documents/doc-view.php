@@ -12,12 +12,11 @@ $domen = Url::base('https');
 ?>
 <div class="row">
     <div class="container-fluid px-5">
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'], 'action' => 'doc-edit']) ?>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','target'=>'_blank'], 'action' => '/documents/doc-edit']) ?>
 
         <?= $form->field($model, 'path')->hiddenInput()->label(false) ?>
 
-        <button type="submit" class="btn btn-outline-primary btn-icon-text my-3
-        ">
+        <button type="submit" class="btn btn-outline-primary btn-icon-text my-3">
             <i class="mdi mdi-file-check btn-icon-prepend"></i>Tahrirlash
         </button>
         <?

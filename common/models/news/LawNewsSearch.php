@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\documents;
+namespace common\models\news;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\documents\MainDocument;
+use common\models\news\LawNews;
 
 /**
- * MainDocumentSearch represents the model behind the search form of `common\models\documents\MainDocument`.
+ * LawNewsSearch represents the model behind the search form of `common\models\news\LawNews`.
  */
-class MainDocumentSearch extends MainDocument
+class LawNewsSearch extends LawNews
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class MainDocumentSearch extends MainDocument
     public function rules()
     {
         return [
-            [['id', 'category_id', 'group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
-            [['name_uz', 'name_ru', 'path'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['title_uz', 'title_ru', 'icon'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class MainDocumentSearch extends MainDocument
      */
     public function search($params)
     {
-        $query = MainDocument::find()->orderBy(['id'=>SORT_DESC]);
+        $query = LawNews::find()->where(['status' => 1]);
 
         // add conditions that should always apply here
 
@@ -59,19 +59,12 @@ class MainDocumentSearch extends MainDocument
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'category_id' => $this->category_id,
-            'group_id' => $this->group_id,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'created_by' => $this->created_by,
-            'time_begin' => $this->time_begin,
-            'time_end' => $this->time_end,
         ]);
 
-        $query->andFilterWhere(['like', 'name_uz', $this->name_uz])
-            ->andFilterWhere(['like', 'name_ru', $this->name_ru])
-            ->andFilterWhere(['like', 'path', $this->path]);
+        $query->andFilterWhere(['like', 'title_uz', $this->title_uz])
+            ->andFilterWhere(['like', 'title_ru', $this->title_ru])
+            ->andFilterWhere(['like', 'icon', $this->icon]);
 
         return $dataProvider;
     }

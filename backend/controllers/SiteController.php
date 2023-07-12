@@ -60,9 +60,9 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($slug)
+    public function actionIndex()
     {
-        dd($slug);
+//        dd($slug);
         return $this->render('index');
     }
 

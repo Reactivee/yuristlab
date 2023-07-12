@@ -35,9 +35,9 @@ use yii\helpers\Html;
     <!--    --><? //= $form->field($model, 'created_by')->textInput() ?>
 
 
-    <?= Html::a('Xujjatni korish', ['doc-view', 'id' => $model->id]);
-    echo $form->field($model, 'path')->textInput(['maxlength' => true]) ;
-    echo $form->field($model, 'path')->fileInput(['maxlength' => true]) ?>
+    <?= Html::a('Xujjatni korish', ['doc-view', 'id' => $model->id], ['class' => 'my-5']);
+    //    echo $form->field($model, 'path')->textInput(['maxlength' => true]) ;
+    //    echo $form->field($model, 'path')->fileInput(['maxlength' => true])  ?>
 
     <!--    --><? //= $form->field($model, 'time_begin')->textInput() ?>
 
@@ -47,7 +47,7 @@ use yii\helpers\Html;
     //    ]);?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success mt-4']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

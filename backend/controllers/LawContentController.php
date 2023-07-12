@@ -2,17 +2,16 @@
 
 namespace backend\controllers;
 
-use common\models\documents\ContentNews;
-use common\models\documents\ContentNewsSearch;
+use common\models\news\LawContent;
+use common\models\news\LawContentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * ContentNewsController implements the CRUD actions for ContentNews model.
+ * LawContentController implements the CRUD actions for LawContent model.
  */
-class ContentNewsController extends Controller
+class LawContentController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class ContentNewsController extends Controller
     }
 
     /**
-     * Lists all ContentNews models.
+     * Lists all LawContent models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ContentNewsSearch();
+        $searchModel = new LawContentSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +48,7 @@ class ContentNewsController extends Controller
     }
 
     /**
-     * Displays a single ContentNews model.
+     * Displays a single LawContent model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -62,18 +61,16 @@ class ContentNewsController extends Controller
     }
 
     /**
-     * Creates a new ContentNews model.
+     * Creates a new LawContent model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new ContentNews();
+        $model = new LawContent();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-
-                $model->save();
+            if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -86,7 +83,7 @@ class ContentNewsController extends Controller
     }
 
     /**
-     * Updates an existing ContentNews model.
+     * Updates an existing LawContent model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -96,15 +93,7 @@ class ContentNewsController extends Controller
     {
         $model = $this->findModel($id);
 
-
-        if ($this->request->isPost && $model->load($this->request->post())) {
-//            $file=UploadedFile::className()_ge
-
-            if ($file_image = UploadedFile::getInstancesByName('path')) {
-                dd($file_image);
-
-            }
-            $model->save();
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -114,7 +103,7 @@ class ContentNewsController extends Controller
     }
 
     /**
-     * Deletes an existing ContentNews model.
+     * Deletes an existing LawContent model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -128,15 +117,15 @@ class ContentNewsController extends Controller
     }
 
     /**
-     * Finds the ContentNews model based on its primary key value.
+     * Finds the LawContent model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return ContentNews the loaded model
+     * @return LawContent the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ContentNews::findOne(['id' => $id])) !== null) {
+        if (($model = LawContent::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

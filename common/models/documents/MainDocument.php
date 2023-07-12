@@ -107,6 +107,23 @@ class MainDocument extends \yii\db\ActiveRecord
         return $status ? $array[$status] : $array;
     }
 
+    public static function getStatusNameColorRound($status = null)
+    {
+        $array = [
+            self::NEW => 'badge badge-pill badge-outline-secondary',
+            self::EDITED => "  badge badge-pill badge-outline-primary",
+            self::DELETED => "   btn-fw badge badge-pill badge-outline-danger",
+            self::NOTSEND => "  badge badge-pill badge-outline-primary",
+            self::SUCCESS => " badge badge-pill badge-outline-success",
+            self::ERROR => " badge badge-pill badge-outline-warning",
+            self::REJECTED => " badge badge-pill badge-outline-light",
+            self::SIGNING => " badge badge-pill badge-outline-success",
+            self::SIGNED => " w badge badge-pill badge-outline-primary",
+        ];
+
+        return $status ? $array[$status] : $array;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -128,7 +145,7 @@ class MainDocument extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'required'],
+            [['status', 'name_uz', 'path', 'category_id', 'type_group_id'], 'required'],
             [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
             [['name_uz', 'name_ru',], 'string', 'max' => 255],
 //            [['name_uz'], 'unique'],
@@ -159,13 +176,16 @@ class MainDocument extends \yii\db\ActiveRecord
     }
 
 
-    public function saveFiles()
+    public function saveFiles($file = null)
     {
-//        dd($this);
-        $docs = json_decode($this->files, true);
+        $docs = $file;
+
+        if (!$file)
+            $docs = json_decode($this->files, true);
 
         if (!empty($docs)) {
             foreach ($docs as $key => $item) {
+
                 $doc = new AttachedDocument();
                 $doc->main_document_id = $this->id;
                 $doc->path = $item['path'];
@@ -183,6 +203,27 @@ class MainDocument extends \yii\db\ActiveRecord
         return true;
     }
 
+    public function saveFilesApi($file = null, $id)
+    {
+
+
+        $doc = new AttachedDocument();
+        $doc->main_document_id = $id;
+        $doc->path = $file['path'];
+//                $doc->name_ru = $item['generate_name'];
+//                $doc->name_uz = $item['generate_name'];
+        $doc->save();
+
+        if (!$doc->save()) {
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
     public static function getByStatusDocuments($key)
     {
 
@@ -196,6 +237,12 @@ class MainDocument extends \yii\db\ActiveRecord
         return $this->hasOne(CategoryDocuments::className(), ['id' => 'category_id']);
     }
 
+    public function getSubCategory()
+    {
+        return $this->hasOne(CategoryDocuments::className(), ['id' => 'group_id']);
+    }
+
+
     public function getGroup()
     {
         return $this->hasOne(GroupDocuments::className(), ['id' => 'group_id']);
@@ -204,6 +251,12 @@ class MainDocument extends \yii\db\ActiveRecord
     public function getType()
     {
         return $this->hasOne(TypeDocuments::className(), ['id' => 'type_group_id']);
+    }
+
+    public function getAttach()
+    {
+//        dd('asd');
+        return $this->hasMany(AttachedDocument::className(), ['main_document_id' => 'id']);
     }
 
 }

@@ -1,10 +1,14 @@
 <?php
+
+use yii\httpclient\JsonParser;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
     require __DIR__ . '/params.php',
     require __DIR__ . '/params-local.php'
 );
+require_once __DIR__ . '/../../common/helpers/helpers.php';
 
 return [
     'id' => 'app-backend',
@@ -22,26 +26,28 @@ return [
 //                    'usernameField' => 'username',
 //                ],
 //            ],
-////            'layout' => '@backend/modules/admin/views/layouts/main.php',
+////            'layout' => '@backend/modules/admin/views/layouts/main__.php',
 //        ],
 
     ],
     'homeUrl' => '/home',
     'components' => [
-        'request' => [
-            'csrfParam' => '_csrf-api',
-            'baseUrl' => '/home',
-            'parsers' => [
-                'application/json' => JsonParser::class,
-            ]
-        ],
+//        'request' => [
+//            'csrfParam' => '_csrf-api',
+//            'baseUrl' => '/home',
+//            'parsers' => [
+//                'application/json' => JsonParser::class,
+//            ]
+//        ],
         'assetManager' => [
             'bundles' => [
                 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 ],
                 'deyraka\materialdashboard\web\MaterialDashboardAsset',
-            ],
+
+            ]
+
         ],
         'formatter' => [
             'class' => 'yii\i18n\Formatter',

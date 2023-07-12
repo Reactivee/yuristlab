@@ -4,12 +4,15 @@
 
 /** @var string $content */
 
+use common\models\documents\MainDocument;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
+use simialbi\yii2\toastr\Toastr;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
+use yii\bootstrap4\Toast;
 
 AppAsset::register($this);
 ?>
@@ -69,6 +72,8 @@ AppAsset::register($this);
     //        ]) ?>
     <div class="container-scroller_">
         <?= $this->render('top') ?>
+
+
         <div class="container-fluid page-body-wrapper">
 
             <?= $this->render('left') ?>
@@ -76,6 +81,38 @@ AppAsset::register($this);
             <div class="main-panel">
                 <div class="content-wrapper p-0">
                     <?= Alert::widget() ?>
+
+                    <div class="d-sm-flex justify-content-between align-items-center border-bottom">
+                        <div class="d-flex align-items-center">
+                            <ul class="nav nav-tabs home-tab" role="tablist">
+                                <? foreach (MainDocument::getStatusNameArr() as $key => $item) { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link " id="Dashboards-tab" data-toggle="tab"
+                                           href="#dash-<?= $key ?>" role="tab"
+                                           aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
+                                            <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>"><?= MainDocument::getByStatusDocuments($key) ?? '' ?></span>
+
+                                        </a>
+                                    </li>
+
+                                <? } ?>
+
+                                <!--                                <li class="nav-item">-->
+                                <!--                                    <a class="nav-link" id="Apps-tab" data-toggle="tab" href="#" role="tab"-->
+                                <!--                                       aria-selected="false">Users</a>-->
+                                <!--                                </li>-->
+                                <!--                                <li class="nav-item">-->
+                                <!--                                    <a class="nav-link" id="Pages-tab" data-toggle="tab" href="#" role="tab"-->
+                                <!--                                       aria-selected="false">Pages</a>-->
+                                <!--                                </li>-->
+                                <!--                                <li class="nav-item">-->
+                                <!--                                    <a class="nav-link" id="Features-tab" data-toggle="tab" href="#" role="tab"-->
+                                <!--                                       aria-selected="false">Features</a>-->
+                                <!--                                </li>-->
+                            </ul>
+
+                        </div>
+                    </div>
                     <?= $content ?>
 
                 </div>

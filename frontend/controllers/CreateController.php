@@ -3,7 +3,9 @@
 namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
+use common\models\documents\CategoryDocuments;
 use common\models\documents\MainDocument;
+use common\models\documents\TypeDocuments;
 use common\models\forms\CreateDocForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -84,13 +86,16 @@ class CreateController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id = null)
     {
         $form = new CreateDocForm();
         $model = new MainDocument();
 
+
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
-            $doc = $model->path = UploadedFile::getInstance($model, 'path');
+
+//            $doc = $model->path = UploadedFile::getInstance($model, 'path');
+            $doc = false;
 
             if ($doc) {
                 $folder = Yii::getAlias('@frontend') . '/web/uploads/docs/';
@@ -103,10 +108,11 @@ class CreateController extends Controller
                 $doc->saveAs($path);
                 $path = '/uploads/docs/' . $generateName . '.' . $doc->extension;
                 $model->path = $path;
-                $model->status = MainDocument::NEW;
-
             }
+            $model->status = MainDocument::NEW;
+
             if (!$model->save()) {
+
                 Yii::$app->session->setFlash('error', 'Xatolik');
                 return $this->refresh();
 
@@ -119,6 +125,13 @@ class CreateController extends Controller
 
             }
 
+        }
+        if ($id) {
+            $res = $this->actionGetFile($id);
+
+            if ($res) {
+                $model->path = $res;
+            }
         }
 
         return $this->render('index', [
@@ -151,7 +164,7 @@ class CreateController extends Controller
                 $data = [
                     'generate_name' => $generateName,
                     'name' => $name,
-                    'path' => Yii::getAlias('@uploadsUrl') . $folder . $generateName . $ext
+                    'path' => $folder . $generateName . '.' . $ext
                 ];
 
             }
@@ -159,6 +172,7 @@ class CreateController extends Controller
 
         return $data;
     }
+
     public function actionUpload()
     {
         $request = \Yii::$app->request;
@@ -233,7 +247,7 @@ class CreateController extends Controller
                 // Save the file to a local directory
                 $localFilePath = $savePathFromDrive;
                 file_put_contents($localFilePath, $fileContent);
-                dd($localFilePath);
+//                dd($localFilePath);
 //                $httpClient = new \GuzzleHttp\Client();
 //                $permissionUrl = 'https://docs.googleapis.com/v1/documents/' . $fileId . ':batchUpdate';
 //                $permissionRequestBody = [
@@ -259,10 +273,10 @@ class CreateController extends Controller
                     'id' => $fileId,
                     'path' => $savePathFromDrive,
                 ];
-                return [
-                    'status' => 200,
-                    'data' => 'UPLOAD_SUCCESSFULLY'
-                ];
+//                return [
+//                    'status' => 200,
+//                    'data' => 'UPLOAD_SUCCESSFULLY'
+//                ];
 
             } else {
                 return [
@@ -275,6 +289,77 @@ class CreateController extends Controller
         }
 
         return 'This Request Method not found!';
+    }
+
+    public function actionGetSubcategory()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents) {
+                $cat = $parents[0];
+                $sub = CategoryDocuments::find()
+                    ->select(['id', 'name_uz as name'])
+                    ->where(['status' => 1])
+                    ->andWhere(['parent_id' => $cat])
+                    ->asArray()
+                    ->all();
+                return ['output' => $sub, 'selected' => ''];
+            }
+        }
+        return ['output' => '', 'selected' => ''];
+
+    }
+
+    public function actionGetTypes()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents) {
+                $cat = $parents[0];
+                $sub = TypeDocuments::find()
+                    ->select(['id', 'name_uz as name'])
+                    ->where(['status' => 1])
+                    ->andWhere(['category_id' => $cat])
+                    ->asArray()
+                    ->all();
+                return ['output' => $sub, 'selected' => ''];
+            }
+        }
+
+        return ['output' => '', 'selected' => ''];
+    }
+
+    public function actionGetFile($id)
+    {
+////        Yii::$app->response->format = Response::FORMAT_JSON;
+        $doc = TypeDocuments::findOne($id);
+//
+        if (!$doc->path) return false;
+//
+//        $templateFile = Yii::getAlias('@frontend') . '/web/' . $doc->path;
+//        $fileName = uniqid() . '.' . $doc->path;
+//        $fileName = pathinfo($templateFile, PATHINFO_FILENAME);
+//        $fileExt = pathinfo($templateFile, PATHINFO_EXTENSION);
+//        $newName = $fileName . uniqid() . "." . $fileExt;
+//        $content = file_get_contents($templateFile);
+//        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+//
+//
+//        try {
+//            $res_save = file_put_contents($savePathDocs, $content);
+//            if ($res_save) {
+        return $doc->path;
+//                return '/uploads/docs/' . $newName;
+//            }
+//
+//        } catch (\Exception $e) {
+//            Yii::$app->session->setFlash('error', $e->getMessage());
+//            return $this->redirect(Yii::$app->request->referrer);
+//        }
+
     }
 
 

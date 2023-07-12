@@ -59,11 +59,14 @@
     "floor12/yii2-summernote": "^1.0",
     "groupdocscloud/groupdocs-editor-cloud": "^22.5",
     "froala/yii2-froala-editor": "^2.6.0",
-    "2amigos/yii2-ckeditor-widget" : "~2.1",
+    "2amigos/yii2-ckeditor-widget": "~2.1",
     "gfrodriguez/yii2-ckeditor": "dev-master",
     "google/apiclient": "^2.0",
     "ramsey/uuid": "^4.2",
-    "yiisoft/yii2-httpclient": "~2.0.0"
+    "yiisoft/yii2-httpclient": "~2.0.0",
+    "marqu3s/yii2-summernote": "dev-master",
+    "simialbi/yii2-widget-toastr": "^1.0.0",
+
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

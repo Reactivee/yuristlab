@@ -13,10 +13,10 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css',
+//        'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css',
     ];
     public $js = [
-        'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js'
+//        'https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -4,3 +4,20 @@ input[type="file"]::file-selector-button {
 .tab-content > .active{
     display: flex;
 }
+.page-item span{
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-color: #dde4e9;
+    color: #000000;
+    font-size: .875rem;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}

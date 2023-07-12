@@ -35,6 +35,7 @@
                     <li class="nav-item"><a class="nav-link" href="/documents">Docs</a>
                     <li class="nav-item"><a class="nav-link" href="/documents/statistics">Stat</a>
                     <li class="nav-item"><a class="nav-link" href="/news">News</a>
+                    <li class="nav-item"><a class="nav-link" href="/law-news">Law News</a>
                     </li>
 
                 </ul>

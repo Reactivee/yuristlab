@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27700450eacf0272cf2e7943e4aee7bd",
+    "content-hash": "68a7583a26fdf2b3dbfd8958d4d31700",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -383,6 +383,21 @@
             ]
         },
         {
+            "name": "bower-asset/codemirror",
+            "version": "6.65.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/codemirror.git",
+                "reference": "e90054a9063d3ceece4869563681901d5acd5003"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/codemirror/zipball/e90054a9063d3ceece4869563681901d5acd5003",
+                "reference": "e90054a9063d3ceece4869563681901d5acd5003"
+            },
+            "type": "bower-asset"
+        },
+        {
             "name": "bower-asset/gentelella",
             "version": "1.4.0",
             "source": {
@@ -405,7 +420,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "git@github.com:RobinHerbots/Inputmask.git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -487,6 +502,39 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/mathiasbynens/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
+            },
+            "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/summernote",
+            "version": "v0.8.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/summernote/summernote.git",
+                "reference": "cd06928b8f978e8c852df5de0b87a008573dac4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/summernote/summernote/zipball/cd06928b8f978e8c852df5de0b87a008573dac4c",
+                "reference": "cd06928b8f978e8c852df5de0b87a008573dac4c"
+            },
+            "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/toastr",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:johnpapa/toastr-bower.git",
+                "reference": "e648a870a60103bbc3986c1fe2b2de86ea4a9569"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/johnpapa/toastr-bower/zipball/e648a870a60103bbc3986c1fe2b2de86ea4a9569",
+                "reference": "e648a870a60103bbc3986c1fe2b2de86ea4a9569"
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6.3"
             },
             "type": "bower-asset"
         },
@@ -1622,16 +1670,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.307.0",
+            "version": "v0.308.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "5f7d451aa912355dda61aa29ac3a4afa8b252467"
+                "reference": "85cf00383e6bf6eca131bd3261b7859ea418a578"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/5f7d451aa912355dda61aa29ac3a4afa8b252467",
-                "reference": "5f7d451aa912355dda61aa29ac3a4afa8b252467",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/85cf00383e6bf6eca131bd3261b7859ea418a578",
+                "reference": "85cf00383e6bf6eca131bd3261b7859ea418a578",
                 "shasum": ""
             },
             "require": {
@@ -1660,9 +1708,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.307.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.308.0"
             },
-            "time": "2023-07-01T01:02:13+00:00"
+            "time": "2023-07-09T01:06:13+00:00"
         },
         {
             "name": "google/auth",
@@ -2969,6 +3017,118 @@
             "time": "2018-11-03T17:45:22+00:00"
         },
         {
+            "name": "loveorigami/yii2-modal-ajax",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/loveorigami/yii2-modal-ajax.git",
+                "reference": "8bc23b8ad16390d42b37ab155bc030902b881fcd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/loveorigami/yii2-modal-ajax/zipball/8bc23b8ad16390d42b37ab155bc030902b881fcd",
+                "reference": "8bc23b8ad16390d42b37ab155bc030902b881fcd",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "lo\\widgets\\modal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Karnbrock Gmbh",
+                    "homepage": "http://karnbrock.biz"
+                },
+                {
+                    "name": "Lukyanov Andrey",
+                    "homepage": "http://loveorigami.info"
+                }
+            ],
+            "description": "A wrapper around Yii2 Bootstrap Modal for using an ActiveForm via AJAX inside",
+            "homepage": "https://github.com/loveorigami/yii2-modal-ajax",
+            "keywords": [
+                "ajax-modal",
+                "bootstrap",
+                "modal",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/loveorigami/yii2-modal-ajax/issues",
+                "source": "https://github.com/loveorigami/yii2-modal-ajax/tree/3.8"
+            },
+            "time": "2019-06-10T06:44:42+00:00"
+        },
+        {
+            "name": "marqu3s/yii2-summernote",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marqu3s/yii2-summernote.git",
+                "reference": "a7038f5d55f2d7b6c4dbb788a0be1e0555365184"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marqu3s/yii2-summernote/zipball/a7038f5d55f2d7b6c4dbb788a0be1e0555365184",
+                "reference": "a7038f5d55f2d7b6c4dbb788a0be1e0555365184",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/codemirror": "@stable",
+                "bower-asset/summernote": "0.*",
+                "yiisoft/yii2": "~2"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "marqu3s\\summernote\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aleksandr Zelenin",
+                    "email": "aleksandr@zelenin.me",
+                    "homepage": "http://zelenin.me",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Joao Marques",
+                    "email": "joao@jjmf.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yii2 Summernote widget. Super simple WYSIWYG editor on Bootstrap",
+            "homepage": "https://github.com/marqu3s/yii2-summernote",
+            "keywords": [
+                "summernote",
+                "widget",
+                "wysiwyg",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/zelenin/yii2-summernote-widget/issues",
+                "source": "https://github.com/marqu3s/yii2-summernote"
+            },
+            "time": "2016-01-15T00:00:00+00:00"
+        },
+        {
             "name": "mdmsoft/yii2-admin",
             "version": "2.12",
             "source": {
@@ -3583,16 +3743,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.20",
+            "version": "3.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67"
+                "reference": "4580645d3fc05c189024eb3b834c6c1e4f0f30a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67",
-                "reference": "543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/4580645d3fc05c189024eb3b834c6c1e4f0f30a1",
+                "reference": "4580645d3fc05c189024eb3b834c6c1e4f0f30a1",
                 "shasum": ""
             },
             "require": {
@@ -3673,7 +3833,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.20"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.21"
             },
             "funding": [
                 {
@@ -3689,7 +3849,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-13T06:30:34+00:00"
+            "time": "2023-07-09T15:24:48+00:00"
         },
         {
             "name": "psr/cache",
@@ -4318,6 +4478,73 @@
                 "source": "https://github.com/select2/select2/tree/4.0.13"
             },
             "time": "2020-01-28T05:01:22+00:00"
+        },
+        {
+            "name": "simialbi/yii2-widget-toastr",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simialbi/yii2-widget-toastr.git",
+                "reference": "a71633a1a5c314a14c3cceb1602e796cb3000f0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simialbi/yii2-widget-toastr/zipball/a71633a1a5c314a14c3cceb1602e796cb3000f0d",
+                "reference": "a71633a1a5c314a14c3cceb1602e796cb3000f0d",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/toastr": "^2.1.0",
+                "php": ">=7.3",
+                "yiisoft/yii2": "^2.0.0"
+            },
+            "require-dev": {
+                "yiisoft/yii2-coding-standards": "~2.0"
+            },
+            "type": "yii2-widget",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "simialbi\\yii2\\toastr\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Die Coding",
+                    "email": "diecoding@gmail.com"
+                },
+                {
+                    "name": "Sugeng Sulistiyawan",
+                    "email": "sugeng.sulistiyawan@gmail.com"
+                },
+                {
+                    "name": "Simon Karlen",
+                    "email": "simi.albi@outlook.com"
+                }
+            ],
+            "description": "toastr is a Javascript library for non-blocking notifications implemented as yii2 widget.",
+            "keywords": [
+                "flash",
+                "jquery",
+                "notification",
+                "session",
+                "toastr",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/simialbi/yii2-widget-toastr/issues",
+                "source": "https://github.com/simialbi/yii2-widget-toastr"
+            },
+            "time": "2022-07-28T06:57:25+00:00"
         },
         {
             "name": "skeeks/yii2-slug-behavior",
@@ -9506,16 +9733,16 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.23",
+            "version": "2.1.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "73af53bd1b99d40f983ba57386ac6c374d9ef177"
+                "reference": "e15e954d0beb82b0b532f998f55e7275083de592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/73af53bd1b99d40f983ba57386ac6c374d9ef177",
-                "reference": "73af53bd1b99d40f983ba57386ac6c374d9ef177",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e15e954d0beb82b0b532f998f55e7275083de592",
+                "reference": "e15e954d0beb82b0b532f998f55e7275083de592",
                 "shasum": ""
             },
             "require": {
@@ -9592,7 +9819,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-22T19:44:57+00:00"
+            "time": "2023-07-10T06:07:43+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -9772,7 +9999,9 @@
         "deyraka/yii2-material-dashboard": 10,
         "zakurdaev/yii2-editorjs-widget": 20,
         "phpoffice/phpword": 20,
-        "gfrodriguez/yii2-ckeditor": 20
+        "gfrodriguez/yii2-ckeditor": 20,
+        "marqu3s/yii2-summernote": 20,
+        "loveorigami/yii2-modal-ajax": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

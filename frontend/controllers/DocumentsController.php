@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\helpers\HTML_TO_DOC;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
+use common\models\documents\TypeDocuments;
 use common\models\forms\CreateDocForm;
 use common\widgets\TelegramBotErrorSender;
 use frontend\models\ResendVerificationEmailForm;
@@ -88,7 +89,6 @@ class DocumentsController extends Controller
     {
         $searchModel = new MainDocumentSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        Yii::$app->session->setFlash('danger', 'Ochirildi');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -98,12 +98,15 @@ class DocumentsController extends Controller
 
     }
 
-    public function actionUploadDocs()
+    public function actionUploadDocs($id = null)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $data = [];
 
         if ($file_image = UploadedFile::getInstancesByName('attached')) {
+            if ($id) {
+                $main = MainDocument::findOne($id);
+            }
 
             foreach ($file_image as $file) {
 
@@ -121,10 +124,14 @@ class DocumentsController extends Controller
                 $data = [
                     'generate_name' => $generateName,
                     'name' => $name,
-                    'path' => Yii::getAlias('@uploadsUrl') . $folder . $generateName . $ext
+                    'path' => $folder . $generateName . '.' . $ext
                 ];
 
+                if ($id) {
+                    $main->saveFilesApi($data, $id);
+                }
             }
+
         }
 
         return $data;
@@ -179,11 +186,60 @@ class DocumentsController extends Controller
 
     public function actionDocView($id)
     {
-        $doc = MainDocument::findOne($id);
 
-        return $this->render('doc-view', [
+//        $doc = MainDocument::findOne($id);
+//
+//        return $this->render('doc-view', [
+//            'model' => $doc
+//        ]);
+
+        ////        Yii::$app->response->format = Response::FORMAT_JSON;
+        $doc = TypeDocuments::findOne($id);
+        $path = '';
+        $main = new MainDocument();
+        if (!$doc->path) return false;
+
+        $templateFile = Yii::getAlias('@frontend') . '/web/' . $doc->path;
+        $fileName = uniqid() . '.' . $doc->path;
+        $fileName = pathinfo($templateFile, PATHINFO_FILENAME);
+        $fileExt = pathinfo($templateFile, PATHINFO_EXTENSION);
+        $newName = $fileName . uniqid() . "." . $fileExt;
+        $content = file_get_contents($templateFile);
+        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+
+        try {
+            $res_save = file_put_contents($savePathDocs, $content);
+            if ($res_save) {
+
+                $main->path = '/uploads/docs/' . $newName;
+
+                return $this->renderAjax('doc-view', [
+                    'model' => $main
+                ]);
+            }
+
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return false;
+
+    }
+
+    public function actionDocViewTemplate($id)
+    {
+
+        $doc = TypeDocuments::findOne($id);
+
+
+        if (!$doc->path) return false;
+
+
+        return $this->renderAjax('doc-view', [
             'model' => $doc
         ]);
+
+
     }
 
     public function actionStatistics()
@@ -198,8 +254,11 @@ class DocumentsController extends Controller
     {
         $model = new MainDocument();
         $doc = '';
+
         if ($this->request->post()) {
+
             $model->load($this->request->post());
+
             $dir_path = Yii::getAlias('@frontend') . '/web';
 
             $client = new Client();
@@ -208,7 +267,7 @@ class DocumentsController extends Controller
                 ->setUrl(Url::base('http') . '/api/docs/uploadnew')
                 ->addFile('file', $dir_path . $model->path)
                 ->send();
-//        return $response;
+
             if ($response->isOk) {
                 $doc = json_decode($response->content);
 
@@ -267,5 +326,65 @@ class DocumentsController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
         TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        Yii::$app->session->setFlash('error', "Google bilan xatolik");
+        return $this->redirect(Yii::$app->request->referrer);
     }
+
+    public function actionToSign($id)
+    {
+        $main = MainDocument::find()->where(['status' => MainDocument::NEW, 'id' => $id])->one();
+        if ($main) {
+            $main->status = MainDocument::SIGNING;
+
+            if ($main->save()) {
+                Yii::$app->session->setFlash('success', "Yuborildi");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+
+        } else {
+            Yii::$app->session->setFlash('error', "Xujjat topilmadi");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        Yii::$app->session->setFlash('error', "Yuborishda xatolik");
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionDocTemplate($id)
+    {
+
+        $doc = TypeDocuments::findOne($id);
+        $templateFile = Yii::getAlias('@frontend') . '/web/' . $doc->path;
+        $fileName = uniqid() . '.' . $doc->path;
+        $fileName = pathinfo($templateFile, PATHINFO_FILENAME);
+        $fileExt = pathinfo($templateFile, PATHINFO_EXTENSION);
+        $newName = $fileName . uniqid() . "." . $fileExt;
+        $content = file_get_contents($templateFile);
+        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+
+
+        try {
+            $res_save = file_put_contents($savePathDocs, $content);
+            if ($res_save) {
+                $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+
+                return $this->render('doc-view', [
+                    'path' => $newName,
+                    'model' => $doc
+                ]);
+
+            }
+
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+//        dd($res_save);
+//        if ($res_save)
+//
+
+    }
+
+
 }

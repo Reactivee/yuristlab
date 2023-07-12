@@ -367,6 +367,7 @@ class DocsController extends Controller
 
         if ($request->isPost) {
             $file = UploadedFile::getInstanceByName('file');
+
             $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
             if (!file_exists($savePathDocs)) {
                 mkdir($savePathDocs, 0777, true);

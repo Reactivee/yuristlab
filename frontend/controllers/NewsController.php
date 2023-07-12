@@ -11,6 +11,7 @@ use common\models\documents\MainDocumentSearch;
 use common\models\forms\CreateDocForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use Psr\Container\NotFoundExceptionInterface;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -98,98 +99,20 @@ class NewsController extends Controller
 
     }
 
-    public function actionUploadDocs()
+    public function actionContent($id)
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $data = [];
 
-        if ($file_image = UploadedFile::getInstancesByName('attached')) {
+        try {
+            $news = ContentNews::find()->where(['status' => ContentNews::NEW, 'id' => $id])->one();
 
-            foreach ($file_image as $file) {
-
-                $folder = '/web/uploads/docs/';
-                $uploads_folder = Yii::getAlias('@frontend') . $folder;
-                if (!file_exists($uploads_folder)) {
-                    mkdir($uploads_folder, 0777, true);
-                }
-                $ext = pathinfo($file->name, PATHINFO_EXTENSION);
-                $name = pathinfo($file->name, PATHINFO_FILENAME);
-                $generateName = Yii::$app->security->generateRandomString();
-                $path = $uploads_folder . $generateName . ".{$ext}";
-                $file->saveAs($path);
-
-                $data = [
-                    'generate_name' => $generateName,
-                    'name' => $name,
-                    'path' => Yii::getAlias('@uploadsUrl') . $folder . $generateName . $ext
-                ];
-
-            }
+        } catch (InvalidArgumentException $e) {
+            throw new NotFoundHttpException($e->getMessage());
         }
 
-        return $data;
-    }
-
-    protected function findModel($id)
-    {
-        if (($model = MainDocument::findOne(['id' => $id])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    public function actionDelete($id)
-    {
-        $model = $this->findModel($id);
-        $model->status = MainDocument::DELETED;
-        $model->save();
-        Yii::$app->session->setFlash('danger', 'Ochirildi');
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Displays a single MainDocument model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        return $this->render('content', [
+            'content' => $news,
         ]);
     }
 
 
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionDocView($id)
-    {
-        $doc = MainDocument::findOne($id);
-
-        return $this->render('doc-view', [
-            'model' => $doc
-        ]);
-    }
-
-    public function actionStatistics()
-    {
-        $main = MainDocument::find()->all();
-        return $this->render('statistics', [
-            'model' => $main
-        ]);
-    }
 }
