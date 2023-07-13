@@ -17,11 +17,13 @@ return [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
         ],
+//        'modules' => [
+//            'gridview' => ['class' => 'kartik\grid\Module', 'downloadAction' => 'gridview/export/download'],
+//        ],
         'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
 //                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
-
                 ],
                 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
@@ -71,4 +73,12 @@ return [
 
     ],
     'params' => $params,
+    'as access' => [
+        'class' => 'frontend\modules\admin\components\AccessControl',
+        'allowActions' => [
+//            'site/login',
+//            'site/logout',
+//            'site/error',
+        ]
+    ],
 ];

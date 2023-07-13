@@ -28,7 +28,17 @@ return [
 //            ],
 ////            'layout' => '@backend/modules/admin/views/layouts/main__.php',
 //        ],
-
+        'admin' => [
+            'class' => 'backend\modules\admin\Module',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'idField' => 'id',
+                    'usernameField' => 'username',
+                ],
+            ],
+            'layout' => '@backend/modules/admin/views/layouts/main.php',
+        ],
     ],
     'homeUrl' => '/home',
     'components' => [
@@ -39,6 +49,20 @@ return [
 //                'application/json' => JsonParser::class,
 //            ]
 //        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'ru',
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'forceTranslation'=>true,
+                    'enableCaching' => false,
+                ],
+            ],
+        ],
         'assetManager' => [
             'bundles' => [
                 'kartik\form\ActiveFormAsset' => [
@@ -92,4 +116,13 @@ return [
 
     ],
     'params' => $params,
+    'as access' => [
+        'class' => 'backend\modules\admin\components\AccessControl',
+        'allowActions' => [
+            'site/login',
+            'site/logout',
+            'site/error',
+        ]
+    ],
+
 ];

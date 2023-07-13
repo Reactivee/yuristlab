@@ -153,8 +153,8 @@ src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">', ['doc-te
 
 
                                         <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                        <span href="/frontend/web
-                                       <?= $model->path ?>" class="mb-0"><?= $model->path ?></span>
+                                        <a target="_blank" href="/frontend/web
+                                       <?= $model->path ?>" class="mb-0"><?= $model->path ?></a>
                                             <p class="text-muted mb-1">0.5 mb</p>
                                             <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>
                                         </div>

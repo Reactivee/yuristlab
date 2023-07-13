@@ -45,20 +45,13 @@
             <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false"
                aria-controls="ui-advanced">
                 <i class="mdi mdi-folder-outline menu-icon"></i>
-                <span class="menu-title">Plugins</span>
+                <span class="menu-title">Lawer</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-advanced">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/dragula.html">Dragula</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/clipboard.html">Clipboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/context-menu.html">Context menu</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/slider.html">Sliders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/carousel.html">Carousel</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/colcade.html">Colcade</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/ui-features/loaders.html">Loaders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/widgets/widgets.html">Widgets</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/lawyer">Index</a></li>
+
                 </ul>
             </div>
         </li>

@@ -82,7 +82,7 @@ class CreateController extends Controller
     {
         $form = new CreateDocForm();
         $model = new MainDocument();
-
+//    dd(Yii::$app->user->);
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
 
             $doc = $model->path;

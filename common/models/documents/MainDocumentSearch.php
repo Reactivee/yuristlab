@@ -2,9 +2,9 @@
 
 namespace common\models\documents;
 
+use common\models\documents\MainDocument;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\documents\MainDocument;
 
 /**
  * MainDocumentSearch represents the model behind the search form of `common\models\documents\MainDocument`.
@@ -40,7 +40,8 @@ class MainDocumentSearch extends MainDocument
      */
     public function search($params)
     {
-        $query = MainDocument::find()->orderBy(['id'=>SORT_DESC]);
+
+        $query = MainDocument::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -48,6 +49,10 @@ class MainDocumentSearch extends MainDocument
             'query' => $query,
         ]);
 
+        if ($params['status']) {
+            $status = $params['status'];
+            $query->where(['status' => $status]);
+        }
         $this->load($params);
 
         if (!$this->validate()) {
@@ -75,4 +80,48 @@ class MainDocumentSearch extends MainDocument
 
         return $dataProvider;
     }
+
+    public function searchLawyer($params)
+    {
+
+        $query = MainDocument::find()->orderBy(['id' => SORT_DESC])->where(['not',['status' => MainDocument::NEW]]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if ($params['status']) {
+            $status = $params['status'];
+            $query->andWhere(['status' => $status]);
+        }
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'category_id' => $this->category_id,
+            'group_id' => $this->group_id,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'time_begin' => $this->time_begin,
+            'time_end' => $this->time_end,
+        ]);
+
+        $query->andFilterWhere(['like', 'name_uz', $this->name_uz])
+            ->andFilterWhere(['like', 'name_ru', $this->name_ru])
+            ->andFilterWhere(['like', 'path', $this->path]);
+
+        return $dataProvider;
+    }
+
 }
