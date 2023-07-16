@@ -115,10 +115,11 @@ class CreateController extends Controller
 
             }
             $model->status = MainDocument::NEW;
+//                dd($model);
             if (!$model->save()) {
-
-                Yii::$app->session->setFlash('error', 'Xatolik');
-                return $this->refresh();
+                dd($model->errors);
+//                Yii::$app->session->setFlash('error', 'Xatolik');
+//                return $this->refresh();
 
             }
 

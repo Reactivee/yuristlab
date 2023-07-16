@@ -115,11 +115,27 @@ class TypeDocumentController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post())  ) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $doc = $model->path = UploadedFile::getInstance($model, 'path');
 
-            $model->save();
-            Yii::$app->session->setFlash('success', 'Saqlandi');
+            if ($doc) {
+                $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $folder . $generateName . '.' . $doc->extension;
 
+                $doc->saveAs($path);
+                $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
+                $model->path = $path;
+
+            }
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Saqlandi');
+                return $this->redirect(['view', 'id' => $model->id]);
+
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

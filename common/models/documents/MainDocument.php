@@ -23,6 +23,8 @@ use yii\faker\FixtureController;
  * @property string|null $path
  * @property int|null $time_begin
  * @property int|null $time_end
+ * @property string|null $code_conclusion
+ * @property string|null $code_document
  */
 class MainDocument extends \yii\db\ActiveRecord
 {
@@ -174,6 +176,8 @@ class MainDocument extends \yii\db\ActiveRecord
             'path' => 'Path',
             'time_begin' => 'Time Begin',
             'time_end' => 'Time End',
+            'code_document' => 'code_conclusion',
+            'code_conclusion' => 'code_conclusion',
         ];
     }
 
@@ -263,12 +267,13 @@ class MainDocument extends \yii\db\ActiveRecord
     {
 
         if (isset($changedAttributes['status']) && $this->status === self::SIGNED) {
+            $this->generateCodes();
             $this->generateCheckOrder();
         }
 
-
-
     }
+
+
 
     public function generateCheckOrder()
     {
@@ -294,8 +299,8 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $templateProcessor->setValue('fio', $user_name);
         $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
-        $templateProcessor->setValue('code_doc', $this->id);
-        $templateProcessor->setValue('code_conclusion', $this->id);
+        $templateProcessor->setValue('code_doc', $this->code_document);
+        $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
 //        $templateProcessor->setValue('id', $this->id);
 //        $templateProcessor->setValue('code', $this->code);
 //        $templateProcessor->setValue('company_name', $this->company->official_name);
@@ -308,7 +313,14 @@ class MainDocument extends \yii\db\ActiveRecord
 //        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
 //        $this->save();
+    }
 
+    public function generateCodes()
+    {
+        $generateDoc_Code = Yii::$app->security->generateRandomString(8);
+        $generateDoc_Conclusion = Yii::$app->security->generateRandomString(9);
+        $this->code_conclusion = $generateDoc_Conclusion;
+        $this->code_document = $generateDoc_Code;
 
     }
 
