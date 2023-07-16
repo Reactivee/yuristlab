@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\documents\ContentNews;
 use common\models\documents\ContentNewsSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -72,6 +73,22 @@ class ContentNewsController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $file_image = $model->path = UploadedFile::getInstances($model, 'path');
+
+                if ($file_image) {
+                    $folder = '/web/uploads/news/';
+                    $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                    if (!file_exists($uploads_folder)) {
+                        mkdir($uploads_folder, 0777, true);
+                    }
+                    $ext = pathinfo($file_image[0]->name, PATHINFO_EXTENSION);
+                    $name = pathinfo($file_image[0]->name, PATHINFO_FILENAME);
+
+                    $generateName = Yii::$app->security->generateRandomString();
+                    $path = $uploads_folder . $generateName . ".{$ext}";
+                    $model->path = $folder . $generateName . ".{$ext}";
+                    $file_image[0]->saveAs($path);
+                }
 
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -98,12 +115,27 @@ class ContentNewsController extends Controller
 
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+
 //            $file=UploadedFile::className()_ge
+            $file_image = $model->path = UploadedFile::getInstances($model, 'path');
+            if ($file_image) {
+//                dd($file_image);
 
-            if ($file_image = UploadedFile::getInstancesByName('path')) {
-                dd($file_image);
+                $folder = '/web/uploads/news/';
+                $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                if (!file_exists($uploads_folder)) {
+                    mkdir($uploads_folder, 0777, true);
+                }
+                $ext = pathinfo($file_image[0]->name, PATHINFO_EXTENSION);
+                $name = pathinfo($file_image[0]->name, PATHINFO_FILENAME);
 
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $uploads_folder . $generateName . ".{$ext}";
+                $model->path = $folder . $generateName . ".{$ext}";
+                $file_image[0]->saveAs($path);
             }
+//        dd($model);
+
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }

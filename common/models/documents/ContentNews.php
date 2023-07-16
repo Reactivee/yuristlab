@@ -44,7 +44,7 @@ class ContentNews extends \yii\db\ActiveRecord
             [['status'], 'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'category_id'], 'integer'],
             [['title_uz', 'title_ru'], 'string', 'max' => 255],
-            [['text_uz', 'text_ru','sub_title_uz','sub_title_ru'], 'safe']
+            [['text_uz', 'text_ru', 'sub_title_uz', 'sub_title_ru'], 'safe']
         ];
     }
 
@@ -81,5 +81,11 @@ class ContentNews extends \yii\db\ActiveRecord
     {
         $cats = CategoryNews::find()->where(['status' => 1])->all();
         return ArrayHelper::map($cats, 'id', 'name_uz');
+    }
+
+    public function getCategoryname()
+    {
+
+        return $this->hasOne(CategoryNews::className(), ['id' => 'category_id']);
     }
 }

@@ -40,7 +40,7 @@ class ContentNewsSearch extends ContentNews
      */
     public function search($params)
     {
-        $query = ContentNews::find();
+        $query = ContentNews::find()->orderBy(['id'=>SORT_DESC]);
 
         // add conditions that should always apply here
 

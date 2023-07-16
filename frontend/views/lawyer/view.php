@@ -28,22 +28,30 @@ if (!empty($model->attach)) {
 ?>
 <div class="container-fluid p-3">
     <div class="buttons_wrap mb-3">
+        <? if ($model->status != MainDocument::SIGNED) { ?>
+            <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
 
+        <? } ?>
 <!--        --><?//= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-        <?= Html::a(' <i class="fas fa-pencil"></i> Orqaga ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary']) ?>
-        <?= Html::a(' <i class="fas fa-backward"></i> Orqaga ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ml-3']) ?>
+        <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
 <!--        --><?//= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
     </div>
     <? if ($model->status == MainDocument::SIGNING) { ?>
         <div class="alert alert-fill-info" role="alert">
             <i class="mdi mdi-alert-circle"></i>
-            Xujjar Imzlandi
+            Xujjar Imzolanmadi
         </div>
     <? } ?>
     <? if ($model->status == MainDocument::REJECTED) { ?>
         <div class="alert alert-fill-danger" role="alert">
             <i class="mdi mdi-alert-circle"></i>
             Rad etilgan
+        </div>
+    <? } ?>
+    <? if ($model->status == MainDocument::SIGNED) { ?>
+        <div class="alert alert-fill-success" role="alert">
+            <i class="mdi mdi-alert-circle"></i>
+            Imzolandi
         </div>
     <? } ?>
     <? echo DetailView::widget(['model' => $model,

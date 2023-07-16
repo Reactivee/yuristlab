@@ -47,25 +47,31 @@ $models = $dataProvider->models;
 
                 <? foreach ($category as $key => $item) { ?>
 
-                    <div class="tab-pane fade <?= $key == 0 ? "show active" : '' ?>" id="pills-<?= $item->id ?>"
+                    <div class="tab-pane row fade <?= $key == 0 ? "show active" : '' ?>" id="pills-<?= $item->id ?>"
                          role="tabpanel"
                          aria-labelledby="pills-home-tab-custom">
                         <?php foreach ($models as $news) {
-                            if ($news->category_id == $item->id) { ?>
+                            if ($news->category_id == $item->id) {  ?>
 
-                                <div class="col-md-3">
-                                    <div class="card h-100">
-                                        <img class="card-img-top" src="https://via.placeholder.com/248x248"
-                                             alt="<?= $news->title_uz ?>">
-                                        <div class="card-body">
-                                            <h4 class="card-title mt-3"><?= $news->title_uz ?></h4>
+                                <div class="col-md-3 mb-4">
+                                    <div class="card news_card h-100">
+                                        <div class="card_news_img_wrapper">
+                                            <img class="card-img-top card-img_main"
+                                                 src="<?= $news->path ? '/frontend/' . $news->path : ' https://via.placeholder.com/248x248' ?> "
+                                                 alt="<?= $news->title_uz ?>">
+                                        </div>
+                                        <div class="card-body_news">
+                                            <span class="btn card_category  btn-inverse-secondary btn-fw"><?=$news->categoryname->name_uz ?></span>
+                                            <h4 class="card_title mt-3"><?= $news->title_uz ?></h4>
                                             <span> 10.10.2023</span>
-                                            <p class="card-text">
+                                            <p class="card-text_news">
                                                 <?= $news->sub_title_uz ?>
                                             </p>
-                                            <a class=" w-100  py-3 text-decoration-none btn btn-inverse-secondary btn-fw  stretched-link"
+                                            <a class="px-4 p-3 text-decoration-none  btn btn-outline-success btn-fw btn-full-view  stretched-link"
                                                href="news/content/<?= $news->id ?>">
-                                                To'liq
+                                                 To'liq ko'rish
+                                                <i class="fas fa fa-arrow-right ml-3"></i>
+
                                             </a>
                                         </div>
                                     </div>

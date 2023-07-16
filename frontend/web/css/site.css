@@ -21,3 +21,52 @@ input[type="file"]::file-selector-button {
     -o-transition-duration: 0.3s;
     transition-duration: 0.3s;
 }
+
+/*News block*/
+.card_title{
+    font-size: 20px;
+    color: black;
+}
+.card-body_news{
+    padding: 18px;
+}
+
+.card-text_news{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+.law_news_sub_title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.sub_title_news img{
+    width: 100% !important;
+}
+.card-img_main{
+    height: 250px;
+    transition: 0.3s ease-in-out;
+}
+.card_news_img_wrapper{
+    overflow: hidden;
+
+}
+.news_card:hover .card-img_main{
+    transform: scale(1.1);
+}
+.btn-full-view{
+    font-size: 15px;
+}
+.card_category{
+    font-size: 10px ;
+}
+.law-news_icon i{
+    /*width: 70px;*/
+    font-size: 60px;
+}

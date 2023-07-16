@@ -60,10 +60,27 @@ class LawyerController extends Controller
 
     public function actionToResign($id)
     {
-        $model = MainDocument::find()->where(['status' => MainDocument::SIGNING, 'id' => $id])->one();
+        $model = MainDocument::find()->where(['id' => $id])->one();
 
         if ($model) {
             $model->status = MainDocument::REJECTED;
+
+            if ($model->save()) {
+                Yii::$app->session->addFlash('success', 'Rad etildi');
+                return $this->redirect(Yii::$app->request->referrer);
+
+            }
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionToSign($id)
+    {
+//        dd('asd')
+        $model = MainDocument::find()->where(['id' => $id])->one();
+
+        if ($model) {
+            $model->status = MainDocument::SIGNED;
 
             if ($model->save()) {
                 Yii::$app->session->addFlash('success', 'Imzolandi');
@@ -72,6 +89,6 @@ class LawyerController extends Controller
             }
         }
         throw new NotFoundHttpException('The requested page does not exist.');
-
     }
+
 }

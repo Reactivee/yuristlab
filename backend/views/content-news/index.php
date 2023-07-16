@@ -30,14 +30,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'title_uz',
-            'title_ru',
-            'text_uz:ntext',
-            'text_ru:ntext',
-            'status',
+
+            [
+                'format' => 'raw',
+                'attribute' => 'title_uz',
+
+            ],
+
+            [
+                'attribute' => 'status',
+//                'value' => function ($model) {
+//                    return $model->getStatusName();
+//                }
+            ],
             'category_id',
-            //'created_at',
-            //'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
             //'created_by',
             [
                 'class' => ActionColumn::className(),

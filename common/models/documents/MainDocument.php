@@ -2,6 +2,8 @@
 
 namespace common\models\documents;
 
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\faker\FixtureController;
@@ -147,7 +149,7 @@ class MainDocument extends \yii\db\ActiveRecord
         return [
             [['status', 'name_uz', 'path', 'category_id', 'type_group_id'], 'required'],
             [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
-            [['name_uz', 'name_ru',], 'string', 'max' => 255],
+            [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
 //            [['name_uz'], 'unique'],
 //            [['name_ru'], 'unique'],
             [['doc_about', 'attached', 'path', 'files', 'deleted_files'], 'safe']
@@ -256,5 +258,59 @@ class MainDocument extends \yii\db\ActiveRecord
 //        dd('asd');
         return $this->hasMany(AttachedDocument::className(), ['main_document_id' => 'id']);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        if (isset($changedAttributes['status']) && $this->status === self::SIGNED) {
+            $this->generateCheckOrder();
+        }
+
+
+
+    }
+
+    public function generateCheckOrder()
+    {
+        $item = MainDocument::find()
+            ->where([
+                'id' => $this->id
+            ])->one();
+//        dd();
+        $user_name = Yii::$app->user->identity->username;
+//        dd($user_name);
+        $phpWord = new PHPWord();
+        $folder = '/web/uploads/temp/';
+        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+        if (!file_exists($uploads_folder)) {
+            mkdir($uploads_folder, 0777, true);
+        }
+
+        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+//        dd(Yii::getAlias('@frontend')  . $item->path);
+//        $folder = '/web/uploads/docs/';
+//        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/' . $item->path);
+
+        $templateProcessor->setValue('fio', $user_name);
+        $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
+        $templateProcessor->setValue('code_doc', $this->id);
+        $templateProcessor->setValue('code_conclusion', $this->id);
+//        $templateProcessor->setValue('id', $this->id);
+//        $templateProcessor->setValue('code', $this->code);
+//        $templateProcessor->setValue('company_name', $this->company->official_name);
+//        $templateProcessor->setValue('inn', $this->company->stir);
+//        $templateProcessor->setValue('adress', $this->company->address);
+//        $templateProcessor->setValue('need_delivery', $this->need_deliver ? 'Да' : 'Нет');
+//
+
+
+//        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
+        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
+//        $this->save();
+
+
+    }
+
 
 }
