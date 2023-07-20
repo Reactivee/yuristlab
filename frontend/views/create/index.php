@@ -5,7 +5,6 @@ use common\models\documents\TypeDocuments;
 use kartik\depdrop\DepDrop;
 use kartik\file\FileInput;
 use kartik\select2\Select2;
-use lo\widgets\modal\ModalAjax;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
@@ -20,6 +19,7 @@ use yii\widgets\Pjax;
 
 $this->title = 'Create new';
 $type_id = Yii::$app->request->getQueryParam('id');
+$doc_id = Yii::$app->request->getQueryParam('doc');
 //dd(Yii::$app->request->getQueryParam('id'));
 $initialPreview = [];
 $initialPreviewConfig = [];
@@ -41,17 +41,21 @@ $initialPreviewConfig = [];
         <?php $this->registerJs("
                     var uploadedImages = {}, deletedImages = [],
                     uploaded = document.getElementById('images'),
-                    deleted = document.getElementById('deleted_images'),
-                    sorted = document.getElementById('sorted_images');")
+                    deleted = document.getElementById('deleted_images')")
         ?>
         <div class="row">
             <div class="col-md-4">
                 <?
                 echo $form->field($main, 'category_id')->widget(Select2::className(), [
-                    'data' => CategoryDocuments::getCategory(),
+                    'data' => CategoryDocuments::getCategory($doc_id),
                     'theme' => Select2::THEME_BOOTSTRAP,
+//                    'type' => DepDrop::TYPE_SELECT2,
                     'options' => ['placeholder' => 'Category', 'id' => 'category_id'],
-                    'pluginOptions' => ['allowClear' => true],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+//                        'depends' => ['group'],
+//                        'url' => Url::to(['get-category']),
+                    ],
                 ])->label(false);
                 ?>
             </div>
@@ -118,13 +122,13 @@ $initialPreviewConfig = [];
                                                      class="btn btn-success">Xujjatni ko'rish</button>
                              </span>
 
-<!--                                --><?//= \yii\helpers\Html::a('Template', Url::to(['/installment/group/index', 'id' => $type_id,])) ?>
+                                <!--                                --><? //= \yii\helpers\Html::a('Template', Url::to(['/installment/group/index', 'id' => $type_id,])) ?>
                                 <!--                            <a target="_blank" href="doc-->
                                 <? //= $main->path ?><!--"-->
                                 <!--                               class=" mb-0">--><? //= $main->path ?><!-- </a>-->
 
                                 <p class="text-muted mb-1">0.5 kb</p>
-<!--                                <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>-->
+                                <!--                                <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>-->
                             </div>
                         </div>
                     </div
@@ -134,66 +138,62 @@ $initialPreviewConfig = [];
     <? } ?>
 
 
-        <div class="col-md-6 mb-4">
-            <label for="">Qo'shimcha fayllar</label>
-            <?
-            echo FileInput::widget([
-                'name' => 'attached',
-                'options' => [
-                    'multiple' => true,
-//                    'accept' => 'images/*'
-                ],
-                'pluginOptions' => [
-                    'showCaption' => false,
-
-                    'uploadUrl' => Url::to(['upload-docs']),
-                    'deleteUrl' => Url::to(['delete-docs']),
+<!--        <div class="col-md-6 mb-4">-->
+<!--            <label for="">Qo'shimcha fayllar</label>-->
+<!--            --><?//
+//            echo FileInput::widget([
+//                'name' => 'attached',
+//                'options' => [
+//                    'multiple' => true,
+////                    'accept' => 'images/*'
+//                ],
+//                'pluginOptions' => [
+//                    'showCaption' => false,
+//                    'uploadUrl' => Url::to(['upload-docs']),
+//                    'deleteUrl' => Url::to(['delete-docs']),
 //                    'allowedFileExtensions' => ['docx', 'doc', 'pdf', 'jpg', 'jpeg'],
-                    'browseClass' => 'btn btn-success ',
-                    'showCancel' => false,
-                    'showClose' => false,
-                    'showUpload' => true,
-                    'maxFileSize' => 2240,
-                    'maxFileCount' => 40,
-                    'overwriteInitial' => false,
-                    'initialPreview' => $initialPreview,
-                    'initialPreviewAsData' => true,
-                    'initialPreviewConfig' => $initialPreviewConfig,
-                    'fileActionSettings' => [
-                        'removeIcon' => '<i class="fa fa-trash"></i>',
-                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-                        'zoomIcon' => '<i class="fa fa-search-plus"></i>'
-                    ],
-                ],
-
-
-                'pluginEvents' => [
-                    'fileuploaded' => new JsExpression('function(event, data, previewId) {
-                            uploadedImages[previewId] = data.response;
-                            uploaded.value = JSON.stringify(uploadedImages);
-                        }'),
-                    'filedeleted' => new JsExpression('function(event, key) {
-                            deletedImages.push(key);
-                            deleted.value = JSON.stringify(deletedImages);
-                        }'),
-                    'filesuccessremove' => new JsExpression('function(event, previewId) {
-                            delete uploadedImages[previewId];
-                            uploaded.value = JSON.stringify(uploadedImages);
-                        }'),
-                    'filesorted' => new JsExpression('function(event, params) {
-                            sorted.value = JSON.stringify(params.stack);
-                        }')
-                ]
-            ]) ?>
-        </div>
+//                    'browseClass' => 'btn btn-success ',
+//                    'showCancel' => false,
+//                    'showClose' => false,
+//                    'showUpload' => true,
+//                    'maxFileSize' => 2240,
+//                    'maxFileCount' => 40,
+//                    'overwriteInitial' => false,
+//                    'initialPreviewAsData' => true,
+//                    'fileActionSettings' => [
+//                        'removeIcon' => '<i class="fa fa-trash"></i>',
+//                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
+//                        'zoomIcon' => '<i class="fa fa-search-plus"></i>'
+//                    ],
+//                ],
+//
+//
+//                'pluginEvents' => [
+//                    'fileuploaded' => new JsExpression('function(event, data, previewId) {
+//                             console.log(previewId)
+//
+//                            uploaded.value = JSON.stringify( data.response);
+//                        }'),
+//                    'filedeleted' => new JsExpression('function(event, key) {
+//                            deletedImages.push(key);
+//                            deleted.value = JSON.stringify(deletedImages);
+//                        }'),
+//                    'filesuccessremove' => new JsExpression('function(event, previewId) {
+//                            delete uploadedImages[previewId];
+//                            uploaded.value = JSON.stringify(uploadedImages);
+//                        }'),
+//                    'filesorted' => new JsExpression('function(event, params) {
+//                            sorted.value = JSON.stringify(params.stack);
+//                        }')
+//                ]
+//            ]) ?>
+<!--        </div>-->
 
     </div>
 
 <?php Pjax::end() ?>
 
-    <div class="col-md-12">
-        <button type="submit" class="btn btn-success  btn-fw">Keyingi Bosqish</button>
-    </div>
+        <button type="submit" class="btn btn-success mt-3 btn-fw">Keyingi Bosqish</button>
 
 
 <?php ActiveForm::end(); ?>

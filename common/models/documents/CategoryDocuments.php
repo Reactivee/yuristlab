@@ -68,11 +68,28 @@ class CategoryDocuments extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getCategory()
+    public static function getAllGroup()
     {
-        $array = self::find()->where(['status' => 1, 'parent_id' => null])->asArray()->all();
+        $array = GroupDocuments::find()->where(['status' => 1])->asArray()->all();
 
-        return ArrayHelper::map($array, 'id', 'name_ru');
+        return ArrayHelper::map($array, 'id', 'name_uz');
+    }
+
+    public function getGroup()
+    {
+        return $this->hasOne(GroupDocuments::className(), ['id' => 'group_id']);
+    }
+
+    public function getParent()
+    {
+        return $this->hasOne(self::className(), ['id' => 'parent_id']);
+    }
+
+    public static function getCategory($doc_id = null)
+    {
+        $array = self::find()->where(['status' => 1, 'parent_id' => null, 'group_id' => $doc_id])->asArray()->all();
+
+        return ArrayHelper::map($array, 'id', 'name_uz');
     }
 
     public static function subGetCategory()

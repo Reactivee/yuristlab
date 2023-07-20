@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var common\models\documents\CategoryDocumentsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -30,11 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'name_uz',
-            'name_ru',
-            'group_id',
-            'parent_id',
+//            'name_ru',
+
+            [
+                'attribute' => 'group_id',
+                'value' => function ($model) {
+                    return $model->group->name_uz;
+                }
+
+            ],
+            [
+                'attribute' => 'parent_id',
+                'value' => function ($model) {
+                    return $model->parent->name_uz;
+                }
+            ],
+
             //'status',
             //'created_at',
             //'updated_at',
@@ -42,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, CategoryDocuments $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

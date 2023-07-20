@@ -66,9 +66,13 @@ if (!empty($model->attach)) {
         <div class="container-fluid px-5 py-3">
 
             <div class="buttons_wrap mb-3">
-                <?= Html::button(' <i class="fas fa-save mr-2"></i> Saqlash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-                <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
-                <?= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
+                <? if ($model->status == MainDocument::NEW) { ?>
+                    <?= Html::button(' <i class="fas fa-save mr-2"></i> Saqlash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
+                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
+                    <?= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
+
+                <? } ?>
+
             </div>
             <? if ($model->status == MainDocument::NEW) { ?>
                 <div class="alert alert-fill-info" role="alert">
@@ -85,7 +89,7 @@ if (!empty($model->attach)) {
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Xujjat kodi:
-                        <span class="text-danger"> <?= $model->id ?></span>
+                        <span class="text-danger"> <?= $model->code_document ?></span>
                     </h4>
                     <h4 class="card-title">Xujjat nomi: <span class="lead text-primary font-weight-bolder">
                     <?= $model->name_uz ?>

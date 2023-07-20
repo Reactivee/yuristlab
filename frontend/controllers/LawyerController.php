@@ -38,9 +38,10 @@ class LawyerController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
         if ($this->request->isPost && $model->load($this->request->post())) {
-
-
+            if ($model->save())
+                Yii::$app->session->setFlash('success', 'Saqlandi');
         }
 
         return $this->render('view', [

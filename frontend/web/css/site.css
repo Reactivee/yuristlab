@@ -1,10 +1,12 @@
 input[type="file"]::file-selector-button {
     /*display: none;*/
 }
-.tab-content > .active{
+
+.tab-content > .active {
     display: flex;
 }
-.page-item span{
+
+.page-item span {
     position: relative;
     display: block;
     padding: 0.5rem 0.75rem;
@@ -23,15 +25,16 @@ input[type="file"]::file-selector-button {
 }
 
 /*News block*/
-.card_title{
+.card_title {
     font-size: 20px;
     color: black;
 }
-.card-body_news{
+
+.card-body_news {
     padding: 18px;
 }
 
-.card-text_news{
+.card-text_news {
     font-size: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -39,34 +42,79 @@ input[type="file"]::file-selector-button {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
-.law_news_sub_title{
+
+.law_news_sub_title {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 }
-.sub_title_news img{
+
+.sub_title_news img {
     width: 100% !important;
 }
-.card-img_main{
+
+.card-img_main {
     height: 250px;
     transition: 0.3s ease-in-out;
 }
-.card_news_img_wrapper{
+
+.card_news_img_wrapper {
     overflow: hidden;
 
 }
-.news_card:hover .card-img_main{
+
+.news_card:hover .card-img_main {
     transform: scale(1.1);
 }
-.btn-full-view{
+
+.btn-full-view {
     font-size: 15px;
 }
-.card_category{
-    font-size: 10px ;
+
+.card_category {
+    font-size: 10px;
 }
-.law-news_icon i{
+
+.law-news_icon i {
     /*width: 70px;*/
     font-size: 60px;
+}
+
+.select_group {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+.select_group option {
+    padding: 1rem 1rem;
+    color: #ffffff;
+    border-bottom: 1px solid #595959;
+}
+
+.dropdown_group .select2-selection__arrow {
+    border: none !important;
+}
+
+.dropdown_group .select2-container {
+    border: none !important;
+}
+
+.dropdown_group .select2-selection {
+    background: #7819a5 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.dropdown_group .select2-container--krajee-bs3 .select2-results__option[aria-selected] {
+    background: #7819a5 !important;
+}
+
+.select2-search--dropdown {
+    display: none !important;
+}
+
+.dropdown_group .select2-container--krajee-bs3 .select2-selection--single .select2-selection__placeholder, .dropdown_group .select2-container--krajee-bs3 .select2-selection--single .select2-selection__rendered {
+    color: white !important;
 }

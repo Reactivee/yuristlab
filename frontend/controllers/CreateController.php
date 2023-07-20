@@ -80,9 +80,10 @@ class CreateController extends Controller
      */
     public function actionIndex($id = null)
     {
+
         $form = new CreateDocForm();
         $model = new MainDocument();
-//    dd(Yii::$app->user->);
+
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
 
             $doc = $model->path;
@@ -132,6 +133,7 @@ class CreateController extends Controller
             }
 
         }
+
         if ($id) {
             $res = $this->actionGetFile($id);
 
@@ -141,14 +143,12 @@ class CreateController extends Controller
         }
 
         return $this->render('index', [
-            'model' => $form,
             'main' => $model
         ]);
 
     }
 
-    public
-    function actionUploadDocs()
+    public  function actionUploadDocs()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $data = [];
@@ -299,8 +299,29 @@ class CreateController extends Controller
         return 'This Request Method not found!';
     }
 
-    public
-    function actionGetSubcategory()
+    public function actionGetCategory()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents) {
+                $cat = $parents[0];
+                $sub = CategoryDocuments::find()
+                    ->select(['id', 'name_uz as name'])
+                    ->where(['status' => 1])
+                    ->andWhere(['group_id' => $cat])
+                    ->asArray()
+                    ->all();
+                return ['output' => $sub, 'selected' => ''];
+            }
+        }
+        return ['output' => '', 'selected' => ''];
+
+    }
+
+
+    public function actionGetSubcategory()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (isset($_POST['depdrop_parents'])) {
@@ -320,8 +341,7 @@ class CreateController extends Controller
 
     }
 
-    public
-    function actionGetTypes()
+    public function actionGetTypes()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 

@@ -1,6 +1,9 @@
 <?php
 
 use common\models\documents\MainDocument;
+
+use kartik\editors\Summernote;
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -32,9 +35,12 @@ if (!empty($model->attach)) {
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
 
         <? } ?>
-<!--        --><?//= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-        <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
-<!--        --><?//= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
+        <? if ($model->status == MainDocument::SIGNED) { ?>
+            <!--        --><? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
+            <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
+            <!--        --><? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
+        <? } ?>
+
     </div>
     <? if ($model->status == MainDocument::SIGNING) { ?>
         <div class="alert alert-fill-info" role="alert">
@@ -42,18 +48,21 @@ if (!empty($model->attach)) {
             Xujjar Imzolanmadi
         </div>
     <? } ?>
+
     <? if ($model->status == MainDocument::REJECTED) { ?>
         <div class="alert alert-fill-danger" role="alert">
             <i class="mdi mdi-alert-circle"></i>
             Rad etilgan
         </div>
     <? } ?>
+
     <? if ($model->status == MainDocument::SIGNED) { ?>
         <div class="alert alert-fill-success" role="alert">
             <i class="mdi mdi-alert-circle"></i>
             Imzolandi
         </div>
     <? } ?>
+
     <? echo DetailView::widget(['model' => $model,
         'attributes' => [
             'id',
@@ -116,10 +125,32 @@ if (!empty($model->attach)) {
 
                     return $url;
                 }
+            ],
+            [
+                'attribute' => 'conclusion_uz',
+                'value' => function ($model) {
+                    if ($model->status == MainDocument::SIGNED) {
+                        return $model->conclusion_uz;
+
+                    }
+                }
             ]
-            // 'time_begin:datetime',
-            // 'time_end:datetime',
+
         ],
-    ]) ?>
+    ]);
+
+    $form = ActiveForm::begin();
+    if ($model->status == MainDocument::SIGNING) {
+
+        echo $form->field($model, 'conclusion_uz')->textInput(['raw' => 6]);
+        ?>
+        <div class="form-group">
+            <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
+        </div>
+    <? } ?>
+
+
+
+    <?php ActiveForm::end(); ?>
 
 </div>

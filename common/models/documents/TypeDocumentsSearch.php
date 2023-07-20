@@ -40,7 +40,10 @@ class TypeDocumentsSearch extends TypeDocuments
      */
     public function search($params)
     {
+        $type = $params['type'];
         $query = TypeDocuments::find();
+        if ($type)
+            $query->where(['id' => $type]);
 
         // add conditions that should always apply here
 

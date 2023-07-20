@@ -1,10 +1,12 @@
 var plugin = $('#file-input').data('fileinput');
-console.log(plugin);
 
 
 function refreshFilesBlock(e) {
+    const queryString = window.location;
+
     var id = e.params.data.id;
-    var url = '/create/index?id=' + id;
+    var url = '?id=' + id;
+
 
     $.get('/create/get-file', {id: id}, function (data) {
         if (data !== null) {

@@ -154,7 +154,7 @@ class MainDocument extends \yii\db\ActiveRecord
             [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
 //            [['name_uz'], 'unique'],
 //            [['name_ru'], 'unique'],
-            [['doc_about', 'attached', 'path', 'files', 'deleted_files'], 'safe']
+            [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz'], 'safe']
         ];
     }
 
@@ -273,7 +273,14 @@ class MainDocument extends \yii\db\ActiveRecord
 
     }
 
+    public function beforeSave($insert)
+    {
+        if ($this->isNewRecord) {
+            $this->generateDocCode();
+        }
 
+        return parent::beforeSave($insert);
+    }
 
     public function generateCheckOrder()
     {
@@ -290,17 +297,28 @@ class MainDocument extends \yii\db\ActiveRecord
         if (!file_exists($uploads_folder)) {
             mkdir($uploads_folder, 0777, true);
         }
-
+//        $get_img = file_get_contents($img);
         \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
 //        dd(Yii::getAlias('@frontend')  . $item->path);
 //        $folder = '/web/uploads/docs/';
 //        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+
+        /*Write qr */
+        $qrCode = (new \Da\QrCode\QrCode('nimadirlar'))
+            ->setSize(430)
+            ->setMargin(0);
+
+        $qrCode->writeFile(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png');
+
+        $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
+
         $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/' . $item->path);
 
         $templateProcessor->setValue('fio', $user_name);
         $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
         $templateProcessor->setValue('code_doc', $this->code_document);
         $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
+        $templateProcessor->setImageValue('qr', $img);
 //        $templateProcessor->setValue('id', $this->id);
 //        $templateProcessor->setValue('code', $this->code);
 //        $templateProcessor->setValue('company_name', $this->company->official_name);
@@ -317,9 +335,18 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public function generateCodes()
     {
-        $generateDoc_Code = Yii::$app->security->generateRandomString(8);
+//        $generateDoc_Code = Yii::$app->security->generateRandomString(8);
         $generateDoc_Conclusion = Yii::$app->security->generateRandomString(9);
         $this->code_conclusion = $generateDoc_Conclusion;
+//        $this->code_document = $generateDoc_Code;
+
+    }
+
+    public function generateDocCode()
+    {
+        $generateDoc_Code = Yii::$app->security->generateRandomString(8);
+//        $generateDoc_Conclusion = Yii::$app->security->generateRandomString(9);
+//        $this->code_conclusion = $generateDoc_Conclusion;
         $this->code_document = $generateDoc_Code;
 
     }
