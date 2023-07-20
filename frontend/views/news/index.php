@@ -53,7 +53,7 @@ $models = $dataProvider->models;
                         <?php foreach ($models as $news) {
                             if ($news->category_id == $item->id) {  ?>
 
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-3 mb-4">
                                     <div class="card news_card h-100">
                                         <div class="card_news_img_wrapper">
                                             <img class="card-img-top card-img_main"

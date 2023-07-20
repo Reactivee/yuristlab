@@ -69,7 +69,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                 <ul class="nav flex-column sub-menu">
 <!--                    <li class="nav-item"><a class="nav-link" href="/create">Create</a>-->
                     <li class="nav-item"><a class="nav-link" href="/documents">Docs</a>
-                    <li class="nav-item"><a class="nav-link" href="/documents">Docs</a>
+<!--                    <li class="nav-item"><a class="nav-link" href="/documents">Docs</a>-->
                     <li class="nav-item"><a class="nav-link" href="/documents/statistics">Stat</a>
                     <li class="nav-item"><a class="nav-link" href="/news">News</a>
                     <li class="nav-item"><a class="nav-link" href="/law-news">Law News</a>
