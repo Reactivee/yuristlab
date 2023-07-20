@@ -69,25 +69,30 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                         \yiister\gentelella\widgets\Menu::widget(
                             [
                                 "items" => [
-//                                    ["label" => "Home", "url" => "/admin", "icon" => "home"],
-                                    ['label' => 'Attached', 'icon' => 'files-o', 'url' => ['/attached-document']],
-                                    ['label' => 'Category', 'icon' => 'text_format', 'url' => ['/category-documents']],
-                                    ['label' => 'Group', 'icon' => 'th-large', 'url' => ['/group-documents']],
-                                    ['label' => 'Main Doc', 'icon' => 'files-o', 'url' => ['/main-document']],
-                                    ['label' => 'Type Category', 'icon' => 'file-o', 'url' => ['/type-document']],
-                                    ['label' => 'New cat', 'icon' => 'text_format', 'url' => ['/category-news']],
-                                    ['label' => 'New content', 'icon' => 'file-image-o', 'url' => ['/content-news']],
-                                    ['label' => 'Recommend category', 'icon' => 'text_format', 'url' => ['/category-recommendation']],
-                                    ['label' => 'Recommend content', 'icon' => 'text_format', 'url' => ['/content-recommendation']],
-                                    ['label' => 'Laws Category', 'icon' => 'text_format', 'url' => ['/law-news']],
-                                    ['label' => 'Laws Content', 'icon' => 'text_format', 'url' => ['/law-content']],
-//                                    ['label' => 'Pages', 'icon' => 'text_format', 'items' => [
-//                                        ['label' => 'Login', 'icon' => 'text_format', 'url' => ['/site/login']],
-//                                        ['label' => 'Error', 'icon' => 'text_format', 'url' => ['/error']],
-//                                        ['label' => 'Registration', 'icon' => 'text_format', 'items' => [
-//                                        ]],
-//                                    ]],
+                                    ["label" => "News", "url" => "#", "icon" => "files-o",
+                                        "items" => [
+                                            ['label' => 'New cat', 'icon' => 'text_format', 'url' => ['/category-news']],
+                                            ['label' => 'New content', 'icon' => 'file-image-o', 'url' => ['/content-news']],
 
+                                        ],
+                                    ],
+                                    ["label" => "Laws news", "url" => "#", "icon" => "files-o",
+                                        "items" => [
+                                            ['label' => 'Laws Category', 'icon' => 'text_format', 'url' => ['/law-news']],
+                                            ['label' => 'Laws Content', 'icon' => 'text_format', 'url' => ['/law-content']],
+
+                                        ],
+                                    ],
+//                                    ['label' => 'Attached', 'icon' => 'files-o', 'url' => ['/attached-document']],
+                                    ['label' => 'Category', 'icon' => 'files-o', 'url' => ['/category-documents']],
+                                    ['label' => 'Group', 'icon' => 'th-large', 'url' => ['/group-documents']],
+//                                    ['label' => 'Main Doc', 'icon' => 'files-o', 'url' => ['/main-document']],
+                                    ['label' => 'Type Category', 'icon' => 'file-o', 'url' => ['/type-document']],
+
+                                    ['label' => 'Recommend category', 'icon' => 'files-o', 'url' => ['/category-recommendation']],
+                                    ['label' => 'Recommend content', 'icon' => 'files-o', 'url' => ['/content-recommendation']],
+
+//
 //                                    ["label" => "Content", "url" => "#", "icon" => "files-o",
 //                                        "items" => [
 ////                                            ["label" => "Top Banner", "url" => ["/top-banner"], "icon" => "file-image-o"],
@@ -103,7 +108,7 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
 //                                            ["label" => "Service", "url" => ["/services"], "icon" => "key"],
 //                                            ["label" => "Citizen", "url" => ["/citizen/update?id=1"], "icon" => "user"],
 //                                        ],
-
+//                                    ],
 
                                 ],
                             ]

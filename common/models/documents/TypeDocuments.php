@@ -76,4 +76,9 @@ class TypeDocuments extends \yii\db\ActiveRecord
 
         return ArrayHelper::map($array, 'id', 'name_ru');
     }
+
+    public function getCategory()
+    {
+        return $this->hasOne(CategoryDocuments::className(), ['id' => 'category_id']);
+    }
 }

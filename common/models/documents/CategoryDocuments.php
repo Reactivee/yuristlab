@@ -87,10 +87,13 @@ class CategoryDocuments extends \yii\db\ActiveRecord
 
     public static function getCategory($doc_id = null)
     {
-        $array = self::find()->where(['status' => 1, 'parent_id' => null, 'group_id' => $doc_id])->asArray()->all();
+        if ($doc_id)
+            $array = self::find()->where(['status' => 1, 'parent_id' => null, 'group_id' => $doc_id])->asArray()->all();
+        $array = self::find()->where(['status' => 1, 'parent_id' => null])->asArray()->all();
 
         return ArrayHelper::map($array, 'id', 'name_uz');
     }
+
 
     public static function subGetCategory()
     {
