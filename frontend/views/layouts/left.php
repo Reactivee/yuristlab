@@ -136,7 +136,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 
     </ul>
     <div class="designer-info">
-        Designed by: <a href="#" target="_blank">Bootstrapdash</a>
+        Designed by: <a href="#" target="_blank">Alfa Technologies</a>
     </div>
 </nav>
 <!-- partial -->
