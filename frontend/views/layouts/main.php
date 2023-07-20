@@ -16,6 +16,8 @@ use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Toast;
 use yii\widgets\Pjax;
 
+$status_id = Yii::$app->request->getQueryParam('status');
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -89,7 +91,7 @@ AppAsset::register($this);
                         <ul class="nav nav-tabs home-tab" role="tablist">
                             <? foreach (MainDocument::getStatusNameArr() as $key => $item) { ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="Dashboards-tab"
+                                    <a class="nav-link <?= $status_id == $key ? 'active' : '' ?>" id="Dashboards-tab"
                                        href="/documents?status=<?= $key ?>"
                                        aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
                                         <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>"><?= MainDocument::getByStatusDocuments($key) ?? '' ?></span>

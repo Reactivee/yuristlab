@@ -24,12 +24,13 @@ $this->title = 'Documents';
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-//            'id',
+            'code_document',
             'name_uz',
 //            'name_ru',
 
             [
                 'attribute' => 'category_id',
+                'label'=>'Kategoriya',
                 'value' => function ($model) {
                     return $model->category->name_uz;
                 }
@@ -37,6 +38,7 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'group_id',
+                'label'=>'Bo\'lim',
                 'value' => function ($model) {
                     return $model->subCategory->name_uz;
                 }
@@ -44,6 +46,7 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'type_group_id',
+                'label'=>'Turkumi',
                 'value' => function ($model) {
                     return $model->type->name_uz;
                 }
