@@ -44,7 +44,7 @@ if (!empty($model->attach)) {
     <? if ($model->status == MainDocument::SIGNING) { ?>
         <div class="alert alert-fill-info" role="alert">
             <i class="mdi mdi-alert-circle"></i>
-            Xujjar Imzolanmadi
+            Yuborildi
         </div>
     <? } ?>
 
