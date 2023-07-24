@@ -159,7 +159,7 @@ class MainDocument extends \yii\db\ActiveRecord
             [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id'], 'integer'],
             [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
 
-            [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz'], 'safe']
+            [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz', 'signed_lawyer'], 'safe']
         ];
     }
 
@@ -276,11 +276,11 @@ class MainDocument extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
 
-
         if (isset($changedAttributes['status']) && $this->status === self::SUCCESS) {
 
             $this->generateCodes();
             $this->generateConclusion();
+            $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 
         }
         if (isset($changedAttributes['status']) && $this->status === self::BOSS_SIGNED) {
@@ -309,7 +309,8 @@ class MainDocument extends \yii\db\ActiveRecord
                 'id' => $this->id
             ])->one();
 
-        $user_name = Yii::$app->user->identity->username;
+        $user_name = Yii::$app->user->identity->employ->first_name . ' ' . Yii::$app->user->identity->employ->last_name;
+
 //        dd($user_name);
         $phpWord = new PHPWord();
         $folder = '/web/uploads/temp/';

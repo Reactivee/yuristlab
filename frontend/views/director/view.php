@@ -35,9 +35,8 @@ if (!empty($model->attach)) {
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
         <? } ?>
         <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
-        <? if ($model->status != MainDocument::SUCCESS) { ?>
+        <? if ($model->signed_lawer) { ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-finish', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
-
         <? } ?>
 
     </div>
@@ -128,10 +127,10 @@ if (!empty($model->attach)) {
             [
                 'attribute' => 'conclusion_uz',
                 'value' => function ($model) {
-                    if ($model->status == MainDocument::SIGNED) {
-                        return $model->conclusion_uz;
 
-                    }
+                    return $model->conclusion_uz;
+
+
                 }
             ]
 
