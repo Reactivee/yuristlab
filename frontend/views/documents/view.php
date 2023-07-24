@@ -124,7 +124,8 @@ if (!empty($model->attach)) {
                             </p>
                             <span class="font-weight-bold">Xujjat yaratgan  shaxs</span>
                             <p class="text-primary font-weight-bold">
-                                <?= $model->created_by ? $model->created_by : 'Admin' ?>
+
+                                <?= $model->employ->first_name . ' ' . $model->employ->last_name ?>
                             </p>
                             <span class="font-weight-bold">Status</span>
                             <p class="text-primary font-weight-bold">

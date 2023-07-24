@@ -2,6 +2,7 @@
 
 namespace common\models\documents;
 
+use common\models\Employ;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Yii;
@@ -267,6 +268,11 @@ class MainDocument extends \yii\db\ActiveRecord
         return $this->hasMany(AttachedDocument::className(), ['main_document_id' => 'id']);
     }
 
+    public function getEmploy()
+    {
+        return $this->hasOne(Employ::className(), ['id' => 'created_by']);
+    }
+
     public function afterSave($insert, $changedAttributes)
     {
 
@@ -285,8 +291,11 @@ class MainDocument extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
-            if (Yii::$app->user->identity->employ->company)
+            if (Yii::$app->user->identity->employ->company) {
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
+                $this->created_by = Yii::$app->user->identity->employ->id;
+
+            }
             $this->generateDocCode();
         }
 
@@ -417,7 +426,7 @@ class MainDocument extends \yii\db\ActiveRecord
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
         $table->addCell(2000, $fancyTableCellBtlrStyle)->addText('Sana', $TableFontStyle);
-        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText( date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
+        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
