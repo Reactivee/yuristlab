@@ -34,13 +34,16 @@ class MainDocument extends \yii\db\ActiveRecord
 
     const NEW = 1;
     const EDITED = 2;
-    const DELETED = -1;
+    const DELETED = 9;
     const NOTSEND = 3;
     const SUCCESS = 4;
     const ERROR = 5;
     const REJECTED = 6;
     const SIGNING = 7;
     const SIGNED = 8;
+    const BOSS_SIGNED = 8;
+
+    const TOBOSS = -10;
 
 
     public function getStatusName($status = null)
@@ -55,6 +58,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::REJECTED => "Rad etilgan",
             self::SIGNING => "Imzolashda",
             self::SIGNED => "Imzolandi",
+            self::TOBOSS => "Rahbar imzosi",
         ];
 
         return $status ? $array[$status] : $array;
@@ -89,6 +93,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::REJECTED => '<div class="badge badge-outline-info badge-pill">Rad etilgan</div>',
             self::SIGNING => '<div class="badge badge-outline-primary badge-pill">Imzolashda</div>',
             self::SIGNED => '<div class="badge badge-outline-success badge-pill">Imzolandi</div>',
+            self::TOBOSS => '<div class="badge badge-outline-warning badge-pill">Rahbar imzosi</div>',
         ];
 
         return $status ? $array[$status] : $array;
@@ -122,7 +127,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::ERROR => " badge badge-pill badge-outline-warning",
             self::REJECTED => " badge badge-pill badge-outline-light",
             self::SIGNING => " badge badge-pill badge-outline-success",
-            self::SIGNED => " w badge badge-pill badge-outline-primary",
+            self::SIGNED => "badge badge-pill badge-outline-primary",
         ];
 
         return $status ? $array[$status] : $array;
@@ -150,10 +155,9 @@ class MainDocument extends \yii\db\ActiveRecord
     {
         return [
             [['status', 'name_uz', 'path', 'category_id', 'type_group_id'], 'required'],
-            [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
+            [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id'], 'integer'],
             [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
-//            [['name_uz'], 'unique'],
-//            [['name_ru'], 'unique'],
+
             [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz'], 'safe']
         ];
     }
@@ -266,16 +270,23 @@ class MainDocument extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
 
-        if (isset($changedAttributes['status']) && $this->status === self::SIGNED) {
+
+        if (isset($changedAttributes['status']) && $this->status === self::SUCCESS) {
+
             $this->generateCodes();
+            $this->generateConclusion();
+
+        }
+        if (isset($changedAttributes['status']) && $this->status === self::BOSS_SIGNED) {
             $this->generateCheckOrder();
         }
-
     }
 
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
+            if (Yii::$app->user->identity->employ->company)
+                $this->company_id = Yii::$app->user->identity->employ->company->id;
             $this->generateDocCode();
         }
 
@@ -288,7 +299,7 @@ class MainDocument extends \yii\db\ActiveRecord
             ->where([
                 'id' => $this->id
             ])->one();
-//        dd();
+
         $user_name = Yii::$app->user->identity->username;
 //        dd($user_name);
         $phpWord = new PHPWord();
@@ -304,7 +315,7 @@ class MainDocument extends \yii\db\ActiveRecord
 //        $uploads_folder = Yii::getAlias('@frontend') . $folder;
 
         /*Write qr */
-        $qrCode = (new \Da\QrCode\QrCode('nimadirlar'))
+        $qrCode = (new \Da\QrCode\QrCode('Elektron doc'))
             ->setSize(430)
             ->setMargin(0);
 
@@ -325,8 +336,6 @@ class MainDocument extends \yii\db\ActiveRecord
 //        $templateProcessor->setValue('inn', $this->company->stir);
 //        $templateProcessor->setValue('adress', $this->company->address);
 //        $templateProcessor->setValue('need_delivery', $this->need_deliver ? 'Да' : 'Нет');
-//
-
 
 //        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
@@ -349,6 +358,109 @@ class MainDocument extends \yii\db\ActiveRecord
 //        $this->code_conclusion = $generateDoc_Conclusion;
         $this->code_document = $generateDoc_Code;
 
+    }
+
+    public function generateConclusion()
+    {
+        $item = MainDocument::find()
+            ->where([
+                'id' => $this->id
+            ])->one();
+
+        $user_name = Yii::$app->user->identity->employ->first_name;
+
+        $phpWord = new PHPWord();
+
+        $folder = '/web/uploads/temp/';
+        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+        if (!file_exists($uploads_folder)) {
+            mkdir($uploads_folder, 0777, true);
+        }
+
+        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+
+        /*Write qr */
+        $qrCode = (new \Da\QrCode\QrCode('Elektron doc'))
+            ->setSize(100)
+            ->setMargin(0);
+
+        $qrCode->writeFile(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png');
+
+        $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
+
+        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/' . $item->path);
+
+        $section = $phpWord->addSection();
+
+        $table = $section->addTable(['alignment' => 'center', 'borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 10, 'Spacing' => 10, 'cellMargin' => 5]);
+
+        $TableFontStyle = ['bold' => true, 'size' => 12, 'valign' => 'text-center', 'alignment' => 'text-center'];
+        $cellRowSpan = ['vMerge' => 'restart', 'alignment' => 'center'];
+        $cellRowContinue = ['vMerge' => 'continue'];
+        $cellColSpan = ['gridSpan' => 2, 'alignment' => 'center'];
+        $fancyTableCellBtlrStyle = ['valign' => 'center', 'alignment' => 'center'];
+
+        $table->addRow();
+        $table->addCell(2000, $cellRowSpan)->addText('${myImage}');
+//        $table->addCell(2000, $cellRowSpan)->addText("2");
+        $table->addCell(4000, $cellColSpan)->addText("Qr ni skanerlang", $TableFontStyle);
+//        $table->addCell(2000, $cellRowSpan)->addText("6");
+//        $templateProcessor->setComplexBlock('table_var', $table);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+//        $table->addCell(null, $cellRowContinue);
+        $table->addCell(2000)->addText("FISH", $TableFontStyle);
+        $table->addCell(2000)->addText($user_name, $TableFontStyle);
+//        $table->addCell(null, $cellRowContinue);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText('Sana', $TableFontStyle);
+        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText( date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText("Xujjat kodi", $TableFontStyle);
+        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText($this->code_document, $TableFontStyle);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText("Xulosa kodi", $TableFontStyle);
+        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText($this->code_conclusion, $TableFontStyle);
+
+
+        $break = $section->addPageBreak();
+        $section->addTextBreak(1);
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+//        $objWriter->save(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx');
+
+
+//        $templateFile = Yii::getAlias('@frontend') . '/web/uploads/docs/asd.docx';
+
+//        $content = file_get_contents($templateFile);
+
+        $templateProcessor->setComplexBlock('table', $table);
+        $templateProcessor->setComplexBlock('break', $break);
+        $templateProcessor->setValue('conclusion', 'Yurist xulosa');
+        $templateProcessor->setImageValue('myImage', $img);
+
+
+//        echo file_get_contents(Yii::getAlias('@frontend') . '/web/uploads/docs/asd.docx');
+
+        /*last step*/
+//        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
+        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
+
+
+//        $contents = file_get_contents(Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
+//
+//        $handle = fopen(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx', "r");
+//        $word = fopen(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx', "w");
+
+//        fwrite($word, $contents);
+//        $copy = copy(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx', Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
+//        dd($copy);
     }
 
 

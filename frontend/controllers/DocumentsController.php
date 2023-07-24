@@ -167,12 +167,16 @@ class DocumentsController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $user_id = Yii::$app->user->identity->employ->id;
+
         if ($this->request->isPost && $model->load($this->request->post())) {
 
         }
+        $model->user_id = $user_id;
+        $model->save();
 
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model
         ]);
     }
 
@@ -300,7 +304,6 @@ class DocumentsController extends Controller
 
         $doc_id = $id;
 
-
         TelegramBotErrorSender::widget(['error' => $doc_id, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
         $client = new \Google\Client();
@@ -338,9 +341,53 @@ class DocumentsController extends Controller
 
     public function actionToSign($id)
     {
-        $main = MainDocument::find()->where(['status' => MainDocument::NEW, 'id' => $id])->one();
+        $main = MainDocument::find()->where(['id' => $id])->one();
         if ($main) {
             $main->status = MainDocument::SIGNING;
+
+            if ($main->save()) {
+                Yii::$app->session->setFlash('success', "Yuborildi");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+
+        } else {
+            Yii::$app->session->setFlash('error', "Xujjat topilmadi");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        Yii::$app->session->setFlash('error', "Yuborishda xatolik");
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionToResign($id)
+    {
+        $main = MainDocument::findOne($id);
+        if ($main) {
+            $main->status = MainDocument::REJECTED;
+
+            if ($main->save()) {
+                Yii::$app->session->setFlash('success', "Yuborildi");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+
+        } else {
+            Yii::$app->session->setFlash('error', "Xujjat topilmadi");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
+        Yii::$app->session->setFlash('error', "Yuborishda xatolik");
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionToPresign($id)
+    {
+
+        $main = MainDocument::find()
+            ->where(['id' => $id])
+//            ->andWhere(['or',''])
+            ->one();
+        if ($main) {
+            $main->status = MainDocument::TOBOSS;
 
             if ($main->save()) {
                 Yii::$app->session->setFlash('success', "Yuborildi");

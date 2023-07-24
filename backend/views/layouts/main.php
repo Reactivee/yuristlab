@@ -91,8 +91,11 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
 
                                     ['label' => 'Recommend category', 'icon' => 'files-o', 'url' => ['/category-recommendation']],
                                     ['label' => 'Recommend content', 'icon' => 'files-o', 'url' => ['/content-recommendation']],
+                                    ['label' => 'Company', 'icon' => 'text_format', 'url' => ['/company']],
+                                    ['label' => 'Jobs', 'icon' => 'text_format', 'url' => ['/jobs']],
+                                    ['label' => 'Get job', 'icon' => 'text_format', 'url' => ['/get-job']],
+                                    ['label' => 'Employ', 'icon' => 'text_format', 'url' => ['/employ']],
 
-//
 //                                    ["label" => "Content", "url" => "#", "icon" => "files-o",
 //                                        "items" => [
 ////                                            ["label" => "Top Banner", "url" => ["/top-banner"], "icon" => "file-image-o"],

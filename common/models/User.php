@@ -55,6 +55,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            ['employ_id', 'safe'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
@@ -110,7 +111,8 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
             'verification_token' => $token,
             'status' => self::STATUS_INACTIVE
@@ -129,7 +131,7 @@ class User extends ActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
@@ -209,5 +211,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function getEmploy()
+    {
+        return $this->hasOne(Employ::className(), ['user_id' => 'id']);
     }
 }

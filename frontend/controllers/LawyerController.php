@@ -81,10 +81,10 @@ class LawyerController extends Controller
         $model = MainDocument::find()->where(['id' => $id])->one();
 
         if ($model) {
-            $model->status = MainDocument::SIGNED;
+            $model->status = MainDocument::SUCCESS;
 
             if ($model->save()) {
-                Yii::$app->session->addFlash('success', 'Imzolandi');
+                Yii::$app->session->addFlash('success', 'Ijobiy xulosa');
                 return $this->redirect(Yii::$app->request->referrer);
 
             }

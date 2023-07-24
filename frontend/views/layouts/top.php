@@ -9,7 +9,8 @@
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <ul class="navbar-nav mr-lg-2">
             <li class="nav-item d-none d-sm-block dropdown arrow-none">
-                <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown" id="profileDropdown6">
+                <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown"
+                        id="profileDropdown6">
                     <i class="mdi mdi-plus-circle btn-icon-prepend"></i>
                     Add Schedule
                 </button>
@@ -35,10 +36,12 @@
                   <i class="mdi mdi-magnify"></i>
                 </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="search" aria-label="search" aria-describedby="search">
+                    <input type="text" class="form-control" placeholder="search" aria-label="search"
+                           aria-describedby="search">
                 </div>
             </li>
         </ul>
+        <span><?= Yii::$app->user->identity->employ->company->name_uz ?></span>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item count-indicator nav-profile dropdown">
                 <span class="count">3</span>
@@ -59,10 +62,12 @@
             </li>
             <li class="nav-item dropdown count-indicator arrow-none">
                 <span class="count bg-success">3</span>
-                <a class="nav-link dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center justify-content-center"
+                   id="notificationDropdown" href="#" data-toggle="dropdown">
                     <i class="mdi mdi-bell-outline mx-0"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                     aria-labelledby="notificationDropdown">
                     <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
                     <a class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
@@ -106,7 +111,8 @@
                 </div>
             </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                data-toggle="offcanvas">
             <span class="mdi mdi-menu"></span>
         </button>
     </div>

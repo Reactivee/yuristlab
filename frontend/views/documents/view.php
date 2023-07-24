@@ -66,10 +66,15 @@ if (!empty($model->attach)) {
         <div class="container-fluid px-5 py-3">
 
             <div class="buttons_wrap mb-3">
-                <? if ($model->status == MainDocument::NEW) { ?>
+                <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
                     <?= Html::button(' <i class="fas fa-save mr-2"></i> Saqlash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
-                    <?= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
+                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
+                    <?= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-5 ']) ?>
+                <? } ?>
+
+                <? if ($model->status == MainDocument::SUCCESS) { ?>
+                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
 
                 <? } ?>
 
@@ -141,8 +146,11 @@ if (!empty($model->attach)) {
                             <div class="card">
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                        <?= Html::a('<img style="width: 90px"
-src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">', ['doc-template', 'id' => $model->id], ['target' => '_blank']) ?>
+                                        <? if ($model->status != MainDocument::BOSS_SIGNED) { ?>
+                                            <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                                ['doc-template', 'id' => $model->id], ['target' => '_blank']);
+                                        }
+                                        ?>
 
                                         <!--                              <span id="installment-btn"-->
                                         <!--                                    class="showInstallmentModal"-->
@@ -158,7 +166,7 @@ src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">', ['doc-te
 
                                         <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                             <a target="_blank" href="/frontend/web<?= $model->path ?>"
-                                               class="mb-0"><?= $model->path ?></a>
+                                               class="mb-0">Ko'chirib olish</a>
                                             <p class="text-muted mb-1">0.5 mb</p>
                                             <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>
                                         </div>

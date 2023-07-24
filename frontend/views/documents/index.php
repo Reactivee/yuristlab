@@ -1,6 +1,7 @@
 <?php
 
 use common\models\documents\MainDocument;
+use common\models\Employ;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -24,13 +25,25 @@ $this->title = 'Documents';
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'code_document',
-            'name_uz',
-//            'name_ru',
 
             [
+                'attribute' => 'code_document',
+                'label' => 'Xujjat kodi',
+            ],
+
+            'name_uz',
+//            'name_ru',
+            [
                 'attribute' => 'category_id',
-                'label'=>'Kategoriya',
+                'label'=>'Bo\'lim',
+                'value' => function ($model) {
+
+                    return $model->category->group->name_uz;
+                }
+            ],
+            [
+                'attribute' => 'category_id',
+                'label' => 'Kategoriya',
                 'value' => function ($model) {
                     return $model->category->name_uz;
                 }
@@ -38,7 +51,7 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'group_id',
-                'label'=>'Bo\'lim',
+                'label' => 'Kategoriya',
                 'value' => function ($model) {
                     return $model->subCategory->name_uz;
                 }
@@ -46,7 +59,7 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'type_group_id',
-                'label'=>'Turkumi',
+                'label' => 'Turkumi',
                 'value' => function ($model) {
                     return $model->type->name_uz;
                 }
@@ -79,7 +92,14 @@ $this->title = 'Documents';
                 'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
-                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+
+                        if ($model->user_id) {
+                            $emp = Employ::findOne($model->user_id);
+                            return Html::a($emp->first_name . ' ' . $emp->last_name, [$url], ['class' => 'btn btn-inverse-warning btn-fw']);
+                        } else {
+                            return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+                        }
+
                     }
                 ],
 //                'urlCreator' => function ($action, MainDocument $model, $key, $index, $column) {

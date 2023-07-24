@@ -20,6 +20,8 @@ use yii\widgets\Pjax;
 $this->title = 'Create new';
 $type_id = Yii::$app->request->getQueryParam('id');
 $doc_id = Yii::$app->request->getQueryParam('doc');
+$gr = \common\models\documents\GroupDocuments::findOne($doc_id);
+
 //dd(Yii::$app->request->getQueryParam('id'));
 $initialPreview = [];
 $initialPreviewConfig = [];
@@ -43,6 +45,9 @@ $initialPreviewConfig = [];
                     uploaded = document.getElementById('images'),
                     deleted = document.getElementById('deleted_images')")
         ?>
+        <? if ($gr) { ?>
+            <button type="button"  class="btn btn-outline-info btn-fw mb-3"><?= $gr->name_uz?></button>
+        <? } ?>
         <div class="row">
             <div class="col-md-4">
                 <?
@@ -138,62 +143,62 @@ $initialPreviewConfig = [];
     <? } ?>
 
 
-<!--        <div class="col-md-6 mb-4">-->
-<!--            <label for="">Qo'shimcha fayllar</label>-->
-<!--            --><?//
-//            echo FileInput::widget([
-//                'name' => 'attached',
-//                'options' => [
-//                    'multiple' => true,
-////                    'accept' => 'images/*'
-//                ],
-//                'pluginOptions' => [
-//                    'showCaption' => false,
-//                    'uploadUrl' => Url::to(['upload-docs']),
-//                    'deleteUrl' => Url::to(['delete-docs']),
-//                    'allowedFileExtensions' => ['docx', 'doc', 'pdf', 'jpg', 'jpeg'],
-//                    'browseClass' => 'btn btn-success ',
-//                    'showCancel' => false,
-//                    'showClose' => false,
-//                    'showUpload' => true,
-//                    'maxFileSize' => 2240,
-//                    'maxFileCount' => 40,
-//                    'overwriteInitial' => false,
-//                    'initialPreviewAsData' => true,
-//                    'fileActionSettings' => [
-//                        'removeIcon' => '<i class="fa fa-trash"></i>',
-//                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-//                        'zoomIcon' => '<i class="fa fa-search-plus"></i>'
-//                    ],
-//                ],
-//
-//
-//                'pluginEvents' => [
-//                    'fileuploaded' => new JsExpression('function(event, data, previewId) {
-//                             console.log(previewId)
-//
-//                            uploaded.value = JSON.stringify( data.response);
-//                        }'),
-//                    'filedeleted' => new JsExpression('function(event, key) {
-//                            deletedImages.push(key);
-//                            deleted.value = JSON.stringify(deletedImages);
-//                        }'),
-//                    'filesuccessremove' => new JsExpression('function(event, previewId) {
-//                            delete uploadedImages[previewId];
-//                            uploaded.value = JSON.stringify(uploadedImages);
-//                        }'),
-//                    'filesorted' => new JsExpression('function(event, params) {
-//                            sorted.value = JSON.stringify(params.stack);
-//                        }')
-//                ]
-//            ]) ?>
-<!--        </div>-->
+        <!--        <div class="col-md-6 mb-4">-->
+        <!--            <label for="">Qo'shimcha fayllar</label>-->
+        <!--            --><? //
+        //            echo FileInput::widget([
+        //                'name' => 'attached',
+        //                'options' => [
+        //                    'multiple' => true,
+        ////                    'accept' => 'images/*'
+        //                ],
+        //                'pluginOptions' => [
+        //                    'showCaption' => false,
+        //                    'uploadUrl' => Url::to(['upload-docs']),
+        //                    'deleteUrl' => Url::to(['delete-docs']),
+        //                    'allowedFileExtensions' => ['docx', 'doc', 'pdf', 'jpg', 'jpeg'],
+        //                    'browseClass' => 'btn btn-success ',
+        //                    'showCancel' => false,
+        //                    'showClose' => false,
+        //                    'showUpload' => true,
+        //                    'maxFileSize' => 2240,
+        //                    'maxFileCount' => 40,
+        //                    'overwriteInitial' => false,
+        //                    'initialPreviewAsData' => true,
+        //                    'fileActionSettings' => [
+        //                        'removeIcon' => '<i class="fa fa-trash"></i>',
+        //                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
+        //                        'zoomIcon' => '<i class="fa fa-search-plus"></i>'
+        //                    ],
+        //                ],
+        //
+        //
+        //                'pluginEvents' => [
+        //                    'fileuploaded' => new JsExpression('function(event, data, previewId) {
+        //                             console.log(previewId)
+        //
+        //                            uploaded.value = JSON.stringify( data.response);
+        //                        }'),
+        //                    'filedeleted' => new JsExpression('function(event, key) {
+        //                            deletedImages.push(key);
+        //                            deleted.value = JSON.stringify(deletedImages);
+        //                        }'),
+        //                    'filesuccessremove' => new JsExpression('function(event, previewId) {
+        //                            delete uploadedImages[previewId];
+        //                            uploaded.value = JSON.stringify(uploadedImages);
+        //                        }'),
+        //                    'filesorted' => new JsExpression('function(event, params) {
+        //                            sorted.value = JSON.stringify(params.stack);
+        //                        }')
+        //                ]
+        //            ]) ?>
+        <!--        </div>-->
 
     </div>
 
 <?php Pjax::end() ?>
 
-        <button type="submit" class="btn btn-success mt-3 btn-fw">Keyingi Bosqish</button>
+    <button type="submit" class="btn btn-success mt-3 btn-fw">Keyingi Bosqish</button>
 
 
 <?php ActiveForm::end(); ?>

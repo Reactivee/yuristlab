@@ -31,15 +31,14 @@ if (!empty($model->attach)) {
 ?>
 <div class="container-fluid p-3">
     <div class="buttons_wrap mb-3">
-        <? if ($model->status != MainDocument::SIGNED) { ?>
-            <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+        <? if ($model->status != MainDocument::NEW) { ?>
+            <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+        <? } ?>
+        <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
+        <? if ($model->status != MainDocument::SUCCESS) { ?>
+            <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-finish', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
 
         <? } ?>
-<!--        --><?// if ($model->status == MainDocument::SIGNED) { ?>
-            <!--        --><? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-            <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
-            <!--        --><? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
-<!--        --><?// } ?>
 
     </div>
     <? if ($model->status == MainDocument::SIGNING) { ?>
@@ -129,10 +128,10 @@ if (!empty($model->attach)) {
             [
                 'attribute' => 'conclusion_uz',
                 'value' => function ($model) {
-//                    if ($model->status == MainDocument::SIGNED) {
+                    if ($model->status == MainDocument::SIGNED) {
                         return $model->conclusion_uz;
 
-//                    }
+                    }
                 }
             ]
 
@@ -140,9 +139,9 @@ if (!empty($model->attach)) {
     ]);
 
     $form = ActiveForm::begin();
-    if ($model->status != MainDocument::SUCCESS) {
+    if ($model->status == MainDocument::SIGNING) {
 
-        echo $form->field($model, 'conclusion_uz')->textarea(['row' => 6]);
+        echo $form->field($model, 'conclusion_uz')->textInput(['raw' => 6]);
         ?>
         <div class="form-group">
             <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>

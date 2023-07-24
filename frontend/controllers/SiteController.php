@@ -80,13 +80,13 @@ class SiteController extends Controller
 //
 //// Adding a section to the document
 //        $section = $phpWord->addSection();
-//        $section->addText('Hello World!');
+//        $section->addText('Hello asdasd!');
 //
 //// Saving the document as a binary
 //        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 //        $objWriter->save('hello_world.docx');
-//
-//// Reading the binary contents of the file
+
+// Reading the binary contents of the file
 //        $fileContents = file_get_contents('http://yurist.loc/exam.doc');
 //        dd($fileContents);
 //        return $fileContents;

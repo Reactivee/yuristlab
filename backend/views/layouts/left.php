@@ -27,6 +27,7 @@ use yii\helpers\Html;
                 ['label' => 'New content', 'icon' => 'text_format', 'url' => ['/content-news']],
                 ['label' => 'Recommend category', 'icon' => 'text_format', 'url' => ['/category-recommendation']],
                 ['label' => 'Recommend content', 'icon' => 'text_format', 'url' => ['/content-recommendation']],
+                ['label' => 'Company', 'icon' => 'text_format', 'url' => ['/company']],
 
 
                 ['label' => 'Pages', 'icon' => 'text_format', 'items' => [

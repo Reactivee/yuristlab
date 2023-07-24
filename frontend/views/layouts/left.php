@@ -59,21 +59,19 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
     <ul class="nav">
 
         <li class="nav-item">
-            <div class="sidebar-title">Pages</div>
+            <div class="sidebar-title">Menu</div>
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i class="mdi mdi-heart-outline menu-icon"></i>
-                <span class="menu-title">Components</span>
+                <span class="menu-title">Xodim</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-<!--                    <li class="nav-item"><a class="nav-link" href="/create">Create</a>-->
-                    <li class="nav-item"><a class="nav-link" href="/documents">Docs</a>
-<!--                    <li class="nav-item"><a class="nav-link" href="/documents">Docs</a>-->
-                    <li class="nav-item"><a class="nav-link" href="/documents/statistics">Stat</a>
-                    <li class="nav-item"><a class="nav-link" href="/news">News</a>
-                    <li class="nav-item"><a class="nav-link" href="/law-news">Law News</a>
-                    <li class="nav-item"><a class="nav-link" href="/templates">Templates</a>
+                    <li class="nav-item"><a class="nav-link" href="/documents">Docs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/documents/statistics">Stat</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/news">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/law-news">Law News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/templates">Templates</a></li>
                     </li>
 
                 </ul>
@@ -89,10 +87,24 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             <div class="collapse" id="ui-advanced">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="/lawyer">Index</a></li>
-
                 </ul>
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-boss" aria-expanded="false"
+               aria-controls="ui-boss">
+                <i class="mdi mdi-folder-outline menu-icon"></i>
+                <span class="menu-title">Rahbar</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-boss">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="/director">Index</a></li>
+                </ul>
+            </div>
+        </li>
+
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                aria-controls="form-elements">
