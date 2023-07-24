@@ -278,7 +278,6 @@ class MainDocument extends \yii\db\ActiveRecord
 
         if (isset($changedAttributes['status']) && $this->status === self::SUCCESS) {
 
-            $this->generateCodes();
             $this->generateConclusion();
             $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 
@@ -297,6 +296,12 @@ class MainDocument extends \yii\db\ActiveRecord
 
             }
             $this->generateDocCode();
+        }
+        if ($this->status === self::SUCCESS) {
+            $this->generateCodes();
+
+            $this->signed_lawyer = Yii::$app->user->identity->employ->id;
+
         }
 
         return parent::beforeSave($insert);

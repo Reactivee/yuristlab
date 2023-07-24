@@ -2,7 +2,6 @@
 
 namespace common\models\documents;
 
-use backend\models\cards\Cards;
 use common\models\documents\MainDocument;
 use Yii;
 use yii\base\Model;
