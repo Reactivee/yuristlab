@@ -35,8 +35,9 @@ if (!empty($model->attach)) {
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
         <? } ?>
         <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
+
         <? if ($model->signed_lawyer) { ?>
-            <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-finish', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+            <?= Html::a(' <i class="fas fa-pencil"></i> So\'ngi Imzolash ', ['/director/to-finish', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
         <? } ?>
 
     </div>
