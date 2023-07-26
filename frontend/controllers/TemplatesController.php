@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\documents\AttachedDocumentSearch;
 use common\models\documents\TypeDocuments;
 use common\models\documents\TypeDocumentsSearch;
+use common\models\forms\CreateDocForm;
 use Yii;
 use yii\web\Controller;
 use common\models\LoginForm;
@@ -26,11 +27,16 @@ class TemplatesController extends Controller
     {
         $types = TypeDocuments::find()->all();
         $searchModel = new TypeDocumentsSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $form = new CreateDocForm();
+        $form->load($this->request->queryParams);
 
+        $dataProvider = $searchModel->searchTemplate($form);
+//    dd($dataProvider->models);
+//        dd($this->request->queryParams);
         return $this->render('index', [
             'types' => $types,
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'model' => $form
         ]);
     }
 

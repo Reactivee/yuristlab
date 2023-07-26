@@ -20,7 +20,7 @@ use frontend\models\ContactForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class UserController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -90,6 +90,7 @@ class SiteController extends Controller
 //        $fileContents = file_get_contents('http://yurist.loc/exam.doc');
 //        dd($fileContents);
 //        return $fileContents;
+
         return $this->render('index');
     }
 

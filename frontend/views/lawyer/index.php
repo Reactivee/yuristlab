@@ -1,11 +1,15 @@
 <?php
 
 /** @var \common\models\documents\MainDocumentSearch $searchModel */
+
 /** @var \common\models\documents\MainDocument $dataProvider */
 
 use common\models\documents\MainDocument;
+use common\models\Employ;
+use kartik\grid\GridView;
+use kartik\select2\Select2;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -23,23 +27,52 @@ $this->title = 'Documents';
 //            'lastPageLabel' => 'Oxiri',
             'class' => '\yii\widgets\LinkPager',
         ],
+         'showPageSummary' => false,
+        'resizableColumns' => true,
+        'resizeStorageKey' => Yii::$app->user->id . '-' . date("m"),
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'attribute' => 'code_document',
+                'label' => 'Xujjat kodi',
+            ],
 //            'id',
             'name_uz',
 //            'name_ru',
             [
-                'attribute' => 'category_id',
+                'attribute' => 'group_id',
+                'format' => 'raw',
+                'filter' => MainDocument::subAllGroup(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
-
                     return $model->category->group->name_uz;
                 }
             ],
             [
                 'attribute' => 'category_id',
+                'format' => 'raw',
+                'filter' => MainDocument::getAllCategory(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_KRAJEE_BS5,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
 
                     return $model->category->name_uz;
@@ -47,7 +80,20 @@ $this->title = 'Documents';
             ],
 
             [
-                'attribute' => 'group_id',
+                'attribute' => 'sub_category_id',
+                'format' => 'raw',
+                'filter' => MainDocument::subAllGetCategory(),
+                'filterType' => GridView::FILTER_SELECT2,
+
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_KRAJEE_BS5,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
                     return $model->subCategory->name_uz;
                 }
@@ -73,6 +119,13 @@ $this->title = 'Documents';
 //            'time_end:datetime',
 
             'created_at:datetime',
+            [
+                'attribute' => 'company_id',
+                'label' => 'Korxona',
+                'value' => function ($model) {
+                    return $model->company->name_uz;
+                }
+            ],
 //            'updated_at:datetime',
             [
                 'attribute' => 'status',
@@ -87,7 +140,13 @@ $this->title = 'Documents';
                 'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
-                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+                        if ($model->user_id) {
+                            $emp = Employ::findOne($model->user_id);
+                            return Html::a($emp->first_name . ' ' . $emp->last_name, [$url], ['class' => 'btn btn-inverse-warning btn-fw']);
+                        } else {
+                            return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+                        }
+
                     }
                 ],
             ],

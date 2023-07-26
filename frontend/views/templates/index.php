@@ -1,9 +1,14 @@
 <?php
 
+use kartik\select2\Select2;
 use kartik\tabs\TabsX;
+use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
 use yii\grid\GridView;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
+
+/** @var \common\models\documents\TypeDocumentsSearch $model */
 
 $request = Yii::$app->request;
 $id = $request->get('type');
@@ -30,63 +35,116 @@ $id = $request->get('type');
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class=" container-fluid">
+                        <?php $form = ActiveForm::begin([
+                            'action' => ['index'],
+                            'method' => 'get',
+                            'options' => [
+                                'data-pjax' => 1
+                            ],
+                        ]); ?>
                         <div class="row">
-                            <div class="coll">
-                                <h4 class="card-title">Types</h4>
-                                <p class="card-description">Basic nav pills</p>
-                            </div>
-                            <div class="coll">
-                                <div class="dropdown">
-                                    <button class="btn btn-danger dropdown-toggle" type="button"
-                                            id="dropdownMenuSizeButton2" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                        Groups
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton2"
-                                         x-placement="bottom-start"
-                                         style="position: absolute; transform: translate3d(0px, 30px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                        <h6 class="dropdown-header">Settings</h6>
-                                        <a class="dropdown-item" href="#">Action</a>
 
-                                    </div>
-                                </div>
+
+                            <div class="col-md-4">
+                                <?
+                                echo $form->field($model, 'group_doc')->widget(Select2::classname(), [
+                                    'data' => \common\models\documents\MainDocument::subAllGroup(),
+                                    'theme' => Select2::THEME_MATERIAL,
+                                    'options' => [
+                                        'placeholder' => 'Select provinces ...',
+                                        'multiple' => true,
+                                        'allowClear' => true
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?
+                                echo $form->field($model, 'category')->widget(Select2::classname(), [
+                                    'data' => \common\models\documents\MainDocument::getAllCategory(),
+                                    'theme' => Select2::THEME_MATERIAL,
+                                    'options' => [
+                                        'placeholder' => 'Select provinces ...',
+                                        'multiple' => true,
+                                        'allowClear' => true
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                    ],
+                                ]);
+                                ?>
+                            </div>
+                            <div class="col-md-4">
+                                <?
+                                echo $form->field($model, 'sub_category')->widget(Select2::classname(), [
+                                    'data' => \common\models\documents\MainDocument::subAllGetCategory(),
+                                    'theme' => Select2::THEME_MATERIAL,
+                                    'options' => [
+                                        'placeholder' => 'Select provinces ...',
+                                        'multiple' => true,
+                                        'allowClear' => true
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                    ],
+                                ]);
+                                ?>
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <?= Html::submitButton('Ko\'rsatish', ['class' => 'btn btn-success']) ?>
+                        </div>
 
-                        <ul class="nav nav-pills nav-pills-info" id="types-tab" role="tablist">
+                        <?php ActiveForm::end(); ?>
 
-                            <li class="nav-item">
-                                <a class="nav-link <?= $id == null ? "active" : "" ?> " id="types-"
-                                   href="/templates"
-                                   role="tab" aria-controls="types_"
-                                   aria-selected="true">Hammasi</a>
-                            </li>
-                            <? foreach ($types as $key => $type) { ?>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= $type->id == $id ? 'active' : '' ?>"
-                                       id="types-<?= $type->id ?>"
-                                       href="?type=<?= $type->id ?>"
-                                       role="tab" aria-controls="types_<?= $type->id ?>"
-                                       aria-selected="true"><?= $type->name_uz ?></a>
-                                </li>
-                            <? } ?>
-                        </ul>
+                        <!--      -->
+                        <!--                        <ul class="nav nav-pills nav-pills-info" id="types-tab" role="tablist">-->
+                        <!---->
+                        <!--                            <li class="nav-item">-->
+                        <!--                                <a class="nav-link -->
+                        <?//= $id == null ? "active" : "" ?><!-- " id="types-"-->
+                        <!--                                   href="/templates"-->
+                        <!--                                   role="tab" aria-controls="types_"-->
+                        <!--                                   aria-selected="true">Hammasi</a>-->
+                        <!--                            </li>-->
+                        <!--                            --><?// foreach ($types as $key => $type) { ?>
+                        <!--                                <li class="nav-item">-->
+                        <!--                                    <a class="nav-link -->
+                        <?//= $type->id == $id ? 'active' : '' ?><!--"-->
+                        <!--                                       id="types---><?//= $type->id ?><!--"-->
+                        <!--                                       href="?type=--><?//= $type->id ?><!--"-->
+                        <!--                                       role="tab" aria-controls="types_-->
+                        <?//= $type->id ?><!--"-->
+                        <!--                                       aria-selected="true">-->
+                        <?//= $type->name_uz ?><!--</a>-->
+                        <!--                                </li>-->
+                        <!--                            --><?// } ?>
+                        <!--                        </ul>-->
 
                         <?php Pjax::begin(); ?>
                         <?= GridView::widget([
                             'dataProvider' => $dataProvider,
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
+                                [
+                                    'attribute' => 'category_id',
+                                    'value'=>function($model){
+                                    return $model->category->name_uz;
+                                    }
+                                ],
                                 'name_uz',
                                 'name_ru',
-                                'group_id',
-                                'parent_id',
+
 
                             ],
                         ]) ?>
                         <?php Pjax::end(); ?>
+
                     </div>
 
 

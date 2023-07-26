@@ -46,7 +46,7 @@ $initialPreviewConfig = [];
                     deleted = document.getElementById('deleted_images')")
         ?>
         <? if ($gr) { ?>
-            <button type="button"  class="btn btn-outline-info btn-fw mb-3"><?= $gr->name_uz?></button>
+            <button type="button" class="btn btn-outline-info btn-fw mb-3"><?= $gr->name_uz ?></button>
         <? } ?>
         <div class="row">
             <div class="col-md-4">
@@ -104,10 +104,7 @@ $initialPreviewConfig = [];
         <?php Pjax::begin(['id' => 'files_block']) ?>
 
         <div class="row">
-            <div class="col-md-12">
 
-
-            </div>
             <? if ($main->path) { ?>
             <div class="col-md-6">
                 <label class="">Asosiy fayl</label>
@@ -119,10 +116,12 @@ $initialPreviewConfig = [];
                             <img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png"
                                  alt="">
                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                              <span id="installment-btn"
-                                    class="showInstallmentModal"
-                                    data-item="<?php echo $main->id ?>"
-                                    data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
+<!--                                <a target="_blank" href="/frontend/web--><?//= $main->path ?><!--"-->
+<!--                                   class="mb-0">Ko'chirib olish</a>-->
+                                <span id="installment-btn"
+                                      class="showInstallmentModal"
+                                      data-item="<?php echo $main->id ?>"
+                                      data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
                                              <button type="submit"
                                                      class="btn btn-success">Xujjatni ko'rish</button>
                              </span>

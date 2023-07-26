@@ -2,12 +2,15 @@
 
 namespace common\models\documents;
 
+use common\models\Company;
 use common\models\Employ;
+use DocxMerge\DocxMerge;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\faker\FixtureController;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "main_document".
@@ -155,7 +158,7 @@ class MainDocument extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'name_uz', 'path', 'category_id', 'type_group_id'], 'required'],
+            [['status', 'name_uz', 'path',], 'required'],
             [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id'], 'integer'],
             [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
 
@@ -246,6 +249,39 @@ class MainDocument extends \yii\db\ActiveRecord
         return $this->hasOne(CategoryDocuments::className(), ['id' => 'category_id']);
     }
 
+    public static function getAllCategory($doc_id = null)
+    {
+        $array = CategoryDocuments::find()->where(['status' => 1, 'parent_id' => null])->asArray()->all();
+
+        if ($doc_id)
+            $array = self::find()->where(['status' => 1, 'parent_id' => null, 'group_id' => $doc_id])->asArray()->all();
+
+        return ArrayHelper::map($array, 'id', 'name_uz');
+    }
+
+
+    public static function subAllGetCategory()
+    {
+        $array = CategoryDocuments::find()
+            ->where(['status' => 1])
+            ->andWhere(['not', ['parent_id' => null]])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($array, 'id', 'name_ru');
+    }
+
+    public static function subAllGroup()
+    {
+        $array = GroupDocuments::find()
+            ->where(['status' => 1])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($array, 'id', 'name_uz');
+    }
+
+
     public function getSubCategory()
     {
         return $this->hasOne(CategoryDocuments::className(), ['id' => 'group_id']);
@@ -271,6 +307,11 @@ class MainDocument extends \yii\db\ActiveRecord
     public function getEmploy()
     {
         return $this->hasOne(Employ::className(), ['id' => 'created_by']);
+    }
+
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -361,7 +402,8 @@ class MainDocument extends \yii\db\ActiveRecord
     {
 //        $generateDoc_Code = Yii::$app->security->generateRandomString(8);
         $generateDoc_Conclusion = Yii::$app->security->generateRandomString(9);
-        $this->code_conclusion = $generateDoc_Conclusion;
+        if (!$this->code_conclusion)
+            $this->code_conclusion = $generateDoc_Conclusion;
 //        $this->code_document = $generateDoc_Code;
 
     }
@@ -382,7 +424,7 @@ class MainDocument extends \yii\db\ActiveRecord
                 'id' => $this->id
             ])->one();
 
-        $user_name = Yii::$app->user->identity->employ->first_name;
+        $user_name = Yii::$app->user->identity->employ->first_name . ' ' . Yii::$app->user->identity->employ->last_name;
 
         $phpWord = new PHPWord();
 
@@ -403,17 +445,18 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
 
-        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/' . $item->path);
 
         $section = $phpWord->addSection();
-
-        $table = $section->addTable(['alignment' => 'center', 'borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 10, 'Spacing' => 10, 'cellMargin' => 5]);
-
-        $TableFontStyle = ['bold' => true, 'size' => 12, 'valign' => 'text-center', 'alignment' => 'text-center'];
+        $TableFontStyle = ['bold' => true, 'size' => 12, 'valign' => 'center', 'alignment' => 'center'];
         $cellRowSpan = ['vMerge' => 'restart', 'alignment' => 'center'];
         $cellRowContinue = ['vMerge' => 'continue'];
         $cellColSpan = ['gridSpan' => 2, 'alignment' => 'center'];
         $fancyTableCellBtlrStyle = ['valign' => 'center', 'alignment' => 'center'];
+        $section->addPageBreak();
+        $section->addTextBreak(1);
+
+
+        $table = $section->addTable(['borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 10, 'Spacing' => 10, 'cellMargin' => 100]);
 
         $table->addRow();
         $table->addCell(2000, $cellRowSpan)->addText('${myImage}');
@@ -426,55 +469,50 @@ class MainDocument extends \yii\db\ActiveRecord
         $table->addCell(null, $cellRowContinue);
 //        $table->addCell(null, $cellRowContinue);
         $table->addCell(2000)->addText("FISH", $TableFontStyle);
-        $table->addCell(2000)->addText($user_name, $TableFontStyle);
+        $table->addCell(4000)->addText($user_name, $TableFontStyle);
 //        $table->addCell(null, $cellRowContinue);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
-        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText('Sana', $TableFontStyle);
-        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText('Sana', $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
-        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText("Xujjat kodi", $TableFontStyle);
-        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText($this->code_document, $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText("Xujjat kodi", $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText($this->code_document, $TableFontStyle);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
-        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText("Xulosa kodi", $TableFontStyle);
-        $table->addCell(2000, $fancyTableCellBtlrStyle)->addText($this->code_conclusion, $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText("Xulosa kodi", $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText($this->code_conclusion, $TableFontStyle);
+        $section->addText($this->conclusion_uz);
 
-
-        $break = $section->addPageBreak();
-        $section->addTextBreak(1);
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-//        $objWriter->save(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx');
 
+        $objWriter->save(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
 
-//        $templateFile = Yii::getAlias('@frontend') . '/web/uploads/docs/asd.docx';
+        $dm = new DocxMerge();
+        $dm->merge([
+            Yii::getAlias('@frontend') . '/web/' . $item->path,
+            Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx',
+        ], Yii::getAlias('@frontend') . '/web/uploads/docs/marged.docx');
 
-//        $content = file_get_contents($templateFile);
+        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/uploads/docs/marged.docx');
 
-        $templateProcessor->setComplexBlock('table', $table);
-        $templateProcessor->setComplexBlock('break', $break);
-        $templateProcessor->setValue('conclusion', 'Yurist xulosa');
-        $templateProcessor->setImageValue('myImage', $img);
-
-
-//        echo file_get_contents(Yii::getAlias('@frontend') . '/web/uploads/docs/asd.docx');
+        $templateProcessor->setValue('fio', 'asaaad');
+//        $templateProcessor->setImageValue('myImage', $img);
 
         /*last step*/
 //        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
 
-
-//        $contents = file_get_contents(Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
 //
 //        $handle = fopen(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx', "r");
-//        $word = fopen(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx', "w");
-
+//
 //        fwrite($word, $contents);
-//        $copy = copy(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx', Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
+//        $copy = copy(Yii::getAlias('@frontend') . '/web/' . $item->path, Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
+//        $copy1 = copy(Yii::getAlias('@frontend') . '/web/uploads/docs/doc.docx', Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
 //        dd($copy);
     }
 

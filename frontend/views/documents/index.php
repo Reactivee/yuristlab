@@ -35,7 +35,7 @@ $this->title = 'Documents';
 //            'name_ru',
             [
                 'attribute' => 'category_id',
-                'label'=>'Bo\'lim',
+                'label' => 'Bo\'lim',
                 'value' => function ($model) {
 
                     return $model->category->group->name_uz;
@@ -93,12 +93,7 @@ $this->title = 'Documents';
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
 
-                        if ($model->user_id) {
-                            $emp = Employ::findOne($model->user_id);
-                            return Html::a($emp->first_name . ' ' . $emp->last_name, [$url], ['class' => 'btn btn-inverse-warning btn-fw']);
-                        } else {
-                            return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
-                        }
+                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
 
                     }
                 ],

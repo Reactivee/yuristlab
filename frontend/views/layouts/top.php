@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Html;
+
+?>
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper align-items-center">
         <a class="navbar-brand brand-logo" href="index.html"><img src="../../images/logo.svg" alt="logo"/></a>
@@ -46,18 +51,17 @@
             <li class="nav-item count-indicator nav-profile dropdown">
                 <span class="count">3</span>
                 <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    <span class="nav-profile-name">Hi, Lucille Wilkins</span>
+                    <span class="nav-profile-name font-weight-bold"><?= Yii::$app->user->identity->employ->first_name . " " . Yii::$app->user->identity->employ->last_name ?></span>
                     <img src="https://via.placeholder.com/36x36" alt="profile"/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item text-primary">
-                        <i class="mdi mdi-settings"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item text-primary">
-                        <i class="mdi mdi-message text-primary"></i>
-                        Messages
-                    </a>
+                    <?php echo Html::a('<i class="mdi mdi-settings"></i> Settings ',
+                        ['/user/index',], ['class' => 'dropdown-item text-primary']) ?>
+                    <?php echo Html::a('<i class="mdi mdi-message"></i> Message ',
+                        ['/user/index',], ['class' => 'dropdown-item text-primary']) ?>
+                    <?php echo Html::a('<i class="fas fa-sign-out"></i>Sign out',
+                        ['/site/logout'], ['data-method' => 'POST', 'class' => 'dropdown-item text-primary']) ?>
+
                 </div>
             </li>
             <li class="nav-item dropdown count-indicator arrow-none">

@@ -12,14 +12,16 @@ use yii\data\ActiveDataProvider;
  */
 class MainDocumentSearch extends MainDocument
 {
+    public $sub_category_id;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'category_id', 'group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
-            [['name_uz', 'name_ru', 'path'], 'safe'],
+            [['id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
+            [['name_uz', 'name_ru', 'path', 'code_document', 'category_id', 'group_id', 'sub_category_id'], 'safe'],
         ];
     }
 
@@ -41,8 +43,11 @@ class MainDocumentSearch extends MainDocument
      */
     public function search($params)
     {
-
+        $user = Yii::$app->user->identity->employ->company->id;
         $query = MainDocument::find()->orderBy(['id' => SORT_DESC]);
+        if ($user)
+            $query->where(['company_id' => $user]);
+
 
         // add conditions that should always apply here
 

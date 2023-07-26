@@ -69,10 +69,8 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="/documents">Docs</a></li>
                     <li class="nav-item"><a class="nav-link" href="/documents/statistics">Stat</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/news">News</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/law-news">Law News</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/templates">Templates</a></li>
-                    </li>
+
+
 
                 </ul>
             </div>
@@ -103,48 +101,31 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                 </ul>
             </div>
         </li>
-
-
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-               aria-controls="form-elements">
-                <i class="mdi mdi-view-grid menu-icon"></i>
-                <span class="menu-title">Forms</span>
+            <a class="nav-link" data-toggle="collapse" href="#ui-news" aria-expanded="false"
+               aria-controls="ui-news">
+                <i class="mdi mdi-folder-outline menu-icon"></i>
+                <span class="menu-title">Yangiliklar</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="form-elements">
+            <div class="collapse" id="ui-news">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/advanced_elements.html">Advanced
-                            Elements</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/validation.html">Validation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/wizard.html">Wizard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/text_editor.html">Text editors</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/forms/code_editor.html">Code editors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/news">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/law-news">Law News</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                <i class="mdi mdi-chart-pie menu-icon"></i>
-                <span class="menu-title">Charts</span>
+            <a class="nav-link"  href="/templates" aria-expanded="false"
+               aria-controls="ui-template">
+                <i class="mdi mdi-folder-outline menu-icon"></i>
+                <span class="menu-title">Namunalar</span>
                 <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="charts">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/morris.html">Morris</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/flot-chart.html">Flot</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/google-charts.html">Google charts</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/sparkline.html">Sparkline js</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/c3.html">C3 charts</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/chartist.html">Chartists</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pages/charts/justGage.html">JustGage</a></li>
-                </ul>
-            </div>
+
         </li>
+
+
 
     </ul>
     <div class="designer-info">

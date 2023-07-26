@@ -167,13 +167,11 @@ class DocumentsController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $user_id = Yii::$app->user->identity->employ->id;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
 
         }
-        $model->user_id = $user_id;
-        $model->save();
+
 
         return $this->render('view', [
             'model' => $model

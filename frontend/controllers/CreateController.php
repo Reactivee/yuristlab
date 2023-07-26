@@ -148,7 +148,7 @@ class CreateController extends Controller
 
     }
 
-    public  function actionUploadDocs()
+    public function actionUploadDocs()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $data = [];
@@ -362,8 +362,7 @@ class CreateController extends Controller
         return ['output' => '', 'selected' => ''];
     }
 
-    public
-    function actionGetFile($id)
+    public function actionGetFile($id)
     {
 ////        Yii::$app->response->format = Response::FORMAT_JSON;
         $doc = TypeDocuments::findOne($id);
