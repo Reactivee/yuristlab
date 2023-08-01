@@ -342,13 +342,15 @@ class MainDocument extends \yii\db\ActiveRecord
             }
             $this->generateDocCode();
         }
+
         if ($this->status === self::SUCCESS) {
             $this->generateCodes();
 
             $this->signed_lawyer = Yii::$app->user->identity->employ->id;
         }
-        if ($this->status === self::BOSS_SIGNED) {
 
+        if ($this->status === self::BOSS_SIGNED) {
+            $this->generateCheckOrder();
             $this->margeDocs();
 
         }
