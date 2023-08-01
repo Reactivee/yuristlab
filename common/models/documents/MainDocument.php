@@ -318,14 +318,18 @@ class MainDocument extends \yii\db\ActiveRecord
     {
 
         if (isset($changedAttributes['status']) && $this->status === self::SUCCESS) {
-
-            $this->generateConclusion();
+            $this->generateLawyerConclusion();
+//            $this->generateConclusion();
             $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 
         }
+
         if (isset($changedAttributes['status']) && $this->status === self::BOSS_SIGNED) {
             $this->generateCheckOrder();
+//            $this->margeDocs();
+
         }
+
     }
 
     public function beforeSave($insert)
@@ -342,6 +346,10 @@ class MainDocument extends \yii\db\ActiveRecord
             $this->generateCodes();
 
             $this->signed_lawyer = Yii::$app->user->identity->employ->id;
+        }
+        if ($this->status === self::BOSS_SIGNED) {
+
+            $this->margeDocs();
 
         }
 
@@ -353,23 +361,19 @@ class MainDocument extends \yii\db\ActiveRecord
         $item = MainDocument::find()
             ->where([
                 'id' => $this->id
-            ])->one();
+            ])
+            ->one();
 
         $user_name = Yii::$app->user->identity->employ->first_name . ' ' . Yii::$app->user->identity->employ->last_name;
 
-//        dd($user_name);
         $phpWord = new PHPWord();
         $folder = '/web/uploads/temp/';
         $uploads_folder = Yii::getAlias('@frontend') . $folder;
         if (!file_exists($uploads_folder)) {
             mkdir($uploads_folder, 0777, true);
         }
-//        $get_img = file_get_contents($img);
-        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
-//        dd(Yii::getAlias('@frontend')  . $item->path);
-//        $folder = '/web/uploads/docs/';
-//        $uploads_folder = Yii::getAlias('@frontend') . $folder;
 
+        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
         /*Write qr */
         $qrCode = (new \Da\QrCode\QrCode('Elektron doc'))
             ->setSize(430)
@@ -385,15 +389,14 @@ class MainDocument extends \yii\db\ActiveRecord
         $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
         $templateProcessor->setValue('code_doc', $this->code_document);
         $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
-        $templateProcessor->setImageValue('qr', $img);
-//        $templateProcessor->setValue('id', $this->id);
-//        $templateProcessor->setValue('code', $this->code);
-//        $templateProcessor->setValue('company_name', $this->company->official_name);
-//        $templateProcessor->setValue('inn', $this->company->stir);
-//        $templateProcessor->setValue('adress', $this->company->address);
-//        $templateProcessor->setValue('need_delivery', $this->need_deliver ? 'Да' : 'Нет');
+        $templateProcessor->setImageValue('qr',
+            array('path' => $img,
+                'width' => 100,
+                'height' => 100,
+                'ratio' => true));
 
-//        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
+        //        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
+
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
 //        $this->save();
     }
@@ -445,75 +448,110 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
 
+        $section = $phpWord->addSection();
+
+        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/' . $item->path);
+//        $templateProcessor->setImageValue('myImage', $img);
+
+        $templateProcessor->setValue('fio', 'asaaad');
+
+        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
+
+
+    }
+
+    public function generateLawyerConclusion()
+    {
+        $item = MainDocument::find()
+            ->where([
+                'id' => $this->id
+            ])->one();
+
+        $user_name = Yii::$app->user->identity->employ->first_name . ' ' . Yii::$app->user->identity->employ->last_name;
+
+        $phpWord = new PHPWord();
+
+        $folder = '/web/uploads/temp/';
+        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+        if (!file_exists($uploads_folder)) {
+            mkdir($uploads_folder, 0777, true);
+        }
+
+        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+
+        /*Write qr */
+        $qrCode = (new \Da\QrCode\QrCode('Elektron doc'))
+            ->setSize(100)
+            ->setMargin(0);
+
+        $qrCode->writeFile(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_conclusion . '.png');
+
+        $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_conclusion . '.png';
 
         $section = $phpWord->addSection();
-        $TableFontStyle = ['bold' => true, 'size' => 12, 'valign' => 'center', 'alignment' => 'center'];
-        $cellRowSpan = ['vMerge' => 'restart', 'alignment' => 'center'];
+
+        $TableFontStyle = ['bold' => true, 'size' => 14, 'valign' => 'center', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
+
+        $cellRowSpan = ['vMerge' => 'restart', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
         $cellRowContinue = ['vMerge' => 'continue'];
-        $cellColSpan = ['gridSpan' => 2, 'alignment' => 'center'];
-        $fancyTableCellBtlrStyle = ['valign' => 'center', 'alignment' => 'center'];
-        $section->addPageBreak();
+        $cellColSpan = ['gridSpan' => 2, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
+//        $fancyTableCellBtlrStyle = ['valign' => 'center', 'alignment' => 'center'];
+
         $section->addTextBreak(1);
 
-
-        $table = $section->addTable(['borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 10, 'Spacing' => 10, 'cellMargin' => 100]);
+        $table = $section->addTable(['borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 1, 'Spacing' => 2, 'cellMargin' => 20, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'ratio' => true]);
 
         $table->addRow();
-        $table->addCell(2000, $cellRowSpan)->addText('${myImage}');
-//        $table->addCell(2000, $cellRowSpan)->addText("2");
+//        $table->addCell(2000, $cellRowSpan)->addText('${myImage}');
+        $table->addCell(2000, $cellRowSpan)->addImage($img, array('width' => 70, 'height' => 70, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'ratio' => true));
         $table->addCell(4000, $cellColSpan)->addText("Qr ni skanerlang", $TableFontStyle);
-//        $table->addCell(2000, $cellRowSpan)->addText("6");
-//        $templateProcessor->setComplexBlock('table_var', $table);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
-//        $table->addCell(null, $cellRowContinue);
+
         $table->addCell(2000)->addText("FISH", $TableFontStyle);
         $table->addCell(4000)->addText($user_name, $TableFontStyle);
-//        $table->addCell(null, $cellRowContinue);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
-        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText('Sana', $TableFontStyle);
-        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
+        $table->addCell(4000, $TableFontStyle)->addText('Sana', $TableFontStyle);
+        $table->addCell(4000, $TableFontStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
-        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText("Xujjat kodi", $TableFontStyle);
-        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText($this->code_document, $TableFontStyle);
+        $table->addCell(4000, $TableFontStyle)->addText("Xujjat kodi", $TableFontStyle);
+        $table->addCell(4000, $TableFontStyle)->addText($this->code_document, $TableFontStyle);
 
         $table->addRow();
         $table->addCell(null, $cellRowContinue);
-        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText("Xulosa kodi", $TableFontStyle);
-        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText($this->code_conclusion, $TableFontStyle);
-        $section->addText($this->conclusion_uz);
+        $table->addCell(4000, $TableFontStyle)->addText("Xulosa kodi", $TableFontStyle);
+        $table->addCell(4000, $TableFontStyle)->addText($this->code_conclusion, $TableFontStyle);
+
+        $section->addTextBreak(1);
+        $section->addText($this->conclusion_uz, $TableFontStyle);
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
         $objWriter->save(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
 
+
+    }
+
+    public function margeDocs()
+    {
+        $generateName = Yii::$app->security->generateRandomString() . uniqid();
+        $fileExt = pathinfo($this->path, PATHINFO_EXTENSION);
+        $newName = $generateName . '.' . $fileExt;
+
         $dm = new DocxMerge();
-        $dm->merge([
-            Yii::getAlias('@frontend') . '/web/' . $item->path,
-            Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx',
-        ], Yii::getAlias('@frontend') . '/web/uploads/docs/marged.docx');
+        $marged = $dm->merge([
+            Yii::getAlias('@frontend') . '/web/' . $this->path,
+            Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx'
+        ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
 
-        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/uploads/docs/marged.docx');
+        $this->path = '/uploads/docs/' . $newName;
+//        dd($this);
 
-        $templateProcessor->setValue('fio', 'asaaad');
-//        $templateProcessor->setImageValue('myImage', $img);
-
-        /*last step*/
-//        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
-        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
-
-//
-//        $handle = fopen(Yii::getAlias('@frontend') . '/web/uploads/docs/asdaaaa.docx', "r");
-//
-//        fwrite($word, $contents);
-//        $copy = copy(Yii::getAlias('@frontend') . '/web/' . $item->path, Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
-//        $copy1 = copy(Yii::getAlias('@frontend') . '/web/uploads/docs/doc.docx', Yii::getAlias('@frontend') . '/web/uploads/docs/asda.docx');
-//        dd($copy);
     }
 
 

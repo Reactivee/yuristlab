@@ -31,13 +31,14 @@ if (!empty($model->attach)) {
 ?>
 <div class="container-fluid p-3">
     <div class="buttons_wrap mb-3">
-        <? if ($model->status != MainDocument::NEW) { ?>
+        <? if (!$model->signed_lawyer && $model->status != MainDocument::NEW) { ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+
         <? } ?>
         <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
 
         <? if ($model->signed_lawyer) { ?>
-            <?= Html::a(' <i class="fas fa-pencil"></i> So\'ngi Imzolash ', ['/director/to-finish', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+            <?= Html::a(' <i class="fas fa-pencil mr-2"></i>Imzolash ', ['/director/to-finish', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
         <? } ?>
 
     </div>

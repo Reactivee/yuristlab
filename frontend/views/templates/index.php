@@ -4,7 +4,9 @@ use kartik\select2\Select2;
 use kartik\tabs\TabsX;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\bootstrap4\Modal;
 use yii\grid\GridView;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 
@@ -126,24 +128,50 @@ $id = $request->get('type');
                         <!--                            --><?// } ?>
                         <!--                        </ul>-->
 
-                        <?php Pjax::begin(); ?>
+                        <!--                        --><?php //Pjax::begin(); ?>
                         <?= GridView::widget([
                             'dataProvider' => $dataProvider,
                             'columns' => [
                                 ['class' => 'yii\grid\SerialColumn'],
                                 [
                                     'attribute' => 'category_id',
-                                    'value'=>function($model){
-                                    return $model->category->name_uz;
+                                    'value' => function ($model) {
+                                        return $model->category->name_uz;
                                     }
                                 ],
                                 'name_uz',
-                                'name_ru',
+                                [
+                                    'attribute' => 'path',
+                                    'format' => 'raw',
+                                    'value' => function ($model) {
+                                        $url = "
+                                         <span id='installment-btn'
+                                      class='showInstallmentModal'
+                                      data-item='$model->id'
+                                          
+                                        data-href='/documents/doc-view-template?id=$model->id'>
+
+                                        <button type='submit'
+                                                class='btn btn-success'>Xujjatni ko'rish</button>
+                                                
+                                        </span>
+                                        ";
+                                        return $url;
+                                    }
+                                ],
+                                [
+                                    'attribute' => 'path',
+                                    'format' => 'html',
+                                    'value' => function ($model) {
+                                        $url = Html::a("<i class='fa fa-cloud-download mr-2'></i> Ko'chirib olish", $model->path);
+                                        return $url;
+                                    }
+                                ]
 
 
                             ],
                         ]) ?>
-                        <?php Pjax::end(); ?>
+                        <!--                        --><?php //Pjax::end(); ?>
 
                     </div>
 
@@ -154,4 +182,73 @@ $id = $request->get('type');
 
         </div>
     </div>
-<?php
+
+
+<?php Modal::begin([
+    'title' => '<span class="modal-header-main">Template </span>',
+    'id' => 'modalInstallment',
+    'size' => 'modal-dialog modal-xl',
+    'headerOptions' => [
+        'id' => 'modalInstallmentHeader'
+    ],
+    'titleOptions' => [
+        'class' => 'title-orange-border text-bold text-uppercase',
+    ],
+    'options' => [
+        'class' => 'modalInstallment',
+    ],
+    'closeButton' => [
+        'id' => 'close-button',
+        'class' => 'close',
+        'data-dismiss' => 'modal',
+    ],
+    'clientOptions' => [
+        //            'backdrop' => 'static',
+        'keyboard' => true,
+    ],
+]); ?>
+    <div id='modalInstallmentContent' class="modalContent">
+        <div class="loading">
+            <div style="text-align:center">
+                <?php echo Html::img('@web/public/images/loading.gif'); ?>
+            </div>
+        </div>
+    </div>
+
+<?php Modal::end();
+
+
+$script = <<<JS
+
+
+$(function(){
+    var loading = $('#modalInstallment .loading').html();
+    $(document).on('click', '.showInstallmentModal', function(e){
+        e.preventDefault();
+        $('#modalInstallment').find('#modalInstallmentContent').html(loading);
+        console.log($('#modalInstallment').data('amount'));
+        console.log($('#modalInstallment').data('bs.modal'));
+        if ($('#modalInstallment').data('bs.modal').isShown) {
+            $('#modalInstallment').find('#modalInstallmentContent')
+                .load($(this).attr('data-href')); 
+            $('#installmentTab a').on('click', function (e) {
+              e.preventDefault();
+              $(this).tab('show');
+            })
+        } else {
+            $('#modalInstallment').modal('show')
+                .find('#modalInstallmentContent')
+                .load($(this).attr('data-href'));
+            $('#installmentTab a').on('click', function (e) {
+              e.preventDefault()
+              $(this).tab('show')
+            })
+        }
+        return false;
+    });
+
+})
+
+JS;
+$this->registerJs($script);
+

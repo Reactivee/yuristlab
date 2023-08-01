@@ -122,6 +122,7 @@ $initialPreviewConfig = [];
                                       class="showInstallmentModal"
                                       data-item="<?php echo $main->id ?>"
                                       data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
+
                                              <button type="submit"
                                                      class="btn btn-success">Xujjatni ko'rish</button>
                              </span>
