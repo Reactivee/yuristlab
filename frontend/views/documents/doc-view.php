@@ -40,7 +40,7 @@ $domen = Url::base('https');
 
 
         <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=<?= $domen . $model->path?>'
-                width='100%' height='100%' frameborder='0'>
+                width='100%' height='900px' frameborder='0'>
         </iframe>
 
         <?php
