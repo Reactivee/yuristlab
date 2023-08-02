@@ -24,6 +24,9 @@ use yii\helpers\ArrayHelper;
  */
 class Employ extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = 0;
+    const STATUS_INACTIVE = 9;
+    const STATUS_ACTIVE = 10;
     /**
      * {@inheritdoc}
      */
@@ -31,6 +34,7 @@ class Employ extends \yii\db\ActiveRecord
     {
         return 'employ';
     }
+
 
     /**
      * {@inheritdoc}
@@ -64,6 +68,16 @@ class Employ extends \yii\db\ActiveRecord
             'role' => 'Role',
             'login' => 'Login',
         ];
+    }
+
+    public  function getStatus($status = null)
+    {
+        $array = [
+            self::STATUS_ACTIVE => 'active',
+            self::STATUS_INACTIVE => 'No active',
+        ];
+
+        return $status ? $array[$status] : $array;
     }
 
     public function getAllUser()

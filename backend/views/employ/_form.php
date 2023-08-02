@@ -1,5 +1,6 @@
 <?php
 
+use kartik\file\FileInput;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -17,21 +18,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList($model->getStatus()) ?>
 
-    <?= $form->field($model, 'user_id')->widget(
-        Select2::classname(), [
-            'data' => $model->getAllUser(),
-            'theme' => Select2::THEME_BOOTSTRAP,
-            'options' => [
-                'placeholder' => 'Select provinces ...',
-                'multiple' => false,
-                'allowClear' => true
-            ],
-            'pluginOptions' => [
-                'allowClear' => true,
-            ],]
-    ) ?>
+
+        <?= $form->field($model, 'user_id')->widget(
+            Select2::classname(), [
+                'data' => $model->getAllUser(),
+                'theme' => Select2::THEME_BOOTSTRAP,
+                'options' => [
+                    'placeholder' => 'Select provinces ...',
+                    'multiple' => false,
+                    'allowClear' => true
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],]
+        ) ?>
+
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
@@ -41,7 +44,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+    <?=
+    $form->field($model, 'photo')->widget(FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'maxFileSize' => 1800,
+            'initialPreviewAsData' => true,
+        ]
+    ]);
+    //    $form->field($model, 'photo')->textInput(['maxlength' => true])  ?>
 
     <?=
     $form->field($model, 'company_id')->widget(Select2::classname(), [
@@ -57,9 +68,9 @@ use yii\widgets\ActiveForm;
         ],
     ]);
 
-    //    $form->field($model, 'company_id')->dropDownList()    ?>
+    //    $form->field($model, 'company_id')->dropDownList()       ?>
 
-    <?= $form->field($model, 'role')->textInput() ?>
+    <?= $form->field($model, 'role')->dropDownList(\common\models\User::getRole()) ?>
 
     <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
 

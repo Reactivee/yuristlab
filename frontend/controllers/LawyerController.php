@@ -44,7 +44,8 @@ class LawyerController extends Controller
             if ($model->save())
                 Yii::$app->session->setFlash('success', 'Saqlandi');
         }
-        $model->user_id = $user_id;
+        if (!$model->user_id)
+            $model->user_id = $user_id;
         $model->save();
         return $this->render('view', [
             'model' => $model,

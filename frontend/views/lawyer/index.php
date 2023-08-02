@@ -27,11 +27,13 @@ $this->title = 'Documents';
 //            'lastPageLabel' => 'Oxiri',
             'class' => '\yii\widgets\LinkPager',
         ],
-         'showPageSummary' => false,
+        'showPageSummary' => false,
         'resizableColumns' => true,
         'resizeStorageKey' => Yii::$app->user->id . '-' . date("m"),
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'responsive' => true,
+        'hover' => true,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
@@ -55,6 +57,7 @@ $this->title = 'Documents';
                         'multiple' => true
                     ],
                 ],
+                'contentOptions' => ['style' => 'width: 100px'],
                 'value' => function ($model) {
                     return $model->category->group->name_uz;
                 }
@@ -65,7 +68,7 @@ $this->title = 'Documents';
                 'filter' => MainDocument::getAllCategory(),
                 'filterType' => GridView::FILTER_SELECT2,
                 'filterWidgetOptions' => [
-                    'theme' => Select2::THEME_KRAJEE_BS5,
+                    'theme' => Select2::THEME_BOOTSTRAP,
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -86,7 +89,7 @@ $this->title = 'Documents';
                 'filterType' => GridView::FILTER_SELECT2,
 
                 'filterWidgetOptions' => [
-                    'theme' => Select2::THEME_KRAJEE_BS5,
+                    'theme' => Select2::THEME_BOOTSTRAP,
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
@@ -101,6 +104,19 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'type_group_id',
+                'format' => 'raw',
+                'filter' => MainDocument::subAllType(),
+                'filterType' => GridView::FILTER_SELECT2,
+
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
                     return $model->type->name_uz;
                 }
@@ -122,6 +138,17 @@ $this->title = 'Documents';
             [
                 'attribute' => 'company_id',
                 'label' => 'Korxona',
+                'filter' => MainDocument::getAllCompany(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
                     return $model->company->name_uz;
                 }
@@ -130,7 +157,18 @@ $this->title = 'Documents';
             [
                 'attribute' => 'status',
                 'format' => "raw",
+                'filter' => MainDocument::getStatusNameArr(),
+                'filterType' => GridView::FILTER_SELECT2,
 
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
                     return MainDocument::getStatusNameColored($model->status);
                 }

@@ -29,6 +29,10 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const ADMIN = 10;
+    const MODERATOR = 11;
+    const EMPLOY = 12;
+
 
     /**
      * {@inheritdoc}
@@ -58,6 +62,17 @@ class User extends ActiveRecord implements IdentityInterface
             ['employ_id', 'safe'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
+    }
+
+    public static function getRole($role = null)
+    {
+        $array = [
+            self::ADMIN => 'admin',
+            self::MODERATOR => 'moderator',
+            self::EMPLOY => 'Xodim',
+        ];
+
+        return $role ? $array[$role] : $array;
     }
 
     /**

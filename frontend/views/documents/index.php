@@ -22,6 +22,11 @@ $this->title = 'Documents';
         ],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+//        'floatPageSummary' => true, // floats page summary to bottom
+//        'headerContainer' => ['class' => 'kv-table-header', 'style' => 'top:50px'], // offset from top
+//        'resizableColumns' => true,
+//        'showPageSummary' => false,
+
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

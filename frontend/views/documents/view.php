@@ -90,6 +90,7 @@ if (!empty($model->attach)) {
                     Xujjar yuborilgan
                 </div>
             <? } ?>
+
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Xujjat kodi:
@@ -146,10 +147,12 @@ if (!empty($model->attach)) {
                             <div class="card">
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                        <? if ($model->status != MainDocument::BOSS_SIGNED) { ?>
+                                        <? if ($model->status == MainDocument::BOSS_SIGNED) { ?>
                                             <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
                                                 ['doc-template', 'id' => $model->id], ['target' => '_blank']);
                                         }
+                                     echo   Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                            ['doc-template', 'id' => $model->id], ['target' => '_blank']);
                                         ?>
 
                                         <!--                              <span id="installment-btn"-->
@@ -270,23 +273,7 @@ if (!empty($model->attach)) {
 
         <?php ActiveForm::end(); ?>
 
-        <!--    --><? //= DetailView::widget([
-        //        'model' => $model,
-        //        'attributes' => [
-        //
-        //            'name_uz',
-        //            'name_ru',
-        //            'category_id',
-        //            'group_id',
-        //            'status',
-        //            'created_at',
-        //            'updated_at',
-        //            'created_by',
-        //            'path',
-        //            'time_begin:datetime',
-        //            'time_end:datetime',
-        //        ],
-        //    ]) ?>
+
 
     </div>
 

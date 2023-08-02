@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\models\Employ;
 use common\models\EmploySearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * EmployController implements the CRUD actions for Employ model.
@@ -70,7 +72,10 @@ class EmployController extends Controller
         $model = new Employ();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+
+
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -93,7 +98,29 @@ class EmployController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $file_image = UploadedFile::getInstances($model, 'photo');
+            if ($file_image) {
+                foreach ($file_image as $file) {
+
+                    $folder = '/web/uploads/employ/';
+                    $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                    if (!file_exists($uploads_folder)) {
+                        mkdir($uploads_folder, 0777, true);
+                    }
+                    $ext = pathinfo($file->name, PATHINFO_EXTENSION);
+                    $name = pathinfo($file->name, PATHINFO_FILENAME);
+                    $generateName = Yii::$app->security->generateRandomString();
+                    $path = $uploads_folder . $generateName . ".{$ext}";
+                    $file->saveAs($path);
+
+                    $model->photo = '/uploads/docs/' . $generateName . ".{$ext}";
+
+                }
+            }
+
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

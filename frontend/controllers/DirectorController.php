@@ -79,12 +79,14 @@ class DirectorController extends Controller
     public function actionToFinish($id)
     {
         $main = MainDocument::find()->where(['id' => $id])->one();
+
         if ($main) {
             $main->status = MainDocument::BOSS_SIGNED;
 
-            if ($main->save()) {
-                Yii::$app->session->setFlash('success', "Yuborildi");
-                return $this->redirect(Yii::$app->request->referrer);
+            if (!$main->save()) {
+                dd($main->errors);
+//                Yii::$app->session->setFlash('success', "Yuborildi");
+//                return $this->redirect(Yii::$app->request->referrer);
             }
 
         } else {

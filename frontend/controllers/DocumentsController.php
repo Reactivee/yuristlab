@@ -406,7 +406,6 @@ class DocumentsController extends Controller
 
         $doc = MainDocument::findOne($id);
 
-
         return $this->render('doc-view', [
             'model' => $doc
         ]);

@@ -162,7 +162,7 @@ class MainDocument extends \yii\db\ActiveRecord
             [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id'], 'integer'],
             [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
 
-            [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz', 'signed_lawyer'], 'safe']
+            [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz', 'signed_lawyer', 'lawyer_conclusion_path'], 'safe']
         ];
     }
 
@@ -218,7 +218,6 @@ class MainDocument extends \yii\db\ActiveRecord
     public function saveFilesApi($file = null, $id)
     {
 
-
         $doc = new AttachedDocument();
         $doc->main_document_id = $id;
         $doc->path = $file['path'];
@@ -230,7 +229,6 @@ class MainDocument extends \yii\db\ActiveRecord
 
             return false;
         }
-
 
         return true;
     }
@@ -281,6 +279,22 @@ class MainDocument extends \yii\db\ActiveRecord
         return ArrayHelper::map($array, 'id', 'name_uz');
     }
 
+    public static function subAllType()
+    {
+        $array = TypeDocuments::find()
+            ->where(['status' => 1])
+            ->asArray()
+            ->all();
+
+        return ArrayHelper::map($array, 'id', 'name_uz');
+    }
+
+
+    public static function getAllCompany()
+    {
+        $comp = Company::find()->all();
+        return ArrayHelper::map($comp, 'id', 'name_uz');
+    }
 
     public function getSubCategory()
     {
@@ -318,14 +332,13 @@ class MainDocument extends \yii\db\ActiveRecord
     {
 
         if (isset($changedAttributes['status']) && $this->status === self::SUCCESS) {
-            $this->generateLawyerConclusion();
 //            $this->generateConclusion();
-            $this->signed_lawyer = Yii::$app->user->identity->employ->id;
+//            $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 
         }
-
+//    dd($changedAttributes);
         if (isset($changedAttributes['status']) && $this->status === self::BOSS_SIGNED) {
-            $this->generateCheckOrder();
+//            $this->generateCheckOrder();
 //            $this->margeDocs();
 
         }
@@ -334,6 +347,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
+
         if ($this->isNewRecord) {
             if (Yii::$app->user->identity->employ->company) {
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
@@ -343,13 +357,16 @@ class MainDocument extends \yii\db\ActiveRecord
             $this->generateDocCode();
         }
 
-        if ($this->status === self::SUCCESS) {
+        if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
             $this->generateCodes();
+            $this->generateLawyerConclusion();
 
-            $this->signed_lawyer = Yii::$app->user->identity->employ->id;
+            if (!$this->signed_lawyer)
+                $this->signed_lawyer = Yii::$app->user->identity->employ->id;
+
         }
 
-        if ($this->status === self::BOSS_SIGNED) {
+        if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
             $this->generateCheckOrder();
             $this->margeDocs();
 
@@ -400,6 +417,7 @@ class MainDocument extends \yii\db\ActiveRecord
         //        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
 
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
+
 //        $this->save();
     }
 
@@ -535,7 +553,7 @@ class MainDocument extends \yii\db\ActiveRecord
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
         $objWriter->save(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
-
+        $this->lawyer_conclusion_path = '/uploads/docs/' . $this->code_document . '.docx';
 
     }
 
@@ -552,7 +570,7 @@ class MainDocument extends \yii\db\ActiveRecord
         ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
 
         $this->path = '/uploads/docs/' . $newName;
-//        dd($this);
+
 
     }
 

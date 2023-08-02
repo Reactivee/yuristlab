@@ -134,7 +134,8 @@ if (!empty($model->attach)) {
 
 
                 }
-            ]
+            ],
+            'path',
 
         ],
     ]);

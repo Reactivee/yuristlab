@@ -20,8 +20,8 @@ class MainDocumentSearch extends MainDocument
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
-            [['name_uz', 'name_ru', 'path', 'code_document', 'category_id', 'group_id', 'sub_category_id'], 'safe'],
+            [['id', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end'], 'integer'],
+            [['name_uz', 'name_ru', 'path', 'code_document', 'category_id', 'group_id', 'sub_category_id','status','company_id','type_group_id' ], 'safe'],
         ];
     }
 
@@ -78,6 +78,8 @@ class MainDocumentSearch extends MainDocument
             'created_by' => $this->created_by,
             'time_begin' => $this->time_begin,
             'time_end' => $this->time_end,
+            'company_id' => $this->company_id,
+            'type_group_id' => $this->company_id,
         ]);
 
         $query->andFilterWhere(['like', 'name_uz', $this->name_uz])
@@ -121,6 +123,8 @@ class MainDocumentSearch extends MainDocument
             'created_by' => $this->created_by,
             'time_begin' => $this->time_begin,
             'time_end' => $this->time_end,
+            'company_id' => $this->company_id,
+            'type_group_id' => $this->type_group_id,
         ]);
 
         $query->andFilterWhere(['like', 'name_uz', $this->name_uz])
