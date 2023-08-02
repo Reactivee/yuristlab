@@ -570,7 +570,8 @@ class MainDocument extends \yii\db\ActiveRecord
         ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
 
         $this->path = '/uploads/docs/' . $newName;
-
+        $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+        chmod($filename, 0644);
 
     }
 
