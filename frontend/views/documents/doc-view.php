@@ -38,6 +38,11 @@ $domen = Url::base('https');
         <!--            Kengaytirilgan-->
         <!--        </a>-->
 
+
+        <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=<?= $domen . $model->path?>'
+                width='100%' height='100%' frameborder='0'>
+        </iframe>
+
         <?php
 
         echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
@@ -51,4 +56,6 @@ $domen = Url::base('https');
         ?>
     </div>
 </div>
+
+
 
