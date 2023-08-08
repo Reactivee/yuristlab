@@ -33,7 +33,7 @@ $fileName = pathinfo($model->path, PATHINFO_FILENAME);
         <!--            <button id="upload">Upload doc File</button>-->
         <!--        </p>-->
         <!--        --><? //= dd($doc)?>
-        <iframe id="iframe" style="width: 100%; height: 100% "
+        <iframe id="iframe" style="width: 100%; height: 900px"
                 src="https://docs.google.com/document/d/<?= $doc ?>/edit?usp=sharing&amp;widget=true&amp;headers=false">
 
 
