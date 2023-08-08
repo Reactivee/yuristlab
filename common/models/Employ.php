@@ -27,6 +27,7 @@ class Employ extends \yii\db\ActiveRecord
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
     /**
      * {@inheritdoc}
      */
@@ -70,7 +71,7 @@ class Employ extends \yii\db\ActiveRecord
         ];
     }
 
-    public  function getStatus($status = null)
+    public function getStatus($status = null)
     {
         $array = [
             self::STATUS_ACTIVE => 'active',
@@ -96,9 +97,23 @@ class Employ extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
     }
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public static function getLawyers()
+    {
+        $law = self::find()
+            ->select(["CONCAT(first_name, ' ', last_name) AS first_name",'id'])
+            ->where(['role' => User::LAWYER, 'status' => self::STATUS_ACTIVE])
+
+            ->all();
+
+        return ArrayHelper::map($law, 'id', 'first_name');
+
+
     }
 
 }

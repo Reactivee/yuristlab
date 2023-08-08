@@ -21,8 +21,9 @@ $this->title = 'Create new';
 $type_id = Yii::$app->request->getQueryParam('id');
 $doc_id = Yii::$app->request->getQueryParam('doc');
 $gr = \common\models\documents\GroupDocuments::findOne($doc_id);
+$cats = CategoryDocuments::getCategory($doc_id);
 
-//dd(Yii::$app->request->getQueryParam('id'));
+
 $initialPreview = [];
 $initialPreviewConfig = [];
 //if (!empty($images = $model->complexImages)) {
@@ -49,58 +50,57 @@ $initialPreviewConfig = [];
             <button type="button" class="btn btn-outline-info btn-fw mb-3"><?= $gr->name_uz ?></button>
         <? } ?>
         <div class="row">
-            <div class="col-md-4">
-                <?
-                echo $form->field($main, 'category_id')->widget(Select2::className(), [
-                    'data' => CategoryDocuments::getCategory($doc_id),
-                    'theme' => Select2::THEME_BOOTSTRAP,
-//                    'type' => DepDrop::TYPE_SELECT2,
-                    'options' => ['placeholder' => 'Category', 'id' => 'category_id'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-//                        'depends' => ['group'],
-//                        'url' => Url::to(['get-category']),
-                    ],
-                ])->label(false);
-                ?>
-            </div>
-            <div class="col-md-4">
-                <?
-                echo $form->field($main, 'group_id')->widget(DepDrop::classname(), [
-                    'type' => DepDrop::TYPE_SELECT2,
-                    'options' => ['id' => 'group_id', 'placeholder' => 'Sub kategoriya', 'class' => 'color_gray'],
-                    'pluginOptions' => [
-                        'depends' => ['category_id'],
-                        'url' => Url::to(['get-subcategory']),
-                    ]
-                ])->label(false); ?>
+            <? if ($cats) { ?>
 
-            </div>
-            <div class="col-md-4">
-                <?
+                <div class="col-md-4">
+                    <? echo $form->field($main, 'category_id')->widget(Select2::className(), [
+                        'data' => CategoryDocuments::getCategory($doc_id),
+                        'theme' => Select2::THEME_BOOTSTRAP,
+                        'options' => ['placeholder' => 'Category', 'id' => 'category_id'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])->label(false);
+                    ?>
+                </div>
+                <div class="col-md-4">
+                    <? echo $form->field($main, 'sub_category_id')->widget(DepDrop::classname(), [
+                        'type' => DepDrop::TYPE_SELECT2,
+                        'options' => ['id' => 'sub_category_id', 'placeholder' => 'Sub kategoriya', 'class' => 'color_gray'],
+                        'pluginOptions' => [
+                            'depends' => ['category_id'],
+                            'url' => Url::to(['get-subcategory']),
+                        ]
+                    ])->label(false); ?>
 
-                echo $form->field($main, 'type_group_id')->widget(DepDrop::classname(), [
-                    'type' => DepDrop::TYPE_SELECT2,
-                    'options' => ['id' => 'type_id', 'placeholder' => 'Type', 'class' => 'color_gray'],
-                    'pluginOptions' => [
-                        'depends' => ['group_id'],
-                        'url' => Url::to(['get-types']),
-                        'allowClear' => true
-                    ],
-                    'pluginEvents' => [
-                        'select2:select' => new JsExpression("function (e) {
+                </div>
+                <div class="col-md-4">
+
+                    <?
+                    echo $form->field($main, 'type_group_id')->widget(DepDrop::classname(), [
+                        'type' => DepDrop::TYPE_SELECT2,
+                        'options' => ['id' => 'type_id', 'placeholder' => 'Type', 'class' => 'color_gray'],
+                        'pluginOptions' => [
+                            'depends' => ['sub_category_id'],
+                            'url' => Url::to(['get-types']),
+                            'allowClear' => true
+                        ],
+                        'pluginEvents' => [
+                            'select2:select' => new JsExpression("function (e) {
                                 refreshFilesBlock(e)
                       }")],
 
 
-                ])->label(false);
-                ?>
-            </div>
+                    ])->label(false);
+                    ?>
+                </div>
+            <? } ?>
             <div class="col-md-12">
                 <?= $form->field($main, 'name_uz')->textInput() ?>
                 <?= $form->field($main, 'doc_about')->textarea(['rows' => 6]) ?>
             </div>
         </div>
+
         <?php Pjax::begin(['id' => 'files_block']) ?>
 
         <div class="row">
@@ -116,24 +116,27 @@ $initialPreviewConfig = [];
                             <img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png"
                                  alt="">
                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-<!--                                <a target="_blank" href="/frontend/web--><?//= $main->path ?><!--"-->
-<!--                                   class="mb-0">Ko'chirib olish</a>-->
-                                <span id="installment-btn"
-                                      class="showInstallmentModal"
-                                      data-item="<?php echo $main->id ?>"
-                                      data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
 
+                                <? if ($doc_id) { ?>
+                                    <span id="installment-btn"
+                                          class="showInstallmentModal"
+                                          data-item="<?php echo $main->id ?>"
+                                          data-href="<?php echo Url::to(['/documents/group-view-template', 'id' => $doc_id]) ?>">
                                              <button type="submit"
                                                      class="btn btn-success">Xujjatni ko'rish</button>
                              </span>
+                                <? } else { ?>
+                                    <span id="installment-btn"
+                                          class="showInstallmentModal"
+                                          data-item="<?php echo $main->id ?>"
+                                          data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
+                                             <button type="submit"
+                                                     class="btn btn-success">Xujjatni ko'rish</button>
+                             </span>
+                                <? } ?>
 
-                                <!--                                --><? //= \yii\helpers\Html::a('Template', Url::to(['/installment/group/index', 'id' => $type_id,])) ?>
-                                <!--                            <a target="_blank" href="doc-->
-                                <? //= $main->path ?><!--"-->
-                                <!--                               class=" mb-0">--><? //= $main->path ?><!-- </a>-->
 
                                 <p class="text-muted mb-1">0.5 kb</p>
-                                <!--                                <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>-->
                             </div>
                         </div>
                     </div

@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\models\documents\GroupDocuments;
 use common\models\documents\GroupDocumentsSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * GroupDocumentsController implements the CRUD actions for GroupDocuments model.
@@ -70,7 +72,29 @@ class GroupDocumentsController extends Controller
         $model = new GroupDocuments();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                if ($model->load($this->request->post())) {
+                    $doc = $model->path = UploadedFile::getInstance($model, 'path');
+
+                    if ($doc) {
+                        $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
+                        if (!file_exists($folder)) {
+                            mkdir($folder, 0777, true);
+                        }
+                        $generateName = Yii::$app->security->generateRandomString();
+                        $path = $folder . $generateName . '.' . $doc->extension;
+
+                        $doc->saveAs($path);
+                        $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
+                        $model->path = $path;
+
+                    }
+                    if ($model->save()) {
+                        Yii::$app->session->setFlash('success', 'Saqlandi');
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -93,7 +117,28 @@ class GroupDocumentsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $doc = $model->path = UploadedFile::getInstance($model, 'path');
+
+            if ($doc) {
+                $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $folder . $generateName . '.' . $doc->extension;
+
+                $doc->saveAs($path);
+                $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
+                $model->path = $path;
+
+            }
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Saqlandi');
+                return $this->redirect(['view', 'id' => $model->id]);
+
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

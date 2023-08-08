@@ -59,7 +59,10 @@ class DirectorController extends Controller
 
     public function actionToSign($id)
     {
-        $main = MainDocument::find()->where(['id' => $id])->one();
+        $main = MainDocument::find()
+            ->where(['id' => $id])
+            ->one();
+
         if ($main) {
             $main->status = MainDocument::SIGNING;
 
@@ -76,6 +79,7 @@ class DirectorController extends Controller
         Yii::$app->session->setFlash('error', "Yuborishda xatolik");
         return $this->redirect(Yii::$app->request->referrer);
     }
+
     public function actionToFinish($id)
     {
         $main = MainDocument::find()->where(['id' => $id])->one();

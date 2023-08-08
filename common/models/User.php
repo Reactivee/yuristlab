@@ -32,6 +32,7 @@ class User extends ActiveRecord implements IdentityInterface
     const ADMIN = 10;
     const MODERATOR = 11;
     const EMPLOY = 12;
+    const LAWYER = 13;
 
 
     /**
@@ -70,6 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
             self::ADMIN => 'admin',
             self::MODERATOR => 'moderator',
             self::EMPLOY => 'Xodim',
+            self::LAWYER => 'Yurist',
         ];
 
         return $role ? $array[$role] : $array;

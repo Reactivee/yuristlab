@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 
-            //'role',
+            'role',
             //'login',
             [
                 'class' => ActionColumn::className(),

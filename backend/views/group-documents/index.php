@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var common\models\documents\GroupDocumentsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -32,14 +33,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'name_uz',
             'name_ru',
-            'status',
-            'created_at:datetime',
+//            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return GroupDocuments::getStatusName($model->status);
+                }
+            ],
+            'path',
+//            'created_at:datetime',
             //'updated_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, GroupDocuments $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

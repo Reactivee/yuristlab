@@ -122,7 +122,14 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                 <span class="menu-title">Namunalar</span>
                 <i class="menu-arrow"></i>
             </a>
-
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"  href="/moderator" aria-expanded="false"
+               aria-controls="ui-template">
+                <i class="mdi mdi-folder-outline menu-icon"></i>
+                <span class="menu-title">Moderator</span>
+                <i class="menu-arrow"></i>
+            </a>
         </li>
 
 

@@ -198,8 +198,9 @@ if (!empty($model->attach)) {
                     </h5>
                 </div>
 
+                <hr>
 
-                <div class="col-md-12 mt-4">
+                <div class="col-md-6 mt-4">
                     <h5 class="font-weight-bold">Asosiy fayl fayllar</h5>
                     <div class="card">
                         <div class="card-body ">
@@ -207,12 +208,7 @@ if (!empty($model->attach)) {
                                 <? if (true) { ?>
                                     <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
                                         ['/documents/doc-template', 'id' => $model->id], ['target' => '_blank']);
-                                }
-
-
-                                ?>
-
-
+                                } ?>
                                 <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                     <a target="_blank" href="/frontend/web<?= $model->path ?>"
                                        class="mb-0">Ko'chirib olish</a>
@@ -220,39 +216,47 @@ if (!empty($model->attach)) {
                                     <span><?= $model->path ?></span>
                                     <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>
                                 </div>
-                                <?
-                                if ($model->lawyer_conclusion_path) {
-                                    echo Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
-                                        ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
-                                }
-                                ?>
                             </div>
-
-                        </div
+                        </div>
                     </div>
                 </div>
+                <?
+                if ($model->lawyer_conclusion_path) { ?>
+                    <div class="col-md-6 mt-4">
+                        <h5 class="font-weight-bold">Xulosa</h5>
+                        <div class="card">
+                            <div class="card-body ">
+                                <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                    <? echo Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                        ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
+                                    ?>
 
 
-                <hr>
-
-
-            </div> <!--end row-->
-        </div> <!--end card body-->
-        <?
-        $form = ActiveForm::begin();
-        if ($model->status == MainDocument::SIGNING) {
-
-            echo $form->field($model, 'conclusion_uz')->textarea(['row' => 6]);
-            ?>
-            <div class="form-group">
-                <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
+                                </div>
+                            </div>
+                        </div
+                    </div>
+                <? }
+                ?>
             </div>
-        <? }
-
-        ?>
-
-        <?php ActiveForm::end(); ?>
-    </div>
 
 
+
+        </div> <!--end row-->
+    </div> <!--end card body-->
+    <?
+    $form = ActiveForm::begin();
+    //        if ($model->status == MainDocument::SIGNING) {
+    //
+    //            echo $form->field($model, 'conclusion_uz')->textarea(['row' => 6]);
+    //            ?>
+    <!--            <div class="form-group">-->
+    <!--                --><? //= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
+    <!--            </div>-->
+    <!--        --><? // }
+
+    ?>
+
+    <?php ActiveForm::end(); ?>
 </div>
+

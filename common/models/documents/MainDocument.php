@@ -11,6 +11,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\faker\FixtureController;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "main_document".
@@ -74,7 +75,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::NEW => 'Yangi',
             self::EDITED => "Korib chiqilmoqda",
             self::DELETED => "O'chirilgan",
-            self::NOTSEND => "Yuborilmagan",
+//            self::NOTSEND => "Yuborilmagan",
             self::SUCCESS => "Ijobiy xulosa",
             self::ERROR => "Salbiy xulosa",
             self::REJECTED => "Rad etilgan",
@@ -137,6 +138,7 @@ class MainDocument extends \yii\db\ActiveRecord
         return $status ? $array[$status] : $array;
     }
 
+
     /**
      * {@inheritdoc}
      */
@@ -158,8 +160,8 @@ class MainDocument extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'name_uz', 'path',], 'required'],
-            [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id'], 'integer'],
+            [['status', 'name_uz', 'path'], 'required'],
+            [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id', 'sub_category_id'], 'integer'],
             [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
 
             [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz', 'signed_lawyer', 'lawyer_conclusion_path'], 'safe']
@@ -298,7 +300,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public function getSubCategory()
     {
-        return $this->hasOne(CategoryDocuments::className(), ['id' => 'group_id']);
+        return $this->hasOne(CategoryDocuments::className(), ['id' => 'sub_category_id']);
     }
 
 
@@ -322,6 +324,12 @@ class MainDocument extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Employ::className(), ['id' => 'created_by']);
     }
+
+    public function getLawyer()
+    {
+        return $this->hasOne(Employ::className(), ['id' => 'user_id']);
+    }
+
 
     public function getCompany()
     {
@@ -352,7 +360,6 @@ class MainDocument extends \yii\db\ActiveRecord
             if (Yii::$app->user->identity->employ->company) {
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
                 $this->created_by = Yii::$app->user->identity->employ->id;
-
             }
             $this->generateDocCode();
         }
@@ -360,15 +367,20 @@ class MainDocument extends \yii\db\ActiveRecord
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
             $this->generateCodes();
             $this->generateLawyerConclusion();
-
             if (!$this->signed_lawyer)
                 $this->signed_lawyer = Yii::$app->user->identity->employ->id;
-
         }
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
             $this->generateCheckOrder();
-            $this->margeDocs();
+
+            if ($this->lawyer_conclusion_path)
+                $this->margeDocs();
+
+        }
+        if ($this->status === self::SIGNING) {
+
+            $this->generateCheckOrder();
 
         }
 
@@ -417,8 +429,10 @@ class MainDocument extends \yii\db\ActiveRecord
         //        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
 
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
+        $filename = Yii::getAlias('@frontend') . '/web/' . $item->path;
+        if ($filename)
+            chmod($filename, 0644);
 
-//        $this->save();
     }
 
     public function generateCodes()
@@ -476,7 +490,9 @@ class MainDocument extends \yii\db\ActiveRecord
         $templateProcessor->setValue('fio', 'asaaad');
 
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
-
+        $filename = Yii::getAlias('@frontend') . '/web/' . $item->path;
+        if ($filename)
+            chmod($filename, 0644);
 
     }
 
@@ -498,9 +514,10 @@ class MainDocument extends \yii\db\ActiveRecord
         }
 
         \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
-
+        $domen = Url::base('https');
+        $link = $domen . '/documents/d?id=' . $this->code_conclusion;
         /*Write qr */
-        $qrCode = (new \Da\QrCode\QrCode('Elektron doc'))
+        $qrCode = (new \Da\QrCode\QrCode($link))
             ->setSize(100)
             ->setMargin(0);
 
@@ -508,51 +525,24 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_conclusion . '.png';
 
-        $section = $phpWord->addSection();
+        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template.docx');
 
-        $TableFontStyle = ['bold' => true, 'size' => 14, 'valign' => 'center', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
+        $templateProcessor->setValue('fio', $user_name);
+        $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
+        $templateProcessor->setValue('code_doc', $this->code_document);
+        $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
+        $templateProcessor->setValue('conclusion', $this->conclusion_uz);
+        $templateProcessor->setImageValue('qr',
+            array('path' => $img,
+                'width' => 100,
+                'height' => 100,
+                'ratio' => true));
 
-        $cellRowSpan = ['vMerge' => 'restart', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
-        $cellRowContinue = ['vMerge' => 'continue'];
-        $cellColSpan = ['gridSpan' => 2, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
-//        $fancyTableCellBtlrStyle = ['valign' => 'center', 'alignment' => 'center'];
+        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
 
-        $section->addTextBreak(1);
-
-        $table = $section->addTable(['borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 1, 'Spacing' => 2, 'cellMargin' => 20, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'ratio' => true]);
-
-        $table->addRow();
-//        $table->addCell(2000, $cellRowSpan)->addText('${myImage}');
-        $table->addCell(2000, $cellRowSpan)->addImage($img, array('width' => 70, 'height' => 70, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'ratio' => true));
-        $table->addCell(4000, $cellColSpan)->addText("Qr ni skanerlang", $TableFontStyle);
-
-        $table->addRow();
-        $table->addCell(null, $cellRowContinue);
-
-        $table->addCell(2000)->addText("FISH", $TableFontStyle);
-        $table->addCell(4000)->addText($user_name, $TableFontStyle);
-
-        $table->addRow();
-        $table->addCell(null, $cellRowContinue);
-        $table->addCell(4000, $TableFontStyle)->addText('Sana', $TableFontStyle);
-        $table->addCell(4000, $TableFontStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
-
-        $table->addRow();
-        $table->addCell(null, $cellRowContinue);
-        $table->addCell(4000, $TableFontStyle)->addText("Xujjat kodi", $TableFontStyle);
-        $table->addCell(4000, $TableFontStyle)->addText($this->code_document, $TableFontStyle);
-
-        $table->addRow();
-        $table->addCell(null, $cellRowContinue);
-        $table->addCell(4000, $TableFontStyle)->addText("Xulosa kodi", $TableFontStyle);
-        $table->addCell(4000, $TableFontStyle)->addText($this->code_conclusion, $TableFontStyle);
-
-        $section->addTextBreak(1);
-        $section->addText($this->conclusion_uz, $TableFontStyle);
-
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-
-        $objWriter->save(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
+        $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
+        if ($filename)
+            chmod($filename, 0644);
         $this->lawyer_conclusion_path = '/uploads/docs/' . $this->code_document . '.docx';
 
     }
@@ -570,8 +560,10 @@ class MainDocument extends \yii\db\ActiveRecord
         ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
 
         $this->path = '/uploads/docs/' . $newName;
+
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
-        chmod($filename, 0644);
+        if ($filename)
+            chmod($filename, 0644);
 
     }
 

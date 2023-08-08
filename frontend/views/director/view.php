@@ -30,22 +30,25 @@ if (!empty($model->attach)) {
 
 ?>
 <div class="container-fluid p-3">
+
     <div class="buttons_wrap mb-3">
         <? if (!$model->signed_lawyer && $model->status != MainDocument::NEW) { ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
-
+            <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
         <? } ?>
-        <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
 
         <? if ($model->signed_lawyer) { ?>
+            <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
+
             <?= Html::a(' <i class="fas fa-pencil mr-2"></i>Imzolash ', ['/director/to-finish', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
         <? } ?>
 
     </div>
+
     <? if ($model->status == MainDocument::SIGNING) { ?>
-        <div class="alert alert-fill-info" role="alert">
+        <div class="alert alert-fill-success" role="alert">
             <i class="mdi mdi-alert-circle"></i>
-            Yuborildi
+            Yuborildi !
         </div>
     <? } ?>
 
@@ -69,14 +72,23 @@ if (!empty($model->attach)) {
             'name_uz',
             //        'name_ru',
             [
-                'attribute' => 'category_id',
+                'attribute' => 'group_id',
+                'label' => 'Guruh',
                 'value' => function ($model) {
-                    return $model->category->name_uz;
+                    return $model->group->name_uz;
                 }
             ],
+//            [
+//                'attribute' => 'category_id',
+//                'label' => 'Kategoriya',
+//                'value' => function ($model) {
+//                    return $model->category->name_uz;
+//                }
+//            ],
 
             [
-                'attribute' => 'group_id',
+                'attribute' => 'sub_category_id',
+                'label' => 'Kategoriya',
                 'value' => function ($model) {
                     return $model->subCategory->name_uz;
                 }
@@ -84,6 +96,7 @@ if (!empty($model->attach)) {
 
             [
                 'attribute' => 'type_group_id',
+                'label' => 'Turkumi',
                 'value' => function ($model) {
                     return $model->type->name_uz;
                 }
@@ -98,7 +111,12 @@ if (!empty($model->attach)) {
             ],
             'created_at:datetime',
             'updated_at:datetime',
-            'created_by',
+            [
+                'attribute' => 'created_by',
+                'value' => function ($model) {
+                    return $model->employ->first_name . ' ' . $model->employ->last_name;
+                }
+            ],
 //            'path',
             [
                 'attribute' => 'path',
@@ -140,18 +158,7 @@ if (!empty($model->attach)) {
         ],
     ]);
 
-    $form = ActiveForm::begin();
-    if ($model->status == MainDocument::SIGNING) {
 
-        echo $form->field($model, 'conclusion_uz')->textInput(['raw' => 6]);
-        ?>
-        <div class="form-group">
-            <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
-        </div>
-    <? } ?>
-
-
-
-    <?php ActiveForm::end(); ?>
+    ?>
 
 </div>

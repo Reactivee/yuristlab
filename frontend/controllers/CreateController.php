@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 
 use common\models\documents\CategoryDocuments;
+use common\models\documents\GroupDocuments;
 use common\models\documents\MainDocument;
 use common\models\documents\TypeDocuments;
 use common\models\forms\CreateDocForm;
@@ -78,7 +79,7 @@ class CreateController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex($id = null)
+    public function actionIndex($id = null, $doc = null)
     {
 
         $form = new CreateDocForm();
@@ -86,14 +87,16 @@ class CreateController extends Controller
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
 
-            $doc = $model->path;
-            if ($doc) {
+            $doc_path = $model->path;
+
+
+            if ($doc_path) {
 
                 $folder = Yii::getAlias('@frontend') . '/web/uploads/docs/';
                 if (!file_exists($folder)) {
                     mkdir($folder, 0777, true);
                 }
-                $templateFile = Yii::getAlias('@frontend') . '/web' . $doc;
+                $templateFile = Yii::getAlias('@frontend') . '/web' . $doc_path;
 
                 $content = file_get_contents($templateFile);
 
@@ -113,15 +116,18 @@ class CreateController extends Controller
                     Yii::$app->session->setFlash('error', $e->getMessage());
                     return $this->redirect(Yii::$app->request->referrer);
                 }
-
             }
+
             $model->status = MainDocument::NEW;
-//                dd($model);
+
+            if ($doc) {
+                $model->group_id = $doc;
+            }
+
             if (!$model->save()) {
                 dd($model->errors);
 //                Yii::$app->session->setFlash('error', 'Xatolik');
 //                return $this->refresh();
-
             }
 
             $files = $model->saveFiles();
@@ -141,6 +147,15 @@ class CreateController extends Controller
                 $model->path = $res;
             }
         }
+
+        if ($doc) {
+            $gr = GroupDocuments::findOne($doc);
+            if ($gr->path)
+                $model->path = $gr->path;
+            $model->group_id = $gr->id;
+//            dd($model);
+        }
+
 
         return $this->render('index', [
             'main' => $model

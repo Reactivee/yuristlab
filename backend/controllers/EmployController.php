@@ -74,7 +74,27 @@ class EmployController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
 
+                $file_image = UploadedFile::getInstances($model, 'photo');
+                if ($file_image) {
+                    foreach ($file_image as $file) {
 
+                        $folder = '/web/uploads/employ/';
+                        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                        if (!file_exists($uploads_folder)) {
+                            mkdir($uploads_folder, 0777, true);
+                        }
+                        $ext = pathinfo($file->name, PATHINFO_EXTENSION);
+                        $name = pathinfo($file->name, PATHINFO_FILENAME);
+                        $generateName = Yii::$app->security->generateRandomString();
+                        $path = $uploads_folder . $generateName . ".{$ext}";
+                        $file->saveAs($path);
+
+                        $model->photo = '/uploads/employ/' . $generateName . ".{$ext}";
+
+                    }
+                }
+
+                $model->save();
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -115,7 +135,7 @@ class EmployController extends Controller
                     $path = $uploads_folder . $generateName . ".{$ext}";
                     $file->saveAs($path);
 
-                    $model->photo = '/uploads/docs/' . $generateName . ".{$ext}";
+                    $model->photo = '/uploads/employ/' . $generateName . ".{$ext}";
 
                 }
             }

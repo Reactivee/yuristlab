@@ -5,6 +5,7 @@ namespace frontend\controllers;
 
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
+use common\models\EmploySearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -93,6 +94,24 @@ class LawyerController extends Controller
             }
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionLawyers($slug = null)
+    {
+
+        $search = new EmploySearch();
+
+        $dataProvider = $search->searchLawyer($this->request->queryParams);
+        if ($slug)
+            return $this->render('team_profile', [
+                'dataProvider' => $dataProvider,
+            ]);
+
+
+        return $this->render('team', [
+            'dataProvider' => $dataProvider,
+        ]);
+
     }
 
 }

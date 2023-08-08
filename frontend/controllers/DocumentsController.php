@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
 use common\models\documents\AttachedDocument;
+use common\models\documents\GroupDocuments;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 use common\models\documents\TypeDocuments;
@@ -245,9 +246,20 @@ class DocumentsController extends Controller
         return $this->renderAjax('doc-view-template', [
             'model' => $doc
         ]);
-
-
     }
+
+    public function actionGroupViewTemplate($id)
+    {
+
+        $doc = GroupDocuments::findOne($id);
+
+        if (!$doc->path) return false;
+
+        return $this->renderAjax('doc-view-template', [
+            'model' => $doc
+        ]);
+    }
+
 
     public function actionStatistics()
     {
@@ -458,6 +470,32 @@ class DocumentsController extends Controller
 
             if ($files->delete()) return true;
         }
+    }
+
+    public function actionD($id)
+    {
+        $main = MainDocument::findOne(['code_document' => $id]);
+
+        if ($main) {
+            return $this->render('doc-view-template', [
+                'model' => $main
+            ]);
+        }
+
+        return false;
+    }
+
+    public function actionLawyer($id)
+    {
+        $main = MainDocument::findOne(['code_document' => $id]);
+
+        if ($main) {
+            return $this->render('doc-view-template', [
+                'model' => $main
+            ]);
+        }
+
+        return false;
     }
 
 

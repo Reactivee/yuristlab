@@ -30,14 +30,12 @@ $this->title = 'Documents';
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-
             [
                 'attribute' => 'code_document',
                 'label' => 'Xujjat kodi',
             ],
-
             'name_uz',
-//            'name_ru',
+
             [
                 'attribute' => 'category_id',
                 'label' => 'Bo\'lim',

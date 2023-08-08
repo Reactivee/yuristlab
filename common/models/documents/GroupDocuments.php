@@ -17,6 +17,9 @@ use yii\behaviors\TimestampBehavior;
  */
 class GroupDocuments extends \yii\db\ActiveRecord
 {
+    const ACTIVE = 1;
+    const NOACTIVE = -1;
+
     /**
      * {@inheritdoc}
      */
@@ -24,21 +27,23 @@ class GroupDocuments extends \yii\db\ActiveRecord
     {
         return 'group_documents';
     }
+
     public function behaviors()
     {
         return [
             TimestampBehavior::className(),
         ];
     }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['status', ], 'required'],
+            [['status',], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['name_uz', 'name_ru'], 'string', 'max' => 255],
+            [['name_uz', 'name_ru', 'key', 'path'], 'string', 'max' => 255],
 //            [['name_uz'], 'unique'],
 //            [['name_ru'], 'unique'],
         ];
@@ -57,6 +62,17 @@ class GroupDocuments extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public static function getStatusName($status = null)
+    {
+        $array = [
+            self::ACTIVE => 'Active',
+            self::NOACTIVE => 'NoActive',
+
+        ];
+
+        return $status ? $array[$status] : $array;
     }
 
     /**

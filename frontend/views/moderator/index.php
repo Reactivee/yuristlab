@@ -6,6 +6,7 @@
 
 use common\models\documents\MainDocument;
 use common\models\Employ;
+use kartik\editable\Editable;
 use kartik\grid\GridView;
 use kartik\select2\Select2;
 use yii\grid\ActionColumn;
@@ -17,7 +18,7 @@ $this->title = 'Documents';
 
 ?>
 <div class="container-fluid m-4 pr-5">
-    <?php Pjax::begin(); ?>
+<!--    --><?php //Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?=
@@ -174,16 +175,65 @@ $this->title = 'Documents';
                 }
             ],
             [
+                'class' => 'kartik\grid\EditableColumn',
+                'attribute' => 'user_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+//                    return $model->lawyer->first_name . ' ' . $model->lawyer->last_name;
+
+                },
+//                'editableOptions' => function ($model, $key, $index) {
+//                    return [
+//                        'header' => 'Name',
+//                        'size' => 'md',
+//                        'beforeInput' => function ($form, $widget) use ($model, $index) {
+////                            echo $form->field($model, "publish_date")->widget(\kartik\widgets\DatePicker::classname(), [
+////                                'options' => ['id' => "publish_date_{$index}"]
+////                            ]);
+//                        },
+//                        'afterInput' => function ($form, $widget) use ($model, $index) {
+////                            echo $form->field($model, "[{$index}]color")->widget(\kartik\color\ColorInput::classname(), [
+////                                'options' => ['id' => "publish_date_{$index}"]
+////                            ]);
+//                        }
+//                    ];
+//                }
+                'editableOptions' => function ($model) {
+                    return [
+                        'formOptions' => ['action' => ['/moderator/set-lawyer', 'doc' => $model->id]],
+                        'displayValue' => $model->user_id? $model->lawyer->first_name . ' ' . $model->lawyer->last_name:'Biriktirilmagan',
+                        'size' => 'md',
+                        'placement' => 'left',
+                        'inputType' => Editable::INPUT_SELECT2,
+                        'options' => [
+                            'data' => Employ::getLawyers(),
+                            'options' => [
+                                'placeholder' => 'Skladni tanlang',
+                            ],
+                            'theme' => Select2::THEME_DEFAULT
+                        ]
+                    ];
+                },
+                'refreshGrid' => true,
+                'hAlign' => 'left',
+                'vAlign' => 'right',
+                'width' => '50px',
+                'pageSummary' => false
+            ],
+//            [
+//                'attribute' => 'user_id',
+//                'value' => function ($model) {
+//                    return $model->lawyer->first_name . ' ' . $model->lawyer->last_name;
+//                }
+//            ],
+            [
                 'class' => ActionColumn::className(),
                 'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
-//                        if ($model->user_id) {
-//                            $emp = Employ::findOne($model->user_id);
-//                            return Html::a($emp->first_name . ' ' . $emp->last_name, [$url], ['class' => 'btn btn-inverse-warning btn-fw']);
-//                        } else {
-                            return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
-//                        }
+
+                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+
 
                     }
                 ],
@@ -191,6 +241,6 @@ $this->title = 'Documents';
         ],
     ]); ?>
 
-    <?php Pjax::end(); ?>
+<!--    --><?php //Pjax::end(); ?>
 
 </div>
