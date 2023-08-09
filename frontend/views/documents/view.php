@@ -77,6 +77,12 @@ if (!empty($model->attach)) {
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
                 <? } ?>
 
+                <? if (!$model->signed_lawyer && $model->status == MainDocument::BOSS_SIGNED) { ?>
+                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
+
+                <? } ?>
+
+
             </div>
             <? if ($model->status == MainDocument::NEW) { ?>
                 <div class="alert alert-fill-info" role="alert">
@@ -88,6 +94,12 @@ if (!empty($model->attach)) {
                 <div class="alert alert-fill-success" role="alert">
                     <i class="mdi mdi-alert-circle"></i>
                     Xujjar yuborilgan
+                </div>
+            <? } ?>
+            <? if ($model->status == MainDocument::TOBOSS) { ?>
+                <div class="alert alert-fill-success" role="alert">
+                    <i class="mdi mdi-alert-circle"></i>
+                    Xujjat yuborilgan !
                 </div>
             <? } ?>
 
@@ -183,6 +195,8 @@ if (!empty($model->attach)) {
                                                 ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
                                             ?>
                                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                                <a target="_blank" href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
+                                                   class="mb-0">Ko'chirib olish</a>
                                                 <p class="text-muted mb-1">
                                                     <?
                                                     $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
@@ -272,14 +286,6 @@ if (!empty($model->attach)) {
                                     'xls' => '<i class="fas fa-file-word"></i>',
                                     'doc' => '<i class="fas fa-file-word"></i>',
                                 ],
-                                //                                'previewFileExtSettings' => [
-                                //                                    'doc' => function ($model) {
-                                //                                        return $model.match(/(doc | docx)$/i);
-                                //    },
-
-                                //                                ]
-
-
                             ]]);
                         ?>
                     </div>

@@ -243,8 +243,8 @@ input[type="file"]::file-selector-button {
     display: none;
 
 }
-.select2-container{
-    /*z-index: 10000;*/
+.select2-container--open{
+    z-index: 10000;
 }
 
 @media only screen and (max-width: 990px) {

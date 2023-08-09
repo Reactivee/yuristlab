@@ -64,7 +64,8 @@ class DirectorController extends Controller
             ->one();
 
         if ($main) {
-            $main->status = MainDocument::SIGNING;
+            $main->status = MainDocument::BOSS_SIGNED;
+            $main->step = MainDocument::STEP_EMPLOYER;
 
             if ($main->save()) {
                 Yii::$app->session->setFlash('success', "Yuborildi");
@@ -98,7 +99,7 @@ class DirectorController extends Controller
             return $this->redirect(Yii::$app->request->referrer);
         }
 
-        Yii::$app->session->setFlash('error', "Yuborishda xatolik");
+        Yii::$app->session->setFlash('success', "Yuborishda xatolik");
         return $this->redirect(Yii::$app->request->referrer);
     }
 

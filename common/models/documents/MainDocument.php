@@ -30,6 +30,8 @@ use yii\helpers\Url;
  * @property int|null $time_end
  * @property string|null $code_conclusion
  * @property string|null $code_document
+ * @property int|null $signed_lawyer
+ * @property string|null $lawyer_conclusion_path
  */
 class MainDocument extends \yii\db\ActiveRecord
 {
@@ -46,9 +48,12 @@ class MainDocument extends \yii\db\ActiveRecord
     const REJECTED = 6;
     const SIGNING = 7;
     const SIGNED = 8;
-    const BOSS_SIGNED = 8;
-
+    const BOSS_SIGNED = 10;
     const TOBOSS = -10;
+
+    const STEP_BOSS = 20;
+    const STEP_LAWYER = 21;
+    const STEP_EMPLOYER = 22;
 
 
     public function getStatusName($status = null)
@@ -63,6 +68,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::REJECTED => "Rad etilgan",
             self::SIGNING => "Imzolashda",
             self::SIGNED => "Imzolandi",
+            self::BOSS_SIGNED => "Rahbar Imzolandi",
             self::TOBOSS => "Rahbar imzosi",
         ];
 
@@ -99,6 +105,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::SIGNING => '<div class="badge badge-outline-primary badge-pill">Imzolashda</div>',
             self::SIGNED => '<div class="badge badge-outline-success badge-pill">Imzolandi</div>',
             self::TOBOSS => '<div class="badge badge-outline-warning badge-pill">Rahbar imzosi</div>',
+            self::BOSS_SIGNED => '<div class="badge badge-outline-warning badge-pill">Rahbar imzoladi</div>',
         ];
 
         return $status ? $array[$status] : $array;
@@ -164,7 +171,7 @@ class MainDocument extends \yii\db\ActiveRecord
             [['category_id', 'group_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id', 'sub_category_id'], 'integer'],
             [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
 
-            [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz', 'signed_lawyer', 'lawyer_conclusion_path'], 'safe']
+            [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz', 'signed_lawyer', 'lawyer_conclusion_path', 'step'], 'safe']
         ];
     }
 
@@ -365,8 +372,11 @@ class MainDocument extends \yii\db\ActiveRecord
         }
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
-            $this->generateCodes();
-            $this->generateLawyerConclusion();
+            if ($this->category) {
+                $this->generateCodes();
+                $this->generateLawyerConclusion();
+            }
+
             if (!$this->signed_lawyer)
                 $this->signed_lawyer = Yii::$app->user->identity->employ->id;
         }
@@ -374,14 +384,8 @@ class MainDocument extends \yii\db\ActiveRecord
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
             $this->generateCheckOrder();
 
-            if ($this->lawyer_conclusion_path)
+            if ($this->lawyer_conclusion_path && $this->category)
                 $this->margeDocs();
-
-        }
-        if ($this->status === self::SIGNING) {
-
-            $this->generateCheckOrder();
-
         }
 
         return parent::beforeSave($insert);
@@ -415,7 +419,6 @@ class MainDocument extends \yii\db\ActiveRecord
         $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
 
         $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/' . $item->path);
-
         $templateProcessor->setValue('fio', $user_name);
         $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
         $templateProcessor->setValue('code_doc', $this->code_document);
@@ -539,8 +542,8 @@ class MainDocument extends \yii\db\ActiveRecord
                 'ratio' => true));
 
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
-
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
+
         if ($filename)
             chmod($filename, 0644);
         $this->lawyer_conclusion_path = '/uploads/docs/' . $this->code_document . '.docx';

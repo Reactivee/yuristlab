@@ -247,6 +247,15 @@ class DocumentsController extends Controller
             'model' => $doc
         ]);
     }
+    public function actionViewTemplate($path)
+    {
+//        dd($path);
+        if (!$path) return false;
+
+        return $this->renderAjax('view-template', [
+            'model' => $path
+        ]);
+    }
 
     public function actionGroupViewTemplate($id)
     {

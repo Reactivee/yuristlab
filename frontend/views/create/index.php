@@ -124,7 +124,7 @@ $initialPreviewConfig = [];
                                           data-href="<?php echo Url::to(['/documents/group-view-template', 'id' => $doc_id]) ?>">
                                              <button type="submit"
                                                      class="btn btn-success">Xujjatni ko'rish</button>
-                             </span>
+                                       </span>
                                 <? } else { ?>
                                     <span id="installment-btn"
                                           class="showInstallmentModal"
@@ -132,7 +132,7 @@ $initialPreviewConfig = [];
                                           data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
                                              <button type="submit"
                                                      class="btn btn-success">Xujjatni ko'rish</button>
-                             </span>
+                                    </span>
                                 <? } ?>
 
 
@@ -208,7 +208,7 @@ $initialPreviewConfig = [];
 
 
 <?php Modal::begin([
-    'title' => '<span class="modal-header-main">Template </span>',
+    'title' => '<span class="modal-header-main">Xujjatni ko\'rish </span>',
     'id' => 'modalInstallment',
     'size' => 'modal-dialog modal-xl',
     'headerOptions' => [
