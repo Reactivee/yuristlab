@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
+use common\models\Employ;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -90,8 +91,12 @@ class UserController extends Controller
 //        $fileContents = file_get_contents('http://yurist.loc/exam.doc');
 //        dd($fileContents);
 //        return $fileContents;
+        $search = Employ::find()->where(['id' => Yii::$app->user->identity->employ->id])->one();
 
-        return $this->render('index');
+
+        return $this->render('index', [
+            'models' => $search
+        ]);
     }
 
     /**

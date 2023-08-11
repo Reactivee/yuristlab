@@ -4,6 +4,7 @@ namespace common\models\documents;
 
 use common\models\Company;
 use common\models\Employ;
+use common\models\User;
 use DocxMerge\DocxMerge;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -32,6 +33,7 @@ use yii\helpers\Url;
  * @property string|null $code_document
  * @property int|null $signed_lawyer
  * @property string|null $lawyer_conclusion_path
+ * @property int|null $step
  */
 class MainDocument extends \yii\db\ActiveRecord
 {
@@ -54,6 +56,7 @@ class MainDocument extends \yii\db\ActiveRecord
     const STEP_BOSS = 20;
     const STEP_LAWYER = 21;
     const STEP_EMPLOYER = 22;
+    const STEP_BOSS_FINISH = 23;
 
 
     public function getStatusName($status = null)
@@ -372,16 +375,28 @@ class MainDocument extends \yii\db\ActiveRecord
         }
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
-            if ($this->category) {
-                $this->generateCodes();
-                $this->generateLawyerConclusion();
+            if (Yii::$app->user->identity->employ->role == User::LAWYER) {
+                if ($this->category) {
+
+                    $this->generateCodes();
+                    $this->generateLawyerConclusion();
+                }
+                if (!$this->signed_lawyer)
+                    $this->signed_lawyer = Yii::$app->user->identity->employ->id;
             }
 
-            if (!$this->signed_lawyer)
-                $this->signed_lawyer = Yii::$app->user->identity->employ->id;
+
         }
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
+
+            if (!$this->category) {
+                $this->generateSignBossDoc();
+                $this->margeDocsByBoss();
+
+            }
+
+
             $this->generateCheckOrder();
 
             if ($this->lawyer_conclusion_path && $this->category)
@@ -409,8 +424,11 @@ class MainDocument extends \yii\db\ActiveRecord
         }
 
         \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+        $domen = Url::base('https');
+        $link = $domen . '/documents/d?id=' . $this->code_document;
+
         /*Write qr */
-        $qrCode = (new \Da\QrCode\QrCode('Elektron doc'))
+        $qrCode = (new \Da\QrCode\QrCode($link))
             ->setSize(430)
             ->setMargin(0);
 
@@ -430,9 +448,8 @@ class MainDocument extends \yii\db\ActiveRecord
                 'ratio' => true));
 
         //        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
-
-        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/' . $item->path);
         $filename = Yii::getAlias('@frontend') . '/web/' . $item->path;
+        $templateProcessor->saveAs($filename);
         if ($filename)
             chmod($filename, 0644);
 
@@ -565,6 +582,75 @@ class MainDocument extends \yii\db\ActiveRecord
         $this->path = '/uploads/docs/' . $newName;
 
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+        if ($filename)
+            chmod($filename, 0644);
+
+    }
+
+    public function margeDocsByBoss()
+    {
+        $generateName = Yii::$app->security->generateRandomString() . uniqid();
+        $fileExt = pathinfo($this->path, PATHINFO_EXTENSION);
+        $newName = $generateName . '.' . $fileExt;
+
+        $dm = new DocxMerge();
+        $marged = $dm->merge([
+            Yii::getAlias('@frontend') . '/web/' . $this->lawyer_conclusion_path,
+            Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx'
+        ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
+
+        $this->lawyer_conclusion_path = '/uploads/docs/' . $newName;
+
+        $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+        if ($filename)
+            chmod($filename, 0644);
+
+    }
+
+    public function generateSignBossDoc()
+    {
+        $item = MainDocument::find()
+            ->where([
+                'id' => $this->id
+            ])->one();
+
+        $user_name = Yii::$app->user->identity->employ->first_name . ' ' . Yii::$app->user->identity->employ->last_name;
+
+        $phpWord = new PHPWord();
+
+        $folder = '/web/uploads/temp/';
+        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+        if (!file_exists($uploads_folder)) {
+            mkdir($uploads_folder, 0777, true);
+        }
+
+        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+        $domen = Url::base('https');
+        $link = $domen . '/documents/d?id=' . $this->code_document;
+        /*Write qr */
+        $qrCode = (new \Da\QrCode\QrCode($link))
+            ->setSize(100)
+            ->setMargin(0);
+
+        $qrCode->writeFile(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png');
+
+        $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
+
+        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template-boss.docx');
+        $templateProcessor->setValue('fio', $user_name);
+        $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
+        $templateProcessor->setValue('code_doc', $this->code_document);
+        $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
+        $templateProcessor->setValue('conclusion', $this->conclusion_uz);
+        $templateProcessor->setImageValue('qr',
+            array('path' => $img,
+                'width' => 100,
+                'height' => 100,
+                'ratio' => true));
+
+        $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
+        $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
+//        dd('as');
         if ($filename)
             chmod($filename, 0644);
 

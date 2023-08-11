@@ -118,7 +118,7 @@ class ModeratorController extends Controller
             $post = Yii::$app->request->post();
             $index = Yii::$app->request->post()['editableIndex'];
             $main = MainDocument::find()
-                ->where(['id' => $doc, 'status' => [MainDocument::NEW, MainDocument::SIGNING]])
+                ->where(['id' => $doc])
                 ->one();
             if ($main) {
                 $main->user_id = (int)$post['MainDocument'][$index]['user_id'];

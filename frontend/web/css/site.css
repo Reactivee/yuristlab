@@ -5,7 +5,9 @@ input[type="file"]::file-selector-button {
 .tab-content > .active {
     display: flex;
 }
-
+.table td, .jsgrid .jsgrid-table td{
+    font-size: 15px ;
+}
 .page-item span {
     position: relative;
     display: block;
@@ -126,7 +128,7 @@ input[type="file"]::file-selector-button {
 }
 
 .our-team:hover {
-    box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5);
 }
 
 .our-team .pic {
@@ -238,10 +240,29 @@ input[type="file"]::file-selector-button {
     color: #707070;
     text-transform: capitalize;
 }
+.wrapper_team_profile{
+    background: #fafafa;
+}
 .popover{
     position: absolute!important;
     display: none;
+}
+.team_info .clearfix{
+    /*border-top: 2px  solid #d7d7d7;*/
+    border-bottom: 1px  solid #D7D7D7;
+    padding: 12px;
 
+}
+.team_info .clearfix span{
+    font-weight: 800;
+    color: black;
+    font-size: 18px;
+}
+.img-round{
+    width: 200px!important;
+}
+.team_info .clearfix:last-child{
+    border: none;
 }
 .select2-container--open{
     z-index: 10000;

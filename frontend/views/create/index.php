@@ -135,7 +135,7 @@ $initialPreviewConfig = [];
                                     </span>
                                 <? } ?>
 
-
+                                <a href="/frontend/web<?= $main->path ?>">Download</a>
                                 <p class="text-muted mb-1">0.5 kb</p>
                             </div>
                         </div>

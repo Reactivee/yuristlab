@@ -42,10 +42,10 @@ if (!empty($model->lawyer_conclusion_path)) {
 ?>
 <div class="container-fluid p-3">
     <div class="buttons_wrap mb-3">
-<!--        --><?// if ($model->status != MainDocument::SIGNED) { ?>
+        <? if ($model->status != MainDocument::SUCCESS) { ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
 
-<!--        --><?// } ?>
+        <? } ?>
         <!--        --><? // if ($model->status == MainDocument::SIGNED) { ?>
         <!--        --><? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
         <?= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
@@ -82,23 +82,29 @@ if (!empty($model->lawyer_conclusion_path)) {
             <div class="row mb-3">
 
                 <div class="col-md-6">
+
                     <span class="font-weight-bold card-title">Xujjat bo'limi</span>
                     <p class="text-success font-weight-bold card-title">
                         <?= $model->group->name_uz ?>
                     </p>
-                    <span class="font-weight-bold   card-title">Xujjat turi</span>
-                    <p class="text-success font-weight-bold card-title">
-                        <?= $model->category->name_uz ?>
-                    </p>
-                    <span class="font-weight-bold card-title">Yo'nalish</span>
-                    <p class="text-success font-weight-bold card-title">
-                        <?= $model->subCategory->name_uz; ?>
-                    </p>
-                    <span class="font-weight-bold card-title ">Turkumi</span>
-                    <p class="text-success font-weight-bold card-title">
-                        <?= $model->type->name_uz; ?>
-                    </p>
+                    <? if ($model->category) { ?>
+                        <span class="font-weight-bold   card-title">Xujjat turi</span>
+                        <p class="text-success font-weight-bold card-title">
+                            <?= $model->category->name_uz ?>
+                        </p>
+                        <span class="font-weight-bold card-title">Yo'nalish</span>
+                        <p class="text-success font-weight-bold card-title">
+                            <?= $model->subCategory->name_uz; ?>
+                        </p>
+                        <span class="font-weight-bold card-title ">Turkumi</span>
+                        <p class="text-success font-weight-bold card-title">
+                            <?= $model->type->name_uz; ?>
+                        </p>
+                    <? } ?>
+
+
                 </div>
+
                 <div class="col-md-6">
                     <span class="font-weight-bold card-title">Xujjat Yaratilgan sana</span>
                     <p class="text-success font-weight-bold card-title">
@@ -121,10 +127,12 @@ if (!empty($model->lawyer_conclusion_path)) {
                         <?= $model->doc_about ?>
                     </h3>
                     <hr>
-                    <span class="font-weight-bold card-title">Yurist xulosa</span>
-                    <h5 class="text-primary font-weight-bold">
-                        <?= $model->conclusion_uz ?>
-                    </h5>
+                    <? if ($model->conclusion_uz) { ?>
+                        <span class="font-weight-bold card-title">Yurist xulosa</span>
+                        <h5 class="text-primary font-weight-bold">
+                            <?= $model->conclusion_uz ?>
+                        </h5>
+                    <? } ?>
                 </div>
 
                 <hr>
@@ -174,7 +182,6 @@ if (!empty($model->lawyer_conclusion_path)) {
                     }
                 } ?>
 
-
                 <div class="col-md-12 mt-4">
 
                     <?
@@ -220,17 +227,19 @@ if (!empty($model->lawyer_conclusion_path)) {
             </div>
 
             <?
-            $form = ActiveForm::begin();
-            if ($model->status == MainDocument::SIGNING) {
+            if ($model->category) {
+                $form = ActiveForm::begin();
+                if ($model->status == MainDocument::SIGNING) {
 
-                echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa')
-                ?>
-                <div class="form-group">
-                    <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
-                </div>
-            <? } ?>
+                    echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa')
+                    ?>
+                    <div class="form-group">
+                        <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
+                    </div>
+                <? } ?>
 
-            <?php ActiveForm::end(); ?>
+                <?php ActiveForm::end();
+            } ?>
         </div> <!--end row-->
     </div> <!--end card body-->
 

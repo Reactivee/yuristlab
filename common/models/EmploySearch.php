@@ -83,7 +83,7 @@ class EmploySearch extends Employ
         $query = Employ::find()
             ->where(['role' => User::LAWYER]);
 
-
+//        dd($params);
         if ($params['slug']) {
             $query->andWhere(['id' => $params['slug']]);
         }

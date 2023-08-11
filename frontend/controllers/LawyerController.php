@@ -6,6 +6,7 @@ namespace frontend\controllers;
 use common\models\documents\AttachedDocument;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
+use common\models\Employ;
 use common\models\EmploySearch;
 use Yii;
 use yii\web\Controller;
@@ -30,7 +31,7 @@ class LawyerController extends Controller
     {
 
         $searchModel = new MainDocumentSearch();
-//        dd(\Yii::$app->request->post());
+
         $dataProvider = $searchModel->searchLawyer($this->request->queryParams);
 
         return $this->render('index', [
@@ -53,7 +54,7 @@ class LawyerController extends Controller
         $model->save();
         $files = AttachedDocument::find()
             ->where(['main_document_id' => $id])
-            ->select(['id','path'])
+            ->select(['id', 'path'])
             ->all();
 
         return $this->render('view', [
@@ -95,11 +96,14 @@ class LawyerController extends Controller
 
         if ($model) {
             $model->status = MainDocument::SUCCESS;
+            $model->step = MainDocument::STEP_EMPLOYER;
 
             if ($model->save()) {
                 Yii::$app->session->addFlash('success', 'Ijobiy xulosa');
                 return $this->redirect(Yii::$app->request->referrer);
-
+            } else {
+                Yii::$app->session->addFlash('error', 'Yuborishda xatolik');
+                return $this->redirect(Yii::$app->request->referrer);
             }
         }
         throw new NotFoundHttpException('The requested page does not exist.');
@@ -111,9 +115,10 @@ class LawyerController extends Controller
         $search = new EmploySearch();
 
         $dataProvider = $search->searchLawyer($this->request->queryParams);
+
         if ($slug)
-            return $this->render('team_profile', [
-                'dataProvider' => $dataProvider,
+            return $this->redirect('team_profile', [
+                'models' => $dataProvider->models,
             ]);
 
 
@@ -122,6 +127,20 @@ class LawyerController extends Controller
         ]);
 
     }
+
+    public function actionInfo($slug = null)
+    {
+
+        $search = Employ::find()->where(['first_name' => $slug])->one();
+
+
+        return $this->render('team_profile', [
+            'models' => $search,
+        ]);
+
+
+    }
+
 
     public function actionUploadConclusion($id)
     {

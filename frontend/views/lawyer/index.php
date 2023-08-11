@@ -34,11 +34,15 @@ $this->title = 'Documents';
         'filterModel' => $searchModel,
         'responsive' => true,
         'hover' => true,
+//          'pageSummaryPosition' => GridView::POS_BOTTOM,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'code_document',
+                'format' => 'raw',
                 'label' => 'Xujjat kodi',
+                'hAlign' => 'center',
+                'width' => '200px'
             ],
 //            'id',
             'name_uz',
@@ -46,6 +50,8 @@ $this->title = 'Documents';
             [
                 'attribute' => 'group_id',
                 'format' => 'raw',
+                'hAlign' => 'center',
+                'width' => '200px',
                 'filter' => MainDocument::subAllGroup(),
                 'filterType' => GridView::FILTER_SELECT2,
                 'filterWidgetOptions' => [
@@ -59,12 +65,14 @@ $this->title = 'Documents';
                 ],
                 'contentOptions' => ['style' => 'width: 100px'],
                 'value' => function ($model) {
-                    return $model->category->group->name_uz;
+                    return $model->group->name_uz;
                 }
             ],
             [
                 'attribute' => 'category_id',
                 'format' => 'raw',
+                'hAlign' => 'center',
+                'width' => '200px',
                 'filter' => MainDocument::getAllCategory(),
                 'filterType' => GridView::FILTER_SELECT2,
                 'filterWidgetOptions' => [
@@ -72,7 +80,7 @@ $this->title = 'Documents';
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '180',
+                        'width' => '120',
                         'multiple' => true
                     ],
                 ],
@@ -85,15 +93,16 @@ $this->title = 'Documents';
             [
                 'attribute' => 'sub_category_id',
                 'format' => 'raw',
+                'hAlign' => 'center',
+                'width' => '200px',
                 'filter' => MainDocument::subAllGetCategory(),
                 'filterType' => GridView::FILTER_SELECT2,
-
                 'filterWidgetOptions' => [
                     'theme' => Select2::THEME_BOOTSTRAP,
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '180',
+                        'width' => '120',
                         'multiple' => true
                     ],
                 ],
@@ -105,6 +114,8 @@ $this->title = 'Documents';
             [
                 'attribute' => 'type_group_id',
                 'format' => 'raw',
+                'hAlign' => 'center',
+                'width' => '200px',
                 'filter' => MainDocument::subAllType(),
                 'filterType' => GridView::FILTER_SELECT2,
 
@@ -113,7 +124,7 @@ $this->title = 'Documents';
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '180',
+                        'width' => '120',
                         'multiple' => true
                     ],
                 ],
@@ -134,10 +145,21 @@ $this->title = 'Documents';
 //            'time_begin:datetime',
 //            'time_end:datetime',
 
-            'created_at:datetime',
+//            'created_at:datetime',
+            [
+                'attribute' => 'created_at',
+                'contentOptions' => ['style' => 'max-width: 100px;'],
+                'hAlign' => 'center',
+                'width' => '500px',
+                'value' => function ($model) {
+                    return date('d-M-Y H:i:s', $model->created_at);
+                },
+            ],
             [
                 'attribute' => 'company_id',
                 'label' => 'Korxona',
+                'hAlign' => 'center',
+                'width' => '500px',
                 'filter' => MainDocument::getAllCompany(),
                 'filterType' => GridView::FILTER_SELECT2,
                 'filterWidgetOptions' => [
@@ -145,7 +167,7 @@ $this->title = 'Documents';
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '180',
+                        'width' => '100',
                         'multiple' => true
                     ],
                 ],
@@ -157,6 +179,8 @@ $this->title = 'Documents';
             [
                 'attribute' => 'status',
                 'format' => "raw",
+                'hAlign' => 'center',
+                'width' => '500px',
                 'filter' => MainDocument::getStatusNameArr(),
                 'filterType' => GridView::FILTER_SELECT2,
 
@@ -182,7 +206,7 @@ $this->title = 'Documents';
 //                            $emp = Employ::findOne($model->user_id);
 //                            return Html::a($emp->first_name . ' ' . $emp->last_name, [$url], ['class' => 'btn btn-inverse-warning btn-fw']);
 //                        } else {
-                            return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
 //                        }
 
                     }

@@ -34,19 +34,13 @@ use yii\helpers\Html;
                     </a>
                 </div>
             </li>
-            <li class="nav-item nav-search d-none d-sm-block">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                <span class="input-group-text" id="search">
-                  <i class="mdi mdi-magnify"></i>
-                </span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="search" aria-label="search"
-                           aria-describedby="search">
-                </div>
-            </li>
+
         </ul>
-        <span><?= Yii::$app->user->identity->employ->company->name_uz ?></span>
+        <span class="font-weight-bold ml-4">Firma: <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
+            <? if (Yii::$app->user->identity->employ->id == Yii::$app->user->identity->employ->company->director) { ?>
+                <span class="ml-3 font-weight-bold text-success">( Boshliq )</span>
+            <? } ?>
+<!--            --><?// dd(Yii::$app->user->identity->employ); ?><!--</span>-->
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item count-indicator nav-profile dropdown">
                 <span class="count">3</span>

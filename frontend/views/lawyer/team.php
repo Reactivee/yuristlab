@@ -10,7 +10,7 @@
             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
 
                     <div class="our-team">
-                        <a class="stretched-link" href="/lawyer/lawyers/<?= $item->first_name ?>">
+                        <a class="stretched-link" href="/lawyer/info/<?= $item->first_name ?>">
                         </a>
                         <div class="pic">
                             <img src="/frontend/web<?= $item->photo ?>" alt="image"/>

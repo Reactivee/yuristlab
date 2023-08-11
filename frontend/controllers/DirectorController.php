@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 
+use common\models\documents\AttachedDocument;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 
@@ -46,13 +47,17 @@ class DirectorController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-
+        $files = AttachedDocument::find()
+            ->where(['main_document_id' => $id])
+            ->select(['id', 'path'])
+            ->all();
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save())
                 Yii::$app->session->setFlash('success', 'Saqlandi');
         }
 
         return $this->render('view', [
+            'files' => $files,
             'model' => $model,
         ]);
     }
@@ -87,20 +92,22 @@ class DirectorController extends Controller
 
         if ($main) {
             $main->status = MainDocument::BOSS_SIGNED;
+            $main->step = MainDocument::STEP_BOSS_FINISH;
 
             if (!$main->save()) {
                 dd($main->errors);
-//                Yii::$app->session->setFlash('success', "Yuborildi");
-//                return $this->redirect(Yii::$app->request->referrer);
+
             }
+            Yii::$app->session->setFlash('success', "Yuborildi");
+            return $this->redirect(Yii::$app->request->referrer);
 
         } else {
             Yii::$app->session->setFlash('error', "Xujjat topilmadi");
             return $this->redirect(Yii::$app->request->referrer);
         }
 
-        Yii::$app->session->setFlash('success', "Yuborishda xatolik");
-        return $this->redirect(Yii::$app->request->referrer);
+//        Yii::$app->session->setFlash('success', "Yuborishda xatolik");
+//        return $this->redirect(Yii::$app->request->referrer);
     }
 
 

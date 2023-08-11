@@ -64,14 +64,19 @@ if (!empty($model->attach)) {
                     sorted = document.getElementById('sorted_images');")
         ?>
         <div class="container-fluid px-5 py-3">
+            <!--            --><? // dd(\backend\modules\admin\components\Helper::checkRoute('/asd')); ?>
 
             <div class="buttons_wrap mb-3">
                 <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
                     <?= Html::button(' <i class="fas fa-save mr-2"></i> Saqlash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
                     <?= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2 ']) ?>
                 <? } ?>
+                <?
+                if (!$model->category && $model->status == MainDocument::BOSS_SIGNED) {
+                    Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']);
+                }
+                ?>
 
                 <? if ($model->status == MainDocument::SUCCESS) { ?>
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
@@ -81,8 +86,6 @@ if (!empty($model->attach)) {
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
 
                 <? } ?>
-
-
             </div>
             <? if ($model->status == MainDocument::NEW) { ?>
                 <div class="alert alert-fill-info" role="alert">
@@ -120,18 +123,21 @@ if (!empty($model->attach)) {
                             <p class="text-primary font-weight-bold card-title">
                                 <?= $model->group->name_uz ?>
                             </p>
-                            <span class="font-weight-bold   card-title">Xujjat turi</span>
-                            <p class="text-primary font-weight-bold card-title">
-                                <?= $model->category->name_uz ?>
-                            </p>
-                            <span class="font-weight-bold card-title">Yo'nalish</span>
-                            <p class="text-primary font-weight-bold card-title">
-                                <?= $model->subCategory->name_uz; ?>
-                            </p>
-                            <span class="font-weight-bold card-title ">Turkumi</span>
-                            <p class="text-primary font-weight-bold card-title">
-                                <?= $model->type->name_uz; ?>
-                            </p>
+                            <? if ($model->category) { ?>
+                                <span class="font-weight-bold   card-title">Xujjat turi</span>
+                                <p class="text-primary font-weight-bold card-title">
+                                    <?= $model->category->name_uz ?>
+                                </p>
+                                <span class="font-weight-bold card-title">Yo'nalish</span>
+                                <p class="text-primary font-weight-bold card-title">
+                                    <?= $model->subCategory->name_uz; ?>
+                                </p>
+                                <span class="font-weight-bold card-title ">Turkumi</span>
+                                <p class="text-primary font-weight-bold card-title">
+                                    <?= $model->type->name_uz; ?>
+                                </p>
+                            <? } ?>
+
                         </div>
                         <div class="col-md-6">
                             <span class="font-weight-bold card-title">Xujjat Yaratilgan sana</span>
@@ -159,25 +165,28 @@ if (!empty($model->attach)) {
                         </div>
 
                         <div class="col-md-6 mt-4">
-                            <h5 class="font-weight-bold">Asosiy fayl fayllar</h5>
+                            <h5 class="font-weight-bold">Asosiy xujjat</h5>
                             <div class="card">
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                        <? if ($model->status != MainDocument::BOSS_SIGNED) { ?>
-                                            <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
-                                                ['doc-template', 'id' => $model->id], ['target' => '_blank']);
-                                        }
+
+                                        <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                            ['doc-template', 'id' => $model->id], ['target' => '_blank']);
+
                                         ?>
+                                        <!--                                        <img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">-->
                                         <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                             <a target="_blank" href="/frontend/web<?= $model->path ?>"
-                                               class="mb-0">Ko'chirib olish</a>
+                                               class="mb-0 text-warning font-weight-bold ">
+                                                <i class="fa fa-cloud-download mr-1"></i>
+                                                Ko'chirib olish</a>
                                             <p class="text-muted mb-1">
                                                 <?
                                                 $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
                                                 echo human_filesize($size, 3)
                                                 ?>
                                             </p>
-                                            <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>
+                                            <!--                                            <a href="" class="btn btn-outline-danger btn-fw mt-2">Delete</a>-->
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +195,7 @@ if (!empty($model->attach)) {
 
                         <div class="col-md-6 mt-4">
                             <? if ($model->lawyer_conclusion_path) { ?>
-                                <h5 class="font-weight-bold">Yurist Xulosa</h5>
+                                <h5 class="font-weight-bold">Yurist biriktirtan xujjat</h5>
                                 <div class="card">
                                     <div class="card-body ">
                                         <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
@@ -195,7 +204,8 @@ if (!empty($model->attach)) {
                                                 ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
                                             ?>
                                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                                <a target="_blank" href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
+                                                <a target="_blank"
+                                                   href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
                                                    class="mb-0">Ko'chirib olish</a>
                                                 <p class="text-muted mb-1">
                                                     <?
@@ -207,134 +217,91 @@ if (!empty($model->attach)) {
                                             </div>
                                         </div>
 
-                                    </div
+                                    </div>
                                 </div>
                             <? } ?>
                         </div>
-
-
-                        <div class="col-md-12">
-                            <!--                        --><? // //
-                            //                        echo FileInput::widget(['name' => 'path',
-                            //                            'options' => ['multiple' => true],
-                            //                            'pluginOptions' => ['previewFileType' => 'any',
-                            //                                'allowedFileExtensions' => ["jpg", "png", "docx", 'doc', 'pdf'],
-                            //                                'showRemove' => false,
-                            //                                'showZoom' => false,
-                            //                                'showUpload' => false,
-                            //                                'showCancel' => false,
-                            //                                'showBrowse' => false,
-                            //                                'showPreview' => true,
-                            //                                'showCaption' => false,
-                            //                                'maxFileSize' => 1000,
-                            //                                'maxFileCount' => 10,
-                            //                                'overwriteInitial' => true,
-                            //                                'initialPreview' => $initialPreview,
-                            //                                'initialPreviewAsData' => true,
-                            //                                'initialPreviewConfig' => $initialPreviewConfig,
-                            //                                'browseClass' => 'btn btn-success',
-                            //                                'uploadClass' => 'btn btn-info',
-                            //                                'removeClass' => 'btn btn-danger',
-                            //
-                            //                                'initialPreviewDownloadUrl' => Url::base('http') . '/frontend' . $model->path,
-                            //
-                            //                                'removeIcon' => '<i class="fas fa-trash"></i> ',
-                            //                                'fileActionSettings' => ['removeIcon' => '<i class="fa fa-trash"></i>',
-                            //                                    'initialPreviewDownloadUrlIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-                            //                                    'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-                            //                                    'zoomIcon' => '<i class="fa fa-search-plus"></i>',
-                            //                                    'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',],]]);
-                            //                                              ?>
-                        </div>
                     </div>
-
 
                     <hr>
-                    <div class="col-md-12 mt-4">
-                        <?
-                        echo FileInput::widget(['name' => 'attached',
-                            'id' => 'file_input',
-                            'options' => ['multiple' => true],
-                            'pluginOptions' => [
-                                'allowedFileExtensions' => ["jpg", "png", "docx", 'doc', 'pdf'],
-                                'uploadUrl' => Url::to(['upload-docs', 'id' => $model->id]),
-                                'deleteUrl' => Url::to(['delete-docs']),
-                                'showCancel' => false,
-                                'showCaption' => false,
-                                'showUpload' => true,
-                                'maxFileSize' => 2000,
-                                'maxFileCount' => 20,
 
-                                'overwriteInitial' => true,
-                                'initialPreview' => $initialPreviewDocs,
-                                'initialPreviewAsData' => true,
-                                //                            'initialPreviewDownloadUrl' => Url::base('http') . '/frontend' . $model->path,
-                                //                                'previewFileIcon' => '<i class="fas fa-file"></i>',
-                                'allowedPreviewTypes' => null, // set to empty, null or false to disable preview for all types
-                                'initialPreviewConfig' => $initialPreviewConfigDocs,
-                                'browseClass' => 'btn btn-success',
-                                'uploadClass' => 'btn btn-info',
-                                'removeClass' => 'btn btn-danger',
-                                'removeIcon' => '<i class="fas fa-trash"></i> ',
-                                'fileActionSettings' => ['removeIcon' => '<i class="fa fa-trash"></i>',
-                                    'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-                                    'zoomIcon' => '<i class="fa fa-search-plus"></i>',
-                                    'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',],
-                                'previewFileIconSettings' => [
-                                    'docx' => '<i class="fas fa-file-word"></i>',
-                                    'pdf' => '<i class="fas fa-file-word"></i>',
-                                    'xls' => '<i class="fas fa-file-word"></i>',
-                                    'doc' => '<i class="fas fa-file-word"></i>',
-                                ],
-                            ]]);
-                        ?>
-                    </div>
+                    <? if ($model->status != MainDocument::NEW) {
 
+                        if ($model->attach) {
+                            ?>
+                            <h5 class="font-weight-bold ">Qoshimcha faylar</h5>
+                            <?
+                            foreach ($model->attach as $item) { ?>
+                                <div class="col-md-6 mt-4">
+                                    <div class="card">
+                                        <div class="card-body ">
+                                            <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                                <? if ($model->path) { ?>
+                                                    <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                                        ['/frontend' . $item->path], ['target' => '_blank']);
+                                                } ?>
+                                                <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                                    <a target="_blank" href="/frontend<?= $item->path ?>"
+                                                       class="mb-0">Ko'chirib olish</a>
+                                                    <p class="text-muted mb-1">0.5 mb</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?
+                            }
+                        } ?>
+                    <? } else { ?>
+
+                        <div class="col-md-12 mt-4">
+                            <?
+                            echo FileInput::widget(['name' => 'attached',
+                                'id' => 'file_input',
+                                'options' => ['multiple' => true],
+                                'pluginOptions' => [
+                                    'allowedFileExtensions' => ["jpg", "png", "docx", 'doc', 'pdf'],
+                                    'uploadUrl' => Url::to(['upload-docs', 'id' => $model->id]),
+                                    'deleteUrl' => Url::to(['delete-docs']),
+                                    'showCancel' => false,
+                                    'showCaption' => false,
+                                    'showUpload' => true,
+                                    'maxFileSize' => 1000,
+                                    'maxFileCount' => 10,
+
+                                    'overwriteInitial' => true,
+                                    'initialPreview' => $initialPreviewDocs,
+                                    'initialPreviewAsData' => true,
+                                    //                            'initialPreviewDownloadUrl' => Url::base('http') . '/frontend' . $model->path,
+                                    //                                'previewFileIcon' => '<i class="fas fa-file"></i>',
+                                    'allowedPreviewTypes' => null, // set to empty, null or false to disable preview for all types
+                                    'initialPreviewConfig' => $initialPreviewConfigDocs,
+                                    'browseClass' => 'btn btn-success',
+                                    'uploadClass' => 'btn btn-info',
+                                    'removeClass' => 'btn btn-danger',
+                                    'removeIcon' => '<i class="fas fa-trash"></i> ',
+                                    'fileActionSettings' => [
+                                        'removeIcon' => '<i class="fa fa-trash"></i>',
+                                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
+                                        'zoomIcon' => '<i class="fa fa-search-plus"></i>',
+                                        'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',],
+                                    'previewFileIconSettings' => [
+                                        'docx' => '<i class="fas fa-file-word"></i>',
+                                        'pdf' => '<i class="fas fa-file-word"></i>',
+                                        'xls' => '<i class="fas fa-file-word"></i>',
+                                        'doc' => '<i class="fas fa-file-word"></i>',
+                                    ],
+                                ]]);
+                            ?>
+                        </div>
+                    <? } ?>
 
                 </div> <!--end row-->
             </div> <!--end card body-->
 
         </div>
     </div>
-
-<?php ActiveForm::end(); ?>
-
-
-    </div>
-
-
-<?php Modal::begin([
-    'title' => '<span class="modal-header-main">Template </span>',
-    'id' => 'modalInstallment',
-    'size' => 'modal-dialog modal-xl',
-    'headerOptions' => [
-        'id' => 'modalInstallmentHeader'
-    ],
-    'titleOptions' => [
-        'class' => 'title-orange-border text-bold text-uppercase',
-    ],
-    'options' => [
-        'class' => 'modalInstallment',
-    ],
-    'closeButton' => [
-        'id' => 'close-button',
-        'class' => 'close',
-        'data-dismiss' => 'modal',
-    ],
-    'clientOptions' => [
-        //            'backdrop' => 'static',
-        'keyboard' => true,
-    ],
-]); ?>
-    <div id='modalInstallmentContent' class="modalContent">
-        <div class="loading">
-            <div style="text-align:center">
-                <?php echo Html::img('@web/public/images/loading.gif'); ?>
-            </div>
-        </div>
-    </div>
-<?php Modal::end(); ?>
-
 <?php
 
 $script = <<<JS

@@ -1,6 +1,7 @@
 <?php
 
 /** @var \common\models\documents\MainDocumentSearch $searchModel */
+
 /** @var \common\models\documents\MainDocument $dataProvider */
 
 use common\models\documents\MainDocument;
@@ -33,13 +34,15 @@ $this->title = 'Documents';
 //            'name_ru',
             [
                 'attribute' => 'category_id',
+                'label' => 'Guruh',
                 'value' => function ($model) {
 
-                    return $model->category->group->name_uz;
+                    return $model->group->name_uz;
                 }
             ],
             [
                 'attribute' => 'category_id',
+                'label' => 'Kategoriya',
                 'value' => function ($model) {
 
                     return $model->category->name_uz;
@@ -48,6 +51,7 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'group_id',
+                'label' => 'Ichki Kategoriya',
                 'value' => function ($model) {
                     return $model->subCategory->name_uz;
                 }
@@ -55,6 +59,8 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'type_group_id',
+                'label' => 'Turkum',
+
                 'value' => function ($model) {
                     return $model->type->name_uz;
                 }
@@ -77,7 +83,6 @@ $this->title = 'Documents';
             [
                 'attribute' => 'status',
                 'format' => "raw",
-
                 'value' => function ($model) {
                     return MainDocument::getStatusNameColored($model->status);
                 }

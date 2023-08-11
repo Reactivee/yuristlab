@@ -1,204 +1,147 @@
-<div class="card-body">
+<?php
+/** @var \common\models\Employ $models */
+
+?>
+<div class="container-fluid p-3 wrapper_team_profile">
+
     <div class="row">
-        <div class="col-lg-4">
-            <div class="border-bottom text-center pb-4">
-                <img src="https://via.placeholder.com/92x92" alt="profile" class="img-lg rounded-circle mb-3">
+        <div class="col-md-4 ">
+            <div class="border-bottom text-center p-4 bg-white">
+                <img src="/frontend/web<?= $models->photo ?>" alt="profile" class="img-round rounded-circle mb-3">
                 <div class="mb-3">
-                    <h3>David Grey. H</h3>
+                    <h3><?= $models->first_name . ' ' . $models->last_name ?></h3>
                     <div class="d-flex align-items-center justify-content-center">
-                        <h5 class="mb-0 mr-2 text-muted">Canada</h5>
-                        <div class="br-wrapper br-theme-css-stars"><select id="profile-rating" name="rating" autocomplete="off" style="display: none;">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select><div class="br-widget"><a href="#" data-rating-value="1" data-rating-text="1" class="br-selected br-current"></a><a href="#" data-rating-value="2" data-rating-text="2"></a><a href="#" data-rating-value="3" data-rating-text="3"></a><a href="#" data-rating-value="4" data-rating-text="4"></a><a href="#" data-rating-value="5" data-rating-text="5"></a></div></div>
+                        <h5 class="mb-0 mr-2 text-muted">Uzbekistan</h5>
+
                     </div>
                 </div>
-                <p class="w-75 mx-auto mb-3">Bureau Oberhaeuser is a design bureau focused on Information- and Interface Design. </p>
+                <p class="w-75 mx-auto mb-3"><?= $models->desc ?></p>
                 <div class="d-flex justify-content-center">
-                    <button class="btn btn-success mr-1">Hire Me</button>
+                    <button class="btn btn-success mr-1">Message</button>
                     <button class="btn btn-success">Follow</button>
                 </div>
-            </div>
-            <div class="border-bottom py-4">
-                <p>Skills</p>
-                <div>
-                    <label class="badge badge-outline-dark">Chalk</label>
-                    <label class="badge badge-outline-dark">Hand lettering</label>
-                    <label class="badge badge-outline-dark">Information Design</label>
-                    <label class="badge badge-outline-dark">Graphic Design</label>
-                    <label class="badge badge-outline-dark">Web Design</label>
-                </div>
-            </div>
-            <div class="border-bottom py-4">
-                <div class="d-flex mb-3">
-                    <div class="progress progress-md flex-grow">
-                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="55" style="width: 55%" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <div class="progress progress-md flex-grow">
-                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="75" style="width: 75%" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="border-top mt-3 pt-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <h3 class="text-success">5896</h3>
+                            <p class="text-success font-weight-bold ">Imzolagan</p>
+                        </div>
+                        <div class="col-4">
+                            <h3 class="text-danger font-weight-bold">1596</h3>
+                            <p class="text-danger font-weight-bold">Rad etgan</p>
+                        </div>
+                        <div class="col-4 text-warning">
+                            <h3 class="text-warning font-weight-bold">7896</h3>
+                            <p class="font-weight-bold">Likes</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="py-4">
-                <p class="clearfix">
+
+            <div class=" text-center my-4 bg-white">
+                <div class="team_info">
+                    <p class="clearfix">
                           <span class="float-left">
                             Status
                           </span>
-                    <span class="float-right text-muted">
+                        <span class="float-right  badge badge-success badge-pill text-white">
                             Active
                           </span>
-                </p>
-                <p class="clearfix">
-                          <span class="float-left">
-                            Phone
-                          </span>
-                    <span class="float-right text-muted">
-                            006 3435 22
-                          </span>
-                </p>
-                <p class="clearfix">
+                    </p>
+
+                    <p class="clearfix">
                           <span class="float-left">
                             Mail
                           </span>
-                    <span class="float-right text-muted">
+                        <span class="float-right text-muted">
                             Jacod@testmail.com
                           </span>
-                </p>
-                <p class="clearfix">
+                    </p>
+                    <p class="clearfix">
                           <span class="float-left">
                             Facebook
                           </span>
-                    <span class="float-right text-muted">
+                        <span class="float-right text-muted">
                             <a href="#">David Grey</a>
                           </span>
-                </p>
-                <p class="clearfix">
+                    </p>
+                    <p class="clearfix">
                           <span class="float-left">
                             Twitter
                           </span>
-                    <span class="float-right text-muted">
+                        <span class="float-right text-muted">
                             <a href="#">@davidgrey</a>
                           </span>
-                </p>
+                    </p>
+                    <p class="clearfix mb-0">
+                          <span class="float-left">
+                            Telegram
+                          </span>
+                        <span class="float-right text-muted">
+                            <a href="#">@davidgrey</a>
+                          </span>
+                    </p>
+                </div>
             </div>
-            <button class="btn btn-primary btn-block mb-2">Preview</button>
+
+
         </div>
-        <div class="col-lg-8">
-            <div class="d-block d-md-flex justify-content-between mt-4 mt-md-0">
-                <div class="text-center mt-4 mt-md-0">
-                    <button class="btn btn-outline-primary">Message</button>
-                    <button class="btn btn-primary">Request</button>
+        <div class="col-md-8">
+            <div class=" text-center bg-white">
+                <div class="team_info">
+                    <p class="clearfix">
+                          <span class="float-left">
+                            Full name
+                          </span>
+                        <span class="float-right text-muted">
+                            Active
+                          </span>
+                    </p>
+                    <p class="clearfix">
+                          <span class="float-left">
+                            Phone
+                          </span>
+                        <span class="float-right text-muted">
+                            006 3435 22
+                          </span>
+                    </p>
+                    <p class="clearfix">
+                          <span class="float-left">
+                            Address
+                          </span>
+                        <span class="float-right text-muted">
+                            Jacod@testmail.com
+                          </span>
+                    </p>
+                    <p class="clearfix">
+                          <span class="float-left">
+                            Email
+                          </span>
+                        <span class="float-right text-muted">
+                            <a href="#">David Grey</a>
+                          </span>
+                    </p>
+                    <p class="clearfix">
+                          <span class="float-left">
+                            Ish joyi
+                          </span>
+                        <span class="float-right text-muted">
+                            <a href="#">David Grey</a>
+                          </span>
+                    </p>
+                    <p class="clearfix">
+                          <span class="float-left">
+                         Lavozimi
+                          </span>
+                        <span class="float-right text-muted">
+                            <a href="#">David Grey</a>
+                          </span>
+                    </p>
+
                 </div>
             </div>
-            <div class="mt-4 py-2 border-top border-bottom">
-                <ul class="nav profile-navbar">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="mdi mdi-account-outline"></i>
-                            Info
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <i class="mdi mdi-newspaper"></i>
-                            Feed
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="mdi mdi-calendar"></i>
-                            Agenda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="mdi mdi-attachment"></i>
-                            Resume
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="profile-feed">
-                <div class="d-flex align-items-start profile-feed-item">
-                    <img src="https://via.placeholder.com/43x43" alt="profile" class="img-sm rounded-circle">
-                    <div class="ml-4">
-                        <h6>
-                            Mason Beck
-                            <small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
-                        </h6>
-                        <p>
-                            There is no better advertisement campaign that is low cost and also successful at the same time.
-                        </p>
-                        <p class="small text-muted mt-2 mb-0">
-                              <span>
-                                <i class="mdi mdi-star mr-1"></i>4
-                              </span>
-                            <span class="ml-2">
-                                <i class="mdi mdi-comment mr-1"></i>11
-                              </span>
-                            <span class="ml-2">
-                                <i class="mdi mdi-reply"></i>
-                              </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="d-flex align-items-start profile-feed-item">
-                    <img src="https://via.placeholder.com/43x43" alt="profile" class="img-sm rounded-circle">
-                    <div class="ml-4">
-                        <h6>
-                            Willie Stanley
-                            <small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
-                        </h6>
-                        <img src="https://via.placeholder.com/640x385" alt="sample" class="rounded mw-100">
-                        <p class="small text-muted mt-2 mb-0">
-                              <span>
-                                <i class="mdi mdi-star mr-1"></i>4
-                              </span>
-                            <span class="ml-2">
-                                <i class="mdi mdi-comment mr-1"></i>11
-                              </span>
-                            <span class="ml-2">
-                                <i class="mdi mdi-reply"></i>
-                              </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="d-flex align-items-start profile-feed-item">
-                    <img src="https://via.placeholder.com/43x43" alt="profile" class="img-sm rounded-circle">
-                    <div class="ml-4">
-                        <h6>
-                            Dylan Silva
-                            <small class="ml-4 text-muted"><i class="mdi mdi-clock mr-1"></i>10 hours</small>
-                        </h6>
-                        <p>
-                            When I first got into the online advertising business, I was looking for the magical combination
-                            that would put my website into the top search engine rankings
-                        </p>
-                        <img src="https://via.placeholder.com/640x385" alt="sample" class="rounded mw-100">
-                        <p class="small text-muted mt-2 mb-0">
-                              <span>
-                                <i class="mdi mdi-star mr-1"></i>4
-                              </span>
-                            <span class="ml-2">
-                                <i class="mdi mdi-comment mr-1"></i>11
-                              </span>
-                            <span class="ml-2">
-                                <i class="mdi mdi-reply"></i>
-                              </span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+
+
         </div>
     </div>
 </div>
-
-<?php
-
-
-
