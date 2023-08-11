@@ -41,7 +41,7 @@ class TypeDocumentsSearch extends TypeDocuments
      */
     public function search($params)
     {
-        dd($params);
+
         $type = $params['type'];
         $query = TypeDocuments::find();
         if ($type)
