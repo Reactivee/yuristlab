@@ -11,7 +11,7 @@ use yii\helpers\Url;
 $domen = Url::base('https');
 $permit = false;
 
-if ($model->category && $model->status == MainDocument::NEW) {
+if ($model->status == MainDocument::NEW) {
     $permit = true;
 }
 
