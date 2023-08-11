@@ -390,14 +390,13 @@ class MainDocument extends \yii\db\ActiveRecord
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
 
-            if (!$this->category) {
+            if (!$this->category && !$this->lawyer_conclusion_path) {
                 $this->generateSignBossDoc();
                 $this->margeDocsByBoss();
-
             }
 
-
-            $this->generateCheckOrder();
+            if (!$this->lawyer_conclusion_path)
+                $this->generateCheckOrder();
 
             if ($this->lawyer_conclusion_path && $this->category)
                 $this->margeDocs();

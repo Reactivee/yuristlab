@@ -130,6 +130,8 @@ class ModeratorController extends Controller
 
 
         }
+        return false;
+
     }
 
 
