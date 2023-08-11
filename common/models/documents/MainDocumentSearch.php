@@ -96,8 +96,8 @@ class MainDocumentSearch extends MainDocument
 
         $query = MainDocument::find()
             ->orderBy(['id' => SORT_DESC])
-            ->where(['not', ['status' => MainDocument::NEW]])
-            ->andWhere(['user_id' => $user]);
+            ->where(['not', ['status' => MainDocument::NEW]]);
+//            ->andWhere(['user_id' => $user]);
 
         // add conditions that should always apply here
 
