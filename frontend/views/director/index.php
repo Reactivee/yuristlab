@@ -28,7 +28,15 @@ $this->title = 'Documents';
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            [
+                'attribute' => 'code_document',
+                'format' => 'raw',
+                'label' => 'Xujjat kodi',
+                'value' => function ($model) {
+                    $font = "<span class='font-weight-bold'>" . $model->code_document . " </span>";
+                    return $font;
+                }
+            ],
 //            'id',
             'name_uz',
 //            'name_ru',

@@ -98,17 +98,17 @@ class MainDocument extends \yii\db\ActiveRecord
     public static function getStatusNameColored($status = null)
     {
         $array = [
-            self::NEW => '<div class="badge badge-outline-primary badge-pill">Yangi</div>',
-            self::EDITED => '<div class="badge badge-outline-info badge-pill">Korib chiqilmoqda</div>',
-            self::DELETED => '<div class="badge badge-outline-danger badge-pill">O\'chirilgan</div>',
-            self::NOTSEND => '<div class="badge badge-outline-warning badge-pill">Yuborilmagan</div>',
-            self::SUCCESS => '<div class="badge badge-outline-success badge-pill">Ijobiy xulosa</div>',
-            self::ERROR => '<div class="badge badge-outline-danger badge-pill">Salbiy xulosa</div>',
-            self::REJECTED => '<div class="badge badge-outline-info badge-pill">Rad etilgan</div>',
-            self::SIGNING => '<div class="badge badge-outline-primary badge-pill">Imzolashda</div>',
-            self::SIGNED => '<div class="badge badge-outline-success badge-pill">Imzolandi</div>',
-            self::TOBOSS => '<div class="badge badge-outline-warning badge-pill">Rahbar imzosi</div>',
-            self::BOSS_SIGNED => '<div class="badge badge-outline-warning badge-pill">Rahbar imzoladi</div>',
+            self::NEW => '<div class=" badge badge-primary badge-pill">Yangi</div>',
+            self::EDITED => '<div class="badge badge-info badge-pill">Korib chiqilmoqda</div>',
+            self::DELETED => '<div class="badge badge-danger badge-pill">O\'chirilgan</div>',
+            self::NOTSEND => '<div class="badge badge-warning badge-pill">Yuborilmagan</div>',
+            self::SUCCESS => '<div class="badge badge-success badge-pill">Ijobiy xulosa</div>',
+            self::ERROR => '<div class="badge badge-danger badge-pill">Salbiy xulosa</div>',
+            self::REJECTED => '<div class="badge badge-info badge-pill">Rad etilgan</div>',
+            self::SIGNING => '<div class="badge badge-primary badge-pill">Imzolashda</div>',
+            self::SIGNED => '<div class="badge badge-success badge-pill">Imzolandi</div>',
+            self::TOBOSS => '<div class="badge badge-warning badge-pill">Rahbar imzosi kutilmoqda</div>',
+            self::BOSS_SIGNED => '<div class="badge badge-warning badge-pill">Rahbar tomonidan imzolandi</div>',
         ];
 
         return $status ? $array[$status] : $array;
@@ -370,27 +370,36 @@ class MainDocument extends \yii\db\ActiveRecord
             if (Yii::$app->user->identity->employ->company) {
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
                 $this->created_by = Yii::$app->user->identity->employ->id;
+                $this->generateDocCode();
+
+            } else {
+                return false;
             }
-            $this->generateDocCode();
         }
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
             if (Yii::$app->user->identity->employ->role == User::LAWYER) {
                 if ($this->category) {
-
                     $this->generateCodes();
                     $this->generateLawyerConclusion();
                 }
-                if (!$this->signed_lawyer)
-                    $this->signed_lawyer = Yii::$app->user->identity->employ->id;
+//                if (!$this->signed_lawyer)
+//                    $this->signed_lawyer = Yii::$app->user->identity->employ->id;
             }
-
+            if (!$this->signed_lawyer)
+                $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 
         }
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
 
             if (!$this->category && !$this->lawyer_conclusion_path) {
+
+                $this->generateCheckOrder();
+
+            }
+
+            if (!$this->category && $this->lawyer_conclusion_path) {
                 $this->generateSignBossDoc();
                 $this->margeDocsByBoss();
             }
@@ -562,6 +571,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
         if ($filename)
             chmod($filename, 0644);
+
         $this->lawyer_conclusion_path = '/uploads/docs/' . $this->code_document . '.docx';
 
     }
@@ -619,6 +629,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $folder = '/web/uploads/temp/';
         $uploads_folder = Yii::getAlias('@frontend') . $folder;
+
         if (!file_exists($uploads_folder)) {
             mkdir($uploads_folder, 0777, true);
         }
@@ -632,15 +643,13 @@ class MainDocument extends \yii\db\ActiveRecord
             ->setMargin(0);
 
         $qrCode->writeFile(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png');
-
         $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
 
         $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template-boss.docx');
         $templateProcessor->setValue('fio', $user_name);
         $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
         $templateProcessor->setValue('code_doc', $this->code_document);
-        $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
-        $templateProcessor->setValue('conclusion', $this->conclusion_uz);
+
         $templateProcessor->setImageValue('qr',
             array('path' => $img,
                 'width' => 100,
@@ -649,7 +658,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $templateProcessor->saveAs(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
-//        dd('as');
+
         if ($filename)
             chmod($filename, 0644);
 

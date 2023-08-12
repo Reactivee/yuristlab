@@ -92,7 +92,10 @@ class DirectorController extends Controller
 
         if ($main) {
             $main->status = MainDocument::BOSS_SIGNED;
-            $main->step = MainDocument::STEP_BOSS_FINISH;
+            $main->step = MainDocument::STEP_EMPLOYER;
+
+            if ($main->signed_lawyer)
+                $main->step = MainDocument::STEP_BOSS_FINISH;
 
             if (!$main->save()) {
                 dd($main->errors);

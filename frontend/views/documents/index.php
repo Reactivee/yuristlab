@@ -32,16 +32,22 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'code_document',
+                'format' => 'raw',
                 'label' => 'Xujjat kodi',
+                'value' => function ($model) {
+                    $font = "<span class='font-weight-bold'>" . $model->code_document . " </span>";
+                    return $font;
+                }
             ],
             'name_uz',
 
             [
                 'attribute' => 'category_id',
+                'format' => 'raw',
                 'label' => 'Bo\'lim',
                 'value' => function ($model) {
-
-                    return $model->category->group->name_uz;
+                    $font = "<span class='font-weight-bold'>" . $model->group->name_uz . " </span>";
+                    return $font;
                 }
             ],
             [
@@ -96,7 +102,7 @@ $this->title = 'Documents';
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
 
-                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+                        return Html::a('<i class="fa fa-pencil mr-1"></i>Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
 
                     }
                 ],

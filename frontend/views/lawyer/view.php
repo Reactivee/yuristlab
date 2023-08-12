@@ -19,23 +19,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $initialPreviewConfigDocs = [];
 $initialPreviewConfig = [];
-//$initialPreview = [];
+
 $initialPreviewDocs = [];
 
 if (!empty($model->lawyer_conclusion_path)) {
-    array_push($initialPreviewConfigDocs, [
-        'caption' => $model->lawyer_conclusion_path,
-        'key' => $model->id,
-        'icon' => '<i class="fa fa-arrow-circle-right"></i>',
-    ]);
-}
 
-if (!empty($model->lawyer_conclusion_path)) {
-
-    array_push($initialPreviewDocs, 'https://cdn-icons-png.flaticon.com/512/5968/5968517.png');
+    array_push($initialPreviewDocs, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU');
     array_push($initialPreviewConfig, [
         'caption' => $model->lawyer_conclusion_path,
         'key' => $model->lawyer_conclusion_path,
+    ]);
+    array_push($initialPreviewConfigDocs, [
+        'caption' => "Yurist xujjati",
+        'key' => $model->id,
+
     ]);
 }
 
@@ -149,7 +146,12 @@ if (!empty($model->lawyer_conclusion_path)) {
                                 <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                     <a target="_blank" href="/frontend/web<?= $model->path ?>"
                                        class="mb-0">Ko'chirib olish</a>
-                                    <p class="text-muted mb-1">0.5 mb</p>
+                                    <p class="text-muted mb-1">
+                                        <?
+                                        $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
+                                        echo human_filesize($size, 3)
+                                        ?>
+                                    </p>
 
                                 </div>
                             </div>
@@ -165,13 +167,18 @@ if (!empty($model->lawyer_conclusion_path)) {
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                         <? if ($model->path) { ?>
-                                            <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                            <?= Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
                                                 ['/frontend' . $file->path], ['target' => '_blank']);
                                         } ?>
                                         <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                             <a target="_blank" href="/frontend<?= $file->path ?>"
                                                class="mb-0">Ko'chirib olish</a>
-                                            <p class="text-muted mb-1">0.5 mb</p>
+<!--                                            <p class="text-muted mb-1">-->
+<!--                                                --><?//
+//                                                $size = filesize(Yii::getAlias('@frontend') . '/web' . $file->path);
+//                                                echo human_filesize($size, 3)
+//                                                ?>
+<!--                                            </p>-->
 
                                         </div>
                                     </div>
@@ -215,7 +222,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                             ],
                             'previewFileIconSettings' => [
                                 'docx' => '<i class="fas fa-file-word"></i>',
-                                'pdf' => '<i class="fas fa-file-word"></i>',
+                                'pdf' => '<i class="fas fa-file-pdf"></i>',
                                 'xls' => '<i class="fas fa-file-word"></i>',
                                 'doc' => '<i class="fas fa-file-word"></i>',
                             ],

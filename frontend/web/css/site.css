@@ -8,6 +8,10 @@ input[type="file"]::file-selector-button {
 .table td, .jsgrid .jsgrid-table td{
     font-size: 15px ;
 }
+.badge{
+    font-size: 12px;
+    font-weight: 600;
+}
 .page-item span {
     position: relative;
     display: block;

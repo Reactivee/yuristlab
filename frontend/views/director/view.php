@@ -273,9 +273,17 @@ if (!empty($model->attach)) {
                                     } ?>
                                     <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                         <a target="_blank" href="/frontend/web<?= $model->path ?>"
-                                           class="mb-0">Ko'chirib olish</a>
-                                        <p class="text-muted mb-1">0.5 mb</p>
+                                           class="mb-0"> <i class="fa fa-cloud-download mr-1"></i>
+                                            Ko'chirib olish</a>
+                                        <p class="text-muted mb-1">
+                                            <?
+                                            if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->path)) {
+                                                $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
+                                                echo human_filesize($size, 3);
+                                            }
 
+                                            ?>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -288,17 +296,21 @@ if (!empty($model->attach)) {
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                         <?
-                                        echo Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                        echo Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
                                             ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
                                         ?>
                                         <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                             <a target="_blank"
                                                href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
-                                               class="mb-0">Ko'chirib olish</a>
+                                               class="mb-0"> <i class="fa fa-cloud-download mr-1"></i>
+                                                Ko'chirib olish</a>
                                             <p class="text-muted mb-1">
                                                 <?
-                                                $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
-                                                echo human_filesize($size, 3)
+                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
+                                                    $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
+                                                    echo human_filesize($size, 3);
+                                                }
+
                                                 ?>
 
                                             </p>
@@ -314,19 +326,27 @@ if (!empty($model->attach)) {
                         foreach ($files as $file) {
                             ?>
                             <div class="col-md-6 mt-4">
-                                <h5 class="font-weight-bold ">Qoshimcha faylar</h5>
+                                <h5 class="font-weight-bold ">Ilova faylar</h5>
                                 <div class="card">
                                     <div class="card-body ">
                                         <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                             <? if ($model->path) { ?>
-                                                <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                                <?= Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
                                                     ['/frontend' . $file->path], ['target' => '_blank']);
                                             } ?>
                                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                                 <a target="_blank" href="/frontend<?= $file->path ?>"
-                                                   class="mb-0">Ko'chirib olish</a>
-                                                <p class="text-muted mb-1">0.5 mb</p>
+                                                   class="mb-0"> <i class="fa fa-cloud-download mr-1"></i>
+                                                    Ko'chirib olish</a>
+                                                <p class="text-muted mb-1">
+                                                    <?
+                                                    if (file_exists(Yii::getAlias('@frontend') . $file->path)) {
+                                                        $size = filesize(Yii::getAlias('@frontend') . $file->path);
+                                                        echo human_filesize($size, 3);
+                                                    }
 
+                                                    ?>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

@@ -123,7 +123,7 @@ $initialPreviewConfig = [];
                                           data-item="<?php echo $main->id ?>"
                                           data-href="<?php echo Url::to(['/documents/group-view-template', 'id' => $doc_id]) ?>">
                                              <button type="submit"
-                                                     class="btn btn-success">Xujjatni ko'rish</button>
+                                                     class="btn btn-success"> <i class="fa fa-eye mr-2"></i>Xujjatni ko'rish</button>
                                        </span>
                                 <? } else { ?>
                                     <span id="installment-btn"
@@ -131,12 +131,12 @@ $initialPreviewConfig = [];
                                           data-item="<?php echo $main->id ?>"
                                           data-href="<?php echo Url::to(['/documents/doc-view-template', 'id' => $type_id]) ?>">
                                              <button type="submit"
-                                                     class="btn btn-success">Xujjatni ko'rish</button>
+                                                     class="btn btn-success"> <i class="fa fa-eye mr-2"></i> Xujjatni ko'rish</button>
                                     </span>
                                 <? } ?>
 
-                                <a href="/frontend/web<?= $main->path ?>">Download</a>
-                                <p class="text-muted mb-1">0.5 kb</p>
+<!--                                <a href="/frontend/web--><?//= $main->path ?><!--">Download</a>-->
+<!--                                <p class="text-muted mb-1">0.5 kb</p>-->
                             </div>
                         </div>
                     </div

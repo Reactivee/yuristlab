@@ -247,6 +247,7 @@ class DocumentsController extends Controller
             'model' => $doc
         ]);
     }
+
     public function actionViewTemplate($path)
     {
 //        dd($path);
@@ -407,6 +408,7 @@ class DocumentsController extends Controller
             ->one();
         if ($main) {
             $main->status = MainDocument::TOBOSS;
+            $main->step = MainDocument::STEP_BOSS;
 
             if ($main->save()) {
                 Yii::$app->session->setFlash('success', "Yuborildi");
