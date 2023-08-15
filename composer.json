@@ -70,7 +70,10 @@
     "kartik-v/yii2-tabs-x": "dev-master",
     "krustnic/docx-merge": "^1.0",
     "kartik-v/yii2-grid": "dev-master",
-    "kartik-v/yii2-editable": "*"
+    "kartik-v/yii2-editable": "*",
+    "dompdf/dompdf": "^2.0",
+    "kartik-v/yii2-mpdf": "*",
+    "ilovepdf/ilovepdf-php": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

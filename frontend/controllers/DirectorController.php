@@ -113,5 +113,22 @@ class DirectorController extends Controller
 //        return $this->redirect(Yii::$app->request->referrer);
     }
 
+    public function actionToResign($id)
+    {
+        $model = MainDocument::find()->where(['id' => $id])->one();
+
+        if ($model) {
+            $model->status = MainDocument::NEW;
+
+            if ($model->save()) {
+                Yii::$app->session->addFlash('success', 'Rad etildi');
+                return $this->redirect(Yii::$app->request->referrer);
+            }else{
+                Yii::$app->session->addFlash('error', 'Xatolik !');
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 
 }

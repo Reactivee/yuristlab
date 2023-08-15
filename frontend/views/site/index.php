@@ -13,6 +13,35 @@ $this->title = 'My Yii Application';
 <div class="site-index">
     <?php
 
+    // Read contents
+    $name = basename(__FILE__, '.php');
+    $source = Yii::getAlias('@frontend') . '/web/uploads/docs/qBb34cYHol7cSNwwdsMn8MaVsTdcWe-x64d8e5c3e42b2.docx';
+
+//    echo date('H:i:s'), " Reading contents from `{$source}`", EOL;
+    $phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
+
+    function write($phpWord, $filename, $writers)
+    {
+        $result = '';
+
+        // Write documents
+        foreach ($writers as $format => $extension) {
+            $result .= date('H:i:s') . " Write to {$format} format";
+            if (null !== $extension) {
+                $targetFile = __DIR__ . "/results/{$filename}.{$extension}";
+                $phpWord->save($targetFile, $format);
+            } else {
+                $result .= ' ... NOT DONE!';
+            }
+//            $result .= EOL;
+        }
+
+        $result .= getEndingNotes($writers, $filename);
+
+        return $result;
+    }
+    // Save file
+    echo write($phpWord, basename(__FILE__, '.php'), 'docx');
 
     //    // Creating the new document...
     //        $phpWord = new \PhpOffice\PhpWord\PhpWord();

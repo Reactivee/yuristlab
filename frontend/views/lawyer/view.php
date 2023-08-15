@@ -201,7 +201,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                             'deleteUrl' => Url::to(['delete-conclusion']),
                             'showCancel' => false,
                             'showCaption' => false,
-                            'showUpload' => true,
+                            'showUpload' => false,
                             'maxFileSize' => 2000,
                             'maxFileCount' => 1,
                             'overwriteInitial' => false,

@@ -18,7 +18,7 @@ $this->title = 'Documents';
 
 ?>
 <div class="container-fluid m-4 pr-5">
-<!--    --><?php //Pjax::begin(); ?>
+    <!--    --><?php //Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?=
@@ -178,6 +178,7 @@ $this->title = 'Documents';
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'user_id',
                 'format' => 'raw',
+
                 'value' => function ($model) {
 //                    return $model->lawyer->first_name . ' ' . $model->lawyer->last_name;
 
@@ -200,15 +201,21 @@ $this->title = 'Documents';
 //                }
                 'editableOptions' => function ($model) {
                     return [
+                        'submitButton' => [
+                            'class' => 'btn btn-success btn-pill ',
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'label' => 'asd',
+
+                        ],
                         'formOptions' => ['action' => ['/moderator/set-lawyer', 'doc' => $model->id]],
-                        'displayValue' => $model->user_id? $model->lawyer->first_name . ' ' . $model->lawyer->last_name:'Biriktirilmagan',
+                        'displayValue' => $model->user_id ? $model->lawyer->first_name . ' ' . $model->lawyer->last_name : 'Biriktirilmagan',
                         'size' => 'md',
                         'placement' => 'left',
                         'inputType' => Editable::INPUT_SELECT2,
                         'options' => [
                             'data' => Employ::getLawyers(),
                             'options' => [
-                                'placeholder' => 'Skladni tanlang',
+                                'placeholder' => 'Yurist tanlang',
                             ],
                             'theme' => Select2::THEME_DEFAULT
                         ]
@@ -241,6 +248,6 @@ $this->title = 'Documents';
         ],
     ]); ?>
 
-<!--    --><?php //Pjax::end(); ?>
+    <!--    --><?php //Pjax::end(); ?>
 
 </div>

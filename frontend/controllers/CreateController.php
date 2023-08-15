@@ -104,8 +104,7 @@ class CreateController extends Controller
 
 //            $fileName = pathinfo($model->path, PATHINFO_FILENAME);
                 $fileExt = pathinfo($model->path, PATHINFO_EXTENSION);
-                $newName = $generateName . '.' . $fileExt;
-
+                $newName = $model->code_document . $generateName . '.' . $fileExt;
                 $savePathDocs = $folder . $newName;
 
                 try {

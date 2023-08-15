@@ -6,11 +6,12 @@ use common\models\Company;
 use common\models\Employ;
 use common\models\User;
 use DocxMerge\DocxMerge;
+use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Settings;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\faker\FixtureController;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
@@ -377,6 +378,9 @@ class MainDocument extends \yii\db\ActiveRecord
             }
         }
 
+        $this->makeBossPDF();
+//        return false;
+
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
             if (Yii::$app->user->identity->employ->role == User::LAWYER) {
                 if ($this->category) {
@@ -393,6 +397,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
 
+
             if (!$this->category && !$this->lawyer_conclusion_path) {
 
                 $this->generateCheckOrder();
@@ -402,10 +407,12 @@ class MainDocument extends \yii\db\ActiveRecord
             if (!$this->category && $this->lawyer_conclusion_path) {
                 $this->generateSignBossDoc();
                 $this->margeDocsByBoss();
+//                $this->generateSignTable();
+//                dd('asd');
             }
 
-            if (!$this->lawyer_conclusion_path)
-                $this->generateCheckOrder();
+//            if (!$this->lawyer_conclusion_path)
+//                $this->generateCheckOrder();
 
             if ($this->lawyer_conclusion_path && $this->category)
                 $this->margeDocs();
@@ -460,6 +467,17 @@ class MainDocument extends \yii\db\ActiveRecord
         $templateProcessor->saveAs($filename);
         if ($filename)
             chmod($filename, 0644);
+        // Make sure you have `dompdf/dompdf` in your composer dependencies.
+//        Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
+//// Any writable directory here. It will be ignored.
+//        Settings::setPdfRendererPath('vendor/hkvstore/dompdf');
+//        $generateName = Yii::$app->security->generateRandomString() . uniqid();
+//        $pdf_file = $generateName . '.pdf';
+//        $phpWord = IOFactory::load($filename, 'Word2007');
+////
+//        $phpWord->save(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $pdf_file, 'PDF');
+//        $this->path = '/uploads/docs/' . $pdf_file;
+
 
     }
 
@@ -600,19 +618,24 @@ class MainDocument extends \yii\db\ActiveRecord
     {
         $generateName = Yii::$app->security->generateRandomString() . uniqid();
         $fileExt = pathinfo($this->path, PATHINFO_EXTENSION);
-        $newName = $generateName . '.' . $fileExt;
+        $newName = $this->code_document . $generateName . '.' . $fileExt;
+        $lawyer_doc = Yii::getAlias('@frontend') . '/web/' . $this->lawyer_conclusion_path;
+        $sign_doc = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
 
-        $dm = new DocxMerge();
-        $marged = $dm->merge([
-            Yii::getAlias('@frontend') . '/web/' . $this->lawyer_conclusion_path,
-            Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx'
-        ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
+        if (file_exists($lawyer_doc) && file_exists($sign_doc)) {
 
-        $this->lawyer_conclusion_path = '/uploads/docs/' . $newName;
+            $dm = new DocxMerge();
+            $marged = $dm->merge([
+                $lawyer_doc,
+                $sign_doc,
+            ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
 
-        $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
-        if ($filename)
-            chmod($filename, 0644);
+            $this->lawyer_conclusion_path = '/uploads/docs/' . $newName;
+
+            $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+            if ($filename)
+                chmod($filename, 0777);
+        }
 
     }
 
@@ -660,8 +683,130 @@ class MainDocument extends \yii\db\ActiveRecord
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
 
         if ($filename)
-            chmod($filename, 0644);
+            chmod($filename, 0777);
 
+
+    }
+
+    public function generateSignTable()
+    {
+        $item = MainDocument::find()
+            ->where([
+                'id' => $this->id
+            ])->one();
+
+        $user_name = Yii::$app->user->identity->employ->first_name . ' ' . Yii::$app->user->identity->employ->last_name;
+
+        $phpWord = new PHPWord();
+
+        $folder = '/web/uploads/temp/';
+        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+        if (!file_exists($uploads_folder)) {
+            mkdir($uploads_folder, 0777, true);
+        }
+        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+        /*Write qr */
+        $qrCode = (new \Da\QrCode\QrCode('Elektron doc'))
+            ->setSize(100)
+            ->setMargin(0);
+
+        $qrCode->writeFile(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_conclusion . '.png');
+
+        $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_conclusion . '.png';
+
+        $section = $phpWord->addSection();
+
+        $TableFontStyle = [
+            'bold' => true,
+            'marginTop' => '100',
+            'afterSpacing' => 1,
+            'Spacing' => 1,
+            'cellMargin' => 1,
+            'size' => 14,
+            'alignItems' => 'center',
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER
+        ];
+
+        $cellRowSpan = ['vMerge' => 'restart', 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
+        $cellRowContinue = ['vMerge' => 'continue'];
+        $fancyTableCellBtlrStyle = ['valign' => 'center', 'alignment' => 'center'];
+//        $section->addPageBreak();
+        $cellColSpan = ['gridSpan' => 2,
+            'alignItems' => 'center',
+            'marginTop' => '100',
+            'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER];
+//        $fancyTableCellBtlrStyle = ['valign' => 'center', 'alignment' => 'center'];
+
+        $section->addTextBreak(1);
+
+//        $table = $section->addTable(['borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 10, 'Spacing' => 10, 'cellMargin' => 100]);
+        $table = $section->addTable(['marginTop' => '100', 'borderSize' => 1, 'borderColor' => 'black', 'afterSpacing' => 10, 'Spacing' => 100, 'cellMargin' => 10, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'ratio' => true]);
+
+        $table->addRow();
+//        $table->addCell(2000, $cellRowSpan)->addText('${myImage}');
+//        $table->addCell(2000, $cellRowSpan)->addText("2");
+//        $table->addCell(2000, $cellRowSpan)->addText('${myImage}');
+        $table->addCell(2000, $cellRowSpan)->addImage($img, array('width' => 70, 'height' => 70, 'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'ratio' => true));
+        $table->addCell(4000, $cellColSpan)->addText("Qr ni skanerlang", $TableFontStyle);
+//        $table->addCell(2000, $cellRowSpan)->addText("6");
+//        $templateProcessor->setComplexBlock('table_var', $table);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+//        $table->addCell(null, $cellRowContinue);
+
+        $table->addCell(2000)->addText("FISH", $TableFontStyle);
+        $table->addCell(4000)->addText($user_name, $TableFontStyle);
+//        $table->addCell(null, $cellRowContinue);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText('Sana', $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
+//        $table->addCell(4000, $TableFontStyle)->addText('Sana', $TableFontStyle);
+//        $table->addCell(4000, $TableFontStyle)->addText(date('d-m-Y H:i:s', $this->updated_at), $TableFontStyle);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText("Xujjat kodi", $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText($this->code_document, $TableFontStyle);
+//        $table->addCell(4000, $TableFontStyle)->addText("Xujjat kodi", $TableFontStyle);
+//        $table->addCell(4000, $TableFontStyle)->addText($this->code_document, $TableFontStyle);
+
+        $table->addRow();
+        $table->addCell(null, $cellRowContinue);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText("Xulosa kodi", $TableFontStyle);
+        $table->addCell(4000, $fancyTableCellBtlrStyle)->addText($this->code_conclusion, $TableFontStyle);
+//        $section->addText($this->conclusion_uz);
+//        $table->addCell(4000, $TableFontStyle)->addText("Xulosa kodi", $TableFontStyle);
+//        $table->addCell(4000, $TableFontStyle)->addText($this->code_conclusion, $TableFontStyle);
+
+        $section->addTextBreak(1);
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+
+        $objWriter->save(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx');
+
+
+    }
+
+    public function makeBossPDF()
+    {
+//        $lawyer_doc = Yii::getAlias('@frontend') . '/web/' . $this->path;
+////        $sign_doc = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
+////        dd($lawyer_doc);
+//        if (file_exists($lawyer_doc)) {
+//
+//            // Make sure you have `dompdf/dompdf` in your composer dependencies.
+//            Settings::setPdfRendererName(Settings::PDF_RENDERER_MPDF);
+//// Any writable directory here. It will be ignored.
+//            Settings::setPdfRendererPath('.');
+//
+//            $phpWord = IOFactory::load($lawyer_doc, 'Word2007');
+//            $phpWord->save('document.pdf', 'PDF');
+////        dd('asd');
+//        }
+//dd('asd');
     }
 
 
