@@ -33,6 +33,9 @@ class AppAsset extends AssetBundle
         'js/settings.js',
         'js/todolist.js',
         'js/dashboard.js',
+        'https://unpkg.com/jszip/dist/jszip.min.js',
+        'js/docx-preview.js',
+
 //        'https://code.jquery.com/jquery-3.7.0.min.js',
         'js/main.js'
     ];

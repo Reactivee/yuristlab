@@ -24,3 +24,23 @@ function refreshFilesBlock(e) {
         }
     });
 }
+
+function PreviewWordDoc() {
+    //Read the Word Document data from the File Upload.
+    var doc = document.getElementById("files").files[0];
+    console.log((doc));
+
+    //If Document not NULL, render it.
+    if (doc != null) {
+        //Set the Document options.
+        var docxOptions = Object.assign(docx.defaultOptions, {
+            useMathMLPolyfill: true
+        });
+
+        //Reference the Container DIV.
+        var container = document.querySelector("#word-container");
+
+        //Render the Word Document.
+        docx.renderAsync(doc, container, null, docxOptions);
+    }
+}

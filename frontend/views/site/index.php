@@ -327,3 +327,5 @@ $this->title = 'My Yii Application';
 //
 //JS;
 //    $this->registerJs($script); ?>
+
+

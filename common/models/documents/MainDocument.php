@@ -6,6 +6,7 @@ use common\models\Company;
 use common\models\Employ;
 use common\models\User;
 use DocxMerge\DocxMerge;
+use NcJoes\OfficeConverter\OfficeConverter;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Settings;
@@ -377,8 +378,8 @@ class MainDocument extends \yii\db\ActiveRecord
                 return false;
             }
         }
-
-        $this->makeBossPDF();
+//
+//        $this->makeBossPDF();
 //        return false;
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
@@ -792,21 +793,31 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public function makeBossPDF()
     {
-//        $lawyer_doc = Yii::getAlias('@frontend') . '/web/' . $this->path;
-////        $sign_doc = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
-////        dd($lawyer_doc);
-//        if (file_exists($lawyer_doc)) {
+        $lawyer_doc = Yii::getAlias('@frontend') . '/web/' . $this->path;
+        $sign_doc = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.docx';
 //
-//            // Make sure you have `dompdf/dompdf` in your composer dependencies.
-//            Settings::setPdfRendererName(Settings::PDF_RENDERER_MPDF);
-//// Any writable directory here. It will be ignored.
-//            Settings::setPdfRendererPath('.');
-//
-//            $phpWord = IOFactory::load($lawyer_doc, 'Word2007');
-//            $phpWord->save('document.pdf', 'PDF');
-////        dd('asd');
-//        }
-//dd('asd');
+//        $converter = new OfficeConverter($lawyer_doc);
+//        $converter->convertTo('output-file.pdf'); //generates pdf file in same directory as test-file.docx
+//        $converter->convertTo('output-file.html'); //generates html file in same directory as test-file.docx
+
+//        $converter = new OfficeConverter('test-file.docx', 'path-to-outdir');
+
+
+//        dd($lawyer_doc);
+        if (file_exists($lawyer_doc)) {
+
+            // Make sure you have `dompdf/dompdf` in your composer dependencies.
+            Settings::setPdfRendererName(Settings::PDF_RENDERER_MPDF);
+// Any writable directory here. It will be ignored.
+            Settings::setPdfRendererPath('.');
+
+            $phpWord = IOFactory::load($lawyer_doc, 'Word2007');
+            $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'ODText');
+            $xmlWriter->save('result.odt');
+
+        dd('asd');
+        }
+dd('asd');
     }
 
 

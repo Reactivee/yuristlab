@@ -73,7 +73,8 @@
     "kartik-v/yii2-editable": "*",
     "dompdf/dompdf": "^2.0",
     "kartik-v/yii2-mpdf": "*",
-    "ilovepdf/ilovepdf-php": "*"
+    "ilovepdf/ilovepdf-php": "*",
+    "ncjoes/office-converter": "^1.0"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

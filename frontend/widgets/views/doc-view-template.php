@@ -1,8 +1,5 @@
 <?
 
-use kartik\file\FileInput;
-use yii\bootstrap4\ActiveForm;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var \common\models\documents\MainDocument $model */

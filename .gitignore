@@ -44,3 +44,4 @@ phpunit.phar
 /api/uploads/
 /api/runtime/
 /frontend/web/uploads/
+/node_modules/

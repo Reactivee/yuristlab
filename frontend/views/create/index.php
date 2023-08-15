@@ -146,56 +146,6 @@ $initialPreviewConfig = [];
     <? } ?>
 
 
-        <!--        <div class="col-md-6 mb-4">-->
-        <!--            <label for="">Qo'shimcha fayllar</label>-->
-        <!--            --><? //
-        //            echo FileInput::widget([
-        //                'name' => 'attached',
-        //                'options' => [
-        //                    'multiple' => true,
-        ////                    'accept' => 'images/*'
-        //                ],
-        //                'pluginOptions' => [
-        //                    'showCaption' => false,
-        //                    'uploadUrl' => Url::to(['upload-docs']),
-        //                    'deleteUrl' => Url::to(['delete-docs']),
-        //                    'allowedFileExtensions' => ['docx', 'doc', 'pdf', 'jpg', 'jpeg'],
-        //                    'browseClass' => 'btn btn-success ',
-        //                    'showCancel' => false,
-        //                    'showClose' => false,
-        //                    'showUpload' => true,
-        //                    'maxFileSize' => 2240,
-        //                    'maxFileCount' => 40,
-        //                    'overwriteInitial' => false,
-        //                    'initialPreviewAsData' => true,
-        //                    'fileActionSettings' => [
-        //                        'removeIcon' => '<i class="fa fa-trash"></i>',
-        //                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-        //                        'zoomIcon' => '<i class="fa fa-search-plus"></i>'
-        //                    ],
-        //                ],
-        //
-        //
-        //                'pluginEvents' => [
-        //                    'fileuploaded' => new JsExpression('function(event, data, previewId) {
-        //                             console.log(previewId)
-        //
-        //                            uploaded.value = JSON.stringify( data.response);
-        //                        }'),
-        //                    'filedeleted' => new JsExpression('function(event, key) {
-        //                            deletedImages.push(key);
-        //                            deleted.value = JSON.stringify(deletedImages);
-        //                        }'),
-        //                    'filesuccessremove' => new JsExpression('function(event, previewId) {
-        //                            delete uploadedImages[previewId];
-        //                            uploaded.value = JSON.stringify(uploadedImages);
-        //                        }'),
-        //                    'filesorted' => new JsExpression('function(event, params) {
-        //                            sorted.value = JSON.stringify(params.stack);
-        //                        }')
-        //                ]
-        //            ]) ?>
-        <!--        </div>-->
 
     </div>
 
@@ -226,7 +176,6 @@ $initialPreviewConfig = [];
         'data-dismiss' => 'modal',
     ],
     'clientOptions' => [
-        //            'backdrop' => 'static',
         'keyboard' => true,
     ],
 ]); ?>
@@ -249,8 +198,7 @@ $(function(){
     $(document).on('click', '.showInstallmentModal', function(e){
         e.preventDefault();
         $('#modalInstallment').find('#modalInstallmentContent').html(loading);
-        console.log($('#modalInstallment').data('amount'));
-        console.log($('#modalInstallment').data('bs.modal'));
+    
         if ($('#modalInstallment').data('bs.modal').isShown) {
             $('#modalInstallment').find('#modalInstallmentContent')
                 .load($(this).attr('data-href')); 

@@ -70,7 +70,7 @@ use yii\widgets\ActiveForm;
 
     //    $form->field($model, 'company_id')->dropDownList()       ?>
 
-    <?= $form->field($model, 'role')->dropDownList(\common\models\User::getRole()) ?>
+    <?= $form->field($model, 'role')->dropDownList(\common\models\Employ::getRole()) ?>
 
     <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
 

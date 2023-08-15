@@ -51,7 +51,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 
-            'role',
+
+            [
+                'attribute' => 'role',
+                'value' => function ($model) {
+                    return Employ::getRole($model->role);
+                }
+            ],
             //'login',
             [
                 'class' => ActionColumn::className(),

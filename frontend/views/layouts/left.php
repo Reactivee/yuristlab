@@ -67,7 +67,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="/documents">Docs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/documents/index">Docs</a></li>
                     <li class="nav-item"><a class="nav-link" href="/documents/statistics">Stat</a></li>
 
 
@@ -84,7 +84,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             </a>
             <div class="collapse" id="ui-advanced">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="/lawyer">Index</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/lawyer/index">Index</a></li>
                 </ul>
             </div>
         </li>
@@ -132,7 +132,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"  href="/lawyer/lawyers" aria-expanded="false"
+            <a class="nav-link"  href="/lawyer/lawyers/" aria-expanded="false"
                aria-controls="ui-template">
                 <i class="mdi mdi-folder-outline menu-icon"></i>
                 <span class="menu-title">Team</span>
