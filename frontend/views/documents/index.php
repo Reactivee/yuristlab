@@ -86,8 +86,14 @@ $this->title = 'Documents';
 //            'time_begin:datetime',
 //            'time_end:datetime',
 
-            'created_at:datetime',
-//            'updated_at:datetime',
+            [
+                'attribute' => 'created_at',
+                'contentOptions' => ['style' => 'max-width: 100px;'],
+
+                'value' => function ($model) {
+                    return date('d-M-Y H:i:s', $model->created_at);
+                },
+            ],
             [
                 'attribute' => 'status',
                 'format' => "raw",

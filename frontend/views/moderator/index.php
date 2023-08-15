@@ -60,7 +60,7 @@ $this->title = 'Documents';
                 ],
                 'contentOptions' => ['style' => 'width: 100px'],
                 'value' => function ($model) {
-                    return $model->category->group->name_uz;
+                    return $model->group->name_uz;
                 }
             ],
             [
@@ -135,7 +135,16 @@ $this->title = 'Documents';
 //            'time_begin:datetime',
 //            'time_end:datetime',
 
-            'created_at:datetime',
+
+            [
+                'attribute' => 'created_at',
+                'contentOptions' => ['style' => 'max-width: 500px;'],
+                'hAlign' => 'center',
+                'width' => '300px',
+                'value' => function ($model) {
+                    return date('d-M-Y H:i:s', $model->created_at);
+                },
+            ],
             [
                 'attribute' => 'company_id',
                 'label' => 'Korxona',

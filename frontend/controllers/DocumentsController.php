@@ -303,7 +303,7 @@ class DocumentsController extends Controller
                 TelegramBotErrorSender::widget(['error' => $response->content, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             }
-
+//
         }
         return $this->render('doc-edit', [
             'model' => $model,
@@ -314,6 +314,8 @@ class DocumentsController extends Controller
 
     public function actionDrive($id, $path)
     {
+
+        $main_doc = MainDocument::find()->where(['path' => '/uploads/docs/' . $path.'.docx'])->one();
 
         $fileCredentialsPath = Yii::getAlias('@api') . '/config/creds.json';
 
@@ -351,7 +353,8 @@ class DocumentsController extends Controller
         $res = file_put_contents($localFilePath, $fileContent);
         if ($res) {
             Yii::$app->session->setFlash('success', "Xujjat Saqlandi");
-            return $this->redirect(Yii::$app->request->referrer);
+            return $this->redirect(['/documents/view/', 'id' => $main_doc->id]);
+
         }
         TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 

@@ -81,7 +81,7 @@ class EmploySearch extends Employ
     public function searchLawyer($params)
     {
         $query = Employ::find()
-            ->where(['role' => User::LAWYER]);
+            ->where(['role' => Employ::LAWYER]);
 
 //        dd($params);
         if ($params['slug']) {

@@ -24,10 +24,11 @@ $res = file_get_contents($templateFile);
         <? //= $domen . $model->path?><!--'-->
         <!--                width='100%' height='900px' >-->
         <!--        </iframe>-->
+
         <?php echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
             'url' => $domen . $model->path,//url на ваш документ
             'width' => '100%',
-            'height' => '600px',
+            'height' => '900px',
             //https://geektimes.ru/post/111647/
             'embedded' => true,
             'a' => \lesha724\documentviewer\GoogleDocumentViewer::A_V //A_V = 'v', A_GT= 'gt', A_BI = 'bi'

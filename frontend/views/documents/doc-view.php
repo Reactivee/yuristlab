@@ -18,27 +18,17 @@ if ($model->status == MainDocument::NEW) {
 ?>
 <div class="row">
     <div class="container-fluid px-5">
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'target' => '_blank'], 'action' => '/documents/doc-edit']) ?>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', ], 'action' => '/documents/doc-edit']) ?>
 
         <?= $form->field($model, 'path')->hiddenInput()->label(false) ?>
         <? if ($permit) { ?>
-            <button type="submit" class="btn btn-outline-primary btn-icon-text my-3">
+            <button onclick="PlayLoader()" type="submit" class="btn btn-outline-primary btn-icon-text my-3">
                 <i class="mdi mdi-file-check btn-icon-prepend"></i>Tahrirlash
             </button>
         <? } ?>
 
         <?
-        //        echo $form->field($model, 'path')->widget(FileInput::classname(), [
-        //
-        //            'pluginOptions' => [
-        //
-        //                'initialPreview' =>
-        //
-        //                    Html::a("asd", '')
-        //
-        //            ]
-        //
-        //        ]);
+
         ?>
         <?php ActiveForm::end() ?>
         <!--        <a href="doc-edit" type="button" class="btn btn-outline-primary btn-icon-text my-3 ">-->
@@ -47,20 +37,20 @@ if ($model->status == MainDocument::NEW) {
         <!--        </a>-->
 
 
-        <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=<?= $domen . $model->path ?>'
-                width='100%' height='900px' frameborder='0'>
-        </iframe>
+<!--        <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=--><?//= $domen . $model->path ?><!--'-->
+<!--                width='100%' height='900px' frameborder='0'>-->
+<!--        </iframe>-->
 
         <?php
 
-        //        echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
-        //            'url' => $domen . $model->path,//url на ваш документ
-        //            'width' => '100%',
-        //            'height' => '600px',
-        //            //https://geektimes.ru/post/111647/
-        //            'embedded' => true,
-        //            'a' => \lesha724\documentviewer\GoogleDocumentViewer::A_BI //A_V = 'v', A_GT= 'gt', A_BI = 'bi'
-        //        ]);
+                echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
+                    'url' => $domen . $model->path,//url на ваш документ
+                    'width' => '100%',
+                    'height' => '900px',
+                    //https://geektimes.ru/post/111647/
+                    'embedded' => true,
+                    'a' => \lesha724\documentviewer\GoogleDocumentViewer::A_BI //A_V = 'v', A_GT= 'gt', A_BI = 'bi'
+                ]);
         ?>
     </div>
 </div>

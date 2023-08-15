@@ -74,7 +74,19 @@ AppAsset::register($this);
     <!--        --><? //= Breadcrumbs::widget([
     //            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     //        ]) ?>
+
     <div class="container-scroller_">
+
+        <div class="preloader js-preloader flex-center">
+            <div class="loader-demo-boxs">
+                <div class="dot-opacity-loader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
         <?= $this->render('top') ?>
 
 

@@ -383,7 +383,7 @@ class MainDocument extends \yii\db\ActiveRecord
 //        return false;
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
-            if (Yii::$app->user->identity->employ->role == User::LAWYER) {
+            if (Yii::$app->user->identity->employ->role == Employ::LAWYER) {
                 if ($this->category) {
                     $this->generateCodes();
                     $this->generateLawyerConclusion();
@@ -812,12 +812,12 @@ class MainDocument extends \yii\db\ActiveRecord
             Settings::setPdfRendererPath('.');
 
             $phpWord = IOFactory::load($lawyer_doc, 'Word2007');
-            $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'ODText');
+            $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'ODText');
             $xmlWriter->save('result.odt');
 
-        dd('asd');
+            dd('asd');
         }
-dd('asd');
+        dd('asd');
     }
 
 

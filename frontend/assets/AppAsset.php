@@ -19,6 +19,8 @@ class AppAsset extends AssetBundle
         'vendors/css/vendor.bundle.base.css',
         'css/vertical-layout-light/style.css',
         'images/favicon.png',
+//        'css/percent-preloader.min.css',
+        'css/preloader.css',
         'css/site.css'
     ];
     public $js = [
@@ -35,6 +37,8 @@ class AppAsset extends AssetBundle
         'js/dashboard.js',
         'https://unpkg.com/jszip/dist/jszip.min.js',
         'js/docx-preview.js',
+//        'js/percent-preloader.min.js',
+        'js/jquery.preloadinator.min.js',
 
 //        'https://code.jquery.com/jquery-3.7.0.min.js',
         'js/main.js'

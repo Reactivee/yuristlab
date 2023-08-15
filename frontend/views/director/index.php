@@ -86,8 +86,14 @@ $this->title = 'Documents';
 //            'time_begin:datetime',
 //            'time_end:datetime',
 
-            'created_at:datetime',
-//            'updated_at:datetime',
+            [
+                'attribute' => 'created_at',
+                'contentOptions' => ['style' => 'max-width: 300px;'],
+
+                'value' => function ($model) {
+                    return date('d-M-Y H:i:s', $model->created_at);
+                },
+            ],
             [
                 'attribute' => 'status',
                 'format' => "raw",
@@ -100,7 +106,7 @@ $this->title = 'Documents';
                 'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
-                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+                        return Html::a('<i class="fa fa-pencil mr-1"></i> Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
                     }
                 ],
             ],

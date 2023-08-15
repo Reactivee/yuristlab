@@ -23,7 +23,10 @@ return [
         ]
     ],
     'components' => [
-
+        'formatter' => [
+            'class'           => 'yii\i18n\Formatter',
+            'defaultTimeZone' => 'Asia/Tashkent',
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',

@@ -196,7 +196,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                         'id' => 'file_input',
                         'options' => ['multiple' => true],
                         'pluginOptions' => [
-                            'allowedFileExtensions' => ["docx", 'doc',],
+                            'allowedFileExtensions' => ["docx"],
                             'uploadUrl' => Url::to(['upload-conclusion', 'id' => $model->id]),
                             'deleteUrl' => Url::to(['delete-conclusion']),
                             'showCancel' => false,

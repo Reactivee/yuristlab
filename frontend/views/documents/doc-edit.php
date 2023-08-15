@@ -13,7 +13,8 @@ $fileName = pathinfo($model->path, PATHINFO_FILENAME);
     <div class="container-fluid px-5">
 
         <?=
-        Html::a('<i class="mdi mdi-file-check btn-icon-prepend"></i> Saqlash', ['drive', 'id' => $doc, 'path' => $fileName], ['class' => 'btn btn-outline-primary btn-icon-text my-4', 'target' => '_blank'])
+
+        Html::a('<i class="mdi mdi-file-check btn-icon-prepend"></i> Saqlash', ['drive', 'id' => $doc, 'path' => $fileName], ['class' => 'btn btn-outline-primary btn-icon-text my-4',])
         ?>
         <!--        <input id='doc_title' type="text" placeholder="document title">-->
         <!--        <button id="create">Create doc File</button>-->
@@ -35,8 +36,6 @@ $fileName = pathinfo($model->path, PATHINFO_FILENAME);
         <!--        --><? //= dd($doc)?>
         <iframe id="iframe" style="width: 100%; height: 900px"
                 src="https://docs.google.com/document/d/<?= $doc ?>/edit?usp=sharing&amp;widget=true&amp;headers=false">
-
-
         </iframe>
 
     </div>

@@ -45,8 +45,8 @@ class MainDocumentSearch extends MainDocument
     {
         $user = Yii::$app->user->identity->employ->company->id;
         $query = MainDocument::find()->orderBy(['id' => SORT_DESC]);
-        if ($user)
-            $query->where(['company_id' => $user]);
+
+        $query->where(['company_id' => $user]);
 
 
         // add conditions that should always apply here
@@ -96,8 +96,8 @@ class MainDocumentSearch extends MainDocument
 
         $query = MainDocument::find()
             ->orderBy(['id' => SORT_DESC])
-            ->where(['not', ['status' => MainDocument::NEW]]);
-//            ->andWhere(['user_id' => $user]);
+            ->where(['not', ['status' => MainDocument::NEW]])
+            ->andWhere(['user_id' => $user]);
 
         // add conditions that should always apply here
 

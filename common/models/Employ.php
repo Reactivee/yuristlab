@@ -121,7 +121,7 @@ class Employ extends \yii\db\ActiveRecord
     {
         $law = self::find()
             ->select(["CONCAT(first_name, ' ', last_name) AS first_name",'id'])
-            ->where(['role' => User::LAWYER, 'status' => self::STATUS_ACTIVE])
+            ->where(['role' => Employ::LAWYER, 'status' => self::STATUS_ACTIVE])
 
             ->all();
 

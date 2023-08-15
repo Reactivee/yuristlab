@@ -44,3 +44,14 @@ function PreviewWordDoc() {
         docx.renderAsync(doc, container, null, docxOptions);
     }
 }
+
+$('.js-preloader').preloadinator({
+    animation: 'fadeOut',
+    scroll: false,
+    animationDuration: 400
+});
+
+function PlayLoader() {
+    let loader = document.querySelector('.preloader');
+    loader.style.display = 'flex';
+}
