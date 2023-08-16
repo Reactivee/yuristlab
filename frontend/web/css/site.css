@@ -1,7 +1,9 @@
 input[type="file"]::file-selector-button {
     /*display: none;*/
 }
-
+.navbar .navbar-brand-wrapper .navbar-brand img{
+    height: auto;
+}
 .tab-content > .active {
     display: flex;
 }
