@@ -3,42 +3,130 @@
 /** @var yii\web\View $this */
 
 
-
-
 $this->title = 'Yuristlab';
 ?>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">Arizalar soni</h4>
+                    <div class="d-xl-flex justify-content-between mt-3 mb-3 align-items-center">
+                        <h6 class="font-weight-normal">Mar 28 - Apr 28.2023</h6>
+                        <button type="button" class="btn btn-outline-primary">Details</button>
+                    </div>
+                    <div class="row mt-4 mb-4 mb-sm-0 d-flex align-items-center">
+                        <div class="col-xl-9  mb-4 mb-sm-0">
+                            <h1 class="font-weight-medium m-0 text-dark">4,356 <span
+                                        class="text-success text-small font-weight-normal">+54.34 (1.2%)</span></h1>
+                        </div>
+
+                        <div class="col-xl-3">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <canvas id="avrg-order-quantity" width="164" height="82"
+                                    style="display: block; width: 82px; height: 41px;"
+                                    class="chartjs-render-monitor"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">Qayta ishlangan xujjatlar</h4>
+                    <div class="d-xl-flex justify-content-between mt-3 mb-3 align-items-center">
+                        <h6 class="font-weight-normal">Mar 28 -  Apr 28.2023</h6>
+                        <button type="button" class="btn btn-outline-primary">Details</button>
+                    </div>
+                    <div class="row mt-4 mb-4 mb-sm-0 d-flex align-items-center">
+                        <div class="col-xl-9 mb-4 mb-sm-0">
+                            <h1 class="font-weight-medium m-0 text-dark">45.34% <span class="text-success text-small font-weight-normal">+24.18 (2.6%)</span></h1>
+                        </div>
+
+                        <div class="col-xl-3"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><canvas id="percentage" width="164" height="82" style="display: block; width: 82px; height: 41px;" class="chartjs-render-monitor"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-0">Rad etilgan xujjatlar</h4>
+                    <div class="d-xl-flex justify-content-between mt-3 mb-3 align-items-center">
+                        <h6 class="font-weight-normal">Mar 28 -  Apr 28.2023</h6>
+                        <button type="button" class="btn btn-outline-primary">Details</button>
+                    </div>
+                    <div class="row mt-4 mb-4 mb-sm-0 d-flex align-items-center">
+                        <div class="col-xl-9 mb-4 mb-sm-0">
+                            <h1 class="font-weight-medium m-0 text-dark">2345.00 <span class="text-danger text-small font-weight-normal">-11.45% (1.2%)</span></h1>
+                        </div>
+
+                        <div class="col-xl-3"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div><canvas id="total-conversion" width="164" height="82" style="display: block; height: 41px; width: 82px;" class="chartjs-render-monitor"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Arizalar soni</h4>
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Xujjatlar statusi</h4>
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--danger zone-->
 <div class="site-index">
     <?php
-//
-//    // Read contents
-//    $name = basename(__FILE__, '.php');
-//    $source = Yii::getAlias('@frontend') . '/web/uploads/docs/qBb34cYHol7cSNwwdsMn8MaVsTdcWe-x64d8e5c3e42b2.docx';
-//
-////    echo date('H:i:s'), " Reading contents from `{$source}`", EOL;
-//    $phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
-//
-//    function write($phpWord, $filename, $writers)
-//    {
-//        $result = '';
-//
-//        // Write documents
-//        foreach ($writers as $format => $extension) {
-//            $result .= date('H:i:s') . " Write to {$format} format";
-//            if (null !== $extension) {
-//                $targetFile = __DIR__ . "/results/{$filename}.{$extension}";
-//                $phpWord->save($targetFile, $format);
-//            } else {
-//                $result .= ' ... NOT DONE!';
-//            }
-////            $result .= EOL;
-//        }
-//
-//        $result .= getEndingNotes($writers, $filename);
-//
-//        return $result;
-//    }
-//    // Save file
-//    echo write($phpWord, basename(__FILE__, '.php'), 'docx');
+    //
+    //    // Read contents
+    //    $name = basename(__FILE__, '.php');
+    //    $source = Yii::getAlias('@frontend') . '/web/uploads/docs/qBb34cYHol7cSNwwdsMn8MaVsTdcWe-x64d8e5c3e42b2.docx';
+    //
+    ////    echo date('H:i:s'), " Reading contents from `{$source}`", EOL;
+    //    $phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
+    //
+    //    function write($phpWord, $filename, $writers)
+    //    {
+    //        $result = '';
+    //
+    //        // Write documents
+    //        foreach ($writers as $format => $extension) {
+    //            $result .= date('H:i:s') . " Write to {$format} format";
+    //            if (null !== $extension) {
+    //                $targetFile = __DIR__ . "/results/{$filename}.{$extension}";
+    //                $phpWord->save($targetFile, $format);
+    //            } else {
+    //                $result .= ' ... NOT DONE!';
+    //            }
+    ////            $result .= EOL;
+    //        }
+    //
+    //        $result .= getEndingNotes($writers, $filename);
+    //
+    //        return $result;
+    //    }
+    //    // Save file
+    //    echo write($phpWord, basename(__FILE__, '.php'), 'docx');
 
     //    // Creating the new document...
     //        $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -181,21 +269,21 @@ $this->title = 'Yuristlab';
     //        'a' => \lesha724\documentviewer\GoogleDocumentViewer::A_BI //A_V = 'v', A_GT= 'gt', A_BI = 'bi'
     //    ]); ?>
     <!---->
-<!--    --><?//= \lesha724\documentviewer\MicrosoftDocumentViewer::widget([
-//        'url' => 'https://yuristlab.uz/exam.doc',//url на ваш документ
-//        'width' => '100%',
-//        'height' => '600px'
-//    ]);
-//    //
-//    //     ?>
-<!--    <a href="https://abcdpdf.com/embedviewer.html?url=ASDASD&filename=ASDAS&format=word" target="_blank"><img width="20" height="20" loading="lazy" src="https://abcdpdf.com/images/favicon.png" alt="icon"><span> view with AbcdPDF </span></a>-->
-<!--    <iframe src="https://abcdpdf.com/embedviewer.html?url=https://yuristlab.uz/exam.doc&filename=exam.doc&format=word"-->
-<!--            width="100%" height="700" frameborder="0"></iframe>-->
-<!--    <iframe width="100%" height="500px"-->
-<!--            src="http://docs.google.com/gview?url=https://yuristlab.uz/exam.doc&embedded=true" frameborder="0">-->
-<!---->
-<!--    </iframe>-->
-<!--    <div id="odf"></div>-->
+    <!--    --><? //= \lesha724\documentviewer\MicrosoftDocumentViewer::widget([
+    //        'url' => 'https://yuristlab.uz/exam.doc',//url на ваш документ
+    //        'width' => '100%',
+    //        'height' => '600px'
+    //    ]);
+    //    //
+    //    //     ?>
+    <!--    <a href="https://abcdpdf.com/embedviewer.html?url=ASDASD&filename=ASDAS&format=word" target="_blank"><img width="20" height="20" loading="lazy" src="https://abcdpdf.com/images/favicon.png" alt="icon"><span> view with AbcdPDF </span></a>-->
+    <!--    <iframe src="https://abcdpdf.com/embedviewer.html?url=https://yuristlab.uz/exam.doc&filename=exam.doc&format=word"-->
+    <!--            width="100%" height="700" frameborder="0"></iframe>-->
+    <!--    <iframe width="100%" height="500px"-->
+    <!--            src="http://docs.google.com/gview?url=https://yuristlab.uz/exam.doc&embedded=true" frameborder="0">-->
+    <!---->
+    <!--    </iframe>-->
+    <!--    <div id="odf"></div>-->
     <!--    --><? //
     //    $form = ActiveForm::begin();
     //
@@ -275,54 +363,54 @@ $this->title = 'Yuristlab';
     //    echo "HtmlViewerResponsiveLayout completed: ", count($response->getPages());
     //    echo "\n";
     //        dd();
-//    $text = Yii::$app->request->post()['comments'];
-//    //        dd($text);
-//
-//    $htd = new HTML_TO_DOC();
-//    $htmlContent = $text;
-//    //        $htd->createDoc($htmlContent, "my-document");
-//    //        $htd->createDoc($htmlContent, "my-document", 1);
-//    $htd->createDoc("a.html", "my-document");
-//    //        $htd->createDoc($htmlContent, "my-document.docx");
-//    $phpWord = new \PhpOffice\PhpWord\PhpWord();
-//    $section = $phpWord->addSection();
-//    $section->addText("Some Initial Value.");
-//    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-//    $objWriter->save('helloWorld.docx');
-//    if (file_exists('helloWorld.docx')) {
-//        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('helloWorld.docx');
-////            $templateProcessor->setValue('name', 'Akbarali');
-////            $templateProcessor->setValue('time', '13.02.2021');
-////            $templateProcessor->setValue('month', 'January');
-////            $templateProcessor->setValue('state', 'Uzbekistan');
-////            dd($templateProcessor);
-//        $templateProcessor->saveAs('helloWorld.docx');
-//    }
+    //    $text = Yii::$app->request->post()['comments'];
+    //    //        dd($text);
+    //
+    //    $htd = new HTML_TO_DOC();
+    //    $htmlContent = $text;
+    //    //        $htd->createDoc($htmlContent, "my-document");
+    //    //        $htd->createDoc($htmlContent, "my-document", 1);
+    //    $htd->createDoc("a.html", "my-document");
+    //    //        $htd->createDoc($htmlContent, "my-document.docx");
+    //    $phpWord = new \PhpOffice\PhpWord\PhpWord();
+    //    $section = $phpWord->addSection();
+    //    $section->addText("Some Initial Value.");
+    //    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+    //    $objWriter->save('helloWorld.docx');
+    //    if (file_exists('helloWorld.docx')) {
+    //        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('helloWorld.docx');
+    ////            $templateProcessor->setValue('name', 'Akbarali');
+    ////            $templateProcessor->setValue('time', '13.02.2021');
+    ////            $templateProcessor->setValue('month', 'January');
+    ////            $templateProcessor->setValue('state', 'Uzbekistan');
+    ////            dd($templateProcessor);
+    //        $templateProcessor->saveAs('helloWorld.docx');
+    //    }
 
 
     // Load an existing document
-//    dd(Yii::getAlias('@frontend'));
-//    $phpWord = IOFactory::load(Yii::getAlias('@frontend') . '/web/helloWorld.docx');
-//
-//    // Modify the document
-//    $section = $phpWord->addSection();
-//
-//    $section->addText('Hello World!');
-//
-//    // Save the document
-//
-//    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-//
-//    $objWriter->save('modified.docx');
-//
-//    ?>
-<!---->
-<!---->
-<!--    --><?php
-//
-//    $script = <<<JS
-//
-//JS;
-//    $this->registerJs($script); ?>
+    //    dd(Yii::getAlias('@frontend'));
+    //    $phpWord = IOFactory::load(Yii::getAlias('@frontend') . '/web/helloWorld.docx');
+    //
+    //    // Modify the document
+    //    $section = $phpWord->addSection();
+    //
+    //    $section->addText('Hello World!');
+    //
+    //    // Save the document
+    //
+    //    $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+    //
+    //    $objWriter->save('modified.docx');
+    //
+    //    ?>
+    <!---->
+    <!---->
+    <!--    --><?php
+    //
+    //    $script = <<<JS
+    //
+    //JS;
+    //    $this->registerJs($script); ?>
 
 

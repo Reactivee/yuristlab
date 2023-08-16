@@ -5,7 +5,7 @@ $(function() {
    */
   'use strict';
   var data = {
-    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+    labels: ["2018", "2019", "2020", "2021", "2022", "2023"],
     datasets: [{
       label: '# of Votes',
       data: [10, 19, 3, 5, 2, 3],
@@ -26,7 +26,7 @@ $(function() {
         'rgba(255, 159, 64, 1)'
       ],
       borderWidth: 1,
-      fill: false
+      fill: true
     }]
   };
   var multiLineData = {
@@ -101,9 +101,9 @@ $(function() {
 
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
-      'Pink',
-      'Blue',
-      'Yellow',
+      'Rad etilgan',
+      'Ijobiy xulosa',
+      'Imzonlanganlar',
     ]
   };
   var doughnutPieOptions = {

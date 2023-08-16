@@ -35,6 +35,7 @@ class AppAsset extends AssetBundle
         'js/settings.js',
         'js/todolist.js',
         'js/dashboard.js',
+        'js/chart.js',
         'https://unpkg.com/jszip/dist/jszip.min.js',
         'js/docx-preview.js',
 //        'js/percent-preloader.min.js',
