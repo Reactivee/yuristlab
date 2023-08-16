@@ -3,12 +3,9 @@
 /** @var yii\web\View $this */
 
 
-use common\helpers\HTML_TO_DOC;
-use floor12\summernote\Summernote;
-use PhpOffice\PhpWord\IOFactory;
-use yii\bootstrap4\ActiveForm;
 
-$this->title = 'My Yii Application';
+
+$this->title = 'Yuristlab';
 ?>
 <div class="site-index">
     <?php

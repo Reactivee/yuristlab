@@ -7,14 +7,8 @@
 use common\models\documents\MainDocument;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
-use simialbi\yii2\toastr\Toastr;
-use yii\bootstrap4\ActiveForm;
-use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
-use yii\bootstrap4\Toast;
-use yii\widgets\Pjax;
+
 
 $status_id = Yii::$app->request->getQueryParam('status');
 
