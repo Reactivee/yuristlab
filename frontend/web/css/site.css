@@ -1,13 +1,17 @@
-input[type="file"]::file-selector-button {
-    /*display: none;*/
+.container-fluid{
+    overflow: hidden;
 }
+
 .navbar .navbar-brand-wrapper .navbar-brand img{
     height: auto;
 }
 .tab-content > .active {
     display: flex;
 }
-
+.new_doc_icon{
+    font-size: 26px;
+    /*color: ;*/
+}
 .table td, .jsgrid .jsgrid-table td {
     font-size: 15px;
 }

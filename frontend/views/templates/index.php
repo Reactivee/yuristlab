@@ -34,10 +34,10 @@ $id = $request->get('type');
     </div>
 
     <div class="content-wrapper">
-        <div class="row">
-            <div class="col-12">
+        <div class="row ">
+            <div class="col-12 ">
                 <div class="card">
-                    <div class=" container-fluid">
+                    <div class="p-4 container-fluid">
                         <?php $form = ActiveForm::begin([
                             'action' => ['index'],
                             'method' => 'get',
@@ -45,16 +45,16 @@ $id = $request->get('type');
                                 'data-pjax' => 1
                             ],
                         ]); ?>
-                        <div class="row">
+                        <div class="row ">
 
 
                             <div class="col-md-4">
                                 <?
                                 echo $form->field($model, 'group_doc')->widget(Select2::classname(), [
                                     'data' => \common\models\documents\MainDocument::subAllGroup(),
-                                    'theme' => Select2::THEME_MATERIAL,
+                                    'theme' => Select2::THEME_KRAJEE_BS5,
                                     'options' => [
-                                        'placeholder' => 'Select provinces ...',
+                                        'placeholder' => 'Guruhni tanlash',
                                         'multiple' => true,
                                         'allowClear' => true
                                     ],
@@ -68,9 +68,9 @@ $id = $request->get('type');
                                 <?
                                 echo $form->field($model, 'category')->widget(Select2::classname(), [
                                     'data' => \common\models\documents\MainDocument::getAllCategory(),
-                                    'theme' => Select2::THEME_MATERIAL,
+                                    'theme' => Select2::THEME_KRAJEE_BS5,
                                     'options' => [
-                                        'placeholder' => 'Select provinces ...',
+                                        'placeholder' => 'Kategoriya tanlash',
                                         'multiple' => true,
                                         'allowClear' => true
                                     ],
@@ -84,9 +84,9 @@ $id = $request->get('type');
                                 <?
                                 echo $form->field($model, 'sub_category')->widget(Select2::classname(), [
                                     'data' => \common\models\documents\MainDocument::subAllGetCategory(),
-                                    'theme' => Select2::THEME_MATERIAL,
+                                    'theme' => Select2::THEME_KRAJEE_BS5,
                                     'options' => [
-                                        'placeholder' => 'Select provinces ...',
+                                        'placeholder' => 'Turkum tanlash',
                                         'multiple' => true,
                                         'allowClear' => true
                                     ],

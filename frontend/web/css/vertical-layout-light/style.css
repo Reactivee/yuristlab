@@ -28723,12 +28723,12 @@ div.tagsinput span.tag a {
 }
 
 .sidebar .dropdown.sidebar-profile-dropdown .dropdown-toggle {
-  background:#7bbcd8;
-  padding: .5rem .875rem;
+  background: #1E5DA9;
+  padding:  7px;
   font-weight: 400;
   color: #ffffff;
   font-size: 8px;
-  border-radius: 3px;
+  border-radius: 9px;
 }
 
 .sidebar .dropdown.sidebar-profile-dropdown .dropdown-toggle .sidebar-profile-icon {
@@ -28749,7 +28749,7 @@ div.tagsinput span.tag a {
 
 .sidebar .dropdown.sidebar-profile-dropdown .dropdown-menu {
   margin-top: 0;
-  width: 100%;
+  /*width: 100%;*/
   background: rgb(191,221,159);
   background: linear-gradient(166deg, rgba(191,221,159,1) 0%, rgba(123,188,216,1) 83%);
   border: 1px solid transparent;
@@ -28761,6 +28761,8 @@ div.tagsinput span.tag a {
   padding: 1rem 1rem;
   color: #161616;
   border-bottom: 1px solid #d0d0d0;
+  font-size: 14px;
+  /*font-weight: 600;*/
 }
 
 .sidebar .dropdown.sidebar-profile-dropdown .dropdown-menu .dropdown-item:last-child {
@@ -28820,7 +28822,7 @@ div.tagsinput span.tag a {
   border-radius: 2px;
   line-height: 1;
   margin-right: 1.125rem;
-  color: #d69ef1;
+  color: #2b8dff;
 }
 
 .rtl .sidebar .nav .nav-item .nav-link i.menu-icon {

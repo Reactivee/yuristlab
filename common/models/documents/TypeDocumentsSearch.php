@@ -94,17 +94,24 @@ class TypeDocumentsSearch extends TypeDocuments
             return $dataProvider;
         }
         $arr = [];
+
         if ($params->group_doc) {
             $gr = CategoryDocuments::find()
                 ->where(['group_id' => $params->group_doc])
                 ->all();
 
-            $cat_arr = ArrayHelper::map($gr, 'id', 'id');
-            $sub = CategoryDocuments::find()
-                ->where(['parent_id' => $cat_arr])
-                ->all();
-            $res = ArrayHelper::map($sub, 'id', 'id');
-            $arr = array_merge($arr, $res);
+            if ($gr) {
+                $cat_arr = ArrayHelper::map($gr, 'id', 'id');
+                $sub = CategoryDocuments::find()
+                    ->where(['parent_id' => $cat_arr])
+                    ->all();
+
+                $res = ArrayHelper::map($sub, 'id', 'id');
+                $arr = array_merge($arr, $res);
+            } else {
+                $gr = GroupDocuments::findOne($params->group_doc);
+//                dd($gr);
+            }
 
         }
 

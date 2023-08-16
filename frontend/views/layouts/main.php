@@ -11,7 +11,8 @@ use yii\bootstrap4\Html;
 
 
 $status_id = Yii::$app->request->getQueryParam('status');
-
+// Yii::$app->session['shift']=6;
+//dd(Yii::$app->session['shift']);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -85,7 +86,7 @@ AppAsset::register($this);
         <?= $this->render('top') ?>
 
 
-        <div class="container-fluid page-body-wrapper">
+        <div class="container-fluid page-body-wrapper  overflow-hidden">
 
             <?= $this->render('left') ?>
 
