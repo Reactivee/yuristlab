@@ -37,12 +37,21 @@ $this->title = 'Documents';
 //          'pageSummaryPosition' => GridView::POS_BOTTOM,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+//            [
+//                'attribute' => 'code_document',
+//                'format' => 'raw',
+//                'label' => 'Xujjat kodi',
+//                'hAlign' => 'center',
+//                'width' => '200px'
+//            ],
             [
                 'attribute' => 'code_document',
                 'format' => 'raw',
                 'label' => 'Xujjat kodi',
-                'hAlign' => 'center',
-                'width' => '200px'
+                'value' => function ($model) {
+                    $font = "<span class='font-weight-bold'>" . $model->code_document . " </span>";
+                    return $font;
+                }
             ],
 //            'id',
             'name_uz',
@@ -158,6 +167,7 @@ $this->title = 'Documents';
             [
                 'attribute' => 'company_id',
                 'label' => 'Korxona',
+                'format'=>'raw',
                 'hAlign' => 'center',
                 'width' => '500px',
                 'filter' => MainDocument::getAllCompany(),
@@ -167,12 +177,14 @@ $this->title = 'Documents';
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '100',
+//                        'width' => '100',
                         'multiple' => true
                     ],
                 ],
                 'value' => function ($model) {
-                    return $model->company->name_uz;
+                    $font = "<span class='font-weight-bold'>" . $model->company->name_uz . " </span>";
+
+                    return $font;
                 }
             ],
 //            'updated_at:datetime',

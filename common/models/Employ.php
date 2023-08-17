@@ -77,7 +77,7 @@ class Employ extends \yii\db\ActiveRecord
     {
         $array = [
             self::ADMIN => 'admin',
-            self::MODERATOR => 'moderator',
+            self::MODERATOR => 'Moderator',
             self::EMPLOY => 'Xodim',
             self::LAWYER => 'Yurist',
         ];

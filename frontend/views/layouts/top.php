@@ -1,7 +1,10 @@
 <?php
 
+use common\models\documents\GroupDocuments;
 use yii\helpers\Html;
 
+$group = GroupDocuments::find()->all();
+$arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 ?>
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper align-items-center">
@@ -15,32 +18,49 @@ use yii\helpers\Html;
         <ul class="navbar-nav mr-lg-2">
             <li class="nav-item d-none d-sm-block dropdown arrow-none">
                 <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown"
-                        id="profileDropdown6">
+                        id="profileDropdown6" aria-expanded="false">
                     <i class="mdi mdi-plus-circle btn-icon-prepend"></i>
-                    Add Schedule
+                    Yangi xujjat qo'shish
                 </button>
                 <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="profileDropdown6">
-                    <a class="dropdown-item text-primary">
-                        <i class="mdi mdi-google-analytics"></i> Product Analysis
-                    </a>
-                    <a class="dropdown-item text-primary">
-                        <i class="mdi mdi-sale"></i> Territory sales
-                    </a>
-                    <a class="dropdown-item text-primary">
-                        <i class="mdi mdi-account-card-details"></i> sales order details
-                    </a>
-                    <a class="dropdown-item text-primary">
-                        <i class="mdi mdi-counter"></i> Product Line sales
-                    </a>
+
+                    <!--                    <a class="dropdown-item text-primary">-->
+                    <!--                        <i class="mdi mdi-sale"></i> Territory sales-->
+                    <!--                    </a>-->
+                    <!--                    <a class="dropdown-item text-primary">-->
+                    <!--                        <i class="mdi mdi-account-card-details"></i> sales order details-->
+                    <!--                    </a>-->
+                    <!--                    <a class="dropdown-item text-primary">-->
+                    <!--                        <i class="mdi mdi-counter"></i> Product Line sales-->
+                    <!--                    </a>-->
+                    <?
+                    foreach ($arr_group as $key => $item) { ?>
+                        <!--                        <a class="dropdown-item" href="/create?doc=--><? //= $key ?><!--">-->
+                        <!--                            <i class="mdi mdi-file-document"></i>-->
+                        <!--                         -->
+                        <!--                        </a>-->
+                        <a class="dropdown-item text-primary" href="/create?doc=<?= $key ?> ">
+                            <i class="mdi mdi-file-document"></i>
+                            <?= $item ?>
+                        </a>
+                    <? } ?>
+
                 </div>
             </li>
 
         </ul>
-        <span class="font-weight-bold ml-4">Firma: <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
-            <? if (Yii::$app->user->identity->employ->id == Yii::$app->user->identity->employ->company->director) { ?>
-                <span class="ml-3 font-weight-bold text-success">( Boshliq )</span>
-            <? } ?>
-<!--            --><?// dd(Yii::$app->user->identity->employ); ?><!--</span>-->
+        <? if (Yii::$app->user->identity->employ->id == Yii::$app->user->identity->employ->company->director) { ?>
+            <span class="font-weight-bold  ml-2">Firma: <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
+<!--            <span>|</span>-->
+            <span class="font-weight-bold text-warning mx-2"> Lavozim:</span>
+            <span class=" font-weight-bold text-success">( Rahbar )</span>
+
+        <? } else { ?>
+            <span class="font-weight-bold text-warning mx-2">Lavozim:</span>
+            <span class="font-weight-bold text-success "> <?= \common\models\Employ::getRole(Yii::$app->user->identity->employ->role); ?></span>
+
+        <? } ?>
+        <!--            --><? // dd(Yii::$app->user->identity->employ); ?><!--</span>-->
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item count-indicator nav-profile dropdown">
                 <span class="count">3</span>

@@ -391,6 +391,7 @@ class MainDocument extends \yii\db\ActiveRecord
 //                if (!$this->signed_lawyer)
 //                    $this->signed_lawyer = Yii::$app->user->identity->employ->id;
             }
+//            dd('asd');
             if (!$this->signed_lawyer)
                 $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 

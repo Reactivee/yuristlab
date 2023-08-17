@@ -8,6 +8,7 @@ use common\models\documents\ContentNews;
 use common\models\documents\ContentNewsSearch;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
+use common\models\Employ;
 use common\models\forms\CreateDocForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -23,6 +24,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
@@ -87,6 +89,11 @@ class ModeratorController extends Controller
     public function actionIndex()
     {
         $searchModel = new MainDocumentSearch();
+//        dd();
+        if (Yii::$app->user->identity->employ->role != Employ::MODERATOR) {
+            throw new MethodNotAllowedHttpException("net Dostup");
+
+        }
         $dataProvider = $searchModel->searchModerator($this->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -132,6 +139,36 @@ class ModeratorController extends Controller
         }
         return false;
 
+    }
+
+    protected function findModel($id)
+    {
+
+        if (($model = MainDocument::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * Displays a single MainDocument model.
+     * @param int $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+        }
+
+
+        return $this->render('view', [
+            'model' => $model
+        ]);
     }
 
 

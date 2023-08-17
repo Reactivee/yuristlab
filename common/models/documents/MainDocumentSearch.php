@@ -3,6 +3,7 @@
 namespace common\models\documents;
 
 use common\models\documents\MainDocument;
+use common\models\Employ;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -193,8 +194,9 @@ class MainDocumentSearch extends MainDocument
     public function searchModerator($params)
     {
 
-        $query = MainDocument::find()
-            ->orderBy(['main_document.id' => SORT_DESC]);
+//        dd();
+            $query = MainDocument::find()
+                ->orderBy(['main_document.id' => SORT_DESC]);
 //            ->where(['user_id' => null]);
 //            ->andWhere(['company_id' => Yii::$app->user->identity->employ->company->id]);
 //            ->andWhere(['status'=>MainDocument::TOBOSS]);

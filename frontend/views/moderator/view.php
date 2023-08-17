@@ -64,59 +64,6 @@ if (!empty($model->attach)) {
                     sorted = document.getElementById('sorted_images');")
         ?>
         <div class="container-fluid px-5 py-3">
-            <!--            --><? // dd(\backend\modules\admin\components\Helper::checkRoute('/asd')); ?>
-
-            <div class="buttons_wrap mb-3">
-                <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
-                    <?= Html::button(' <i class="fas fa-save mr-2"></i> Saqlash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']); ?>
-                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'ml-2 btn btn-outline-primary btn-icon-text']); ?>
-                    <?= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2 ']) ?>
-                <? } ?>
-                <?
-                if (!$model->category && $model->status == MainDocument::BOSS_SIGNED && $model->step != MainDocument::STEP_BOSS_FINISH) {
-                    echo Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']);
-                }
-                ?>
-                <?
-                if (!$model->category && $model->status == MainDocument::NEW) {
-                    echo Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']);
-                }
-                ?>
-
-                <? if ($model->status == MainDocument::SUCCESS) { ?>
-                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
-                <? } ?>
-
-                <? if (!$model->signed_lawyer && $model->status == MainDocument::BOSS_SIGNED && $model->step != MainDocument::STEP_BOSS_FINISH) { ?>
-                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
-
-                <? } ?>
-            </div>
-            <? if ($model->status == MainDocument::NEW) { ?>
-                <div class="alert alert-fill-info" role="alert">
-                    <i class="mdi mdi-alert-circle"></i>
-                    Xujjar yuborilmagan
-                </div>
-            <? } ?>
-            <? if ($model->status == MainDocument::SIGNING) { ?>
-                <div class="alert alert-fill-success" role="alert">
-                    <i class="mdi mdi-alert-circle"></i>
-                    Xujjar yuborilgan
-                </div>
-            <? } ?>
-            <? if ($model->status == MainDocument::TOBOSS) { ?>
-                <div class="alert alert-fill-success" role="alert">
-                    <i class="mdi mdi-alert-circle"></i>
-                    Xujjat yuborilgan !
-                </div>
-            <? } ?>
-            <? if ($model->step == MainDocument::STEP_BOSS_FINISH) { ?>
-                <div class="alert alert-fill-success" role="alert">
-                    <i class="mdi mdi-alert-circle"></i>
-                    Xujjat imzolandi !
-                </div>
-            <? } ?>
-
 
             <div class="card">
                 <div class="card-body">

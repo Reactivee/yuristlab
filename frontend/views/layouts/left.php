@@ -37,13 +37,13 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
         <!--                   -->
         <!--                --><? // } ?>
         <!--            </select>-->
-        <a class="dropdown-toggle d-flex align-items-center justify-content-between px-2" href="#"
-           data-toggle="dropdown" id="profileDropdown1">
-            <i class="mdi mdi-plus-circle menu-icon new_doc_icon mr-2"></i>
-            <div>
-                <div class="nav-profile-name">Yangi Xujjat yaratish</div>
-            </div>
-        </a>
+<!--        <a class="dropdown-toggle d-flex align-items-center justify-content-between px-2" href="#"-->
+<!--           data-toggle="dropdown" id="profileDropdown1">-->
+<!--            <i class="mdi mdi-plus-circle menu-icon new_doc_icon mr-2"></i>-->
+<!--            <div>-->
+<!--                <div class="nav-profile-name">Yangi Xujjat yaratish</div>-->
+<!--            </div>-->
+<!--        </a>-->
 
         <div class="dropdown-menu navbar-dropdown dropdown-menu-left" aria-labelledby="profileDropdown1">
             <?

@@ -98,7 +98,8 @@ class LawyerController extends Controller
             $model->status = MainDocument::SUCCESS;
             $model->step = MainDocument::STEP_EMPLOYER;
 
-            if (!$model->lawyer_conclusion_path) {
+
+            if (!$model->category && !$model->lawyer_conclusion_path) {
                 Yii::$app->session->addFlash('error', 'Yuborishda xatolik/ Xujjat biriktirilmagan');
                 return $this->redirect(Yii::$app->request->referrer);
             }
