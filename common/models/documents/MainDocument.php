@@ -280,7 +280,7 @@ class MainDocument extends \yii\db\ActiveRecord
             ->asArray()
             ->all();
 
-        return ArrayHelper::map($array, 'id', 'name_ru');
+        return ArrayHelper::map($array, 'id', 'name_uz');
     }
 
     public static function subAllGroup()
