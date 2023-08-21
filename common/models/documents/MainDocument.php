@@ -416,8 +416,11 @@ class MainDocument extends \yii\db\ActiveRecord
 //            if (!$this->lawyer_conclusion_path)
 //                $this->generateCheckOrder();
 
-            if ($this->lawyer_conclusion_path && $this->category)
+            if ($this->lawyer_conclusion_path && $this->category){
+                $this->generateCheckOrder();
                 $this->margeDocs();
+
+            }
         }
 
         return parent::beforeSave($insert);

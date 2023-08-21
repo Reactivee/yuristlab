@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\helpers\HTML_TO_DOC;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use PhpOffice\PhpWord\IOFactory;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -389,33 +390,24 @@ class SiteController extends Controller
         // Execute request
         $result = curl_exec($curl);
 
-        if (curl_errno($curl) == 0)
-        {
+        if (curl_errno($curl) == 0) {
             $status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-            if ($status_code == 200)
-            {
+            if ($status_code == 200) {
                 $json = json_decode($result, true);
 
-                if (!isset($json["error"]) || $json["error"] == false)
-                {
+                if (!isset($json["error"]) || $json["error"] == false) {
                     $status = $json["status"];
-                }
-                else
-                {
+                } else {
                     // Display service reported error
                     echo "<p>Error: " . $json["message"] . "</p>";
                 }
-            }
-            else
-            {
+            } else {
                 // Display request error
                 echo "<p>Status code: " . $status_code . "</p>";
                 echo "<p>" . $result . "</p>";
             }
-        }
-        else
-        {
+        } else {
             // Display CURL error
             echo "Error: " . curl_error($curl);
         }
@@ -424,5 +416,38 @@ class SiteController extends Controller
         curl_close($curl);
 
         return $status;
+    }
+
+    public function actionTest()
+    {
+
+        $wordFile = Yii::getAlias('@frontend') . '/web/uploads/docs/test.docx';
+
+        $htmlFile = Yii::getAlias('@frontend') . '/web/uploads/docs/test.html';
+
+
+//        $phpWord = IOFactory::load($wordFile);
+//        $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
+//        $htmlWriter->save($htmlFile);
+//        dd('asd');
+
+        // Create an instance of the mPDF class
+        $mpdf = new \Mpdf\Mpdf();
+
+// Read the Word document
+        $wordContent = file_get_contents($wordFile);
+//        dd($wordContent);
+// Convert Word content to HTML (you may need to install a library for this, like phpword/phpword)
+        $phpWord = IOFactory::load($wordFile);
+//        dd($phpWord);
+        $htmlContent = IOFactory::createWriter($phpWord, 'HTML');
+//        $htmlContent = YourWordToHtmlConversionFunction($wordContent);
+
+         // Add the HTML content to the mPDF instance
+        $mpdf->WriteHTML($htmlFile);
+
+// Output the PDF
+        $mpdf->Output(Yii::getAlias('@frontend') . '/web/uploads/docs/test.pdf', \Mpdf\Output\Destination::FILE);
+        dd('asd');
     }
 }

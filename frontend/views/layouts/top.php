@@ -17,11 +17,11 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <ul class="navbar-nav mr-lg-2">
             <li class="nav-item d-none d-sm-block dropdown arrow-none">
-                <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown"
-                        id="profileDropdown6" aria-expanded="false">
-                    <i class="mdi mdi-plus-circle btn-icon-prepend"></i>
-                    Yangi xujjat qo'shish
-                </button>
+<!--                <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown"-->
+<!--                        id="profileDropdown6" aria-expanded="false">-->
+<!--                    <i class="mdi mdi-plus-circle btn-icon-prepend"></i>-->
+<!--                    Yangi xujjat qo'shish-->
+<!--                </button>-->
                 <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="profileDropdown6">
 
                     <!--                    <a class="dropdown-item text-primary">-->
@@ -33,17 +33,13 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                     <!--                    <a class="dropdown-item text-primary">-->
                     <!--                        <i class="mdi mdi-counter"></i> Product Line sales-->
                     <!--                    </a>-->
-                    <?
-                    foreach ($arr_group as $key => $item) { ?>
-                        <!--                        <a class="dropdown-item" href="/create?doc=--><? //= $key ?><!--">-->
-                        <!--                            <i class="mdi mdi-file-document"></i>-->
-                        <!--                         -->
-                        <!--                        </a>-->
-                        <a class="dropdown-item text-primary" href="/create?doc=<?= $key ?> ">
-                            <i class="mdi mdi-file-document"></i>
-                            <?= $item ?>
-                        </a>
-                    <? } ?>
+<!--                    --><?//
+//                    foreach ($arr_group as $key => $item) { ?>
+<!--                        <a class="dropdown-item text-primary" href="/create?doc=--><?//= $key ?><!-- ">-->
+<!--                            <i class="mdi mdi-file-document"></i>-->
+<!--                            --><?//= $item ?>
+<!--                        </a>-->
+<!--                    --><?// } ?>
 
                 </div>
             </li>

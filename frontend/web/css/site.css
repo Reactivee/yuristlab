@@ -15,7 +15,10 @@
 .table td, .jsgrid .jsgrid-table td {
     font-size: 15px;
 }
+.btn_new_doc{
+    font-size: 15px;
 
+}
 .badge {
     font-size: 12px;
     font-weight: 600;

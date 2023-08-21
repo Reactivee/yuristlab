@@ -37,23 +37,44 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
         <!--                   -->
         <!--                --><? // } ?>
         <!--            </select>-->
-<!--        <a class="dropdown-toggle d-flex align-items-center justify-content-between px-2" href="#"-->
-<!--           data-toggle="dropdown" id="profileDropdown1">-->
-<!--            <i class="mdi mdi-plus-circle menu-icon new_doc_icon mr-2"></i>-->
-<!--            <div>-->
-<!--                <div class="nav-profile-name">Yangi Xujjat yaratish</div>-->
-<!--            </div>-->
-<!--        </a>-->
+        <!--        <a class="dropdown-toggle d-flex align-items-center justify-content-between px-2" href="#"-->
+        <!--           data-toggle="dropdown" id="profileDropdown1">-->
+        <!--            <i class="mdi mdi-plus-circle menu-icon new_doc_icon mr-2"></i>-->
+        <!--            <div>-->
+        <!--                <div class="nav-profile-name">Yangi Xujjat yaratish</div>-->
+        <!--            </div>-->
+        <!--        </a>-->
+        <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item   text-center ">
+                <button type="button" class="btn btn-success btn-icon-text btn_new_doc d-flex align-items-center justify-content-center" data-toggle="dropdown"
+                        id="profileDropdown6" aria-expanded="false">
+                    <i class="mdi mdi-plus-circle btn-icon-prepend "></i>
+                    Yangi xujjat qo'shish
+                </button>
+                <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="profileDropdown6">
 
-        <div class="dropdown-menu navbar-dropdown dropdown-menu-left" aria-labelledby="profileDropdown1">
-            <?
-            foreach ($arr_group as $key => $item) { ?>
-                <a class="dropdown-item" href="/create?doc=<?= $key ?>">
-                    <i class="mdi mdi-file-document"></i>
-                    <?= $item ?>
-                </a>
-            <? } ?>
-        </div>
+                    <?
+                    foreach ($arr_group as $key => $item) { ?>
+                        <a class="dropdown-item text-primary" href="/create?doc=<?= $key ?> ">
+                            <i class="mdi mdi-file-document"></i>
+                            <?= $item ?>
+                        </a>
+                    <? } ?>
+
+                </div>
+            </li>
+
+        </ul>
+
+        <!--        <div class="dropdown-menu navbar-dropdown dropdown-menu-left" aria-labelledby="profileDropdown1">-->
+        <!--            --><? //
+        //            foreach ($arr_group as $key => $item) { ?>
+        <!--                <a class="dropdown-item" href="/create?doc=--><? //= $key ?><!--">-->
+        <!--                    <i class="mdi mdi-file-document"></i>-->
+        <!--                    --><? //= $item ?>
+        <!--                </a>-->
+        <!--            --><? // } ?>
+        <!--        </div>-->
     </div>
 
     <ul class="nav">
@@ -69,7 +90,6 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="/documents">Index</a></li>
                     <li class="nav-item"><a class="nav-link" href="/documents/statistics">Statistics</a></li>
-
 
 
                 </ul>
@@ -116,7 +136,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link"  href="/templates" aria-expanded="false"
+            <a class="nav-link" href="/templates" aria-expanded="false"
                aria-controls="ui-template">
                 <i class="mdi mdi-file-document menu-icon"></i>
                 <span class="menu-title">Namunalar</span>
@@ -124,7 +144,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"  href="/moderator" aria-expanded="false"
+            <a class="nav-link" href="/moderator" aria-expanded="false"
                aria-controls="ui-template">
                 <i class="mdi mdi-settings menu-icon"></i>
                 <span class="menu-title">Moderator</span>
@@ -132,7 +152,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link"  href="/lawyer/lawyers/" aria-expanded="false"
+            <a class="nav-link" href="/lawyer/lawyers/" aria-expanded="false"
                aria-controls="ui-template">
                 <i class="mdi mdi-human-male-female menu-icon"></i>
                 <span class="menu-title">Team</span>
