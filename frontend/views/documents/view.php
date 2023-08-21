@@ -68,7 +68,7 @@ if (!empty($model->attach)) {
 
             <div class="buttons_wrap mb-3">
                 <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
-                    <?= Html::button(' <i class="fas fa-save mr-2"></i> Saqlash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']); ?>
+                    <!--                    --><? //= Html::button(' <i class="fas fa-save mr-2"></i> Saqlash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']); ?>
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'ml-2 btn btn-outline-primary btn-icon-text']); ?>
                     <?= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2 ']) ?>
                 <? } ?>
@@ -132,20 +132,20 @@ if (!empty($model->attach)) {
 
                         <div class="col-md-6">
                             <span class="font-weight-bold card-title">Xujjat bo'limi</span>
-                            <p class="text-primary font-weight-bold card-title">
+                            <p class="text-success font-weight-bold card-title">
                                 <?= $model->group->name_uz ?>
                             </p>
                             <? if ($model->category) { ?>
                                 <span class="font-weight-bold   card-title">Xujjat turi</span>
-                                <p class="text-primary font-weight-bold card-title">
+                                <p class="text-success font-weight-bold card-title">
                                     <?= $model->category->name_uz ?>
                                 </p>
                                 <span class="font-weight-bold card-title">Yo'nalish</span>
-                                <p class="text-primary font-weight-bold card-title">
+                                <p class="text-success font-weight-bold card-title">
                                     <?= $model->subCategory->name_uz; ?>
                                 </p>
                                 <span class="font-weight-bold card-title ">Turkumi</span>
-                                <p class="text-primary font-weight-bold card-title">
+                                <p class="text-success font-weight-bold card-title">
                                     <?= $model->type->name_uz; ?>
                                 </p>
                             <? } ?>
@@ -165,12 +165,17 @@ if (!empty($model->attach)) {
                             <p class="text-primary font-weight-bold card-title">
                                 <?= MainDocument::getStatusNameColored($model->status); ?>
                             </p>
+                            <? if ($model->status == MainDocument::REJECTED) { ?>
+                                <span class="font-weight-bold card-title">Yurist xulosasi</span>
+                                <br>
+                                <p class="text-white badge badge-danger badge-pill font-weight-bold card-title "><?= $model->conclusion_uz ?></p>
+                            <? } ?>
 
                         </div>
 
                         <div class="col-md-12">
                             <span class="font-weight-bold card-title">Qisqa mazmuni</span>
-                            <h4 class="text-primary font-weight-bold">
+                            <h4 class="text-success font-weight-bold">
                                 <?= $model->doc_about ?>
                             </h4>
                             <hr>

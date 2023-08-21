@@ -383,6 +383,7 @@ class MainDocument extends \yii\db\ActiveRecord
 //        return false;
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::SUCCESS) {
+//            $this->whriteWordDoc();
             if (Yii::$app->user->identity->employ->role == Employ::LAWYER) {
                 if ($this->category) {
                     $this->generateCodes();
@@ -395,7 +396,9 @@ class MainDocument extends \yii\db\ActiveRecord
             if (!$this->signed_lawyer)
                 $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 
+
         }
+///        dd('stop');
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
 
@@ -416,8 +419,10 @@ class MainDocument extends \yii\db\ActiveRecord
 //            if (!$this->lawyer_conclusion_path)
 //                $this->generateCheckOrder();
 
-            if ($this->lawyer_conclusion_path && $this->category){
+            if ($this->lawyer_conclusion_path && $this->category) {
+
                 $this->generateCheckOrder();
+
                 $this->margeDocs();
 
             }
@@ -465,13 +470,15 @@ class MainDocument extends \yii\db\ActiveRecord
             array('path' => $img,
                 'width' => 100,
                 'height' => 100,
-                'ratio' => true));
+                'ratio' => false));
 
-        //        $this->check_order = '/uploads/order/docs/' . $this->generateCheckOrderName() . '.docx';
         $filename = Yii::getAlias('@frontend') . '/web/' . $item->path;
         $templateProcessor->saveAs($filename);
+
         if ($filename)
             chmod($filename, 0644);
+
+
         // Make sure you have `dompdf/dompdf` in your composer dependencies.
 //        Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
 //// Any writable directory here. It will be ignored.
@@ -579,7 +586,7 @@ class MainDocument extends \yii\db\ActiveRecord
         $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template.docx');
 
         $templateProcessor->setValue('fio', $user_name);
-        $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
+        $templateProcessor->setValue('date', date('d-m-Y H:i:s'));
         $templateProcessor->setValue('code_doc', $this->code_document);
         $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
         $templateProcessor->setValue('conclusion', $this->conclusion_uz);
@@ -822,6 +829,28 @@ class MainDocument extends \yii\db\ActiveRecord
             dd('asd');
         }
         dd('asd');
+    }
+
+    public function whriteWordDoc()
+    {
+        $word = Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template-boss.docx';
+        $word_2 = Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template.docx';
+        $phpWord = IOFactory::load($word, 'Word2007');
+        $phpWord_2 = IOFactory::load($word_2, 'Word2007');
+//        $phpWord = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $folder = '/web/uploads/temp/';
+        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+        if (!file_exists($uploads_folder)) {
+            mkdir($uploads_folder, 0777, true);
+        }
+        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+
+        $section = $phpWord->addSection();
+        $section->addText($phpWord_2);
+
+        $phpWord->save(Yii::getAlias('@frontend') . '/web/uploads/docs/tested.docx');
+
+
     }
 
 

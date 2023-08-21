@@ -41,11 +41,11 @@ if (!empty($model->lawyer_conclusion_path)) {
     <div class="buttons_wrap mb-3">
         <? if ($model->status != MainDocument::SUCCESS) { ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+            <?= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
 
         <? } ?>
-        <? if (!$model->status == MainDocument::SUCCESS) { ?>
+        <? if ($model->status == MainDocument::SUCCESS) { ?>
             <!--        --><? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-            <?= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
             <!--        --><? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
         <? } ?>
 
@@ -120,7 +120,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                 </div>
                 <div class="col-md-12">
                     <span class="font-weight-bold card-title">Qisqa mazmuni</span>
-                    <h3 class="text-primary font-weight-bold">
+                    <h3 class="text-success font-weight-bold">
                         <?= $model->doc_about ?>
                     </h3>
                     <hr>
@@ -149,8 +149,11 @@ if (!empty($model->lawyer_conclusion_path)) {
                                                 class="fa fa-cloud-download mr-1"></i>Ko'chirib olish</a>
                                     <p class="text-muted mb-1">
                                         <?
-                                        $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
-                                        echo human_filesize($size, 3)
+                                        if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->path)) {
+                                            $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
+                                            echo human_filesize($size, 3);
+
+                                        }
                                         ?>
                                     </p>
 
@@ -177,8 +180,10 @@ if (!empty($model->lawyer_conclusion_path)) {
                                             Ko'chirib olish</a>
                                         <p class="text-muted mb-1">
                                             <?
-                                            $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
-                                            echo human_filesize($size, 3)
+                                            if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
+                                                $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
+                                                echo human_filesize($size, 3);
+                                            }
                                             ?>
 
                                         </p>
@@ -207,8 +212,12 @@ if (!empty($model->lawyer_conclusion_path)) {
                                                         class="fa fa-cloud-download mr-1"></i>Ko'chirib olish</a>
                                             <p class="text-muted mb-1">
                                                 <?
-                                                $size = filesize(Yii::getAlias('@frontend') . $file->path);
-                                                echo human_filesize($size, 3)
+
+                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $file ->path)) {
+
+                                                    $size = filesize(Yii::getAlias('@frontend') . $file->path);
+                                                    echo human_filesize($size, 3);
+                                                }
                                                 ?>
                                             </p>
 
