@@ -2,6 +2,7 @@
 
 use common\models\documents\MainDocument;
 
+use kartik\editable\Editable;
 use kartik\editors\Summernote;
 use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
@@ -132,9 +133,40 @@ if (!empty($model->lawyer_conclusion_path)) {
                     </h3>
                     <hr>
                     <? if ($model->conclusion_uz) { ?>
+
                         <span class="font-weight-bold card-title">Yurist xulosa</span>
                         <h5 class="text-primary font-weight-bold">
-                            <?= $model->conclusion_uz ?>
+                            <?
+                            echo Editable::widget([
+                                'name' => 'notes',
+                                'asPopover' => true,
+                                'displayValue' => $model->conclusion_uz,
+                                'format' => Editable::FORMAT_BUTTON,
+                                'editableValueOptions'=>['class'=>'text-danger'],
+                                'inputType' => Editable::INPUT_TEXTAREA,
+                                'value' => $model->conclusion_uz,
+                                'header' => 'Yurist xulosa',
+                                'size' => 'lg',
+                                'submitOnEnter' => true,
+                                'editableButtonOptions' => [
+                                    'label' => '<i class="fas fa-edit"></i>',
+                                ],
+
+                                'submitButton' => [
+                                    'icon' => '<i class="fas fa-check"></i>',
+                                    'class' => 'btn btn-success',
+                                    'label' => 'btn btn-success',
+                                ],
+                                'options' => [
+                                    'class' => 'form-control',
+                                    'rows' => 5,
+//                                'style' => 'width:400px',
+                                    'placeholder' => 'Yurist xulosasi...',
+
+                                ],
+                            ]);
+                            ?>
+                            <!--                            --><? //= $model->conclusion_uz ?>
                         </h5>
                     <? } ?>
                 </div>
@@ -284,7 +316,7 @@ if (!empty($model->lawyer_conclusion_path)) {
             </div>
 
             <?
-            if ($model->category) {
+            if (!$model->category && !$model->conclusion_uz) {
                 $form = ActiveForm::begin();
                 if ($model->status == MainDocument::SIGNING) {
 

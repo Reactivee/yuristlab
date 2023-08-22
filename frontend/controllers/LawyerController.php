@@ -44,11 +44,21 @@ class LawyerController extends Controller
     {
         $model = $this->findModel($id);
         $user_id = Yii::$app->user->identity->employ->id;
+//        dd($this->request->post());
+        $post = $this->request->post();
+        if ($this->request->isPost && $model->load($post)) {
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save())
                 Yii::$app->session->setFlash('success', 'Saqlandi');
         }
+        if ($post['hasEditable']) {
+
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $model->conclusion_uz = $post['notes'];
+            $model->save();
+
+        }
+
 //        if (!$model->user_id)
 //            $model->user_id = $user_id;
         $model->save();
