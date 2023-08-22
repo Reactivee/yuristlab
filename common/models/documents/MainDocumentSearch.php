@@ -93,7 +93,7 @@ class MainDocumentSearch extends MainDocument
     public function searchLawyer($params)
     {
 
-        $user = Yii::$app->user->identity->id;
+        $user = Yii::$app->user->identity->employ->id;
 
         $query = MainDocument::find()
             ->orderBy(['id' => SORT_DESC])
