@@ -39,7 +39,7 @@ if (!empty($model->lawyer_conclusion_path)) {
 ?>
 <div class="container-fluid p-3">
     <div class="buttons_wrap mb-3">
-        <? if ($model->status != MainDocument::SUCCESS) { ?>
+        <? if ($model->status != MainDocument::SUCCESS && $model->status != MainDocument::BOSS_SIGNED) { ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
             <?= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
 
@@ -48,6 +48,7 @@ if (!empty($model->lawyer_conclusion_path)) {
             <!--        --><? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
             <!--        --><? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
         <? } ?>
+
 
     </div>
 
@@ -62,6 +63,12 @@ if (!empty($model->lawyer_conclusion_path)) {
         <div class="alert alert-fill-success" role="alert">
             <i class="mdi mdi-alert-circle"></i>
             Imzolandi !
+        </div>
+    <? } ?>
+    <? if ($model->status == MainDocument::BOSS_SIGNED) { ?>
+        <div class="alert alert-fill-success" role="alert">
+            <i class="mdi mdi-alert-circle"></i>
+            Rahbar tomonidan imzolandi !
         </div>
     <? } ?>
 
@@ -213,7 +220,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                                             <p class="text-muted mb-1">
                                                 <?
 
-                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $file ->path)) {
+                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $file->path)) {
 
                                                     $size = filesize(Yii::getAlias('@frontend') . $file->path);
                                                     echo human_filesize($size, 3);
