@@ -24,14 +24,14 @@ AppAsset::register($this);
         <?php $this->registerCsrfMetaTags() ?>
         <?php echo Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        <link rel="shortcut icon" href="/images//favicon.ico" type="image/x-icon">
-        <link rel="apple-touch-icon" sizes="180x180" href="/images//favicon.ico">
-        <link rel="apple-touch-icon" sizes="152x152" href="/images//favicon.ico">
-        <link rel="apple-touch-icon" sizes="144x144" href="/images//favicon.ico">
-        <link rel="mask-icon" href="/images//favicon.ico">
-        <meta property="og:site_name" content="Deniz Homes">
-        <meta property="og:title" content="Deniz Homes">
-        <meta property="og:locale" content="en">
+        <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+        <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon.ico">
+        <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon.ico">
+        <link rel="mask-icon" href="/images/favicon.ico">
+        <meta property="og:site_name" content="YuristLab">
+        <meta property="og:title" content="YuristLab">
+        <meta property="og:locale" content="uz">
         <?php $this->head() ?>
     </head>
     <body class="d-flex flex-column h-100">
