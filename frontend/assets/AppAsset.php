@@ -48,4 +48,12 @@ class AppAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap4\BootstrapAsset',
     ];
+    public $cssOptions = [
+        "async" => true,
+        'as' => 'style'
+    ];
+    public $jsOptions = [
+        "defer" => true,
+        'as' => 'script'
+    ];
 }
