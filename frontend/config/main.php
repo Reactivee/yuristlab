@@ -90,9 +90,10 @@ return [
     'as access' => [
         'class' => 'backend\modules\admin\components\AccessControl',
         'allowActions' => [
-//            'site/login',
-//            'site/logout',
-//            'site/error',
+            'site/login',
+            'site/signup',
+            'site/logout',
+            'site/error',
         ]
     ],
 ];

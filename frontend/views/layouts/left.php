@@ -1,5 +1,6 @@
 <?php
 
+use backend\modules\admin\components\Helper;
 use common\models\documents\GroupDocuments;
 use kartik\select2\Select2;
 
@@ -46,7 +47,9 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
         <!--        </a>-->
         <ul class="navbar-nav mr-lg-2">
             <li class="nav-item   text-center ">
-                <button type="button" class="btn btn-success btn-icon-text btn_new_doc d-flex align-items-center justify-content-center" data-toggle="dropdown"
+                <button type="button"
+                        class="btn btn-success btn-icon-text btn_new_doc d-flex align-items-center justify-content-center"
+                        data-toggle="dropdown"
                         id="profileDropdown6" aria-expanded="false">
                     <i class="mdi mdi-plus-circle btn-icon-prepend "></i>
                     Yangi xujjat qo'shish
@@ -81,33 +84,40 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 
         <li class="nav-item">
             <div class="sidebar-title">Menu</div>
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="mdi mdi-human-child menu-icon"></i>
-                <span class="menu-title">Xodim</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="/documents">Index</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/documents/statistics">Statistics</a></li>
+            <? if (\frontend\modules\admin\components\Helper::checkRoute('/documents/')) { ?>
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                   aria-controls="ui-basic">
+                    <i class="mdi mdi-human-child menu-icon"></i>
+                    <span class="menu-title">Xodim</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/documents">Index</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/documents/statistics">Statistics</a></li>
 
 
-                </ul>
-            </div>
+                    </ul>
+                </div>
+            <? } ?>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false"
-               aria-controls="ui-advanced">
-                <i class="mdi mdi-scale-balance menu-icon"></i>
-                <span class="menu-title">Yurist</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-advanced">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="/lawyer/index">Index</a></li>
-                </ul>
-            </div>
-        </li>
+        <? if (\backend\modules\admin\components\Helper::checkRoute('/lawyer/')) { ?>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false"
+                   aria-controls="ui-advanced">
+                    <i class="mdi mdi-scale-balance menu-icon"></i>
+                    <span class="menu-title">Yurist</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-advanced">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/lawyer/index">Index</a></li>
+                    </ul>
+                </div>
+            </li>
+        <? } ?>
+        <? if (\backend\modules\admin\components\Helper::checkRoute('/director/')) { ?>
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-boss" aria-expanded="false"
                aria-controls="ui-boss">
@@ -121,6 +131,8 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                 </ul>
             </div>
         </li>
+        <? } ?>
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-news" aria-expanded="false"
                aria-controls="ui-news">
@@ -143,21 +155,33 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                 <i class="menu-arrow"></i>
             </a>
         </li>
+        <?
+
+        //            dd(Helper::checkRoute('/moderator/'));
+        ?>
+        <? if (\backend\modules\admin\components\Helper::checkRoute('/moderator/')) { ?>
+            <li class="nav-item">
+                <a class="nav-link" href="/moderator" aria-expanded="false"
+                   aria-controls="ui-template">
+                    <i class="mdi mdi-settings menu-icon"></i>
+                    <span class="menu-title">Moderator</span>
+                    <i class="menu-arrow"></i>
+                </a>
+            </li>
+        <? } ?>
         <li class="nav-item">
-            <a class="nav-link" href="/moderator" aria-expanded="false"
-               aria-controls="ui-template">
-                <i class="mdi mdi-settings menu-icon"></i>
-                <span class="menu-title">Moderator</span>
-                <i class="menu-arrow"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/lawyer/lawyers/" aria-expanded="false"
-               aria-controls="ui-template">
+            <a class="nav-link" href="#ui-about" data-toggle="collapse" aria-expanded="false" aria-controls="ui-about">
                 <i class="mdi mdi-human-male-female menu-icon"></i>
-                <span class="menu-title">Team</span>
+                <span class="menu-title">Biz haqimizda</span>
                 <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="ui-about">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="/about">Biz haqimizda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about/team">Bizning jamoa</a></li>
+                </ul>
+            </div>
+
         </li>
 
     </ul>

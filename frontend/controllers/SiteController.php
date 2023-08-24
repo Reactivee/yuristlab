@@ -31,13 +31,9 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout',],
+                'only' => ['logout'],
                 'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
+
                     [
                         'actions' => ['logout'],
                         'allow' => true,
@@ -101,9 +97,11 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+
         $this->layout = 'blank';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -137,6 +135,7 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
@@ -169,10 +168,11 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
-
+//    dd('sd');
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
+        $this->layout = 'blank';
 
+        if ($model->load(Yii::$app->request->post())) {
             if (!$model->signup()) {
                 dd($model->errors);
             }
@@ -443,7 +443,7 @@ class SiteController extends Controller
         $htmlContent = IOFactory::createWriter($phpWord, 'HTML');
 //        $htmlContent = YourWordToHtmlConversionFunction($wordContent);
 
-         // Add the HTML content to the mPDF instance
+        // Add the HTML content to the mPDF instance
         $mpdf->WriteHTML($htmlFile);
 
 // Output the PDF
