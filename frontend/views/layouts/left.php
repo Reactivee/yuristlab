@@ -178,7 +178,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             <div class="collapse" id="ui-about">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="/about">Biz haqimizda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/about/team">Bizning jamoa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about/">Bizning jamoa</a></li>
                 </ul>
             </div>
 
