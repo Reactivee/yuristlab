@@ -1,24 +1,36 @@
-.container-fluid{
+.container-fluid {
     overflow: hidden;
 }
 
-.navbar .navbar-brand-wrapper .navbar-brand img{
-    height: auto;
+.navbar .navbar-brand-wrapper .navbar-brand img {
+    width: calc(185px - 119px);
+    height: 100%;
+    text-align: center;
 }
+
+.brand-logo img {
+    width: 100px;
+    height: 100%;
+}
+
 .tab-content > .active {
     display: flex;
 }
-.new_doc_icon{
+
+.new_doc_icon {
     font-size: 26px;
     /*color: ;*/
 }
+
 .table td, .jsgrid .jsgrid-table td {
     font-size: 15px;
 }
-.btn_new_doc{
+
+.btn_new_doc {
     font-size: 15px;
 
 }
+
 .badge {
     font-size: 12px;
     font-weight: 600;
