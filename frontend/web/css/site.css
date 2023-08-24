@@ -3,7 +3,7 @@
 }
 
 .navbar .navbar-brand-wrapper .navbar-brand img {
-    width: calc(185px - 119px);
+    /*width: calc(185px - 119px);*/
     height: 100%;
     text-align: center;
 }
