@@ -10,8 +10,8 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 ?>
 
 <!-- partial:partials/_sidebar.html -->
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-
+<nav class="sidebar sidebar-offcanvas position-relative" id="sidebar">
+    <div class="w-100  siderbar_bg"  ></div>
 
     <div class="dropdown sidebar-profile-dropdown dropdown_group">
         <!--                        --><? // //

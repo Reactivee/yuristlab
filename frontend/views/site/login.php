@@ -27,13 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
             <div class="my-1 mx-0" style="color:#999;">
-                If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                <br>
-                Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
+                <!--                If you forgot your password you can -->
+                <? //= Html::a('reset it', ['site/request-password-reset']) ?><!--.-->
+                <!--                <br>-->
+<!--                Ro'yhatdan o'tmagan bo'lsangiz --><?//= Html::a('Ro\'yhatdan o\'tish', ['site/signup']) ?>
             </div>
 
             <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Tizimga kirish', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::a("Ro'yhatdan o'tish", ['site/signup'], ['class' => 'btn btn-success', 'name' => 'login-button']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>

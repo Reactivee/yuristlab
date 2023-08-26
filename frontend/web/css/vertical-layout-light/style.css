@@ -28719,6 +28719,8 @@ div.tagsinput span.tag a {
   -moz-box-shadow: 6px 16px 31px -18px #b7bcd1;
   -ms-box-shadow: 6px 16px 31px -18px #b7bcd1;
   position: relative;
+  /*background-image: url("/images/bg_bggenerator_com.png");*/
+  /*background-size: cover;*/
 }
 
 .sidebar .dropdown.sidebar-profile-dropdown {
@@ -28780,6 +28782,8 @@ div.tagsinput span.tag a {
   flex-wrap: nowrap;
   flex-direction: column;
   margin-bottom: 60px;
+  z-index: 1;
+  position: relative;
 }
 
 .sidebar .nav .nav-item {
