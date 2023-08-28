@@ -9,7 +9,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper align-items-center">
         <a class="navbar-brand brand-logo" href="/"><img src="../../images/logo.png" alt="logo"/></a>
-<!--        <a class="navbar-brand brand-logo-mini" href="/"><img src="../../images/logo.png" alt="logo"/></a>-->
+        <!--        <a class="navbar-brand brand-logo-mini" href="/"><img src="../../images/logo.png" alt="logo"/></a>-->
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-sort-variant"></span>
         </button>
@@ -17,11 +17,11 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <ul class="navbar-nav mr-lg-2">
             <li class="nav-item d-none d-sm-block dropdown arrow-none">
-<!--                <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown"-->
-<!--                        id="profileDropdown6" aria-expanded="false">-->
-<!--                    <i class="mdi mdi-plus-circle btn-icon-prepend"></i>-->
-<!--                    Yangi xujjat qo'shish-->
-<!--                </button>-->
+                <!--                <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown"-->
+                <!--                        id="profileDropdown6" aria-expanded="false">-->
+                <!--                    <i class="mdi mdi-plus-circle btn-icon-prepend"></i>-->
+                <!--                    Yangi xujjat qo'shish-->
+                <!--                </button>-->
                 <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="profileDropdown6">
 
                     <!--                    <a class="dropdown-item text-primary">-->
@@ -33,13 +33,14 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                     <!--                    <a class="dropdown-item text-primary">-->
                     <!--                        <i class="mdi mdi-counter"></i> Product Line sales-->
                     <!--                    </a>-->
-<!--                    --><?//
-//                    foreach ($arr_group as $key => $item) { ?>
-<!--                        <a class="dropdown-item text-primary" href="/create?doc=--><?//= $key ?><!-- ">-->
-<!--                            <i class="mdi mdi-file-document"></i>-->
-<!--                            --><?//= $item ?>
-<!--                        </a>-->
-<!--                    --><?// } ?>
+                    <!--                    --><? //
+                    //                    foreach ($arr_group as $key => $item) { ?>
+                    <!--                        <a class="dropdown-item text-primary" href="/create?doc=-->
+                    <? //= $key ?><!-- ">-->
+                    <!--                            <i class="mdi mdi-file-document"></i>-->
+                    <!--                            --><? //= $item ?>
+                    <!--                        </a>-->
+                    <!--                    --><? // } ?>
 
                 </div>
             </li>
@@ -47,7 +48,6 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
         </ul>
         <? if (Yii::$app->user->identity->employ->id == Yii::$app->user->identity->employ->company->director) { ?>
             <span class="font-weight-bold  ml-2">Firma: <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
-<!--            <span>|</span>-->
             <span class="font-weight-bold text-warning mx-2"> Lavozim:</span>
             <span class=" font-weight-bold text-success">( Rahbar )</span>
 
@@ -56,7 +56,6 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             <span class="font-weight-bold text-success "> <?= \common\models\Employ::getRole(Yii::$app->user->identity->employ->role); ?></span>
 
         <? } ?>
-        <!--            --><? // dd(Yii::$app->user->identity->employ); ?><!--</span>-->
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item count-indicator nav-profile dropdown">
                 <span class="count">3</span>
@@ -71,7 +70,6 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                         ['/user/index',], ['class' => 'dropdown-item text-primary']) ?>
                     <?php echo Html::a('<i class="fas fa-sign-out"></i>Sign out',
                         ['/site/logout'], ['data-method' => 'POST', 'class' => 'dropdown-item text-primary']) ?>
-
                 </div>
             </li>
             <li class="nav-item dropdown count-indicator arrow-none">

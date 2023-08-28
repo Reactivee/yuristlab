@@ -76,7 +76,7 @@ class Employ extends \yii\db\ActiveRecord
     public static function getRole($role = null)
     {
         $array = [
-            self::ADMIN => 'admin',
+            self::ADMIN => 'Administrator',
             self::MODERATOR => 'Moderator',
             self::EMPLOY => 'Xodim',
             self::LAWYER => 'Yurist',

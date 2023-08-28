@@ -77,7 +77,7 @@ if (!empty($model->lawyer_conclusion_path)) {
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Xujjat kodi:
-                <span class="text-danger"> <?= $model->code_document ?></span>
+                <span class="lead text-danger font-weight-bolder"> <?= $model->code_document ?></span>
             </h4>
             <h4 class="card-title">Xujjat nomi: <span class="lead text-primary font-weight-bolder">
                     <?= $model->name_uz ?>
@@ -128,9 +128,9 @@ if (!empty($model->lawyer_conclusion_path)) {
                 </div>
                 <div class="col-md-12">
                     <span class="font-weight-bold card-title">Qisqa mazmuni</span>
-                    <h3 class="text-success font-weight-bold">
+                    <p class="text-warning font-weight-bold card-title">
                         <?= $model->doc_about ?>
-                    </h3>
+                    </p>
                     <hr>
                     <? if ($model->conclusion_uz) { ?>
 

@@ -2,6 +2,27 @@
     overflow: hidden;
 }
 
+/*Login page*/
+.login_wrapper {
+    padding: 100px 200px;
+    background-image: url("/images/Sprinkle.svg");
+    background-size: cover;
+    height: 100vh;
+}
+
+.login_form {
+    padding: 70px 70px;
+    margin: 0 50px;
+    background-color: rgba(112, 112, 112, 0.3);
+    backdrop-filter: blur(70px);
+    border-radius: 17px;
+}
+.login_form label{
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+/*login end*/
 .navbar .navbar-brand-wrapper .navbar-brand img {
     /*width: calc(185px - 119px);*/
     height: 100%;
