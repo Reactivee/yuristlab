@@ -316,7 +316,8 @@ if (!empty($model->lawyer_conclusion_path)) {
             </div>
 
             <?
-            if (!$model->category && !$model->conclusion_uz) {
+
+            if ($model->category && !$model->conclusion_uz) {
                 $form = ActiveForm::begin();
                 if ($model->status == MainDocument::SIGNING) {
 
