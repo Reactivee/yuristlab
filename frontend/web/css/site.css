@@ -114,9 +114,12 @@
 
 /*Signup page*/
 .sign_wrapper {
-    background-image: url("/images/Sprinkle.svg");
+    overflow: hidden;
+    /*background-image: url("/images/Sprinkle.svg");*/
     background-size: cover;
-    height: 100vh;
+    /*height: 100vh;*/
+    padding: 70px 200px;
+
 }
 
 .wrap_sign_bg {
@@ -125,7 +128,6 @@
     /*box-shadow: -1px -2px 8px 10px rgba(34, 60, 80, 0.08);*/
     border-radius: 20px;
     /*margin: 20px 0;*/
-    padding: 50px;
 }
 
 .wrap_sign_bg input {

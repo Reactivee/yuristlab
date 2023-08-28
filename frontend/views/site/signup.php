@@ -11,9 +11,10 @@ use yii\bootstrap4\ActiveForm;
 $this->title = "Ro'yhatdan o'tish";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="particles-js " id="particles-js"></div>
 
-<div class="sign_wrapper">
-    <div class="wrap_sign_bg">
+<div class="sign_wrapper overflow-hidden">
+    <div class="wrap_sign_bg overflow-hidden">
 
         <div class="row ">
             <!--                <div class="col-md-2">/</div>-->
@@ -45,3 +46,18 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<?php
+$this->registerCssFile("/css/particles.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::class],
+
+]);
+$this->registerJsFile(
+    'js/particles.min.js',
+    ['depends' => [\yii\web\JqueryAsset::class]]
+);
+$this->registerJsFile(
+    'js/particles_in.js',
+    ['depends' => [\yii\web\JqueryAsset::class]]
+);
+
+?>
