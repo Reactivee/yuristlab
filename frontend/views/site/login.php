@@ -11,12 +11,15 @@ use yii\bootstrap4\ActiveForm;
 $this->title = 'Tizimga kirish';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="login_wrapper">
+<div class="particles-js overflow-hidden" id="particles-js"></div>
+
+<div class="login_wrapper ">
+    <!-- particles.js container -->
     <div class="row align-items-center">
-        <div class="col-lg-6 ">
+        <div class="col-md-6 ">
             <div class="login_form">
                 <h1 class="text-success font-weight-bold text-center"><?= Html::encode($this->title) ?></h1>
-<!--                <p>Please fill out the following fields to login:</p>-->
+                <!--                <p>Please fill out the following fields to login:</p>-->
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Login') ?>
@@ -39,10 +42,25 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?php ActiveForm::end(); ?>
         </div>
-        <div class="col-lg-6">
+        <div class="col-md-6">
             <img class="w-100" src="/images/short_logo.png" alt="">
         </div>
     </div>
 </div>
 
+<?php
+$this->registerCssFile("/css/particles.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::class],
+
+]);
+$this->registerJsFile(
+    'js/particles.min.js',
+    ['depends' => [\yii\web\JqueryAsset::class]]
+);
+$this->registerJsFile(
+    'js/particles_in.js',
+    ['depends' => [\yii\web\JqueryAsset::class]]
+);
+
+?>
 

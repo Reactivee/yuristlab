@@ -19,6 +19,7 @@ class AppAsset extends AssetBundle
         'vendors/css/vendor.bundle.base.css',
         'css/vertical-layout-light/style.css',
         'images/favicon.png',
+        'css/particles.css',
 //        'css/percent-preloader.min.css',
         'css/preloader.css',
         'css/site.css'
@@ -40,7 +41,8 @@ class AppAsset extends AssetBundle
         'js/docx-preview.js',
 //        'js/percent-preloader.min.js',
         'js/jquery.preloadinator.min.js',
-
+        'js/particles.js',
+        'js/stats.js',
 //        'https://code.jquery.com/jquery-3.7.0.min.js',
         'js/main.js'
     ];
