@@ -12,15 +12,16 @@ $this->title = "Ro'yhatdan o'tish";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="wrap_sign">
+<div class="sign_wrapper">
     <div class="wrap_sign_bg">
 
         <div class="row ">
             <!--                <div class="col-md-2">/</div>-->
             <div class="col-md-6">
-                <h1><?= Html::encode($this->title) ?></h1>
+                <div class="login_form">
+                <h1 class="text-success font-weight-bold text-center"><?= Html::encode($this->title) ?></h1>
 
-                <p>Please fill out the following fields to signup:</p>
+<!--                <p>Please fill out the following fields to signup:</p>-->
                 <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('FIO') ?>
@@ -34,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="form-group">
                     <?= Html::submitButton('Tasdiqlash', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>
+                </div>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
