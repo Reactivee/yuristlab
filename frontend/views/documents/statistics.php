@@ -10,7 +10,7 @@ $status = \common\models\documents\MainDocument::getStatusNameArr();
     <div class="row">
         <? foreach ($status as $key => $item) { ?>
             <div class="col-md-3 mb-3">
-                <div class="card ">
+                <div class="card_stat">
                     <div class="card-body <?= MainDocument::getStatusNameColor($key) ?> ">
                         <h4 class="card-title text-default text-center"><?= $item ?></h4>
                         <div class="d-flex justify-content-center">
