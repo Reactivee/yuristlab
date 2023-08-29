@@ -102,6 +102,7 @@ $this->title = 'Documents';
                     return MainDocument::getStatusNameColored($model->status);
                 }
             ],
+
             [
                 'class' => ActionColumn::className(),
                 'template' => '{view}',

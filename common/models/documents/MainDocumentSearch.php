@@ -3,6 +3,7 @@
 namespace common\models\documents;
 
 use common\models\documents\MainDocument;
+
 use common\models\Employ;
 use Yii;
 use yii\base\Model;
@@ -45,11 +46,11 @@ class MainDocumentSearch extends MainDocument
     public function search($params)
     {
         $user = Yii::$app->user->identity->employ->company->id;
+
+
         $query = MainDocument::find()->orderBy(['id' => SORT_DESC]);
 
         $query->where(['company_id' => $user]);
-
-
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -59,6 +60,63 @@ class MainDocumentSearch extends MainDocument
         if ($params['status']) {
             $status = $params['status'];
             $query->where(['status' => $status]);
+        }
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'category_id' => $this->category_id,
+            'group_id' => $this->group_id,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'time_begin' => $this->time_begin,
+            'time_end' => $this->time_end,
+            'company_id' => $this->company_id,
+            'type_group_id' => $this->company_id,
+        ]);
+
+        $query->andFilterWhere(['like', 'name_uz', $this->name_uz])
+            ->andFilterWhere(['like', 'name_ru', $this->name_ru])
+            ->andFilterWhere(['like', 'path', $this->path]);
+
+        return $dataProvider;
+    }
+
+    public function searchForAll($params)
+    {
+        $company = Yii::$app->user->identity->employ->company->id;
+        $user = Yii::$app->user->identity->employ->id;
+
+
+        $query = MainDocument::find()
+            ->orderBy(['id' => SORT_DESC]);
+
+        if ($company)
+            $query->where(['company_id' => $company]);
+
+        if ($user) {
+            $query->andWhere(['user_id' => $user]);
+
+        }
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if ($params['status']) {
+            $status = $params['status'];
+            $query->andWhere(['status' => $status]);
         }
         $this->load($params);
 
@@ -195,8 +253,8 @@ class MainDocumentSearch extends MainDocument
     {
 
 //        dd();
-            $query = MainDocument::find()
-                ->orderBy(['main_document.id' => SORT_DESC]);
+        $query = MainDocument::find()
+            ->orderBy(['main_document.id' => SORT_DESC]);
 //            ->where(['user_id' => null]);
 //            ->andWhere(['company_id' => Yii::$app->user->identity->employ->company->id]);
 //            ->andWhere(['status'=>MainDocument::TOBOSS]);

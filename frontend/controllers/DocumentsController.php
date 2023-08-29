@@ -96,8 +96,22 @@ class DocumentsController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
 
+    /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionAll()
+    {
+        $searchModel = new MainDocumentSearch();
+        $dataProvider = $searchModel->searchForAll($this->request->queryParams);
 
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionUploadDocs($id = null)

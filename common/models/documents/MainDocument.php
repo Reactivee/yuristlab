@@ -250,9 +250,23 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public static function getByStatusDocuments($key)
     {
+        $company = Yii::$app->user->identity->employ->company->id;
+        $user = Yii::$app->user->identity->employ->id;
 
-        $main = MainDocument::find()->where(['status' => $key])->count();
-        return $main;
+        $main = MainDocument::find()
+            ->where(['status' => $key]);
+
+
+        if ($company)
+            $main->andWhere(['company_id' => $company]);
+
+        if ($user) {
+            $main->andWhere(['user_id' => $user]);
+
+        }
+
+
+        return $main->count();
 
     }
 

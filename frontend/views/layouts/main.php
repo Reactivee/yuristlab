@@ -108,7 +108,7 @@ AppAsset::register($this);
                             <? foreach (MainDocument::getStatusNameArr() as $key => $item) { ?>
                                 <li class="nav-item">
                                     <a class="nav-link <?= $status_id == $key ? 'active' : '' ?>" id="Dashboards-tab"
-                                       href="/documents?status=<?= $key ?>"
+                                       href="/documents/all/?status=<?= $key ?>"
                                        aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
                                         <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>"><?= MainDocument::getByStatusDocuments($key) ?? '' ?></span>
                                     </a>
