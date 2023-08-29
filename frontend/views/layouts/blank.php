@@ -14,6 +14,14 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/favicon.ico">
+    <link rel="mask-icon" href="/images/favicon.ico">
+    <meta property="og:site_name" content="YuristLab">
+    <meta property="og:title" content="YuristLab">
+    <meta property="og:locale" content="uz">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
