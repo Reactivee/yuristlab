@@ -102,8 +102,7 @@ $this->title = 'Documents';
                     return MainDocument::getStatusNameColored($model->status);
                 }
             ],
-            'user_id',
-            'company_id',
+
             [
                 'class' => ActionColumn::className(),
                 'template' => '{view}',
