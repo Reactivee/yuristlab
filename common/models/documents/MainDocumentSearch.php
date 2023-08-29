@@ -103,9 +103,8 @@ class MainDocumentSearch extends MainDocument
         if ($company)
             $query->where(['company_id' => $company]);
 
-        if ($user) {
+        if (!$company && $user) {
             $query->andWhere(['user_id' => $user]);
-
         }
 
         // add conditions that should always apply here

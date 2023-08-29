@@ -102,12 +102,25 @@ $this->title = 'Documents';
                     return MainDocument::getStatusNameColored($model->status);
                 }
             ],
-
+            'user_id',
+            'company_id',
             [
                 'class' => ActionColumn::className(),
                 'template' => '{view}',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
+                        $user = Yii::$app->user->identity->employ->role;
+//                        dd($user);
+                        if ($user == Employ::LAWYER) {
+                            $url = '/lawyer/view/' . $key;
+                        }
+
+                        if ($user == Employ::EMPLOY) {
+                            $url = '/documents/view/' . $key;
+                        }
+                        if ($user == Employ::MODERATOR) {
+                            $url = '/moderator/view/' . $key;
+                        }
 
                         return Html::a('<i class="fa fa-pencil mr-1"></i>Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
 

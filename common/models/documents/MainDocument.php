@@ -73,8 +73,8 @@ class MainDocument extends \yii\db\ActiveRecord
             self::REJECTED => "Rad etilgan",
             self::SIGNING => "Imzolashda",
             self::SIGNED => "Imzolandi",
-            self::BOSS_SIGNED => "Rahbar Imzolandi",
-            self::TOBOSS => "Rahbar imzosi",
+            self::BOSS_SIGNED => "Rahbar tomonidan imzolandi",
+            self::TOBOSS => "Rahbar imzosi kutilmoqda",
         ];
 
         return $status ? $array[$status] : $array;
@@ -88,10 +88,12 @@ class MainDocument extends \yii\db\ActiveRecord
             self::DELETED => "O'chirilgan",
 //            self::NOTSEND => "Yuborilmagan",
             self::SUCCESS => "Ijobiy xulosa",
-            self::ERROR => "Salbiy xulosa",
+//            self::ERROR => "Salbiy xulosa",
             self::REJECTED => "Rad etilgan",
             self::SIGNING => "Imzolashda",
             self::SIGNED => "Imzolandi",
+            self::BOSS_SIGNED => "Rahbar tomonidan imzolandi",
+            self::TOBOSS => "Rahbar imzosi kutilmoqda",
         ];
 
         return $status ? $array[$status] : $array;
@@ -128,6 +130,8 @@ class MainDocument extends \yii\db\ActiveRecord
             self::REJECTED => "btn btn-inverse-light btn-fw",
             self::SIGNING => "btn btn-inverse-success btn-fw",
             self::SIGNED => "btn btn-inverse-primary btn-fw",
+            self::BOSS_SIGNED => "btn btn-inverse-primary btn-fw",
+            self::TOBOSS => "btn btn-inverse-primary btn-fw",
         ];
 
         return $status ? $array[$status] : $array;
@@ -145,6 +149,8 @@ class MainDocument extends \yii\db\ActiveRecord
             self::REJECTED => " badge badge-pill badge-outline-light",
             self::SIGNING => " badge badge-pill badge-outline-success",
             self::SIGNED => "badge badge-pill badge-outline-primary",
+            self::BOSS_SIGNED => "badge badge-pill badge-outline-success",
+            self::TOBOSS => "badge badge-pill badge-outline-warning",
         ];
 
         return $status ? $array[$status] : $array;
@@ -260,7 +266,7 @@ class MainDocument extends \yii\db\ActiveRecord
         if ($company)
             $main->andWhere(['company_id' => $company]);
 
-        if ($user) {
+        if (!$company && $user) {
             $main->andWhere(['user_id' => $user]);
 
         }
