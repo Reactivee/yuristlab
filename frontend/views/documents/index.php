@@ -115,9 +115,6 @@ $this->title = 'Documents';
                             $url = '/lawyer/view/' . $key;
                         }
 
-                        if ($user == Employ::EMPLOY) {
-                            $url = '/documents/view/' . $key;
-                        }
                         if ($user == Employ::MODERATOR) {
                             $url = '/moderator/view/' . $key;
                         }
