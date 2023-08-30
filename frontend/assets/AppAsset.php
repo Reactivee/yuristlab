@@ -18,7 +18,6 @@ class AppAsset extends AssetBundle
         'vendors/mdi/css/materialdesignicons.min.css',
         'vendors/css/vendor.bundle.base.css',
         'css/vertical-layout-light/style.css',
-        'images/favicon.png',
         'css/particles.css',
 //        'css/percent-preloader.min.css',
         'css/preloader.css',
