@@ -319,7 +319,7 @@ if (!empty($model->lawyer_conclusion_path)) {
 
             if ($model->category && !$model->conclusion_uz) {
                 $form = ActiveForm::begin();
-                if ($model->status == MainDocument::SIGNING) {
+                if ($model->status == MainDocument::EDITED) {
 
                     echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa')
                     ?>
