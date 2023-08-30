@@ -89,11 +89,11 @@ class ModeratorController extends Controller
     public function actionIndex()
     {
         $searchModel = new MainDocumentSearch();
-//        dd();
-        if (Yii::$app->user->identity->employ->role != Employ::MODERATOR) {
-            throw new MethodNotAllowedHttpException("net Dostup");
 
-        }
+//        if (Yii::$app->user->identity->employ->role != Employ::MODERATOR) {
+//            throw new MethodNotAllowedHttpException("Sizda ruxsat yo'q");
+//
+//        }
         $dataProvider = $searchModel->searchModerator($this->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -126,9 +126,11 @@ class ModeratorController extends Controller
             $index = Yii::$app->request->post()['editableIndex'];
             $main = MainDocument::find()
                 ->where(['id' => $doc])
+                ->andWhere(['status' => MainDocument::EDITED])
                 ->one();
             if ($main) {
                 $main->user_id = (int)$post['MainDocument'][$index]['user_id'];
+                $main->status = MainDocument::SIGNING;
                 if (!$main->save()) {
                     return $main->errors;
                 }

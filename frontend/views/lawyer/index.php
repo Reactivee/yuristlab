@@ -44,6 +44,16 @@ $this->title = 'Documents';
 //                'hAlign' => 'center',
 //                'width' => '200px'
 //            ],
+
+//            'id',
+
+            [
+                'attribute' =>   'name_uz',
+                'hAlign' => 'center',
+                'format' => 'raw',
+                'label' => 'Xujjat Nomi',
+
+            ],
             [
                 'attribute' => 'code_document',
                 'format' => 'raw',
@@ -53,11 +63,10 @@ $this->title = 'Documents';
                     return $font;
                 }
             ],
-//            'id',
-            'name_uz',
 //            'name_ru',
             [
                 'attribute' => 'group_id',
+                'label' => 'Guruh nomi',
                 'format' => 'raw',
                 'hAlign' => 'center',
                 'width' => '200px',
@@ -72,7 +81,7 @@ $this->title = 'Documents';
                         'multiple' => true
                     ],
                 ],
-                'contentOptions' => ['style' => 'width: 100px'],
+                'contentOptions' => ['style' => 'width: 150px'],
                 'value' => function ($model) {
                     return $model->group->name_uz;
                 }
@@ -80,6 +89,7 @@ $this->title = 'Documents';
             [
                 'attribute' => 'category_id',
                 'format' => 'raw',
+                'label' => 'Kategoriya',
                 'hAlign' => 'center',
                 'width' => '200px',
                 'filter' => MainDocument::getAllCategory(),
@@ -93,6 +103,8 @@ $this->title = 'Documents';
                         'multiple' => true
                     ],
                 ],
+                'contentOptions' => ['style' => 'width: 150px'],
+
                 'value' => function ($model) {
 
                     return $model->category->name_uz;
@@ -101,6 +113,7 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'sub_category_id',
+                'label' => 'Bo\'lim',
                 'format' => 'raw',
                 'hAlign' => 'center',
                 'width' => '200px',
@@ -122,6 +135,8 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'type_group_id',
+                'label' => 'Turkum',
+
                 'format' => 'raw',
                 'hAlign' => 'center',
                 'width' => '200px',
@@ -157,7 +172,9 @@ $this->title = 'Documents';
 //            'created_at:datetime',
             [
                 'attribute' => 'created_at',
-                'contentOptions' => ['style' => 'max-width: 100px;'],
+                'label' => 'Yaratilgan sana',
+
+                'contentOptions' => ['style' => 'max-width: 200px;'],
                 'hAlign' => 'center',
                 'width' => '500px',
                 'value' => function ($model) {

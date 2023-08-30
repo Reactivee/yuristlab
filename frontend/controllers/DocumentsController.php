@@ -380,7 +380,7 @@ class DocumentsController extends Controller
     {
         $main = MainDocument::find()->where(['id' => $id])->one();
         if ($main) {
-            $main->status = MainDocument::SIGNING;
+            $main->status = MainDocument::EDITED;
 
             if ($main->save()) {
                 Yii::$app->session->setFlash('success', "Yuborildi");

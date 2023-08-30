@@ -253,7 +253,8 @@ class MainDocumentSearch extends MainDocument
 
 //        dd();
         $query = MainDocument::find()
-            ->orderBy(['main_document.id' => SORT_DESC]);
+            ->orderBy(['main_document.id' => SORT_DESC])
+            ->andWhere(['not', ['status' => MainDocument::NEW]]);
 //            ->where(['user_id' => null]);
 //            ->andWhere(['company_id' => Yii::$app->user->identity->employ->company->id]);
 //            ->andWhere(['status'=>MainDocument::TOBOSS]);

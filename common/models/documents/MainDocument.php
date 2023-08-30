@@ -65,7 +65,7 @@ class MainDocument extends \yii\db\ActiveRecord
     {
         $array = [
             self::NEW => 'Yangi',
-            self::EDITED => "Korib chiqilmoqda",
+            self::EDITED => "Ko'rib chiqilmoqda",
             self::DELETED => "O'chirilgan",
             self::NOTSEND => "Yuborilmagan",
             self::SUCCESS => "Ijobiy xulosa",
@@ -84,16 +84,16 @@ class MainDocument extends \yii\db\ActiveRecord
     {
         $array = [
             self::NEW => 'Yangi',
-            self::EDITED => "Korib chiqilmoqda",
-            self::DELETED => "O'chirilgan",
+            self::EDITED => "Ko'rib chiqilmoqda",
+            self::SIGNING => "Imzolashda",
 //            self::NOTSEND => "Yuborilmagan",
+//            self::SIGNED => "Imzolandi",
             self::SUCCESS => "Ijobiy xulosa",
 //            self::ERROR => "Salbiy xulosa",
             self::REJECTED => "Rad etilgan",
-            self::SIGNING => "Imzolashda",
-            self::SIGNED => "Imzolandi",
-            self::BOSS_SIGNED => "Rahbar tomonidan imzolandi",
             self::TOBOSS => "Rahbar imzosi kutilmoqda",
+            self::BOSS_SIGNED => "Rahbar tomonidan imzolandi",
+            self::DELETED => "O'chirilgan",
         ];
 
         return $status ? $array[$status] : $array;
@@ -101,18 +101,19 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public static function getStatusNameColored($status = null)
     {
+
         $array = [
-            self::NEW => '<div class=" badge badge-primary badge-pill">Yangi</div>',
-            self::EDITED => '<div class="badge badge-info badge-pill">Korib chiqilmoqda</div>',
-            self::DELETED => '<div class="badge badge-danger badge-pill">O\'chirilgan</div>',
-            self::NOTSEND => '<div class="badge badge-warning badge-pill">Yuborilmagan</div>',
-            self::SUCCESS => '<div class="badge badge-success badge-pill">Ijobiy xulosa</div>',
-            self::ERROR => '<div class="badge badge-danger badge-pill">Salbiy xulosa</div>',
-            self::REJECTED => '<div class="badge badge-info badge-pill">Rad etilgan</div>',
-            self::SIGNING => '<div class="badge badge-primary badge-pill">Imzolashda</div>',
-            self::SIGNED => '<div class="badge badge-success badge-pill">Imzolandi</div>',
-            self::TOBOSS => '<div class="badge badge-warning badge-pill">Rahbar imzosi kutilmoqda</div>',
-            self::BOSS_SIGNED => '<div class="badge badge-warning badge-pill">Rahbar tomonidan imzolandi</div>',
+            self::NEW => '<div class=" badge badge-primary badge-pill">' . self::getStatusNameArr(self::NEW) . '</div>',
+            self::EDITED => '<div class="badge badge-info badge-pill">' . self::getStatusNameArr(self::EDITED) . '</div>',
+            self::DELETED => '<div class="badge badge-danger badge-pill">' . self::getStatusNameArr(self::DELETED) . '/div>',
+            self::NOTSEND => '<div class="badge badge-warning badge-pill">' . self::getStatusNameArr(self::NOTSEND) . '</div>',
+            self::SUCCESS => '<div class="badge badge-success badge-pill">' . self::getStatusNameArr(self::SUCCESS) . '</div>',
+            self::ERROR => '<div class="badge badge-danger badge-pill">' . self::getStatusNameArr(self::ERROR) . '</div>',
+            self::REJECTED => '<div class="badge badge-danger badge-pill">' . self::getStatusNameArr(self::REJECTED) . '</div>',
+            self::SIGNING => '<div class="badge badge-primary badge-pill">' . self::getStatusNameArr(self::SIGNING) . '</div>',
+            self::SIGNED => '<div class="badge badge-success badge-pill">' . self::getStatusNameArr(self::SIGNED) . '</div>',
+            self::TOBOSS => '<div class="badge badge-warning badge-pill">' . self::getStatusNameArr(self::TOBOSS) . '</div>',
+            self::BOSS_SIGNED => '<div class="badge badge-success badge-pill">' . self::getStatusNameArr(self::BOSS_SIGNED) . '</div>',
         ];
 
         return $status ? $array[$status] : $array;
@@ -127,7 +128,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::NOTSEND => "btn btn-inverse-primary btn-fw",
             self::SUCCESS => "btn btn-inverse-success btn-fw",
             self::ERROR => "btn btn-inverse-warning btn-fw",
-            self::REJECTED => "btn btn-inverse-light btn-fw",
+            self::REJECTED => "btn btn-inverse-warning btn-fw",
             self::SIGNING => "btn btn-inverse-success btn-fw",
             self::SIGNED => "btn btn-inverse-primary btn-fw",
             self::BOSS_SIGNED => "btn btn-inverse-primary btn-fw",
@@ -146,7 +147,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::NOTSEND => "  badge badge-pill badge-outline-primary",
             self::SUCCESS => " badge badge-pill badge-outline-success",
             self::ERROR => " badge badge-pill badge-outline-warning",
-            self::REJECTED => " badge badge-pill badge-outline-light",
+            self::REJECTED => " badge badge-pill badge-outline-warning",
             self::SIGNING => " badge badge-pill badge-outline-success",
             self::SIGNED => "badge badge-pill badge-outline-primary",
             self::BOSS_SIGNED => "badge badge-pill badge-outline-success",

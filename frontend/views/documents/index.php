@@ -2,8 +2,10 @@
 
 use common\models\documents\MainDocument;
 use common\models\Employ;
+use kartik\grid\GridView;
+use kartik\select2\Select2;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -31,6 +33,13 @@ $this->title = 'Documents';
             ['class' => 'yii\grid\SerialColumn'],
 
             [
+                'attribute' =>   'name_uz',
+                'hAlign' => 'center',
+                'format' => 'raw',
+                'label' => 'Xujjat Nomi',
+
+            ],
+            [
                 'attribute' => 'code_document',
                 'format' => 'raw',
                 'label' => 'Xujjat kodi',
@@ -39,28 +48,71 @@ $this->title = 'Documents';
                     return $font;
                 }
             ],
-            'name_uz',
-
+//            'name_ru',
             [
-                'attribute' => 'category_id',
+                'attribute' => 'group_id',
+                'label' => 'Guruh nomi',
                 'format' => 'raw',
-                'label' => 'Bo\'lim',
+                'hAlign' => 'center',
+                'width' => '200px',
+                'filter' => MainDocument::subAllGroup(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
+                'contentOptions' => ['style' => 'width: 150px'],
                 'value' => function ($model) {
-                    $font = "<span class='font-weight-bold'>" . $model->group->name_uz . " </span>";
-                    return $font;
+                    return $model->group->name_uz;
                 }
             ],
             [
                 'attribute' => 'category_id',
+                'format' => 'raw',
                 'label' => 'Kategoriya',
+                'hAlign' => 'center',
+                'width' => '200px',
+                'filter' => MainDocument::getAllCategory(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '120',
+                        'multiple' => true
+                    ],
+                ],
+                'contentOptions' => ['style' => 'width: 150px'],
+
                 'value' => function ($model) {
+
                     return $model->category->name_uz;
                 }
             ],
 
             [
-                'attribute' => 'group_id',
-                'label' => 'Kategoriya',
+                'attribute' => 'sub_category_id',
+                'label' => 'Bo\'lim',
+                'format' => 'raw',
+                'hAlign' => 'center',
+                'width' => '200px',
+                'filter' => MainDocument::subAllGetCategory(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '120',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
                     return $model->subCategory->name_uz;
                 }
@@ -68,7 +120,23 @@ $this->title = 'Documents';
 
             [
                 'attribute' => 'type_group_id',
-                'label' => 'Turkumi',
+                'label' => 'Turkum',
+
+                'format' => 'raw',
+                'hAlign' => 'center',
+                'width' => '200px',
+                'filter' => MainDocument::subAllType(),
+                'filterType' => GridView::FILTER_SELECT2,
+
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '120',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
                     return $model->type->name_uz;
                 }
@@ -86,18 +154,36 @@ $this->title = 'Documents';
 //            'time_begin:datetime',
 //            'time_end:datetime',
 
+//            'created_at:datetime',
             [
                 'attribute' => 'created_at',
-                'contentOptions' => ['style' => 'max-width: 100px;'],
+                'label' => 'Yaratilgan sana',
 
+                'contentOptions' => ['style' => 'max-width: 200px;'],
+                'hAlign' => 'center',
+                'width' => '500px',
                 'value' => function ($model) {
                     return date('d-M-Y H:i:s', $model->created_at);
                 },
             ],
+          //            'updated_at:datetime',
             [
                 'attribute' => 'status',
                 'format' => "raw",
+                'hAlign' => 'center',
+                'width' => '500px',
+                'filter' => MainDocument::getStatusNameArr(),
+                'filterType' => GridView::FILTER_SELECT2,
 
+                'filterWidgetOptions' => [
+                    'theme' => Select2::THEME_BOOTSTRAP,
+                    'options' => ['prompt' => ''],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                        'width' => '180',
+                        'multiple' => true
+                    ],
+                ],
                 'value' => function ($model) {
                     return MainDocument::getStatusNameColored($model->status);
                 }
