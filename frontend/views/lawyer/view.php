@@ -134,7 +134,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                     <hr>
                     <? if ($model->conclusion_uz) { ?>
 
-                        <span class="font-weight-bold card-title">Yurist xulosa</span>
+                        <span class="font-weight-bold card-title">Yurist xulosasi</span>
                         <h5 class="text-primary font-weight-bold">
                             <?
                             echo Editable::widget([
@@ -319,7 +319,7 @@ if (!empty($model->lawyer_conclusion_path)) {
 
             if ($model->category && !$model->conclusion_uz) {
                 $form = ActiveForm::begin();
-                if ($model->status == MainDocument::EDITED) {
+                if ($model->status == MainDocument::EDITED||$model->status == MainDocument::SIGNING) {
 
                     echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa')
                     ?>
