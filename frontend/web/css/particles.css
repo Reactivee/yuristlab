@@ -15,7 +15,7 @@ html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abb
 
 /* ---- particles.js container ---- */
 
-#particles-js {
+.container-scroller_ .particles-js {
     width: 100%;
     height: 100%;
     background: rgb(89, 9, 128);
