@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
+use common\models\Employ;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use PhpOffice\PhpWord\IOFactory;
@@ -173,11 +174,26 @@ class SiteController extends Controller
         $this->layout = 'blank';
 
         if ($model->load(Yii::$app->request->post())) {
-            if (!$model->signup()) {
-                dd($model->errors);
+
+            $user = $model->signup();
+            if (!$user) {
+                Yii::$app->session->setFlash('error', 'Registratsiya qilishda xatolik');
+//                return $this->goHome();
             }
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+
+            $employ = new Employ();
+            $employ->login = $model->login;
+            $employ->first_name = $model->username;
+            $employ->phone = $model->phone;
+            $employ->inn = $model->inn;
+            $employ->passport = $model->passport;
+            $employ->user_id = $user->id;
+            if ($employ->save()) {
+                Yii::$app->session->setFlash('success', 'Muvaffaqiyatli ro\'yhatdan o\'tdingiz');
+                return $this->goHome();
+            }
+            Yii::$app->session->setFlash('error', 'Registratsiya qilishda xatolik');
+//            return $this->goHome();
         }
 
         return $this->render('signup', [

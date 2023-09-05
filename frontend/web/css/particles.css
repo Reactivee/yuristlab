@@ -17,7 +17,7 @@ html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abb
 
 .container-scroller_ .particles-js {
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     background: rgb(89, 9, 128);
     background: -moz-linear-gradient(174deg, rgba(89, 9, 128, 1) 0%, rgba(77, 0, 113, 1) 54%);
     background: -webkit-linear-gradient(174deg, rgba(89, 9, 128, 1) 0%, rgba(77, 0, 113, 1) 54%);

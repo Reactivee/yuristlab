@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="particles-js " id="particles-js"></div>
 
-<div class="sign_wrapper overflow-hidden">
-    <div class="wrap_sign_bg overflow-hidden">
+<div class="sign_wrapper ">
+    <div class="wrap_sign_bg">
 
         <div class="row ">
             <!--                <div class="col-md-2">/</div>-->
@@ -26,9 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('FIO') ?>
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Login') ?>
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Telefon Nomer') ?>
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Passport seriya') ?>
+                <?= $form->field($model, 'login')->textInput(['autofocus' => true])->label('Login') ?>
+                <?= $form->field($model, 'phone')->textInput(['autofocus' => true])->label('Telefon Nomer') ?>
+                <?= $form->field($model, 'passport')->textInput(['autofocus' => true])->label('Passport seriya') ?>
+                <?= $form->field($model, 'inn')->textInput(['autofocus' => true])->label('INN') ?>
 
                 <?= $form->field($model, 'email') ?>
 

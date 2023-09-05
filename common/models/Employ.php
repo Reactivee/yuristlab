@@ -48,7 +48,7 @@ class Employ extends \yii\db\ActiveRecord
         return [
             [['status', 'user_id', 'type', 'company_id', 'role'], 'integer'],
             [['desc'], 'string'],
-            [['first_name', 'last_name', 'key', 'phone', 'photo', 'login'], 'string', 'max' => 255],
+            [['first_name', 'last_name', 'key', 'phone', 'photo', 'login','passport','inn'], 'string', 'max' => 255],
         ];
     }
 

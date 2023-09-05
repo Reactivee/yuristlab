@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
+use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\helpers\Html;
 
@@ -29,8 +30,10 @@ AppAsset::register($this);
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
-<main role="main">
+<main role="main" style="overflow: auto">
     <div class="container-fluid">
+        <?= Alert::widget() ?>
+
         <?= $content ?>
     </div>
 </main>

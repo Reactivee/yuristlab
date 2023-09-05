@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'desc')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'director')->dropDownList($model->getDir()) ?>
+<!--    --><?//= $form->field($model, 'director')->dropDownList($model->getDir()) ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 
