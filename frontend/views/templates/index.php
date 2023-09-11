@@ -1,14 +1,10 @@
 <?php
 
 use kartik\select2\Select2;
-use kartik\tabs\TabsX;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Modal;
 use yii\grid\GridView;
-use yii\helpers\Url;
-use yii\widgets\DetailView;
-use yii\widgets\Pjax;
 
 /** @var \common\models\documents\TypeDocumentsSearch $model */
 

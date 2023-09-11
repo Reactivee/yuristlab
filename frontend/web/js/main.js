@@ -36,10 +36,8 @@ function PreviewWordDoc() {
         var docxOptions = Object.assign(docx.defaultOptions, {
             useMathMLPolyfill: true
         });
-
         //Reference the Container DIV.
         var container = document.querySelector("#word-container");
-
         //Render the Word Document.
         docx.renderAsync(doc, container, null, docxOptions);
     }

@@ -95,7 +95,6 @@ class EmployController extends Controller
                 }
 
                 $model->save();
-                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {

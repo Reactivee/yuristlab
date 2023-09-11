@@ -159,7 +159,6 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
         </li>
         <?
 
-        //            dd(Helper::checkRoute('/moderator/'));
         ?>
         <? if (\backend\modules\admin\components\Helper::checkRoute('/moderator/')) { ?>
             <li class="nav-item">

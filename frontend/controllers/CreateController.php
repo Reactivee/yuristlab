@@ -82,13 +82,11 @@ class CreateController extends Controller
     public function actionIndex($id = null, $doc = null)
     {
 
-        $form = new CreateDocForm();
         $model = new MainDocument();
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
 
             $doc_path = $model->path;
-
 
             if ($doc_path) {
 
@@ -99,7 +97,6 @@ class CreateController extends Controller
                 $templateFile = Yii::getAlias('@frontend') . '/web' . $doc_path;
 
                 $content = file_get_contents($templateFile);
-
                 $generateName = Yii::$app->security->generateRandomString() . uniqid();
 
 //            $fileName = pathinfo($model->path, PATHINFO_FILENAME);

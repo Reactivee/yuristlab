@@ -49,7 +49,6 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>
-
         <?= $this->render('top') ?>
 
 

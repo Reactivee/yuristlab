@@ -141,7 +141,7 @@ if (!empty($model->attach)) {
                     <hr>
 
                     <div class="col-md-6 mt-4">
-                        <h5 class="font-weight-bold ">Asosiy fayl</h5>
+                        <h5 class="font-weight-bold card-title  ">Asosiy fayl</h5>
                         <div class="card">
                             <div class="card-body ">
                                 <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
@@ -151,7 +151,8 @@ if (!empty($model->attach)) {
                                     } ?>
                                     <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                         <a target="_blank" href="/frontend/web<?= $model->path ?>"
-                                           class="mb-0"> <i class="fa fa-cloud-download mr-1"></i>
+                                           class="mb-0 text-warning font-weight-bold ">
+                                            <i class="fa fa-cloud-download mr-1"></i>
                                             Ko'chirib olish</a>
                                         <p class="text-muted mb-1">
                                             <?
@@ -167,44 +168,11 @@ if (!empty($model->attach)) {
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mt-4">
-                        <? if ($model->lawyer_conclusion_path) { ?>
-                            <h5 class="font-weight-bold">Yurist biriktirtan xujjat</h5>
-                            <div class="card">
-                                <div class="card-body ">
-                                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                        <?
-                                        echo Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
-                                            ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
-                                        ?>
-                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                            <a target="_blank"
-                                               href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
-                                               class="mb-0"> <i class="fa fa-cloud-download mr-1"></i>
-                                                Ko'chirib olish</a>
-                                            <p class="text-muted mb-1">
-                                                <?
-                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
-                                                    $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
-                                                    echo human_filesize($size, 3);
-                                                }
-
-                                                ?>
-
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        <? } ?>
-                    </div>
-
                     <? if ($files) {
                         foreach ($files as $file) {
                             ?>
                             <div class="col-md-6 mt-4">
-                                <h5 class="font-weight-bold ">Ilova faylar</h5>
+                                <h5 class="font-weight-bold card-title">Ilova faylar</h5>
                                 <div class="card">
                                     <div class="card-body ">
                                         <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
@@ -214,8 +182,10 @@ if (!empty($model->attach)) {
                                             } ?>
                                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                                 <a target="_blank" href="/frontend<?= $file->path ?>"
-                                                   class="mb-0"> <i class="fa fa-cloud-download mr-1"></i>
+                                                   class="mb-0 text-warning font-weight-bold"> <i
+                                                            class="fa fa-cloud-download mr-1"></i>
                                                     Ko'chirib olish</a>
+
                                                 <p class="text-muted mb-1">
                                                     <?
                                                     if (file_exists(Yii::getAlias('@frontend') . $file->path)) {
@@ -239,6 +209,50 @@ if (!empty($model->attach)) {
 
             </div> <!--end row-->
         </div> <!--end card body-->
+        <? if ($model->lawyer_conclusion_path) { ?>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="font-weight-bold card-title">Yurist biriktirtan xujjat</h5>
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mt-3">
+                            <div class="card">
+                                <div class="card-body ">
+                                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                        <?
+                                        echo Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
+                                            ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
+                                        ?>
+                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+
+                                            <a target="_blank"
+                                               href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
+                                               class="mb-0 text-warning font-weight-bold ">
+                                                <i class="fa fa-cloud-download mr-1"></i>
+                                                Ko'chirib olish</a>
+                                            <p class="text-muted mb-1">
+                                                <?
+                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
+                                                    $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
+                                                    echo human_filesize($size, 3);
+                                                }
+
+                                                ?>
+
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <? } ?>
 
     </div>
 <?php Modal::begin([

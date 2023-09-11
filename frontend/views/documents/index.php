@@ -109,7 +109,7 @@ $this->title = 'Documents';
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '120',
+//                        'width' => '120',
                         'multiple' => true
                     ],
                 ],
@@ -133,7 +133,7 @@ $this->title = 'Documents';
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '120',
+//                        'width' => '120',
                         'multiple' => true
                     ],
                 ],
@@ -180,7 +180,7 @@ $this->title = 'Documents';
                     'options' => ['prompt' => ''],
                     'pluginOptions' => [
                         'allowClear' => true,
-                        'width' => '180',
+//                        'width' => '180',
                         'multiple' => true
                     ],
                 ],

@@ -142,7 +142,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                                 'asPopover' => true,
                                 'displayValue' => $model->conclusion_uz,
                                 'format' => Editable::FORMAT_BUTTON,
-                                'editableValueOptions'=>['class'=>'text-danger'],
+                                'editableValueOptions' => ['class' => 'text-danger'],
                                 'inputType' => Editable::INPUT_TEXTAREA,
                                 'value' => $model->conclusion_uz,
                                 'header' => 'Yurist xulosa',
@@ -173,8 +173,8 @@ if (!empty($model->lawyer_conclusion_path)) {
 
                 <hr>
 
-                <div class="col-md-6 mt-4">
-                    <h5 class="font-weight-bold ">Asosiy fayl</h5>
+                <div class="col-md-4 mt-4">
+                    <h5 class="font-weight-bold card-title">Asosiy fayl</h5>
                     <div class="card">
                         <div class="card-body ">
                             <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
@@ -191,7 +191,6 @@ if (!empty($model->lawyer_conclusion_path)) {
                                         if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->path)) {
                                             $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
                                             echo human_filesize($size, 3);
-
                                         }
                                         ?>
                                     </p>
@@ -201,43 +200,12 @@ if (!empty($model->lawyer_conclusion_path)) {
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mt-4">
-                    <? if ($model->lawyer_conclusion_path) { ?>
-                        <h5 class="font-weight-bold">Yurist biriktirtan xujjat</h5>
-                        <div class="card">
-                            <div class="card-body ">
-                                <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                    <?
-                                    echo Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
-                                        ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
-                                    ?>
-                                    <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                        <a target="_blank"
-                                           href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
-                                           class="mb-0 text-warning font-weight-bold">
-                                            <i class="fa fa-cloud-download mr-1"></i>
-                                            Ko'chirib olish</a>
-                                        <p class="text-muted mb-1">
-                                            <?
-                                            if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
-                                                $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
-                                                echo human_filesize($size, 3);
-                                            }
-                                            ?>
 
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    <? } ?>
-                </div>
                 <? if ($files) {
                     foreach ($files as $file) {
                         ?>
-                        <div class="col-md-6 mt-4">
-                            <h5 class="font-weight-bold ">Ilova faylar</h5>
+                        <div class="col-md-4 mt-4">
+                            <h5 class="font-weight-bold card-title ">Ilova faylar</h5>
                             <div class="card">
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
@@ -253,8 +221,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                                                 <?
 
                                                 if (file_exists(Yii::getAlias('@frontend') . '/web' . $file->path)) {
-
-                                                    $size = filesize(Yii::getAlias('@frontend') . $file->path);
+                                                    $size = filesize(Yii::getAlias('@frontend') . '/web' . $file->path);
                                                     echo human_filesize($size, 3);
                                                 }
                                                 ?>
@@ -270,7 +237,6 @@ if (!empty($model->lawyer_conclusion_path)) {
                 } ?>
 
                 <div class="col-md-12 mt-4">
-
                     <?
                     if (!$model->category) {
                         echo FileInput::widget(['name' => 'lawyer_conclusion_path',
@@ -309,17 +275,17 @@ if (!empty($model->lawyer_conclusion_path)) {
                                 ],
                             ]]);
                     }
-
                     ?>
                 </div>
 
             </div>
+            <!--end row-->
+
 
             <?
-
             if ($model->category && !$model->conclusion_uz) {
                 $form = ActiveForm::begin();
-                if ($model->status == MainDocument::EDITED||$model->status == MainDocument::SIGNING) {
+                if ($model->status == MainDocument::EDITED || $model->status == MainDocument::SIGNING) {
 
                     echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa')
                     ?>
@@ -332,6 +298,45 @@ if (!empty($model->lawyer_conclusion_path)) {
             } ?>
         </div> <!--end row-->
     </div> <!--end card body-->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="font-weight-bold card-title">Yurist biriktirtan xujjat(Xulosa)</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-4 mt-3">
+                    <? if ($model->lawyer_conclusion_path) { ?>
+                        <div class="card">
+                            <div class="card-body ">
+                                <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                    <?
+                                    echo Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                        ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
+                                    ?>
+                                    <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                        <a target="_blank"
+                                           href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
+                                           class="mb-0 text-warning font-weight-bold">
+                                            <i class="fa fa-cloud-download mr-1"></i>
+                                            Ko'chirib olish</a>
+                                        <p class="text-muted mb-1">
+                                            <?
+                                            if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
+                                                $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
+                                                echo human_filesize($size, 3);
+                                            }
+                                            ?>
+
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    <? } ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
