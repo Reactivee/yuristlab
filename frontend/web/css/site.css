@@ -2,6 +2,11 @@
     overflow: hidden;
 }
 
+.img-lg {
+    width: 400px;
+    height: 100%;
+}
+
 /*Login page*/
 .login_wrapper {
     padding: 100px 200px;
@@ -59,8 +64,13 @@
     height: 100%;
 }
 
+.tab-content {
+    border: none;
+    padding: 0;
+}
+
 .tab-content > .active {
-    display: flex;
+    /*display: flex;*/
 }
 
 .new_doc_icon {
@@ -94,9 +104,11 @@
     display: flex;
     overflow: hidden;
 }
-.card_stat .card-body{
+
+.card_stat .card-body {
     /*padding: 40px 0;*/
 }
+
 .page-item span {
     position: relative;
     display: block;
@@ -417,6 +429,19 @@
     margin: 0 auto;
 }
 
+/*User page*/
+.user_tab .nav-item .nav-link{
+    margin-bottom: 10px;
+    background: #e6e9ed;
+    color: #434a54;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+.user_tab .nav-item .nav-link.active{
+    background: #410060;
+    color: #ffffff;
+}
 @media only screen and (max-width: 990px) {
     .our-team {
         margin-bottom: 30px;

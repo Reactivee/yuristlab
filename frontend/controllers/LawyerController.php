@@ -8,6 +8,7 @@ use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 use common\models\Employ;
 use common\models\EmploySearch;
+use common\models\forms\UserForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -148,13 +149,23 @@ class LawyerController extends Controller
     {
 
         $search = Employ::find()->where(['first_name' => $slug])->one();
-
+        $form = new UserForm();
+//        d($form);
+        if (Yii::$app->request->post()) {
+            $form->load(Yii::$app->request->post());
+            $form->changeUserPassword();
+//            dd(Yii::$app->request->post());
+        }
 
         return $this->render('team_profile', [
             'models' => $search,
+            'user_form' => $form
         ]);
+    }
 
-
+    public function actionUserdata()
+    {
+        dd(Yii::$app->request->post());
     }
 
 

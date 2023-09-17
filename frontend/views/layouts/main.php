@@ -53,36 +53,44 @@ AppAsset::register($this);
 
 
         <div class="container-fluid page-body-wrapper  overflow-hidden">
+<!--            <div class="row">-->
+                <!--                <div class="col-3">-->
+                <?= $this->render('left') ?>
 
-            <?= $this->render('left') ?>
+                <!--                </div>-->
+                <!--                <div class="col-9">-->
+                <div class="main-panel">
+                    <div class="content-wrapper p-0">
+                        <?= Alert::widget() ?>
 
-            <div class="main-panel">
-                <div class="content-wrapper p-0">
-                    <?= Alert::widget() ?>
+                        <div class="d-sm-flex justify-content-between align-items-center border-bottom">
 
-                    <div class="d-sm-flex justify-content-between align-items-center border-bottom">
+                            <ul class="nav nav-tabs home-tab" role="tablist">
+                                <? foreach (MainDocument::getStatusNameArr() as $key => $item) { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link <?= $status_id == $key ? 'active' : '' ?>"
+                                           id="Dashboards-tab"
+                                           href="/documents/all/?status=<?= $key ?>"
+                                           aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
+                                            <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>"><?= MainDocument::getByStatusDocuments($key) ?? '' ?></span>
+                                        </a>
+                                    </li>
 
-                        <ul class="nav nav-tabs home-tab" role="tablist">
-                            <? foreach (MainDocument::getStatusNameArr() as $key => $item) { ?>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= $status_id == $key ? 'active' : '' ?>" id="Dashboards-tab"
-                                       href="/documents/all/?status=<?= $key ?>"
-                                       aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
-                                        <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>"><?= MainDocument::getByStatusDocuments($key) ?? '' ?></span>
-                                    </a>
-                                </li>
+                                <? } ?>
+                            </ul>
 
-                            <? } ?>
-                        </ul>
 
+                        </div>
+
+                        <?= $content ?>
 
                     </div>
-
-                    <?= $content ?>
-
+                    <!-- content-wrapper ends -->
                 </div>
-                <!-- content-wrapper ends -->
-            </div>
+
+                <!--                </div>-->
+
+<!--            </div>-->
         </div>
     </div>
 

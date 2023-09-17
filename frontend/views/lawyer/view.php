@@ -3,12 +3,10 @@
 use common\models\documents\MainDocument;
 
 use kartik\editable\Editable;
-use kartik\editors\Summernote;
 use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var common\models\documents\MainDocument $model */

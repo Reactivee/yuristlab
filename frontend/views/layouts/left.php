@@ -13,7 +13,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 <nav class="sidebar sidebar-offcanvas position-relative" id="sidebar">
     <div class="particles-js " id="particles-js"></div>
 
-    <div class="w-100  siderbar_bg"  ></div>
+    <div class="w-100  siderbar_bg"></div>
 
     <div class="dropdown sidebar-profile-dropdown dropdown_group">
         <!--                        --><? // //
@@ -120,19 +120,19 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
         <? } ?>
         <? if (\backend\modules\admin\components\Helper::checkRoute('/director/')) { ?>
 
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-boss" aria-expanded="false"
-               aria-controls="ui-boss">
-                <i class="mdi mdi-worker menu-icon"></i>
-                <span class="menu-title">Rahbar</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-boss">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="/director">Index</a></li>
-                </ul>
-            </div>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-boss" aria-expanded="false"
+                   aria-controls="ui-boss">
+                    <i class="mdi mdi-worker menu-icon"></i>
+                    <span class="menu-title">Rahbar</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-boss">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/director">Index</a></li>
+                    </ul>
+                </div>
+            </li>
         <? } ?>
 
         <li class="nav-item">
@@ -179,7 +179,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             <div class="collapse" id="ui-about">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"><a class="nav-link" href="/about">Biz haqimizda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/about/">Bizning jamoa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/lawyer/lawyers/">Bizning jamoa</a></li>
                 </ul>
             </div>
 
