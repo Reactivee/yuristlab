@@ -10,7 +10,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 ?>
 
 <!-- partial:partials/_sidebar.html -->
-<nav class="sidebar sidebar-offcanvas position-relative" id="sidebar">
+<nav class="sidebar sidebar-offcanvas position-fixed" id="sidebar">
     <div class="particles-js " id="particles-js"></div>
 
     <div class="w-100  siderbar_bg"></div>
@@ -182,7 +182,6 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                     <li class="nav-item"><a class="nav-link" href="/lawyer/lawyers/">Bizning jamoa</a></li>
                 </ul>
             </div>
-
         </li>
 
     </ul>
