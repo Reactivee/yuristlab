@@ -317,19 +317,17 @@ class DocumentsController extends Controller
                 TelegramBotErrorSender::widget(['error' => $response->content, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
             }
-//
         }
         return $this->render('doc-edit', [
             'model' => $model,
             'doc' => $doc->id
         ]);
-
     }
 
     public function actionDrive($id, $path)
     {
 
-        $main_doc = MainDocument::find()->where(['path' => '/uploads/docs/' . $path.'.docx'])->one();
+        $main_doc = MainDocument::find()->where(['path' => '/uploads/docs/' . $path . '.docx'])->one();
 
         $fileCredentialsPath = Yii::getAlias('@api') . '/config/creds.json';
 
@@ -449,8 +447,6 @@ class DocumentsController extends Controller
         return $this->render('doc-view', [
             'model' => $doc
         ]);
-
-
     }
 
     public function actionDocTemplate_old($id)

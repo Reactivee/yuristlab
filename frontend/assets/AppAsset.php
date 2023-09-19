@@ -12,9 +12,8 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-//        'vendors/font-awesome/css/font-awesome.min.css',
-
-        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css",
+//        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css",
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css',
         'vendors/jquery-toast-plugin/jquery.toast.min.css',
         'vendors/mdi/css/materialdesignicons.min.css',
         'vendors/css/vendor.bundle.base.css',

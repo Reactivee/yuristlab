@@ -85,7 +85,6 @@ if (!empty($model->attach)) {
                 <div class="row mb-3">
 
                     <div class="col-md-6">
-
                         <span class="font-weight-bold card-title">Xujjat bo'limi</span>
                         <p class="text-success font-weight-bold card-title">
                             <?= $model->group->name_uz ?>

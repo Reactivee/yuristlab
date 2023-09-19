@@ -22,7 +22,7 @@ if ($model->status == MainDocument::NEW) {
 
         <?= $form->field($model, 'path')->hiddenInput()->label(false) ?>
         <? if ($permit) { ?>
-            <button onclick="PlayLoader()" type="submit" class="btn btn-outline-primary btn-icon-text my-3">
+            <button type="submit" class="btn btn-outline-primary btn-icon-text my-3">
                 <i class="mdi mdi-file-check btn-icon-prepend"></i>Tahrirlash
             </button>
         <? } ?>

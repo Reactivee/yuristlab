@@ -2,7 +2,8 @@
 
 namespace common\models;
 
-use Yii;
+use common\models\Company;
+use common\models\User;
 use yii\helpers\ArrayHelper;
 
 /**

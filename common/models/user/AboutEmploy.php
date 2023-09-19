@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace common\models\user;
 
 use Yii;
 
@@ -15,6 +15,10 @@ use Yii;
  * @property int|null $key
  * @property string|null $text
  * @property int|null $status
+ * @property int|null $begin_date
+ * @property int|null $end_date
+ * @property string|null $text_ru
+ * @property string|null $text_uz
  */
 class AboutEmploy extends \yii\db\ActiveRecord
 {
@@ -32,9 +36,9 @@ class AboutEmploy extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'status'], 'integer'],
+            [['key', 'status', 'begin_date', 'end_date'], 'integer'],
             [['text'], 'string'],
-            [['name_uz', 'name_ru', 'icon', 'img'], 'string', 'max' => 255],
+            [['name_uz', 'name_ru', 'icon', 'img', 'text_ru', 'text_uz'], 'string', 'max' => 255],
         ];
     }
 
@@ -52,6 +56,10 @@ class AboutEmploy extends \yii\db\ActiveRecord
             'key' => 'Key',
             'text' => 'Text',
             'status' => 'Status',
+            'begin_date' => 'Begin Date',
+            'end_date' => 'End Date',
+            'text_ru' => 'Text Ru',
+            'text_uz' => 'Text Uz',
         ];
     }
 }

@@ -9,7 +9,11 @@ use common\models\documents\MainDocumentSearch;
 use common\models\Employ;
 use common\models\EmploySearch;
 use common\models\forms\UserForm;
+use common\widgets\TelegramBotErrorSender;
+use Google\Service\Drive;
 use Yii;
+use yii\helpers\Url;
+use yii\httpclient\Client;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -227,6 +231,119 @@ class LawyerController extends Controller
         }
 
         return false;
+    }
+
+    public function actionDocTemplate($id)
+    {
+
+        $doc = MainDocument::findOne($id);
+
+        if (!$doc->lawyer_conclusion_path) {
+            $templateFile = Yii::getAlias('@frontend') . '/web/uploads/templates/sud.docx';
+            $fileName = pathinfo($templateFile, PATHINFO_FILENAME);
+            $fileExt = pathinfo($templateFile, PATHINFO_EXTENSION);
+            $newName = $fileName . '-' . uniqid() . "." . $fileExt;
+            $content = file_get_contents($templateFile);
+            $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+
+            try {
+                $res_save = file_put_contents($savePathDocs, $content);
+
+                if ($res_save) {
+
+                    $doc->lawyer_conclusion_path = '/uploads/docs/' . $newName;
+                    $doc->save();
+
+                }
+            } catch (\Exception $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            Yii::$app->session->setFlash('success', 'Xujjat yuklandi');
+        }
+
+        return $this->render('doc-view', [
+            'model' => $doc
+        ]);
+    }
+
+    public function actionDocEdit()
+    {
+        $model = new MainDocument();
+        $doc = '';
+
+        if ($this->request->post()) {
+
+            $model->load($this->request->post());
+
+            $dir_path = Yii::getAlias('@frontend') . '/web';
+
+            $client = new Client();
+            $response = $client->createRequest()
+                ->setMethod('POST')
+                ->setUrl(Url::base('http') . '/api/docs/uploadnew')
+                ->addFile('file', $dir_path . $model->lawyer_conclusion_path)
+                ->send();
+
+            if ($response->isOk) {
+                $doc = json_decode($response->content);
+                TelegramBotErrorSender::widget(['error' => $response->content, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+            }
+
+        }
+        return $this->render('doc-edit', [
+            'model' => $model,
+            'doc' => $doc->id
+        ]);
+    }
+
+    public function actionDrive($id, $path)
+    {
+
+        $main_doc = MainDocument::find()->where(['lawyer_conclusion_path' => '/uploads/docs/' . $path . '.docx'])->one();
+
+        $fileCredentialsPath = Yii::getAlias('@api') . '/config/creds.json';
+
+        $savePathDocs = Yii::getAlias('@frontend') . '/web/uploads/docs/';
+        if (!file_exists($savePathDocs)) {
+            mkdir($savePathDocs, 0777, true);
+        }
+
+        $doc_id = $id;
+
+        TelegramBotErrorSender::widget(['error' => $doc_id, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        $client = new \Google\Client();
+        $client->setAuthConfig($fileCredentialsPath);
+        $client->addScope(Drive::DRIVE);
+        $client->setAccessType('offline');
+        $refreshToken = '1//09s88IcMbMVaZCgYIARAAGAkSNwF-L9IrW9GA0k0Z6S8zUWgyEujFVJc5flyDLS6yHNtUqU4OTe78NoLRu2Lvms4_MxaDLX_m7o8';
+        $accessToken = $client->fetchAccessTokenWithRefreshToken($refreshToken);
+        $client->setAccessToken($accessToken);
+
+        try {
+            $service = new Drive($client);
+            $savePathFromDrive = $savePathDocs . $path . '.docx';
+            $exportMimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            $exportFileContent = $service->files->export($doc_id, $exportMimeType, array('alt' => 'media'));
+            $fileContent = $exportFileContent->getBody()->getContents();
+
+        } catch (\Exception $e) {
+            TelegramBotErrorSender::widget(['error' => $e, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        }
+
+        // Save the file to a local directory
+        $localFilePath = $savePathFromDrive;
+        $res = file_put_contents($localFilePath, $fileContent);
+        if ($res) {
+            Yii::$app->session->setFlash('success', "Xujjat Saqlandi");
+            return $this->redirect(['/lawyer/view/', 'id' => $main_doc->id]);
+        }
+        TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        Yii::$app->session->setFlash('error', "Google bilan xatolik");
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
 }

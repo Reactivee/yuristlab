@@ -41,23 +41,13 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
             <div class="left_col scroll-view">
 
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="/home" class="site_title"><i class="fa fa-paw"></i> <span>Deniz Homes</span></a>
+                    <a href="/home" class="site_title"><i class="fa fa-paw"></i> <span>Yuristlab</span></a>
                 </div>
 
 
                 <div class="clearfix"></div>
 
-                <!-- menu prile quick info -->
-                <div class="profile">
-                    <div class="profile_pic">
-                        <!--                        <img src="http://placehold.it/128x128" alt="..." class="img-circle profile_img">-->
-                    </div>
-                    <!--                    <div class="profile_info">-->
-                    <!--                        <span>Welcome,</span>-->
-                    <!--                        <h2>John Doe</h2>-->
-                    <!--                    </div>-->
-                </div>
-                <!-- /menu prile quick info -->
+
 
                 <br/>
 
@@ -80,10 +70,8 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                                         "items" => [
                                             ['label' => 'Laws Category', 'icon' => 'text_format', 'url' => ['/law-news']],
                                             ['label' => 'Laws Content', 'icon' => 'text_format', 'url' => ['/law-content']],
-
                                         ],
                                     ],
-//                                    ['label' => 'Attached', 'icon' => 'files-o', 'url' => ['/attached-document']],
                                     ['label' => 'Category', 'icon' => 'files-o', 'url' => ['/category-documents']],
                                     ['label' => 'Group', 'icon' => 'th-large', 'url' => ['/group-documents']],
 //                                    ['label' => 'Main Doc', 'icon' => 'files-o', 'url' => ['/main-document']],
@@ -91,27 +79,21 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
 
                                     ['label' => 'Recommend category', 'icon' => 'files-o', 'url' => ['/category-recommendation']],
                                     ['label' => 'Recommend content', 'icon' => 'files-o', 'url' => ['/content-recommendation']],
-                                    ['label' => 'Company', 'icon' => 'text_format', 'url' => ['/company']],
                                     ['label' => 'Jobs', 'icon' => 'text_format', 'url' => ['/jobs']],
                                     ['label' => 'Get job', 'icon' => 'text_format', 'url' => ['/get-job']],
-                                    ['label' => 'Employ', 'icon' => 'text_format', 'url' => ['/employ']],
 
-//                                    ["label" => "Content", "url" => "#", "icon" => "files-o",
-//                                        "items" => [
-////                                            ["label" => "Top Banner", "url" => ["/top-banner"], "icon" => "file-image-o"],
-//                                            ["label" => "Advantages", "url" => ["/advantages"], "icon" => "th-large"],
-//                                            ["label" => "About", "url" => ["/about"]],
-//                                            ["label" => "About in page", "url" => ["/about-in"]],
-//                                            ["label" => "Team", "url" => '#', "icon" => "users",
-//                                                "items" => [
-//                                                    ["label" => "Team", "url" => ["/team"], "icon" => "users",],
-//                                                    ["label" => "Team Languages", "url" => ["/team-languages"], "icon" => "language"],
-//                                                ],
-//                                            ],
-//                                            ["label" => "Service", "url" => ["/services"], "icon" => "key"],
-//                                            ["label" => "Citizen", "url" => ["/citizen/update?id=1"], "icon" => "user"],
-//                                        ],
-//                                    ],
+                                    ["label" => "User info", "url" => "#", "icon" => "user",
+                                        "items" => [
+                                            ['label' => 'Company', 'icon' => 'text_format', 'url' => ['/company']],
+                                            ['label' => 'Xodimlar', 'icon' => 'text_format', 'url' => ['/employ']],
+                                            ['label' => 'Xodimlar haqida', 'icon' => 'text_format', 'url' => ['/about-employ']],
+                                            ['label' => 'Hobby', 'icon' => 'text_format', 'url' => ['/hobbies']],
+                                            ['label' => 'Tarmoqlar', 'icon' => 'text_format', 'url' => ['/social-employ']],
+
+
+                                        ],
+                                    ],
+
 
                                 ],
                             ]

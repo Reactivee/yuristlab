@@ -66,9 +66,12 @@ if (!empty($model->attach)) {
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'ml-2 btn btn-outline-primary btn-icon-text']); ?>
                 <? } ?>
                 <?
+
                 if (!$model->category && $model->status == MainDocument::BOSS_SIGNED && $model->step != MainDocument::STEP_BOSS_FINISH) {
                     echo Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']);
-                } ?>
+                }
+                ?>
+
                 <?
                 if (!$model->category && $model->status == MainDocument::NEW) {
                     echo Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']);
@@ -78,9 +81,11 @@ if (!empty($model->attach)) {
                     <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
                 <? } ?>
 
-                <? if (!$model->signed_lawyer && $model->status == MainDocument::BOSS_SIGNED && $model->step != MainDocument::STEP_BOSS_FINISH) { ?>
-                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
-                <? } ?>
+                <?
+//
+//                if (!$model->signed_lawyer && $model->status == MainDocument::BOSS_SIGNED) { ?>
+<!--                    --><?//= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
+<!--                --><?// } ?>
                 <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
                     <!--                    --><? //= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'ml-2 btn btn-outline-primary btn-icon-text']); ?>
                     <?= Html::a(' <i class="fas fa-trash"></i> O\'chirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2 ']) ?>
@@ -179,7 +184,7 @@ if (!empty($model->attach)) {
                         </div>
 
                         <div class="col-md-4 mt-4">
-                            <h5 class="font-weight-bold card-title  ">Asosiy xujjat</h5>
+                            <h5 class="font-weight-bold card-title">Asosiy xujjat</h5>
                             <div class="card">
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
@@ -203,6 +208,7 @@ if (!empty($model->attach)) {
                                 </div>
                             </div>
                         </div>
+
                         <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
                             <div class="col-md-12 mt-4">
                                 <h5 class="font-weight-bold card-title">Ilovalar</h5>

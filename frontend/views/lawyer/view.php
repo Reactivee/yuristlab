@@ -177,7 +177,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                         <div class="card-body ">
                             <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                 <? if ($model->path) { ?>
-                                    <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                    <?= Html::a('<img style="width: 90px" src="/images/main-file.png" alt="">',
                                         ['/documents/doc-template', 'id' => $model->id], ['target' => '_blank']);
                                 } ?>
                                 <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
@@ -208,7 +208,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                         <? if ($model->path) { ?>
-                                            <?= Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
+                                            <?= Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
                                                 ['/frontend' . $file->path], ['target' => '_blank']);
                                         } ?>
                                         <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
@@ -234,48 +234,6 @@ if (!empty($model->lawyer_conclusion_path)) {
                     }
                 } ?>
 
-                <div class="col-md-12 mt-4">
-                    <?
-                    if (!$model->category) {
-                        echo FileInput::widget(['name' => 'lawyer_conclusion_path',
-                            'id' => 'file_input',
-                            'options' => ['multiple' => true],
-                            'pluginOptions' => [
-                                'allowedFileExtensions' => ["docx"],
-                                'uploadUrl' => Url::to(['upload-conclusion', 'id' => $model->id]),
-                                'deleteUrl' => Url::to(['delete-conclusion']),
-                                'showCancel' => false,
-                                'showCaption' => false,
-                                'showUpload' => false,
-                                'maxFileSize' => 2000,
-                                'maxFileCount' => 1,
-                                'overwriteInitial' => false,
-                                'initialPreview' => $initialPreviewDocs,
-                                'initialPreviewAsData' => true,
-                                'initialPreviewDownloadUrl' => Url::base('http') . '/frontend/web' . $model->lawyer_conclusion_path,
-                                'allowedPreviewTypes' => false, // set to empty, null or false to disable preview for all types
-                                'initialPreviewConfig' => $initialPreviewConfigDocs,
-                                'browseClass' => 'btn btn-success',
-                                'uploadClass' => 'btn btn-info',
-                                'removeClass' => 'btn btn-danger',
-                                'removeIcon' => '<i class="fas fa-trash"></i> ',
-                                'fileActionSettings' => ['removeIcon' => '<i class="fa fa-trash"></i>',
-                                    'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-                                    'downloadIcon' => '<i class="fa fa-download" aria-hidden="true"></i>',
-                                    'zoomIcon' => '<i class="fa fa-search-plus"></i>',
-                                    'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',
-                                ],
-                                'previewFileIconSettings' => [
-                                    'docx' => '<i class="fas fa-file-word"></i>',
-                                    'pdf' => '<i class="fas fa-file-pdf"></i>',
-                                    'xls' => '<i class="fas fa-file-word"></i>',
-                                    'doc' => '<i class="fas fa-file-word"></i>',
-                                ],
-                            ]]);
-                    }
-                    ?>
-                </div>
-
             </div>
             <!--end row-->
 
@@ -284,9 +242,7 @@ if (!empty($model->lawyer_conclusion_path)) {
             if ($model->category && !$model->conclusion_uz) {
                 $form = ActiveForm::begin();
                 if ($model->status == MainDocument::EDITED || $model->status == MainDocument::SIGNING) {
-
-                    echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa')
-                    ?>
+                    echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa') ?>
                     <div class="form-group">
                         <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
                     </div>
@@ -298,7 +254,7 @@ if (!empty($model->lawyer_conclusion_path)) {
     </div> <!--end card body-->
     <div class="card mt-4">
         <div class="card-body">
-            <h5 class="font-weight-bold card-title">Yurist biriktirtan xujjat(Xulosa)</h5>
+            <h5 class="font-weight-bold card-title">Yurist biriktirtan xujjat (Xulosa)</h5>
             <hr>
             <div class="row">
                 <div class="col-md-4 mt-3">
@@ -307,7 +263,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                             <div class="card-body ">
                                 <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                     <?
-                                    echo Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                    echo Html::a('<img style="width: 90px" src="/images/main-file.png" alt="">',
                                         ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
                                     ?>
                                     <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
@@ -317,21 +273,66 @@ if (!empty($model->lawyer_conclusion_path)) {
                                             <i class="fa fa-cloud-download mr-1"></i>
                                             Ko'chirib olish</a>
                                         <p class="text-muted mb-1">
-                                            <?
-                                            if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
+                                            <? if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
                                                 $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
                                                 echo human_filesize($size, 3);
                                             }
                                             ?>
-
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     <? } ?>
+                    <? if ($model->status == MainDocument::SIGNING) {
+                        echo Html::a('<i class="mdi mdi-file-document mr-2"></i> Davo ariza biriktirish',
+                            ['/lawyer/doc-template', 'id' => $model->id],
+                            ['class' => 'btn btn-primary mt-3']) ?>
+
+                        <!--                        --><? // if (!$model->category) {
+//                            echo FileInput::widget(['name' => 'lawyer_conclusion_path',
+//                                'id' => 'file_input',
+//                                'options' => ['multiple' => true],
+//                                'pluginOptions' => [
+//                                    'allowedFileExtensions' => ["docx"],
+//                                    'uploadUrl' => Url::to(['upload-conclusion', 'id' => $model->id]),
+//                                    'deleteUrl' => Url::to(['delete-conclusion']),
+//                                    'showCancel' => false,
+//                                    'showCaption' => false,
+//                                    'showUpload' => false,
+//                                    'maxFileSize' => 2000,
+//                                    'maxFileCount' => 1,
+//                                    'overwriteInitial' => false,
+//                                    'initialPreview' => $initialPreviewDocs,
+//                                    'initialPreviewAsData' => true,
+//                                    'initialPreviewDownloadUrl' => Url::base('http') . '/frontend/web' . $model->lawyer_conclusion_path,
+//                                    'allowedPreviewTypes' => false, // set to empty, null or false to disable preview for all types
+//                                    'initialPreviewConfig' => $initialPreviewConfigDocs,
+//                                    'browseClass' => 'btn btn-success',
+//                                    'uploadClass' => 'btn btn-info',
+//                                    'removeClass' => 'btn btn-danger',
+//                                    'removeIcon' => '<i class="fas fa-trash"></i> ',
+//                                    'fileActionSettings' => ['removeIcon' => '<i class="fa fa-trash"></i>',
+//                                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
+//                                        'downloadIcon' => '<i class="fa fa-download" aria-hidden="true"></i>',
+//                                        'zoomIcon' => '<i class="fa fa-search-plus"></i>',
+//                                        'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',
+//                                    ],
+//                                    'previewFileIconSettings' => [
+//                                        'docx' => '<i class="fas fa-file-word"></i>',
+//                                        'pdf' => '<i class="fas fa-file-pdf"></i>',
+//                                        'xls' => '<i class="fas fa-file-word"></i>',
+//                                        'doc' => '<i class="fas fa-file-word"></i>',
+//                                    ],
+//                                ]]);
+//                        }
+//                        ?>
+
+                    <? } ?>
+
+
                 </div>
+
             </div>
         </div>
     </div>

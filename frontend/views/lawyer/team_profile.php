@@ -34,7 +34,7 @@ use yii\bootstrap4\Html;
             </div>
 
             <div class="d-flex align-items-center mr-4">
-                <i class="mdi  mdi-worker icon-md"></i>
+                <i class="mdi mdi mdi-account icon-md"></i>
                 <h4 class=" mr-1 card-title mt-2">Lavozim:</h4>
                 <div class="d-flex align-items-center">
                     <h5 class=" p-0 mt-1 text-muted">Yurist</h5>
