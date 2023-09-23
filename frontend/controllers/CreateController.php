@@ -101,7 +101,7 @@ class CreateController extends Controller
 
 //            $fileName = pathinfo($model->path, PATHINFO_FILENAME);
                 $fileExt = pathinfo($model->path, PATHINFO_EXTENSION);
-                $newName = $model->code_document . $generateName . '.' . $fileExt;
+                $newName = $model->code_document . $generateName . '.docx' ;
                 $savePathDocs = $folder . $newName;
 
                 try {
