@@ -27,7 +27,7 @@ $permit = false;
 
         <?php
         echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
-            'url' => $domen . $model->path,//url на ваш документ
+            'url' => $domen . $model->lawyer_conclusion_path,//url на ваш документ
             'width' => '100%',
             'height' => '900px',
             //https://geektimes.ru/post/111647/
