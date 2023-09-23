@@ -328,6 +328,8 @@ class DocumentsController extends Controller
     {
 
         $main_doc = MainDocument::find()->where(['path' => '/uploads/docs/' . $path . '.docx'])->one();
+        if (!$main_doc)
+            $main_doc = MainDocument::find()->where(['path' => '/uploads/docs/' . $path . '.doc'])->one();
 
         $fileCredentialsPath = Yii::getAlias('@api') . '/config/creds.json';
 
