@@ -31,7 +31,7 @@ class SocialEmploy extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key'], 'integer'],
+            [['key','employ_id'], 'integer'],
             [['name_uz', 'name_ru', 'icon', 'img', 'link'], 'string', 'max' => 255],
         ];
     }

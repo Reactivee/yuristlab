@@ -1,7 +1,7 @@
 <?php
 
 use kartik\date\DatePicker;
-use kartik\datetime\DateTimePicker;
+
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -26,31 +26,35 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'key')->textInput() ?>
 
-    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'text')->textarea(['rows' => 6]);
 
-    <?php echo $form->field($model, 'begin_date')->widget(
-        DatePicker::className(), [
-            'name' => 'begin_date',
-            'type' => DatePicker::TYPE_COMPONENT_APPEND,
-            'value' => '23-Feb-1982',
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd-M-yyyy'
-            ]
-        ]
-    ) ?>
 
-    <?php echo $form->field($model, 'end_date')->widget(
-        DatePicker::className(), [
-            'name' => 'begin_date',
-            'type' => DatePicker::TYPE_COMPONENT_APPEND,
-            'value' => '23-Feb-1982',
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'dd-M-yyyy'
-            ]
-        ]
-    ) ?>
+    ?>
+    <?= $form->field($model, 'employ_id')->dropDownList($model->getEmploy()) ?>
+
+<!--    --><?php //echo $form->field($model, 'begin_date')->widget(
+//        DatePicker::className(), [
+//            'name' => 'begin_date',
+//            'type' => DatePicker::TYPE_COMPONENT_APPEND,
+//            'value' => '23-Feb-1982',
+//            'pluginOptions' => [
+//                'autoclose' => true,
+//                'format' => 'dd-M-yyyy'
+//            ]
+//        ]
+//    ) ?>
+
+<!--    --><?php //echo $form->field($model, 'end_date')->widget(
+//        DatePicker::className(), [
+//            'name' => 'begin_date',
+//            'type' => DatePicker::TYPE_COMPONENT_APPEND,
+//            'value' => '23-Feb-1982',
+//            'pluginOptions' => [
+//                'autoclose' => true,
+//                'format' => 'dd-M-yyyy'
+//            ]
+//        ]
+//    ) ?>
 
 
     <div class="form-group">

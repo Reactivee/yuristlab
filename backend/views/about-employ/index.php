@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'name_ru',
             'icon',
             'img',
+            'employ_id',
             //'key',
             //'text:ntext',
             //'status',

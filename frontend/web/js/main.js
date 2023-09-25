@@ -53,3 +53,4 @@ function PlayLoader() {
     let loader = document.querySelector('.preloader');
     loader.style.display = 'flex';
 }
+

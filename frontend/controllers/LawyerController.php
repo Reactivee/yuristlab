@@ -9,9 +9,12 @@ use common\models\documents\MainDocumentSearch;
 use common\models\Employ;
 use common\models\EmploySearch;
 use common\models\forms\UserForm;
+use common\models\user\AboutEmploy;
 use common\widgets\TelegramBotErrorSender;
 use Google\Service\Drive;
 use Yii;
+use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\httpclient\Client;
 use yii\web\Controller;
@@ -154,16 +157,18 @@ class LawyerController extends Controller
 
         $search = Employ::find()->where(['first_name' => $slug])->one();
         $form = new UserForm();
-//        d($form);
+        $about = AboutEmploy::find()->where(['employ_id' => $search->id])->all();
+        if (empty($about))
+            $about = [new AboutEmploy()];
         if (Yii::$app->request->post()) {
             $form->load(Yii::$app->request->post());
             $form->changeUserPassword();
-//            dd(Yii::$app->request->post());
         }
 
         return $this->render('team_profile', [
             'models' => $search,
-            'user_form' => $form
+            'user_form' => $form,
+            'about' => $about,
         ]);
     }
 
@@ -344,6 +349,44 @@ class LawyerController extends Controller
 
         Yii::$app->session->setFlash('error', "Google bilan xatolik");
         return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionAboutEmploy()
+    {
+        if (Yii::$app->request->post()) {
+            $posts = Yii::$app->request->post()['AboutEmploy'];
+            $employ_id = Yii::$app->user->identity->employ;
+
+            if (!$employ_id) return false;
+            $about = AboutEmploy::find()->where(['employ_id' => 3])->all();
+
+            $oldIDs = ArrayHelper::map($about, 'id', 'id');
+
+            Model::loadMultiple($about, Yii::$app->request->post());
+            $deleted = AboutEmploy::deleteAll(['id' => $oldIDs]);
+
+            foreach ($posts as $key =>   $item) {
+                if(isset($item['name_uz'])){
+                    $new_info = new AboutEmploy();
+
+                    $new_info->key = $item->key;
+                    $new_info['name_uz'] = $item['name_uz'];
+                    $new_info['text_uz'] = $item['text_uz'];
+                    $new_info->employ_id = 3;
+                    $new_info->save();
+                }
+
+            }
+            Yii::$app->session->setFlash('success', 'Saqlandi');
+            return $this->redirect(Yii::$app->request->referrer);
+
+
+//
+//            $post = Yii::$app->request->post();
+//            dd($post);
+
+        }
+
     }
 
 }

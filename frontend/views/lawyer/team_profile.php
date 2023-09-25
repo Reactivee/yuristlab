@@ -1,6 +1,8 @@
 <?php
 /** @var \common\models\Employ $models */
 
+use kartik\date\DatePicker;
+use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
@@ -295,92 +297,186 @@ use yii\bootstrap4\Html;
             </div>
             <div class="tab-pane fade" id="editor">
                 <div class="card-body">
-                    <form class="form-sample">
-
-                        <div class="row">
-                            <h4 class="card-title">Xodim ish joylari</h4>
-
-                            <div class="col-md-12 work-form">
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label card-title">Ish joyi</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label card-title">Lavozimi</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group ">
-                                    <h4 class="card-title">Ishlagan davr</h4>
-                                    <div class="input-group input-daterange d-flex align-items-center">
-                                        <input type="text" class="form-control" value="2022-04-05">
-                                        <div class="input-group-addon mx-4">gacha</div>
-                                        <input type="text" class="form-control" value="2023-04-19">
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-warning text-right">+</button>
-                                <hr>
-
+                    <!--                    <form class="form-sample">-->
+                    <!---->
+                    <!--                        <div class="row">-->
+                    <!--                            <h4 class="card-title">Xodim ish joylari</h4>-->
+                    <!---->
+                    <!--                            <div class="col-md-12 work-form">-->
+                    <!--                                <div class="form-group row">-->
+                    <!--                                    <label class="col-sm-2 col-form-label card-title">Ish joyi</label>-->
+                    <!--                                    <div class="col-sm-10">-->
+                    <!--                                        <input type="text" class="form-control">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                <div class="form-group row">-->
+                    <!--                                    <label class="col-sm-2 col-form-label card-title">Lavozimi</label>-->
+                    <!--                                    <div class="col-sm-10">-->
+                    <!--                                        <input type="text" class="form-control">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!---->
+                    <!--                                <div class="form-group ">-->
+                    <!--                                    <h4 class="card-title">Ishlagan davr</h4>-->
+                    <!--                                    <div class="input-group input-daterange d-flex align-items-center">-->
+                    <!--                                        <input type="text" class="form-control" value="2022-04-05">-->
+                    <!--                                        <div class="input-group-addon mx-4">gacha</div>-->
+                    <!--                                        <input type="text" class="form-control" value="2023-04-19">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                <button type="button" class="btn btn-warning text-right">+</button>-->
+                    <!--                                <hr>-->
+                    <!---->
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                        </div>-->
+                    <!--                        <div class="row">-->
+                    <!--                            <h4 class="card-title">Ta'lim davri</h4>-->
+                    <!---->
+                    <!--                            <div class="col-md-12 work-form">-->
+                    <!--                                <div class="form-group row">-->
+                    <!--                                    <label class="col-sm-2 col-form-label card-title">O'quv muassasasi</label>-->
+                    <!--                                    <div class="col-sm-10">-->
+                    <!--                                        <input type="text" class="form-control">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                <div class="form-group row">-->
+                    <!--                                    <label class="col-sm-2 col-form-label card-title">Lavozimi</label>-->
+                    <!--                                    <div class="col-sm-10">-->
+                    <!--                                        <input type="text" class="form-control">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!---->
+                    <!--                                <div class="form-group ">-->
+                    <!--                                    <h4 class="card-title">O'quv davr</h4>-->
+                    <!--                                    <div class="input-group input-daterange d-flex align-items-center">-->
+                    <!--                                        <input type="text" class="form-control" value="2022-04-05">-->
+                    <!--                                        <div class="input-group-addon mx-4">gacha</div>-->
+                    <!--                                        <input type="text" class="form-control" value="2023-04-19">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                                <button type="button" class="btn btn-warning text-right">+</button>-->
+                    <!--                                <hr>-->
+                    <!---->
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                        </div>-->
+                    <!--                        <div class="row">-->
+                    <!--                            <h4 class="card-title">Xobbilar</h4>-->
+                    <!---->
+                    <!--                            <div class="col-md-12 work-form">-->
+                    <!--                                <div class="form-group row">-->
+                    <!--                                    <label class="col-sm-2 col-form-label card-title">O'quv muassasasi</label>-->
+                    <!--                                    <div class="col-sm-10">-->
+                    <!--                                        <input type="text" class="form-control">-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!---->
+                    <!--                                <button type="button" class="btn btn-warning text-right">+</button>-->
+                    <!--                                <hr>-->
+                    <!---->
+                    <!--                            </div>-->
+                    <!---->
+                    <!--                        </div>-->
+                    <!---->
+                    <!--                        --><? //= Html::button('Saqlash', ['class' => 'btn btn-success mt-2']) ?>
+                    <!--                    </form>-->
+                    <div class="col-md-12">
+                        <?php $dynform = ActiveForm::begin([
+                            'id' => 'dynamic-form',
+                            'action' => '/lawyer/about-employ'
+                        ]); ?>
+                        <?php DynamicFormWidget::begin([
+                            'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                            'widgetBody' => '.container-items', // required: css class selector
+                            'widgetItem' => '.item', // required: css class
+                            'limit' => 50, // the maximum times, an element can be cloned (default 999)
+                            'min' => 0, // 0 or 1 (default 1)
+                            'insertButton' => '.add-item', // css class
+                            'deleteButton' => '.remove-item', // css class
+                            'model' => $about[0],
+                            'formId' => 'dynamic-form',
+                            'formFields' => [
+                                'name_uz',
+                                'name_ru',
+                                'text_ru',
+                                'text_uz',
+                                'begin_date',
+                                'end_date',
+                            ],
+                        ]); ?>
+                        <!--Working place -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <button type="button" class="pull-right add-item btn btn-success">
+                                    <i class="fa fa-plus mr-2"></i>Faoliyat davri qo'shish
+                                </button>
+                                <div class="clearfix"></div>
                             </div>
+                            <div class="panel-body">
+                                <div class="container-items"><!-- widgetContainer -->
+                                    <?php foreach ($about as $i => $item) { ?>
+                                        <div class="item panel panel-default mt-2"><!-- widgetBody -->
+                                            <div class="panel-heading">
+                                                <span class="panel-title-working">Faoliyat davr: <?= ($i + 1) ?></span>
+                                                <div class="pull-right">
+                                                    <button type="button" class="remove-item btn btn-danger btn-xs">
+                                                        <i class="fa fa-minus"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
 
-                        </div>
-                        <div class="row">
-                            <h4 class="card-title">Ta'lim davri</h4>
+                                            <div class="panel-body">
+                                                <?php if (!$item->isNewRecord) {
+                                                    echo Html::activeHiddenInput($item, "[{$i}]id");
+                                                }
 
-                            <div class="col-md-12 work-form">
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label card-title">O'quv muassasasi</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control">
-                                    </div>
+                                                ?>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-sm-12">
+                                                        <?= $dynform->field($item, "[{$i}]key")
+                                                            ->dropdownList($item->getKeys())
+                                                            ->label('Yo\'nalish') ?>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <?= $dynform->field($item, "[{$i}]name_uz")
+                                                            ->textInput(['maxlength' => true, ['inputOptions' => [
+                                                                'autocomplete' => 'off']]])
+                                                            ->label('Ishlagan joy') ?>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <?= $dynform->field($item, "[{$i}]text_uz")
+                                                            ->textInput(['maxlength' => true, ['inputOptions' => [
+                                                                'autocomplete' => 'off']]])
+                                                            ->label('Lavozim') ?>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label card-title">Lavozimi</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="form-group ">
-                                    <h4 class="card-title">O'quv davr</h4>
-                                    <div class="input-group input-daterange d-flex align-items-center">
-                                        <input type="text" class="form-control" value="2022-04-05">
-                                        <div class="input-group-addon mx-4">gacha</div>
-                                        <input type="text" class="form-control" value="2023-04-19">
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-warning text-right">+</button>
-                                <hr>
-
                             </div>
-
-                        </div>
-                        <div class="row">
-                            <h4 class="card-title">Xobbilar</h4>
-
-                            <div class="col-md-12 work-form">
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label card-title">O'quv muassasasi</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-
-                                <button type="button" class="btn btn-warning text-right">+</button>
-                                <hr>
-
-                            </div>
-
                         </div>
 
-                        <?= Html::button('Saqlash', ['class' => 'btn btn-success mt-2']) ?>
+                        <?php DynamicFormWidget::end(); ?>
+                        <div class="col-sm-12 m-0 p-0">
+                            <?= $dynform->field($item, "text")
+                                ->textInput(['maxlength' => true, ['inputOptions' => [
+                                    'autocomplete' => 'off']]])
+                                ->label('Hobbilar') ?>
+                        </div>
+                        <div class="form-group">
+                            <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
+                        </div>
 
+                        <?php ActiveForm::end(); ?>
+                    </div>
                 </div>
             </div>
+
 
         </div>
 
@@ -544,3 +640,49 @@ use yii\bootstrap4\Html;
         <!--        </div>-->
     </div>
 </div>
+
+<?php
+
+$js2 = <<<JS
+jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+
+    jQuery(".dynamicform_wrapper .panel-title-working").each(function(index) {
+        jQuery(this).html("Faoliyat davr:" + (index + 1))
+    });
+    var inputs = item.getElementsByTagName("input");
+        for(var i = 0; i < inputs.length; i++) {
+    
+    inputs[i].removeAttribute("value");
+    inputs[i].setAttribute("value","");
+     }
+});
+
+jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
+    jQuery(".dynamicform_wrapper .panel-title-working").each(function(index) {
+        jQuery(this).html("Ta'lim olgan:" + (index + 1))
+    });
+});
+
+
+jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+  
+    jQuery(".dynamicform_wrapper .panel-title-edu").each(function(index) {
+        jQuery(this).html("Ta'lim olgan:" + (index + 1))
+    });
+    var inputs = item.getElementsByTagName("input");
+        for(var i = 0; i < inputs.length; i++) {
+    
+    inputs[i].removeAttribute("value");
+    inputs[i].setAttribute("value","");
+     }
+});
+
+jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
+    jQuery(".dynamicform_wrapper .panel-title-edu").each(function(index) {
+        jQuery(this).html("Ta'lim olgan:" + (index + 1))
+    });
+});
+JS;
+
+$this->registerJs($js2, 3);
+?>

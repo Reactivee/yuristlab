@@ -2,7 +2,9 @@
 
 namespace common\models\user;
 
+use common\models\Employ;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "about_employ".
@@ -22,6 +24,12 @@ use Yii;
  */
 class AboutEmploy extends \yii\db\ActiveRecord
 {
+
+
+    const EDU = 1;
+    const WORK_PLACE = 2;
+    const WORK_EXP = 3;
+
     /**
      * {@inheritdoc}
      */
@@ -36,9 +44,9 @@ class AboutEmploy extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'status', 'begin_date', 'end_date'], 'integer'],
-            [['text'], 'string'],
-            [['name_uz', 'name_ru', 'icon', 'img', 'text_ru', 'text_uz'], 'string', 'max' => 255],
+            [['status', 'employ_id'], 'integer'],
+            [['begin_date', 'end_date', 'key'], 'safe'],
+            [['name_uz', 'name_ru', 'icon', 'img', 'text_ru', 'text_uz', 'text'], 'safe'],
         ];
     }
 
@@ -61,5 +69,25 @@ class AboutEmploy extends \yii\db\ActiveRecord
             'text_ru' => 'Text Ru',
             'text_uz' => 'Text Uz',
         ];
+    }
+
+    public function getEmploy()
+    {
+        $emp = Employ::find()->all();
+
+        return ArrayHelper::map($emp, 'id', function ($model) {
+            return $model['first_name'] . '-' . $model['last_name'];
+        });
+    }
+
+    public function getKeys()
+    {
+        $keys = [
+            self::EDU => "Ta'lim muassalari",
+            self::WORK_EXP => 'Ish faoliyati',
+            self::WORK_PLACE => 'Ishlagan muassasalari',
+        ];
+
+        return $keys;
     }
 }

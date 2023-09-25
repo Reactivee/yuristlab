@@ -103,8 +103,6 @@ if (!empty($model->attach)) {
                                 <?= $model->type->name_uz; ?>
                             </p>
                         <? } ?>
-
-
                     </div>
 
                     <div class="col-md-6">
@@ -121,6 +119,9 @@ if (!empty($model->attach)) {
                         <p class="text-primary font-weight-bold card-title">
                             <?= MainDocument::getStatusNameColored($model->status); ?>
                         </p>
+                        <? if ($model->step == MainDocument::STEP_BOSS_FINISH) { ?>
+                            <span class="text-danger font-weight-bold">Jarayon yakunlangan !</span>
+                        <? } ?>
 
                     </div>
                     <div class="col-md-12">
@@ -159,10 +160,33 @@ if (!empty($model->attach)) {
                                                 $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
                                                 echo human_filesize($size, 3);
                                             }
-
                                             ?>
                                         </p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <? if ($model->step == MainDocument::STEP_BOSS_FINISH && $model->group_id == 4) ?>
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h4 class="card-title">Sud xulosa yuklash</h4>
+                                <div class="file-upload-wrapper">
+                                    <div id="fileuploader">
+                                        <div class="ajax-upload-dragdrop">
+                                            <div class="ajax-file-upload">yuklash
+                                                <form method="POST"
+                                                      action="YOUR_FILE_UPLOAD_URL"
+                                                      enctype="multipart/form-data" style="margin: 0px; padding: 0px;">
+                                                    <input type="file" id="ajax-upload-id-1695648520754" name="myfile[]"
+                                                           accept="*" multiple=""
+                                                           style="position: absolute; cursor: pointer; top: 0px; width: 100%; height: 100%; left: 0px; z-index: 100; opacity: 0;">
+                                                </form>
+                                            </div>
+                                            <span>Faylni yuklang</b></span></div>
+                                        <div></div>
+                                    </div>
+                                    <!--                                    <div class="ajax-file-upload-container"></div>-->
                                 </div>
                             </div>
                         </div>

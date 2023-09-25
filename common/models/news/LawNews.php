@@ -31,7 +31,7 @@ class LawNews extends \yii\db\ActiveRecord
         return [
             [['status'], 'required'],
             [['status'], 'integer'],
-            [['title_uz', 'title_ru', 'icon'], 'string', 'max' => 255],
+            [['title_uz', 'title_ru', 'icon','link'], 'string', 'max' => 255],
         ];
     }
 

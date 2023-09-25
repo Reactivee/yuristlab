@@ -33,7 +33,6 @@ class AppAsset extends AssetBundle
         'vendors/chart.js/Chart.min.js',
         'js/off-canvas.js',
         'js/formpickers.js',
-        'js/inputmask.js',
         'js/hoverable-collapse.js',
         'js/template.js',
         'js/settings.js',

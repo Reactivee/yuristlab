@@ -122,6 +122,9 @@ if (!empty($model->lawyer_conclusion_path)) {
                     <p class="text-primary font-weight-bold card-title">
                         <?= MainDocument::getStatusNameColored($model->status); ?>
                     </p>
+                    <? if ($model->step == MainDocument::STEP_BOSS_FINISH) { ?>
+                        <span class="text-danger font-weight-bold">Jarayon yakunlangan !</span>
+                    <? } ?>
 
                 </div>
                 <div class="col-md-12">
@@ -158,7 +161,6 @@ if (!empty($model->lawyer_conclusion_path)) {
                                 'options' => [
                                     'class' => 'form-control',
                                     'rows' => 5,
-//                                'style' => 'width:400px',
                                     'placeholder' => 'Yurist xulosasi...',
 
                                 ],
@@ -197,6 +199,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                             </div>
                         </div>
                     </div>
+                    <input type="">
                 </div>
 
                 <? if ($files) {

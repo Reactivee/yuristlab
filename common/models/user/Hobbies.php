@@ -30,6 +30,7 @@ class Hobbies extends \yii\db\ActiveRecord
     {
         return [
             [['name_uz', 'name_ru', 'icon', 'img'], 'string', 'max' => 255],
+            [['employ_id'], 'safe'],
         ];
     }
 
