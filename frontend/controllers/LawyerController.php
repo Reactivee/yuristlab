@@ -358,7 +358,7 @@ class LawyerController extends Controller
             $employ_id = Yii::$app->user->identity->employ;
 
             if (!$employ_id) return false;
-            $about = AboutEmploy::find()->where(['employ_id' => 3])->all();
+            $about = AboutEmploy::find()->where(['employ_id' => $employ_id->id])->all();
 
             $oldIDs = ArrayHelper::map($about, 'id', 'id');
 
@@ -372,7 +372,7 @@ class LawyerController extends Controller
                     $new_info->key = $item->key;
                     $new_info['name_uz'] = $item['name_uz'];
                     $new_info['text_uz'] = $item['text_uz'];
-                    $new_info->employ_id = 3;
+                    $new_info->employ_id = $employ_id->id;
                     $new_info->save();
                 }
 
