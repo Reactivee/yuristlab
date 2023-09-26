@@ -5,7 +5,7 @@ use kartik\date\DatePicker;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
-dd();
+
 ?>
 <div class="container-fluid p-4 wrapper_team_profile">
 
