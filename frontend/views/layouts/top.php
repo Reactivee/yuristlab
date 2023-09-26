@@ -47,7 +47,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 
         </ul>
         <? if (Yii::$app->user->identity->employ->id == Yii::$app->user->identity->employ->company->director) { ?>
-            <span class="font-weight-bold  ml-2">Firma: <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
+            <span class="font-weight-bold  ml-2">Tashkilot: <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
             <span class="font-weight-bold text-warning mx-2"> Lavozim:</span>
             <span class=" font-weight-bold text-success">( Rahbar )</span>
 

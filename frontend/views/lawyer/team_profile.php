@@ -5,7 +5,7 @@ use kartik\date\DatePicker;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
-
+dd();
 ?>
 <div class="container-fluid p-4 wrapper_team_profile">
 
@@ -95,13 +95,7 @@ use yii\bootstrap4\Html;
                         <i class="mdi  mdi-security text-danger ml-2"></i>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="editor-tab-vertical" data-toggle="tab" href="#editor" role="tab"
-                       aria-controls="contact-2" aria-selected="false">
-                        Ma'lumotlar o'zgaritish
-                        <i class="mdi mdi-table-edit text-success ml-2"></i>
-                    </a>
-                </li>
+
             </ul>
         </div>
 

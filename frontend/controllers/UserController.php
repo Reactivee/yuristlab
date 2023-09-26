@@ -4,10 +4,15 @@ namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
 use common\models\Employ;
+use common\models\forms\UserForm;
+use common\models\user\AboutEmploy;
+use common\models\user\SocialEmploy;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -91,11 +96,23 @@ class UserController extends Controller
 //        $fileContents = file_get_contents('http://yurist.loc/exam.doc');
 //        dd($fileContents);
 //        return $fileContents;
-        $search = Employ::find()->where(['id' => Yii::$app->user->identity->employ->id])->one();
+        $search = Yii::$app->user->identity->employ;
+        $form = new UserForm();
+        $about = AboutEmploy::find()->where(['employ_id' => $search->id])->all();
+        $social = SocialEmploy::find()->where(['employ_id' => $search->id])->all();
+        if (empty($about))
+            $about = [new AboutEmploy()];
 
+//        if (Yii::$app->request->post()) {
+//            $form->load(Yii::$app->request->post());
+//            $form->changeUserPassword();
+//        }
 
         return $this->render('index', [
-            'models' => $search
+            'models' => $search,
+            'user_form' => $form,
+            'about' => $about,
+            'social' => $social,
         ]);
     }
 
@@ -281,5 +298,44 @@ class UserController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionAboutEmploy()
+    {
+        if (Yii::$app->request->post()) {
+
+            $posts = Yii::$app->request->post()['AboutEmploy'];
+            $employ_id = Yii::$app->user->identity->employ;
+
+            if (!$employ_id) return false;
+
+            if ($posts) {
+                $about = AboutEmploy::find()->where(['employ_id' => $employ_id->id])->all();
+                $oldIDs = ArrayHelper::map($about, 'id', 'id');
+                $deleted = AboutEmploy::deleteAll(['id' => $oldIDs]);
+                foreach ($posts as $key => $item) {
+                    if (isset($item['name_uz'])) {
+                        $new_info = new AboutEmploy();
+                        $new_info->key = $item->key;
+                        $new_info['name_uz'] = $item['name_uz'];
+                        $new_info['text_uz'] = $item['text_uz'];
+                        $new_info->employ_id = $employ_id->id;
+                        $new_info->save();
+                    }
+                }
+            }
+            $hobby = Yii::$app->request->post()['Employ'];
+            $employ_id->hobby = $hobby['hobby'];
+            $employ_id->save();
+
+
+
+
+            Yii::$app->session->setFlash('success', 'Saqlandi');
+            return $this->redirect(Yii::$app->request->referrer);
+
+        }
+        return false;
+
     }
 }

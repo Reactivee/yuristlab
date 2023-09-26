@@ -35,6 +35,7 @@ use yii\widgets\ActiveForm;
     ) ?>
 
 
+    <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'desc')->textarea(['rows' => 6]) ?>
 

@@ -32,6 +32,7 @@ class Employ extends \yii\db\ActiveRecord
     const MODERATOR = 11;
     const EMPLOY = 12;
     const LAWYER = 13;
+
     /**
      * {@inheritdoc}
      */
@@ -48,8 +49,8 @@ class Employ extends \yii\db\ActiveRecord
     {
         return [
             [['status', 'user_id', 'type', 'company_id', 'role'], 'integer'],
-            [['desc'], 'string'],
-            [['first_name', 'last_name', 'key', 'phone', 'photo', 'login','passport','inn'], 'string', 'max' => 255],
+            [['desc', 'address'], 'string'],
+            [['first_name', 'last_name', 'key', 'phone', 'photo', 'login', 'passport', 'inn'], 'string', 'max' => 255],
         ];
     }
 
@@ -74,6 +75,7 @@ class Employ extends \yii\db\ActiveRecord
             'login' => 'Login',
         ];
     }
+
     public static function getRole($role = null)
     {
         $array = [
@@ -89,8 +91,8 @@ class Employ extends \yii\db\ActiveRecord
     public function getStatus($status = null)
     {
         $array = [
-            self::STATUS_ACTIVE => 'active',
-            self::STATUS_INACTIVE => 'No active',
+            self::STATUS_ACTIVE => 'Faol',
+            self::STATUS_INACTIVE => 'Nofaol',
         ];
 
         return $status ? $array[$status] : $array;
@@ -121,9 +123,8 @@ class Employ extends \yii\db\ActiveRecord
     public static function getLawyers()
     {
         $law = self::find()
-            ->select(["CONCAT(first_name, ' ', last_name) AS first_name",'id'])
+            ->select(["CONCAT(first_name, ' ', last_name) AS first_name", 'id'])
             ->where(['role' => Employ::LAWYER, 'status' => self::STATUS_ACTIVE])
-
             ->all();
 
         return ArrayHelper::map($law, 'id', 'first_name');

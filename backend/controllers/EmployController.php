@@ -88,9 +88,7 @@ class EmployController extends Controller
                         $generateName = Yii::$app->security->generateRandomString();
                         $path = $uploads_folder . $generateName . ".{$ext}";
                         $file->saveAs($path);
-
                         $model->photo = '/uploads/employ/' . $generateName . ".{$ext}";
-
                     }
                 }
 
@@ -133,10 +131,11 @@ class EmployController extends Controller
                     $generateName = Yii::$app->security->generateRandomString();
                     $path = $uploads_folder . $generateName . ".{$ext}";
                     $file->saveAs($path);
-
                     $model->photo = '/uploads/employ/' . $generateName . ".{$ext}";
-
                 }
+            } else {
+                $old_photo = $model->oldAttributes['photo'];
+                $model->photo = $old_photo;
             }
 
             $model->save();

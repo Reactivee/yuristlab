@@ -23,6 +23,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'key')->textInput() ?>
 
     <?= $form->field($model, 'link')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'employ_id')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
