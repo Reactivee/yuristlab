@@ -441,7 +441,7 @@ use yii\bootstrap4\Html;
 
                         <?php DynamicFormWidget::end(); ?>
 
-                        <div class="col-sm-12 m-0 p-0">
+                        <div class="col-sm-12 mt-3 p-0">
                             <?= $dynform->field($models, "hobby")
                                 ->textInput(['maxlength' => true, ['inputOptions' => [
                                     'autocomplete' => 'off']]])
