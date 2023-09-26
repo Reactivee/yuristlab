@@ -22,6 +22,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -97,8 +98,23 @@ class UserController extends Controller
 //        dd($fileContents);
 //        return $fileContents;
         $search = Yii::$app->user->identity->employ;
+
+        $post = Yii::$app->request->post();
+
+        if ($post['hasEditable']) {
+
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $search->address = $post['address'] ?? $search->address;
+            $search->desc = $post['desc'] ?? $search->desc;
+            if (!$search->save()) {
+                dd($search->error);
+            }
+
+        }
+
         $form = new UserForm();
         $about = AboutEmploy::find()->where(['employ_id' => $search->id])->all();
+
         $social = SocialEmploy::find()->where(['employ_id' => $search->id])->all();
         if (empty($about))
             $about = [new AboutEmploy()];
@@ -107,6 +123,7 @@ class UserController extends Controller
 //            $form->load(Yii::$app->request->post());
 //            $form->changeUserPassword();
 //        }
+
 
         return $this->render('index', [
             'models' => $search,
@@ -304,10 +321,33 @@ class UserController extends Controller
     {
         if (Yii::$app->request->post()) {
 
-            $posts = Yii::$app->request->post()['AboutEmploy'];
+
             $employ_id = Yii::$app->user->identity->employ;
 
             if (!$employ_id) return false;
+            $file_image = UploadedFile::getInstances($employ_id, 'photo');
+
+            if ($file_image) {
+                foreach ($file_image as $file) {
+                    $folder = '/web/uploads/employ/';
+                    $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                    if (!file_exists($uploads_folder)) {
+                        mkdir($uploads_folder, 0777, true);
+                    }
+                    $ext = pathinfo($file->name, PATHINFO_EXTENSION);
+                    $name = pathinfo($file->name, PATHINFO_FILENAME);
+                    $generateName = Yii::$app->security->generateRandomString();
+                    $path = $uploads_folder . $generateName . ".{$ext}";
+                    $file->saveAs($path);
+                    $employ_id->photo = '/uploads/employ/' . $generateName . ".{$ext}";
+                }
+            } else {
+                $old_photo = $employ_id->oldAttributes['photo'];
+                $employ_id->photo = $old_photo;
+            }
+
+            $posts = Yii::$app->request->post()['AboutEmploy'];
+            $hobby = Yii::$app->request->post()['Employ'];
 
             if ($posts) {
                 $about = AboutEmploy::find()->where(['employ_id' => $employ_id->id])->all();
@@ -324,14 +364,15 @@ class UserController extends Controller
                     }
                 }
             }
-            $hobby = Yii::$app->request->post()['Employ'];
+
             $employ_id->hobby = $hobby['hobby'];
-            $employ_id->save();
 
+            if ($employ_id->save()) {
+                Yii::$app->session->setFlash('success', 'Saqlandi');
+            } else {
+                Yii::$app->session->setFlash('error', 'Xatolik');
+            }
 
-
-
-            Yii::$app->session->setFlash('success', 'Saqlandi');
             return $this->redirect(Yii::$app->request->referrer);
 
         }

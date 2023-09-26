@@ -77,29 +77,7 @@ use yii\bootstrap4\Html;
             <hr>
         </div>
 
-
-        <div class="col-md-3 ">
-            <ul class="nav nav-tabs nav-tabs-vertical user_tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab-vertical" data-toggle="tab" href="#home-2" role="tab"
-                       aria-controls="home-2" aria-selected="true">
-                        Xodim haqida
-
-                        <i class="mdi mdi-home-outline text-warning text-info ml-2"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab-vertical" data-toggle="tab" href="#profile-2" role="tab"
-                       aria-controls="profile-2" aria-selected="false">
-                        Xavfsizlik
-                        <i class="mdi  mdi-security text-danger ml-2"></i>
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-
-        <div class="col-md-9 tab-content ">
+        <div class="col-md-12 tab-content ">
             <div class="tab-pane fade active show" id="home-2">
                 <div class="accordion" id="accordion" role="tablist">
 

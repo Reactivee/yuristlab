@@ -84,10 +84,25 @@ class AboutEmploy extends \yii\db\ActiveRecord
     {
         $keys = [
             self::EDU => "Ta'lim muassalari",
-            self::WORK_EXP => 'Ish faoliyati',
+            self::WORK_EXP => 'Ish faoliyati martabasi',
             self::WORK_PLACE => 'Ishlagan muassasalari',
         ];
 
         return $keys;
+    }
+
+    public static function getInfo($key)
+    {
+        $id = Yii::$app->user->identity->employ->id;
+        if ($id) {
+
+            $about = AboutEmploy::find()
+                ->where(['key' => $key, 'employ_id' => $id])
+                ->all();
+
+            return $about;
+        }
+        return false;
+
     }
 }

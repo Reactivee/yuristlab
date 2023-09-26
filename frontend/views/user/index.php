@@ -1,7 +1,10 @@
 <?php
 /** @var \common\models\Employ $models */
 
+use common\models\user\AboutEmploy;
 use kartik\date\DatePicker;
+use kartik\editable\Editable;
+use kartik\file\FileInput;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
@@ -19,7 +22,38 @@ use yii\bootstrap4\Html;
                          class="mb-3 img-lg rounded" alt="profile image">
                     <h2><?= $models->first_name . ' ' . $models->last_name ?>  </h2>
                     <h5 class="my-2 mr-2 text-muted">Uzbekistan</h5>
-                    <p class="mb-0 text-success font-weight-bold"><?= $models->desc ?></p>
+                    <p class="mb-0 text-success font-weight-bold">
+                        <?
+                        echo Editable::widget([
+                            'name' => 'desc',
+                            'asPopover' => true,
+                            'displayValue' => $models->desc,
+                            'format' => Editable::FORMAT_BUTTON,
+                            'editableValueOptions' => ['class' => 'text-success font-weight-bold'],
+                            'inputType' => Editable::INPUT_TEXTAREA,
+                            'value' => $models->desc,
+                            'header' => 'Xodim haqida',
+                            'size' => 'lg',
+                            'submitOnEnter' => false,
+                            'editableButtonOptions' => [
+                                'label' => '<i class="fas fa-edit"></i>',
+                            ],
+                            'submitButton' => [
+                                'icon' => '<i class="fas fa-check"></i>',
+                                'class' => 'btn btn-success',
+                                'label' => 'btn btn-success',
+                            ],
+                            'options' => [
+                                'class' => 'form-control',
+                                'rows' => 3,
+                                'placeholder' => '',
+                            ],
+                        ]);
+                        ?>
+
+
+                    </p>
+
                 </div>
             </div>
             <hr>
@@ -30,7 +64,37 @@ use yii\bootstrap4\Html;
                 <i class="mdi  mdi-map-marker icon-md"></i>
                 <h4 class="card-title mt-2 mr-2"> Manzili:</h4>
                 <div class="d-flex align-items-center">
-                    <h5 class="text-muted p-0 mt-1"><?= $models->address ?></h5>
+                    <!--                    <h5 class="text-muted p-0 mt-1">--><? //= $models->address ?><!--</h5>-->
+                    <h5 class="text-primary font-weight-bold">
+                        <?
+                        echo Editable::widget([
+                            'name' => 'address',
+                            'asPopover' => true,
+                            'displayValue' => $models->address,
+                            'format' => Editable::FORMAT_BUTTON,
+                            'editableValueOptions' => ['class' => 'text-muted'],
+                            'inputType' => Editable::INPUT_TEXTAREA,
+                            'value' => $models->address,
+                            'header' => 'Yurist xulosa',
+                            'size' => 'lg',
+                            'submitOnEnter' => false,
+                            'editableButtonOptions' => [
+                                'label' => '<i class="fas fa-edit"></i>',
+                            ],
+                            'submitButton' => [
+                                'icon' => '<i class="fas fa-check"></i>',
+                                'class' => 'btn btn-success',
+                                'label' => 'btn btn-success',
+                            ],
+                            'options' => [
+                                'class' => 'form-control',
+                                'rows' => 3,
+                                'placeholder' => '',
+                            ],
+                        ]);
+                        ?>
+                        <!--                            --><? //= $model->conclusion_uz ?>
+                    </h5>
                 </div>
             </div>
 
@@ -126,30 +190,19 @@ use yii\bootstrap4\Html;
                             <div class="card-body">
                                 <!--                            <h4 class="card-title">Updates</h4>-->
                                 <ul class="bullet-line-list">
-                                    <li>
-                                        <h6>2020-2020-yillarda “Kvant Group Enterprise”MCHJ</h6>
-                                        <p>Yurist</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            3 yil oldin
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>2021-H.Q Jizzax shahar Adliya bo’limida </h6>
-                                        <p>Bosh yuriskonsult</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            2 yil oldin
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>Promotion</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing </p>
-                                        <p class="text-muted">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            7 months ago.
-                                        </p>
-                                    </li>
+                                    <? $info = AboutEmploy::getInfo(AboutEmploy::WORK_PLACE) ?>
+                                    <? foreach ($info as $item) { ?>
+                                        <li>
+                                            <h6><?= $item->name_uz ?></h6>
+                                            <p><?= $item->text_uz ?></p>
+
+                                            <p class="text-muted mb-4">
+                                                <i class="mdi mdi-clock-outline"></i>
+                                                3 yil oldin
+                                            </p>
+
+                                        </li>
+                                    <? } ?>
                                 </ul>
                             </div>
                         </div>
@@ -170,28 +223,22 @@ use yii\bootstrap4\Html;
                             <div class="card-body">
                                 <!--                            <h4 class="card-title">Updates</h4>-->
                                 <ul class="bullet-line-list">
-                                    <li>
-                                        <h6>Toshkent davlat Yuridik unversiteti </h6>
-                                        <p>Bakalavr bitiruvchisi 2017-2021 yillar</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            2 yil oldin
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>Toshkent davlat Yuridik unversiteti </h6>
-                                        <p>Magistratura bitiruvchisi 2024-2025 yillar</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            <!--                                        2 yil oldin-->
-                                        </p>
-                                    </li>
+                                    <? $info = AboutEmploy::getInfo(AboutEmploy::EDU) ?>
 
+                                    <? foreach ($info as $item) { ?>
+                                        <li>
+                                            <h6><?= $item->name_uz ?></h6>
+                                            <p><?= $item->text_uz ?></p>
+                                            <p class="text-muted mb-4">
+                                                <i class="mdi mdi-clock-outline"></i>
+                                                3 yil oldin
+                                            </p>
+                                        </li>
+                                    <? } ?>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
 
 
                     <div class="card">
@@ -234,13 +281,19 @@ use yii\bootstrap4\Html;
                              data-parent="#accordion">
                             <div class="card-body">
                                 <ul class="bullet-line-list">
-                                    <li>
-                                        <h6>2022-yilda 3-darajali Yurist</h6>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            2 yil oldin
-                                        </p>
-                                    </li>
+                                    <? $info = AboutEmploy::getInfo(AboutEmploy::WORK_EXP) ?>
+
+                                    <? foreach ($info as $item) { ?>
+                                        <li>
+                                            <h6><?= $item->name_uz ?></h6>
+                                            <p><?= $item->text_uz ?></p>
+                                            <p class="text-muted mb-4">
+                                                <i class="mdi mdi-clock-outline"></i>
+                                                3 yil oldin
+                                            </p>
+                                        </li>
+                                    <? } ?>
+
                                 </ul>
                             </div>
                         </div>
@@ -440,12 +493,29 @@ use yii\bootstrap4\Html;
                         </div>
 
                         <?php DynamicFormWidget::end(); ?>
-
-                        <div class="col-sm-12 mt-3 p-0">
+                        <hr>
+                        <div class="col-12 mt-3 p-0">
                             <?= $dynform->field($models, "hobby")
                                 ->textInput(['maxlength' => true, ['inputOptions' => [
                                     'autocomplete' => 'off']]])
                                 ->label('Hobbilar') ?>
+                        </div>
+                        <div class="col-6 mt-3 p-0">
+                            <?= $dynform->field($models, 'photo')->widget(FileInput::classname(), [
+                                'options' => ['accept' => 'image/*'],
+                                'pluginOptions' => [
+                                    'initialPreviewAsData' => true,
+                                    'allowedFileExtensions' => ["jpg", "png"],
+                                    'previewFileType' => 'image',
+                                    'elCaptionText' => '#customCaption',
+                                    'showCancel' => false,
+                                    'showCaption' => false,
+                                    'showUpload' => false,
+                                    'maxFileSize' => 1000,
+                                    'browseLabel' => 'Fayl yuklash',
+                                ]
+                            ])->label('Rasm yuklash');
+                            ?>
                         </div>
 
                         <div class="form-group">

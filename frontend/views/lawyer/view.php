@@ -152,7 +152,6 @@ if (!empty($model->lawyer_conclusion_path)) {
                                 'editableButtonOptions' => [
                                     'label' => '<i class="fas fa-edit"></i>',
                                 ],
-
                                 'submitButton' => [
                                     'icon' => '<i class="fas fa-check"></i>',
                                     'class' => 'btn btn-success',
@@ -162,7 +161,6 @@ if (!empty($model->lawyer_conclusion_path)) {
                                     'class' => 'form-control',
                                     'rows' => 5,
                                     'placeholder' => 'Yurist xulosasi...',
-
                                 ],
                             ]);
                             ?>

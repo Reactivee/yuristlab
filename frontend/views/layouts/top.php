@@ -59,9 +59,10 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item count-indicator nav-profile dropdown">
                 <span class="count">3</span>
-                <a class="nav-link  d-flex align-items-center dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                <a class="nav-link  d-flex align-items-center dropdown-toggle" href="#" data-toggle="dropdown"
+                   id="profileDropdown">
                     <span class="nav-profile-name font-weight-bold"><?= Yii::$app->user->identity->employ->first_name . " " . Yii::$app->user->identity->employ->last_name ?></span>
-                    <img src="https://via.placeholder.com/36x36" alt="profile"/>
+                    <img src="<?= Yii::$app->user->identity->employ->photo ?? '' ?>" alt="profile"/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                     <?php echo Html::a('<i class="mdi mdi-settings"></i> Settings ',
