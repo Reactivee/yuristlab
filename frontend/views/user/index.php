@@ -127,19 +127,125 @@ use yii\bootstrap4\Html;
         <div class="col-12">
             <hr>
             <div class="d-flex">
-                <? foreach ($social as $item) { ?>
-                    <a href="<?= $item->link ?>" class="btn btn-social-icon-text btn-linkedin text-capitalize mr-3">
-                        <i class="mdi mdi-<?= $item->name_uz ?>"></i><?= $item->name_uz ?>
-                    </a>
-                    <!--                    <a href="#" class="btn btn-social-icon-text btn-dribbble mr-3">-->
-                    <!--                        <i class="mdi mdi-instagram"></i>Instagram-->
-                    <!--                    </a>-->
-                    <!--                    <a href="#" class="btn btn-social-icon-text btn-facebook mr-3"><i-->
-                    <!--                                class="mdi mdi-facebook"></i>Facebook-->
-                    <!--                    </a>-->
-                    <!--                    <a href="#" class="btn btn-social-icon-text btn-google mr-3"><i class="mdi mdi-google-plus"></i>Google-->
-                    <!--                    </a>-->
-                <? } ?>
+
+                <a href="#" class="btn btn-social-icon-text  mr-3">
+                    <i class="mdi mdi-telegram mr-2"></i>Telegram
+                    <? echo Editable::widget([
+                        'name' => 'telegram',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => false,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+                            'class' => 'btn btn-sm btn-default p-0',
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 m-0',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </a>
+
+                <a href="#" class="btn btn-social-icon-text mr-3">
+                    <i class="mdi mdi-instagram mr-2"></i>Instagram
+                    <? echo Editable::widget([
+                        'name' => 'instagram',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => false,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 m-0',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </a>
+                <a href="#" class="btn btn-social-icon-text  mr-3"><i
+                            class="mdi mdi-facebook mr-2"></i>Facebook
+                    <? echo Editable::widget([
+                        'name' => 'facebook',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => false,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 m-0',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </a>
+                <a href="#" class="btn btn-social-icon-text  mr-3">
+                    <i class="mdi mdi-google-plus mr-2"></i>Google
+                    <? echo Editable::widget([
+                        'name' => 'google',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => false,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 m-0',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </a>
+
             </div>
             <hr>
         </div>
@@ -306,13 +412,6 @@ use yii\bootstrap4\Html;
                 <div class="card-body">
                     <?php $form = ActiveForm::begin(); ?>
 
-                    <!--                    <form id="form" class="forms-sample" action="/lawyer/userdata" method="post">-->
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label for="exampleInputUsername1">Login</label>-->
-                    <!--                        <input type="text" name="login" class="form-control" id="exampleInputUsername1"-->
-                    <!--                               placeholder="Username">-->
-                    <!--                    </div>-->
-                    <!--                    --><? // dd($models->user); ?>
                     <?= $form->field($user_form, 'login')->textInput(['maxlength' => true, 'value' => $models->user->username])->label('Login') ?>
                     <?= $form->field($user_form, 'email')->textInput(['maxlength' => true, 'value' => $models->user->email])->label('Email manzil') ?>
                     <?= $form->field($user_form, 'old_pass')->passwordInput(['maxlength' => true])->label('Eski parol') ?>
@@ -320,98 +419,12 @@ use yii\bootstrap4\Html;
                     <?= $form->field($user_form, 'new_pass_confirm')->passwordInput(['maxlength' => true])->label('Parolni tasdiqlash') ?>
 
                     <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success mt-2']) ?>
-
-                    <!--                        <button type="submit" class="btn btn-primary mr-2">Saqlash</button>-->
                     <?php ActiveForm::end(); ?>
 
                 </div>
             </div>
             <div class="tab-pane fade" id="editor">
                 <div class="card-body">
-                    <!--                    <form class="form-sample">-->
-                    <!---->
-                    <!--                        <div class="row">-->
-                    <!--                            <h4 class="card-title">Xodim ish joylari</h4>-->
-                    <!---->
-                    <!--                            <div class="col-md-12 work-form">-->
-                    <!--                                <div class="form-group row">-->
-                    <!--                                    <label class="col-sm-2 col-form-label card-title">Ish joyi</label>-->
-                    <!--                                    <div class="col-sm-10">-->
-                    <!--                                        <input type="text" class="form-control">-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                                <div class="form-group row">-->
-                    <!--                                    <label class="col-sm-2 col-form-label card-title">Lavozimi</label>-->
-                    <!--                                    <div class="col-sm-10">-->
-                    <!--                                        <input type="text" class="form-control">-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!---->
-                    <!--                                <div class="form-group ">-->
-                    <!--                                    <h4 class="card-title">Ishlagan davr</h4>-->
-                    <!--                                    <div class="input-group input-daterange d-flex align-items-center">-->
-                    <!--                                        <input type="text" class="form-control" value="2022-04-05">-->
-                    <!--                                        <div class="input-group-addon mx-4">gacha</div>-->
-                    <!--                                        <input type="text" class="form-control" value="2023-04-19">-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                                <button type="button" class="btn btn-warning text-right">+</button>-->
-                    <!--                                <hr>-->
-                    <!---->
-                    <!--                            </div>-->
-                    <!---->
-                    <!--                        </div>-->
-                    <!--                        <div class="row">-->
-                    <!--                            <h4 class="card-title">Ta'lim davri</h4>-->
-                    <!---->
-                    <!--                            <div class="col-md-12 work-form">-->
-                    <!--                                <div class="form-group row">-->
-                    <!--                                    <label class="col-sm-2 col-form-label card-title">O'quv muassasasi</label>-->
-                    <!--                                    <div class="col-sm-10">-->
-                    <!--                                        <input type="text" class="form-control">-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                                <div class="form-group row">-->
-                    <!--                                    <label class="col-sm-2 col-form-label card-title">Lavozimi</label>-->
-                    <!--                                    <div class="col-sm-10">-->
-                    <!--                                        <input type="text" class="form-control">-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!---->
-                    <!--                                <div class="form-group ">-->
-                    <!--                                    <h4 class="card-title">O'quv davr</h4>-->
-                    <!--                                    <div class="input-group input-daterange d-flex align-items-center">-->
-                    <!--                                        <input type="text" class="form-control" value="2022-04-05">-->
-                    <!--                                        <div class="input-group-addon mx-4">gacha</div>-->
-                    <!--                                        <input type="text" class="form-control" value="2023-04-19">-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                                <button type="button" class="btn btn-warning text-right">+</button>-->
-                    <!--                                <hr>-->
-                    <!---->
-                    <!--                            </div>-->
-                    <!---->
-                    <!--                        </div>-->
-                    <!--                        <div class="row">-->
-                    <!--                            <h4 class="card-title">Xobbilar</h4>-->
-                    <!---->
-                    <!--                            <div class="col-md-12 work-form">-->
-                    <!--                                <div class="form-group row">-->
-                    <!--                                    <label class="col-sm-2 col-form-label card-title">O'quv muassasasi</label>-->
-                    <!--                                    <div class="col-sm-10">-->
-                    <!--                                        <input type="text" class="form-control">-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!---->
-                    <!--                                <button type="button" class="btn btn-warning text-right">+</button>-->
-                    <!--                                <hr>-->
-                    <!---->
-                    <!--                            </div>-->
-                    <!---->
-                    <!--                        </div>-->
-                    <!---->
-                    <!--                        --><? //= Html::button('Saqlash', ['class' => 'btn btn-success mt-2']) ?>
-                    <!--                    </form>-->
                     <div class="col-md-12">
                         <?php $dynform = ActiveForm::begin([
                             'id' => 'dynamic-form',
@@ -709,29 +722,10 @@ jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
 jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
     jQuery(".dynamicform_wrapper .panel-title-working").each(function(index) {
-        jQuery(this).html("Ta'lim olgan:" + (index + 1))
+        jQuery(this).html("Faoliyat davr:" + (index + 1))
     });
 });
 
-
-jQuery(".dynamicform_wrapper").on("afterInsert", function(e, item) {
-  
-    jQuery(".dynamicform_wrapper .panel-title-edu").each(function(index) {
-        jQuery(this).html("Ta'lim olgan:" + (index + 1))
-    });
-    var inputs = item.getElementsByTagName("input");
-        for(var i = 0; i < inputs.length; i++) {
-    
-    inputs[i].removeAttribute("value");
-    inputs[i].setAttribute("value","");
-     }
-});
-
-jQuery(".dynamicform_wrapper").on("afterDelete", function(e) {
-    jQuery(".dynamicform_wrapper .panel-title-edu").each(function(index) {
-        jQuery(this).html("Ta'lim olgan:" + (index + 1))
-    });
-});
 JS;
 
 $this->registerJs($js2, 3);
