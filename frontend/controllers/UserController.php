@@ -316,7 +316,7 @@ class UserController extends Controller
                 foreach ($posts as $key => $item) {
                     if (isset($item['name_uz'])) {
                         $new_info = new AboutEmploy();
-                        $new_info->key = $item->key;
+                        $new_info->key = $item['key'];
                         $new_info['name_uz'] = $item['name_uz'];
                         $new_info['text_uz'] = $item['text_uz'];
                         $new_info->employ_id = $employ_id->id;
