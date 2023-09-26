@@ -35,7 +35,7 @@
     "kartik-v/yii2-widget-select2": "*",
     "skeeks/yii2-slug-behavior": "*",
     "kartik-v/yii2-editors": "*",
-    "wbraganca/yii2-dynamicform": "*",
+
     "kartik-v/yii2-widget-depdrop": "^1.0",
     "2amigos/yii2-gallery-widget": "^1.1",
     "2amigos/yii2-transliterator-helper": "^1.0",
