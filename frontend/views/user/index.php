@@ -110,7 +110,35 @@ use yii\bootstrap4\Html;
                 <i class="mdi mdi-av-timer icon-md "></i>
                 <h4 class="card-title mt-2">Yosh:</h4>
                 <div class="d-flex mt-0 align-items-center">
-                    <h5 class="p-0 ml-2 mt-1 text-muted">28</h5>
+                    <h5 class="p-0 ml-2 mt-1 text-muted">
+                        <?
+                        echo Editable::widget([
+                            'name' => 'age',
+                            'asPopover' => true,
+                            'displayValue' => $models->age,
+                            'format' => Editable::FORMAT_BUTTON,
+                            'editableValueOptions' => ['class' => 'text-muted'],
+                            'inputType' => Editable::INPUT_TEXTAREA,
+                            'value' => $models->age,
+                            'header' => 'Yoshi',
+                            'size' => 'lg',
+                            'submitOnEnter' => false,
+                            'editableButtonOptions' => [
+                                'label' => '<i class="fas fa-edit"></i>',
+                            ],
+                            'submitButton' => [
+                                'icon' => '<i class="fas fa-check"></i>',
+                                'class' => 'btn btn-success',
+                                'label' => 'btn btn-success',
+                            ],
+                            'options' => [
+                                'class' => 'form-control',
+                                'rows' => 3,
+                                'placeholder' => '',
+                            ],
+                        ]);
+                        ?>
+                    </h5>
                 </div>
             </div>
             <div class="d-flex align-items-center">

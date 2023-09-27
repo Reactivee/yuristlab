@@ -106,6 +106,7 @@ class UserController extends Controller
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $search->address = $post['address'] ?? $search->address;
             $search->desc = $post['desc'] ?? $search->desc;
+            $search->age = (integer)$post['age'] ?? $search->age;
             if (!$search->save()) {
                 dd($search->error);
             }

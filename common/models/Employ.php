@@ -48,9 +48,9 @@ class Employ extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'user_id', 'type', 'company_id', 'role'], 'integer'],
+            [['status', 'user_id', 'type', 'company_id', 'role','age'], 'integer'],
             [['desc', 'address'], 'string'],
-            [['first_name', 'last_name', 'key', 'phone', 'photo', 'login', 'passport', 'inn'], 'string', 'max' => 255],
+            [['first_name', 'last_name', 'key', 'phone', 'photo', 'login', 'passport', 'inn','telegram','instagram','facebook','other'], 'string', 'max' => 255],
         ];
     }
 
