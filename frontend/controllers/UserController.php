@@ -106,7 +106,7 @@ class UserController extends Controller
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $search->address = $post['address'] ?? $search->address;
             $search->desc = $post['desc'] ?? $search->desc;
-            $search->age = (integer)$post['age'] ?? $search->age;
+            $search->age = $post['age'] ?? $search->age;
             $search->instagram = $post['instagram'] ?? $search->instagram;
             $search->telegram = $post['telegram'] ?? $search->telegram;
             $search->facebook = $post['facebook'] ?? $search->facebook;
@@ -330,8 +330,30 @@ class UserController extends Controller
             $employ_id = Yii::$app->user->identity->employ;
 
             if (!$employ_id) return false;
-            $file_image = UploadedFile::getInstances($employ_id, 'photo');
 
+            $hobby = Yii::$app->request->post();
+            $posts = Yii::$app->request->post()['AboutEmploy'];
+
+            if ($posts) {
+                $about = AboutEmploy::find()->where(['employ_id' => $employ_id->id])->all();
+                $oldIDs = ArrayHelper::map($about, 'id', 'id');
+                $deleted = AboutEmploy::deleteAll(['id' => $oldIDs]);
+                foreach ($posts as $key => $item) {
+                    if (isset($item['name_uz'])) {
+                        $new_info = new AboutEmploy();
+                        $new_info->key = $item['key'];
+                        $new_info['name_uz'] = $item['name_uz'];
+                        $new_info['text_uz'] = $item['text_uz'];
+                        $new_info->employ_id = $employ_id->id;
+                        $new_info->save();
+                    }
+                }
+            }
+
+            $employ_id->load($hobby);
+
+            //Rasm yuklash
+            $file_image = UploadedFile::getInstances($employ_id, 'photo');
             if ($file_image) {
                 foreach ($file_image as $file) {
                     $folder = '/web/uploads/employ/';
@@ -350,27 +372,6 @@ class UserController extends Controller
                 $old_photo = $employ_id->oldAttributes['photo'];
                 $employ_id->photo = $old_photo;
             }
-
-            $posts = Yii::$app->request->post()['AboutEmploy'];
-            $hobby = Yii::$app->request->post()['Employ'];
-
-            if ($posts) {
-                $about = AboutEmploy::find()->where(['employ_id' => $employ_id->id])->all();
-                $oldIDs = ArrayHelper::map($about, 'id', 'id');
-                $deleted = AboutEmploy::deleteAll(['id' => $oldIDs]);
-                foreach ($posts as $key => $item) {
-                    if (isset($item['name_uz'])) {
-                        $new_info = new AboutEmploy();
-                        $new_info->key = $item['key'];
-                        $new_info['name_uz'] = $item['name_uz'];
-                        $new_info['text_uz'] = $item['text_uz'];
-                        $new_info->employ_id = $employ_id->id;
-                        $new_info->save();
-                    }
-                }
-            }
-
-            $employ_id->hobby = $hobby['hobby'];
 
             if ($employ_id->save()) {
                 Yii::$app->session->setFlash('success', 'Saqlandi');

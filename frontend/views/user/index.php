@@ -26,7 +26,7 @@ use yii\bootstrap4\Html;
                     <img src="<?= $models->photo ?>"
                          class="mb-3 img-lg rounded" alt="profile image">
                     <h2><?= $models->first_name . ' ' . $models->last_name ?>  </h2>
-                    <!--                    <h5 class="my-2 mr-2 text-muted">Uzbekistan</h5>-->
+                    <h5 class="my-2 mr-2 text-muted"><?= $models->company->name_uz ?></h5>
                     <p class="mb-0 text-success font-weight-bold">
                         <?
                         echo Editable::widget([
@@ -282,8 +282,6 @@ use yii\bootstrap4\Html;
                     ]);
                     ?>
                 </div>
-
-
             </div>
             <hr>
         </div>
@@ -465,7 +463,7 @@ use yii\bootstrap4\Html;
                 </div>
             </div>
             <div class="tab-pane fade" id="editor">
-                <div class="card-body">
+                <div class="card-body row">
                     <div class="col-md-12">
                         <?php $dynform = ActiveForm::begin([
                             'id' => 'dynamic-form',
@@ -545,39 +543,53 @@ use yii\bootstrap4\Html;
                                 </div>
                             </div>
                         </div>
-
                         <?php DynamicFormWidget::end(); ?>
                         <hr>
-                        <div class="col-12 mt-3 p-0">
-                            <?= $dynform->field($models, "hobby")
-                                ->textInput(['maxlength' => true, ['inputOptions' => [
-                                    'autocomplete' => 'off']]])
-                                ->label('Hobbilar') ?>
-                        </div>
-                        <div class="col-6 mt-3 p-0">
-                            <?= $dynform->field($models, 'photo')->widget(FileInput::classname(), [
-                                'options' => ['accept' => 'image/*'],
-                                'pluginOptions' => [
-                                    'initialPreviewAsData' => true,
-                                    'allowedFileExtensions' => ["jpg", "png"],
-                                    'previewFileType' => 'image',
-                                    'elCaptionText' => '#customCaption',
-                                    'showCancel' => false,
-                                    'showCaption' => false,
-                                    'showUpload' => false,
-                                    'maxFileSize' => 1000,
-                                    'browseLabel' => 'Fayl yuklash',
-                                ]
-                            ])->label('Rasm yuklash');
-                            ?>
-                        </div>
-
-                        <div class="form-group">
-                            <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
-                        </div>
-
-                        <?php ActiveForm::end(); ?>
                     </div>
+
+                    <div class="col-12 ">
+                        <?= $dynform->field($models, "hobby")
+                            ->textInput(['maxlength' => true, ['inputOptions' => [
+                                'autocomplete' => 'off']]])
+                            ->label('Hobbilar') ?>
+                    </div>
+                    <div class="col-6">
+                        <?= $dynform->field($models, "passport")
+                            ->textInput(['maxlength' => true, ['inputOptions' => [
+                                'autocomplete' => 'off']]])
+                            ->label('Pasport seriya') ?>
+                    </div>
+                    <div class="col-6">
+                        <?= $dynform->field($models, "inn")
+                            ->textInput(['maxlength' => true, ['inputOptions' => [
+                                'autocomplete' => 'off']]])
+                            ->label('INN') ?>
+                    </div>
+                    <hr>
+                    <div class="col-6">
+                        <?= $dynform->field($models, 'photo')->widget(FileInput::classname(), [
+                            'options' => ['accept' => 'image/*'],
+                            'pluginOptions' => [
+                                'initialPreviewAsData' => true,
+                                'allowedFileExtensions' => ["jpg", "png"],
+                                'previewFileType' => 'image',
+                                'elCaptionText' => '#customCaption',
+                                'showCancel' => false,
+                                'showCaption' => false,
+                                'showUpload' => false,
+                                'maxFileSize' => 1000,
+                                'browseLabel' => 'Fayl yuklash',
+                            ]
+                        ])->label('Rasm yuklash');
+                        ?>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
+                    </div>
+
+                    <?php ActiveForm::end(); ?>
+
                 </div>
             </div>
 
