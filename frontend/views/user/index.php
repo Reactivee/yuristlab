@@ -138,123 +138,123 @@ use yii\bootstrap4\Html;
                 </a>
                 <a href="#" class="btn btn-social-icon-text btn-google mr-3"><i class="mdi mdi-google-plus"></i>Google
                 </a>
-<!--                <a href="#" class="btn btn-social-icon-text  mr-3">-->
-<!--                    <i class="mdi mdi-telegram mr-2"></i>Telegram-->
-<!--                    --><?// echo Editable::widget([
-//                        'name' => 'telegram',
-//                        'asPopover' => true,
-//                        'format' => Editable::FORMAT_BUTTON,
-//                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-//                        'inputType' => Editable::INPUT_TEXTAREA,
-//                        'value' => false,
-//                        'header' => 'Social',
-//                        'size' => 'lg',
-//                        'submitOnEnter' => false,
-//                        'editableButtonOptions' => [
-//                            'label' => '<i class="fas fa-edit"></i>',
-//                            'class' => 'btn btn-sm btn-default p-0',
-//                        ],
-//                        'submitButton' => [
-//                            'icon' => '<i class="fas fa-check"></i>',
-//                            'class' => 'btn btn-success',
-//                            'label' => 'btn btn-success',
-//                        ],
-//                        'options' => [
-//                            'class' => 'form-control p-0 m-0',
-//                            'rows' => 3,
-//                            'placeholder' => '',
-//                        ],
-//                    ]);
-//                    ?>
-<!--                </a>-->
-<!---->
-<!--                <a href="#" class="btn btn-social-icon-text mr-3">-->
-<!--                    <i class="mdi mdi-instagram mr-2"></i>Instagram-->
-<!--                    --><?// echo Editable::widget([
-//                        'name' => 'instagram',
-//                        'asPopover' => true,
-//                        'format' => Editable::FORMAT_BUTTON,
-//                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-//                        'inputType' => Editable::INPUT_TEXTAREA,
-//                        'value' => false,
-//                        'header' => 'Social',
-//                        'size' => 'lg',
-//                        'submitOnEnter' => false,
-//                        'editableButtonOptions' => [
-//                            'label' => '<i class="fas fa-edit"></i>',
-//                        ],
-//                        'submitButton' => [
-//                            'icon' => '<i class="fas fa-check"></i>',
-//                            'class' => 'btn btn-success',
-//                            'label' => 'btn btn-success',
-//                        ],
-//                        'options' => [
-//                            'class' => 'form-control p-0 m-0',
-//                            'rows' => 3,
-//                            'placeholder' => '',
-//                        ],
-//                    ]);
-//                    ?>
-<!--                </a>-->
-<!--                <a href="#" class="btn btn-social-icon-text  mr-3"><i-->
-<!--                            class="mdi mdi-facebook mr-2"></i>Facebook-->
-<!--                    --><?// echo Editable::widget([
-//                        'name' => 'facebook',
-//                        'asPopover' => true,
-//                        'format' => Editable::FORMAT_BUTTON,
-//                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-//                        'inputType' => Editable::INPUT_TEXTAREA,
-//                        'value' => false,
-//                        'header' => 'Social',
-//                        'size' => 'lg',
-//                        'submitOnEnter' => false,
-//                        'editableButtonOptions' => [
-//                            'label' => '<i class="fas fa-edit"></i>',
-//                        ],
-//                        'submitButton' => [
-//                            'icon' => '<i class="fas fa-check"></i>',
-//                            'class' => 'btn btn-success',
-//                            'label' => 'btn btn-success',
-//
-//                        ],
-//                        'options' => [
-//                            'class' => 'form-control p-0 m-0',
-//                            'rows' => 3,
-//                            'placeholder' => '',
-//                        ],
-//                    ]);
-//                    ?>
-<!--                </a>-->
-<!--                <a href="#" class="btn btn-social-icon-text  mr-3">-->
-<!--                    <i class="mdi mdi-google-plus mr-2"></i>Google-->
-<!--                    --><?// echo Editable::widget([
-//                        'name' => 'google',
-//                        'asPopover' => true,
-//                        'format' => Editable::FORMAT_BUTTON,
-//                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-//                        'inputType' => Editable::INPUT_TEXTAREA,
-//                        'value' => false,
-//                        'header' => 'Social',
-//                        'size' => 'lg',
-//                        'submitOnEnter' => false,
-//                        'editableButtonOptions' => [
-//                            'label' => '<i class="fas fa-edit"></i>',
-//
-//                        ],
-//                        'submitButton' => [
-//                            'icon' => '<i class="fas fa-check"></i>',
-//                            'class' => 'btn btn-success',
-//                            'label' => 'btn btn-success',
-//
-//                        ],
-//                        'options' => [
-//                            'class' => 'form-control p-0 m-0',
-//                            'rows' => 3,
-//                            'placeholder' => '',
-//                        ],
-//                    ]);
-//                    ?>
-<!--                </a>-->
+                <!--                <a href="#" class="btn btn-social-icon-text  mr-3">-->
+                <!--                    <i class="mdi mdi-telegram mr-2"></i>Telegram-->
+                <!--                    --><? // echo Editable::widget([
+                //                        'name' => 'telegram',
+                //                        'asPopover' => true,
+                //                        'format' => Editable::FORMAT_BUTTON,
+                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                //                        'inputType' => Editable::INPUT_TEXTAREA,
+                //                        'value' => false,
+                //                        'header' => 'Social',
+                //                        'size' => 'lg',
+                //                        'submitOnEnter' => false,
+                //                        'editableButtonOptions' => [
+                //                            'label' => '<i class="fas fa-edit"></i>',
+                //                            'class' => 'btn btn-sm btn-default p-0',
+                //                        ],
+                //                        'submitButton' => [
+                //                            'icon' => '<i class="fas fa-check"></i>',
+                //                            'class' => 'btn btn-success',
+                //                            'label' => 'btn btn-success',
+                //                        ],
+                //                        'options' => [
+                //                            'class' => 'form-control p-0 m-0',
+                //                            'rows' => 3,
+                //                            'placeholder' => '',
+                //                        ],
+                //                    ]);
+                //                    ?>
+                <!--                </a>-->
+                <!---->
+                <!--                <a href="#" class="btn btn-social-icon-text mr-3">-->
+                <!--                    <i class="mdi mdi-instagram mr-2"></i>Instagram-->
+                <!--                    --><? // echo Editable::widget([
+                //                        'name' => 'instagram',
+                //                        'asPopover' => true,
+                //                        'format' => Editable::FORMAT_BUTTON,
+                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                //                        'inputType' => Editable::INPUT_TEXTAREA,
+                //                        'value' => false,
+                //                        'header' => 'Social',
+                //                        'size' => 'lg',
+                //                        'submitOnEnter' => false,
+                //                        'editableButtonOptions' => [
+                //                            'label' => '<i class="fas fa-edit"></i>',
+                //                        ],
+                //                        'submitButton' => [
+                //                            'icon' => '<i class="fas fa-check"></i>',
+                //                            'class' => 'btn btn-success',
+                //                            'label' => 'btn btn-success',
+                //                        ],
+                //                        'options' => [
+                //                            'class' => 'form-control p-0 m-0',
+                //                            'rows' => 3,
+                //                            'placeholder' => '',
+                //                        ],
+                //                    ]);
+                //                    ?>
+                <!--                </a>-->
+                <!--                <a href="#" class="btn btn-social-icon-text  mr-3"><i-->
+                <!--                            class="mdi mdi-facebook mr-2"></i>Facebook-->
+                <!--                    --><? // echo Editable::widget([
+                //                        'name' => 'facebook',
+                //                        'asPopover' => true,
+                //                        'format' => Editable::FORMAT_BUTTON,
+                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                //                        'inputType' => Editable::INPUT_TEXTAREA,
+                //                        'value' => false,
+                //                        'header' => 'Social',
+                //                        'size' => 'lg',
+                //                        'submitOnEnter' => false,
+                //                        'editableButtonOptions' => [
+                //                            'label' => '<i class="fas fa-edit"></i>',
+                //                        ],
+                //                        'submitButton' => [
+                //                            'icon' => '<i class="fas fa-check"></i>',
+                //                            'class' => 'btn btn-success',
+                //                            'label' => 'btn btn-success',
+                //
+                //                        ],
+                //                        'options' => [
+                //                            'class' => 'form-control p-0 m-0',
+                //                            'rows' => 3,
+                //                            'placeholder' => '',
+                //                        ],
+                //                    ]);
+                //                    ?>
+                <!--                </a>-->
+                <!--                <a href="#" class="btn btn-social-icon-text  mr-3">-->
+                <!--                    <i class="mdi mdi-google-plus mr-2"></i>Google-->
+                <!--                    --><? // echo Editable::widget([
+                //                        'name' => 'google',
+                //                        'asPopover' => true,
+                //                        'format' => Editable::FORMAT_BUTTON,
+                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                //                        'inputType' => Editable::INPUT_TEXTAREA,
+                //                        'value' => false,
+                //                        'header' => 'Social',
+                //                        'size' => 'lg',
+                //                        'submitOnEnter' => false,
+                //                        'editableButtonOptions' => [
+                //                            'label' => '<i class="fas fa-edit"></i>',
+                //
+                //                        ],
+                //                        'submitButton' => [
+                //                            'icon' => '<i class="fas fa-check"></i>',
+                //                            'class' => 'btn btn-success',
+                //                            'label' => 'btn btn-success',
+                //
+                //                        ],
+                //                        'options' => [
+                //                            'class' => 'form-control p-0 m-0',
+                //                            'rows' => 3,
+                //                            'placeholder' => '',
+                //                        ],
+                //                    ]);
+                //                    ?>
+                <!--                </a>-->
 
             </div>
             <hr>
@@ -312,10 +312,10 @@ use yii\bootstrap4\Html;
                                             <h6><?= $item->name_uz ?></h6>
                                             <p><?= $item->text_uz ?></p>
 
-                                            <p class="text-muted mb-4">
-                                                <i class="mdi mdi-clock-outline"></i>
-                                                3 yil oldin
-                                            </p>
+                                            <!--                                            <p class="text-muted mb-4">-->
+                                            <!--                                                <i class="mdi mdi-clock-outline"></i>-->
+                                            <!--                                                3 yil oldin-->
+                                            <!--                                            </p>-->
 
                                         </li>
                                     <? } ?>
@@ -345,44 +345,16 @@ use yii\bootstrap4\Html;
                                         <li>
                                             <h6><?= $item->name_uz ?></h6>
                                             <p><?= $item->text_uz ?></p>
-                                            <p class="text-muted mb-4">
-                                                <i class="mdi mdi-clock-outline"></i>
-                                                3 yil oldin
-                                            </p>
+                                            <!--                                            <p class="text-muted mb-4">-->
+                                            <!--                                                <i class="mdi mdi-clock-outline"></i>-->
+                                            <!--                                                3 yil oldin-->
+                                            <!--                                            </p>-->
                                         </li>
                                     <? } ?>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="card">
-                        <div class="card-header" role="tab" id="heading-4">
-                            <h6 class="mb-0">
-                                <a class="collapsed" data-toggle="collapse" href="#collapse-4" aria-expanded="false"
-                                   aria-controls="collapse-4">
-                                    <i class="mdi mdi-gamepad-variant mr-2"></i>
-                                    Mavjud ko’nikmalari (Qiziqishlar,hobbylari)
-                                </a>
-                            </h6>
-                        </div>
-                        <div id="collapse-4" class="collapse" role="tabpanel" aria-labelledby="heading-4"
-                             data-parent="#accordion">
-                            <div class="card-body">
-                                <div class="badge badge-success badge-pill m-3 ">Video montaj</div>
-                                <div class="m-2 badge badge-success badge-pill">Adobe After effec</div>
-                                <div class="m-2 badge badge-success badge-pill">Adobe Photoshop</div>
-                                <div class="m-2 badge badge-success badge-pill">Ingliz tilida erkin muloqot qilish</div>
-                                <p class="text-success">
-                                    <i class="mdi mdi-alert-octagon mr-2"></i>If the problem persists, you can
-                                    contact our
-                                    support.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="card">
                         <div class="card-header" role="tab" id="heading-5">
                             <h6 class="mb-0">
@@ -403,10 +375,10 @@ use yii\bootstrap4\Html;
                                         <li>
                                             <h6><?= $item->name_uz ?></h6>
                                             <p><?= $item->text_uz ?></p>
-                                            <p class="text-muted mb-4">
-                                                <i class="mdi mdi-clock-outline"></i>
-                                                3 yil oldin
-                                            </p>
+                                            <!--                                            <p class="text-muted mb-4">-->
+                                            <!--                                                <i class="mdi mdi-clock-outline"></i>-->
+                                            <!--                                                3 yil oldin-->
+                                            <!--                                            </p>-->
                                         </li>
                                     <? } ?>
 
@@ -414,6 +386,37 @@ use yii\bootstrap4\Html;
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading-4">
+                            <h6 class="mb-0">
+                                <a class="collapsed" data-toggle="collapse" href="#collapse-4" aria-expanded="false"
+                                   aria-controls="collapse-4">
+                                    <i class="mdi mdi-gamepad-variant mr-2"></i>
+                                    Mavjud ko’nikmalari (Qiziqishlar,hobbylari)
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapse-4" class="collapse" role="tabpanel" aria-labelledby="heading-4"
+                             data-parent="#accordion">
+                            <div class="card-body">
+                                <?
+                                $parts = preg_split('/\s+/', $models->hobby);
+                                if ($parts) {
+                                    foreach ($parts as $word) {
+                                        ?>
+                                        <h2 class="badge badge-success badge-pill mr-2"><?=$word?></h2>
+                                    <?
+                                    }
+                                }
+                                ?>
+
+
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>
@@ -497,7 +500,7 @@ use yii\bootstrap4\Html;
                                                         <?= $dynform->field($item, "[{$i}]name_uz")
                                                             ->textInput(['maxlength' => true, ['inputOptions' => [
                                                                 'autocomplete' => 'off']]])
-                                                            ->label('Ishlagan joy') ?>
+                                                            ->label('Faoliyat joy') ?>
                                                     </div>
                                                     <div class="col-sm-12">
                                                         <?= $dynform->field($item, "[{$i}]text_uz")
