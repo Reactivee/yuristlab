@@ -12,6 +12,11 @@ use yii\bootstrap4\Html;
 //dd($models);
 
 ?>
+<style>
+    .social_wrapper .kv-editable-value {
+        display: none;
+    }
+</style>
 <div class="container-fluid p-4 wrapper_team_profile">
 
     <div class="row">
@@ -21,7 +26,7 @@ use yii\bootstrap4\Html;
                     <img src="<?= $models->photo ?>"
                          class="mb-3 img-lg rounded" alt="profile image">
                     <h2><?= $models->first_name . ' ' . $models->last_name ?>  </h2>
-                    <h5 class="my-2 mr-2 text-muted">Uzbekistan</h5>
+                    <!--                    <h5 class="my-2 mr-2 text-muted">Uzbekistan</h5>-->
                     <p class="mb-0 text-success font-weight-bold">
                         <?
                         echo Editable::widget([
@@ -50,8 +55,6 @@ use yii\bootstrap4\Html;
                             ],
                         ]);
                         ?>
-
-
                     </p>
 
                 </div>
@@ -154,135 +157,132 @@ use yii\bootstrap4\Html;
         </div>
         <div class="col-12">
             <hr>
-            <div class="d-flex">
-                <a href="#" class="btn btn-social-icon-text btn-linkedin mr-3">
-                    <i class="mdi mdi-telegram"></i>Telegram
-                </a>
-                <a href="#" class="btn btn-social-icon-text btn-dribbble mr-3">
-                    <i class="mdi mdi-instagram"></i>Instagram
-                </a>
-                <a href="#" class="btn btn-social-icon-text btn-facebook mr-3"><i
-                            class="mdi mdi-facebook"></i>Facebook
-                </a>
-                <a href="#" class="btn btn-social-icon-text btn-google mr-3"><i class="mdi mdi-google-plus"></i>Google
-                </a>
-                <!--                <a href="#" class="btn btn-social-icon-text  mr-3">-->
-                <!--                    <i class="mdi mdi-telegram mr-2"></i>Telegram-->
-                <!--                    --><? // echo Editable::widget([
-                //                        'name' => 'telegram',
-                //                        'asPopover' => true,
-                //                        'format' => Editable::FORMAT_BUTTON,
-                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-                //                        'inputType' => Editable::INPUT_TEXTAREA,
-                //                        'value' => false,
-                //                        'header' => 'Social',
-                //                        'size' => 'lg',
-                //                        'submitOnEnter' => false,
-                //                        'editableButtonOptions' => [
-                //                            'label' => '<i class="fas fa-edit"></i>',
-                //                            'class' => 'btn btn-sm btn-default p-0',
-                //                        ],
-                //                        'submitButton' => [
-                //                            'icon' => '<i class="fas fa-check"></i>',
-                //                            'class' => 'btn btn-success',
-                //                            'label' => 'btn btn-success',
-                //                        ],
-                //                        'options' => [
-                //                            'class' => 'form-control p-0 m-0',
-                //                            'rows' => 3,
-                //                            'placeholder' => '',
-                //                        ],
-                //                    ]);
-                //                    ?>
-                <!--                </a>-->
-                <!---->
-                <!--                <a href="#" class="btn btn-social-icon-text mr-3">-->
-                <!--                    <i class="mdi mdi-instagram mr-2"></i>Instagram-->
-                <!--                    --><? // echo Editable::widget([
-                //                        'name' => 'instagram',
-                //                        'asPopover' => true,
-                //                        'format' => Editable::FORMAT_BUTTON,
-                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-                //                        'inputType' => Editable::INPUT_TEXTAREA,
-                //                        'value' => false,
-                //                        'header' => 'Social',
-                //                        'size' => 'lg',
-                //                        'submitOnEnter' => false,
-                //                        'editableButtonOptions' => [
-                //                            'label' => '<i class="fas fa-edit"></i>',
-                //                        ],
-                //                        'submitButton' => [
-                //                            'icon' => '<i class="fas fa-check"></i>',
-                //                            'class' => 'btn btn-success',
-                //                            'label' => 'btn btn-success',
-                //                        ],
-                //                        'options' => [
-                //                            'class' => 'form-control p-0 m-0',
-                //                            'rows' => 3,
-                //                            'placeholder' => '',
-                //                        ],
-                //                    ]);
-                //                    ?>
-                <!--                </a>-->
-                <!--                <a href="#" class="btn btn-social-icon-text  mr-3"><i-->
-                <!--                            class="mdi mdi-facebook mr-2"></i>Facebook-->
-                <!--                    --><? // echo Editable::widget([
-                //                        'name' => 'facebook',
-                //                        'asPopover' => true,
-                //                        'format' => Editable::FORMAT_BUTTON,
-                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-                //                        'inputType' => Editable::INPUT_TEXTAREA,
-                //                        'value' => false,
-                //                        'header' => 'Social',
-                //                        'size' => 'lg',
-                //                        'submitOnEnter' => false,
-                //                        'editableButtonOptions' => [
-                //                            'label' => '<i class="fas fa-edit"></i>',
-                //                        ],
-                //                        'submitButton' => [
-                //                            'icon' => '<i class="fas fa-check"></i>',
-                //                            'class' => 'btn btn-success',
-                //                            'label' => 'btn btn-success',
-                //
-                //                        ],
-                //                        'options' => [
-                //                            'class' => 'form-control p-0 m-0',
-                //                            'rows' => 3,
-                //                            'placeholder' => '',
-                //                        ],
-                //                    ]);
-                //                    ?>
-                <!--                </a>-->
-                <!--                <a href="#" class="btn btn-social-icon-text  mr-3">-->
-                <!--                    <i class="mdi mdi-google-plus mr-2"></i>Google-->
-                <!--                    --><? // echo Editable::widget([
-                //                        'name' => 'google',
-                //                        'asPopover' => true,
-                //                        'format' => Editable::FORMAT_BUTTON,
-                //                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
-                //                        'inputType' => Editable::INPUT_TEXTAREA,
-                //                        'value' => false,
-                //                        'header' => 'Social',
-                //                        'size' => 'lg',
-                //                        'submitOnEnter' => false,
-                //                        'editableButtonOptions' => [
-                //                            'label' => '<i class="fas fa-edit"></i>',
-                //
-                //                        ],
-                //                        'submitButton' => [
-                //                            'icon' => '<i class="fas fa-check"></i>',
-                //                            'class' => 'btn btn-success',
-                //                            'label' => 'btn btn-success',
-                //
-                //                        ],
-                //                        'options' => [
-                //                            'class' => 'form-control p-0 m-0',
-                //                            'rows' => 3,
-                //                            'placeholder' => '',
-                //                        ],
-                //                    ]);
-                //                    ?>
-                <!--                </a>-->
+            <div class="d-flex align-items-center social_wrapper">
+                <div class="mr-3">
+                    <a href="<?= $models->telegram ?>" class="btn btn-social-icon-text btn-linkedin">
+                        <i class="mdi mdi-telegram"></i>Telegram
+                    </a>
+                    <? echo Editable::widget([
+                        'name' => 'telegram',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => $models->telegram,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+                            'class' => 'btn btn-sm btn-default p-0',
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 mr-3',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="mr-3">
+                    <a href="<?= $models->instagram ?>" class="btn btn-social-icon-text btn-dribbble">
+                        <i class="mdi mdi-instagram"></i>Instagram
+                    </a>
+                    <? echo Editable::widget([
+                        'name' => 'instagram',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => $models->instagram,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+                            'class' => 'btn btn-sm btn-default p-0',
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 m-0',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="mr-3">
+                    <a href="<?= $models->facebook ?>" class="btn btn-social-icon-text btn-facebook"><i
+                                class="mdi mdi-facebook"></i>Facebook
+                    </a>
+                    <? echo Editable::widget([
+                        'name' => 'facebook',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => $models->facebook,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+                            'class' => 'btn btn-sm btn-default p-0',
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 m-0',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </div>
+                <div class="mr-3">
+                    <a href="<?= $models->other ?>" class="btn btn-social-icon-text btn-google">
+                        <i class="mdi mdi-google-plus"></i>Google
+                    </a>
+                    <? echo Editable::widget([
+                        'name' => 'other',
+                        'asPopover' => true,
+                        'format' => Editable::FORMAT_BUTTON,
+                        'editableValueOptions' => ['class' => 'text-muted p-0 m-0'],
+                        'inputType' => Editable::INPUT_TEXTAREA,
+                        'value' => $models->other,
+                        'header' => 'Social',
+                        'size' => 'lg',
+                        'submitOnEnter' => false,
+                        'editableButtonOptions' => [
+                            'label' => '<i class="fas fa-edit"></i>',
+                            'class' => 'btn btn-sm btn-default p-0',
+                        ],
+                        'submitButton' => [
+                            'icon' => '<i class="fas fa-check"></i>',
+                            'class' => 'btn btn-success',
+                            'label' => 'btn btn-success',
+                        ],
+                        'options' => [
+                            'class' => 'form-control p-0 m-0',
+                            'rows' => 3,
+                            'placeholder' => '',
+                        ],
+                    ]);
+                    ?>
+                </div>
+
 
             </div>
             <hr>
@@ -434,8 +434,8 @@ use yii\bootstrap4\Html;
                                 if ($parts) {
                                     foreach ($parts as $word) {
                                         ?>
-                                        <h2 class="badge badge-success badge-pill mr-2"><?=$word?></h2>
-                                    <?
+                                        <h2 class="badge badge-success badge-pill mr-2"><?= $word ?></h2>
+                                        <?
                                     }
                                 }
                                 ?>

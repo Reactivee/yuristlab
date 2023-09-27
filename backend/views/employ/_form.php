@@ -46,6 +46,14 @@ use yii\widgets\ActiveForm;
 
 
 
+
+
+
+
+    <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'type')->textInput() ?>
+
+    <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
     <?=
     $form->field($model, 'company_id')->widget(Select2::classname(), [
         'data' => $model->getAllCompany(),
@@ -60,8 +68,7 @@ use yii\widgets\ActiveForm;
         ],
     ])->label('Tashkilot');
 
-    //    $form->field($model, 'company_id')->dropDownList()        ?>
-
+    //    $form->field($model, 'company_id')->dropDownList()         ?>
     <?=
     $form->field($model, 'role')->widget(Select2::classname(), [
         'data' => \common\models\Employ::getRole(),
@@ -76,13 +83,7 @@ use yii\widgets\ActiveForm;
         ],
     ])->label('lavozim');
 
-    //    $form->field($model, 'role')->dropDownList(\common\models\Employ::getRole())  ?>
-
-    <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'type')->textInput() ?>
-
-    <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
-
+    //    $form->field($model, 'role')->dropDownList(\common\models\Employ::getRole())   ?>
     <?=
     $form->field($model, 'photo')->widget(FileInput::classname(), [
         'options' => ['accept' => 'image/*'],
@@ -90,8 +91,13 @@ use yii\widgets\ActiveForm;
             'maxFileSize' => 1800,
             'initialPreviewAsData' => true,
         ]
-    ]);
-    //    $form->field($model, 'photo')->textInput(['maxlength' => true])   ?>
+    ]); ?>
+    <?= $form->field($model, 'telegram')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'facebook')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'other')->textInput(['maxlength' => true]) ?>
+
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
