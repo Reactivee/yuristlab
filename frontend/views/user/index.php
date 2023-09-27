@@ -407,7 +407,6 @@ use yii\bootstrap4\Html;
                                             <!--                                            </p>-->
                                         </li>
                                     <? } ?>
-
                                 </ul>
                             </div>
                         </div>

@@ -83,7 +83,7 @@ class EmploySearch extends Employ
         $query = Employ::find()
             ->where(['role' => Employ::LAWYER]);
 
-//        dd($params);
+
         if ($params['slug']) {
             $query->andWhere(['id' => $params['slug']]);
         }
@@ -92,8 +92,8 @@ class EmploySearch extends Employ
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
+
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails

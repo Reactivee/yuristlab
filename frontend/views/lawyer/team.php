@@ -14,16 +14,16 @@
                         </a>
                         <div class="pic">
                             <img src="/frontend/web<?= $item->photo ?>" alt="image"/>
-                            <ul class="social">
-                                <li><a href="#" class="fab fa-facebook"></a></li>
-                                <li><a href="#" class="fab fa-google-plus"></a></li>
-                                <li><a href="#" class="fab fa-instagram"></a></li>
-                                <li><a href="#" class="fab fa-linkedin"></a></li>
-                            </ul>
+<!--                            <ul class="social">-->
+<!--                                <li><a href="#" class="fab fa-facebook"></a></li>-->
+<!--                                <li><a href="#" class="fab fa-google-plus"></a></li>-->
+<!--                                <li><a href="#" class="fab fa-instagram"></a></li>-->
+<!--                                <li><a href="#" class="fab fa-linkedin"></a></li>-->
+<!--                            </ul>-->
                         </div>
                         <div class="team-content">
                             <h3 class="title"><?= $item->first_name . ' ' . $item->last_name ?></h3>
-                            <span class="post">Web Developer</span>
+                            <span class="post">Yurist</span>
                         </div>
                     </div>
 

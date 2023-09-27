@@ -91,9 +91,12 @@ class AboutEmploy extends \yii\db\ActiveRecord
         return $keys;
     }
 
-    public static function getInfo($key)
+    public static function getInfo($key, $id = null)
     {
-        $id = Yii::$app->user->identity->employ->id;
+
+        if (!$id)
+            $id = Yii::$app->user->identity->employ->id;
+
         if ($id) {
 
             $about = AboutEmploy::find()

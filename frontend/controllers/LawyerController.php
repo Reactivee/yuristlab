@@ -133,18 +133,12 @@ class LawyerController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionLawyers($slug = null)
+    public function actionLawyers()
     {
 
         $search = new EmploySearch();
 
         $dataProvider = $search->searchLawyer($this->request->queryParams);
-
-        if ($slug)
-            return $this->redirect('team_profile', [
-                'models' => $dataProvider->models,
-            ]);
-
 
         return $this->render('team', [
             'dataProvider' => $dataProvider,
@@ -156,14 +150,13 @@ class LawyerController extends Controller
     {
 
         $search = Employ::find()->where(['first_name' => $slug])->one();
+
         $form = new UserForm();
         $about = AboutEmploy::find()->where(['employ_id' => $search->id])->all();
+
         if (empty($about))
             $about = [new AboutEmploy()];
-        if (Yii::$app->request->post()) {
-            $form->load(Yii::$app->request->post());
-            $form->changeUserPassword();
-        }
+
 
         return $this->render('team_profile', [
             'models' => $search,

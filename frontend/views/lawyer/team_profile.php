@@ -1,6 +1,7 @@
 <?php
 /** @var \common\models\Employ $models */
 
+use common\models\user\AboutEmploy;
 use kartik\date\DatePicker;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
@@ -15,11 +16,11 @@ use yii\bootstrap4\Html;
         <div class="col-12 ">
             <div class="card-body text-center">
                 <div>
-                    <img src="https://www.lhh.com/us/en/-/media/lhh_rd/insights-images/licensed-images/08-shutterstock_772074559.jpg?h=333&w=500&hash=83509936180EF9DE39C4FC68020AFA9E"
+                    <img src="<?= $models->photo ?>"
                          class="mb-3 img-lg rounded" alt="profile image">
-                    <h2>Nizomov Doniyor Isomutdin o’g’li</h2>
-                    <h5 class="my-2 mr-2 text-muted">Uzbekistan</h5>
-                    <p class="mb-0 text-success font-weight-bold">“Yurist Lab” loyihasi asoschisi</p>
+                    <h2><?= $models->first_name . ' ' . $models->last_name ?>  </h2>
+                    <h5 class="my-2 mr-2 text-muted"><?= $models->company->name_uz ?></h5>
+                    <p class="mb-0 mt-2 text-success font-weight-bold"><?= $models->desc ?> </p>
                 </div>
             </div>
             <hr>
@@ -31,7 +32,7 @@ use yii\bootstrap4\Html;
                 <h4 class="card-title mt-2 mr-2"> Manzili:</h4>
                 <div class="d-flex align-items-center">
                     <h5 class="text-muted p-0 mt-1">
-                        1996-yil 28-noyabrda Jizzax shahrida tug’ilgan</h5>
+                        <?= $models->address ?></h5>
                 </div>
             </div>
 
@@ -47,7 +48,7 @@ use yii\bootstrap4\Html;
                 <i class="mdi mdi-av-timer icon-md "></i>
                 <h4 class="card-title mt-2">Yosh:</h4>
                 <div class="d-flex mt-0 align-items-center">
-                    <h5 class="p-0 ml-2 mt-1 text-muted">28</h5>
+                    <h5 class="p-0 ml-2 mt-1 text-muted"><?= $models->age ?></h5>
                 </div>
             </div>
             <div class="d-flex align-items-center">
@@ -62,16 +63,17 @@ use yii\bootstrap4\Html;
         <div class="col-12">
             <hr>
             <div class="d-flex">
-                <a href="#" class="btn btn-social-icon-text btn-linkedin mr-3">
+                <a href="<?= $models->telegram ?>" class="btn btn-social-icon-text btn-linkedin mr-3">
                     <i class="mdi mdi-telegram"></i>Telegram
                 </a>
-                <a href="#" class="btn btn-social-icon-text btn-dribbble mr-3">
+                <a href="<?= $models->instagram ?>" class="btn btn-social-icon-text btn-dribbble mr-3">
                     <i class="mdi mdi-instagram"></i>Instagram
                 </a>
-                <a href="#" class="btn btn-social-icon-text btn-facebook mr-3"><i
+                <a href="<?= $models->facebook ?>" class="btn btn-social-icon-text btn-facebook mr-3"><i
                             class="mdi mdi-facebook"></i>Facebook
                 </a>
-                <a href="#" class="btn btn-social-icon-text btn-google mr-3"><i class="mdi mdi-google-plus"></i>Google
+                <a href="<?= $models->other ?>" class="btn btn-social-icon-text btn-google mr-3 ">
+                    <i class="mdi mdi-google-plus"></i>Google
                 </a>
             </div>
             <hr>
@@ -82,7 +84,7 @@ use yii\bootstrap4\Html;
                 <div class="accordion" id="accordion" role="tablist">
 
                     <div class="card">
-                        <div class="card-header" role="tab" id="heading-1">
+                        <div class="card-header show active" role="tab" id="heading-1">
                             <h6 class="mb-0">
                                 <a data-toggle="collapse" href="#collapse-1" aria-expanded="false"
                                    aria-controls="collapse-1" class="collapsed">
@@ -91,35 +93,18 @@ use yii\bootstrap4\Html;
                                 </a>
                             </h6>
                         </div>
-                        <div id="collapse-1" class="collapse" role="tabpanel" aria-labelledby="heading-1"
+                        <div id="collapse-1" class="collapse show" role="tabpanel" aria-labelledby="heading-1"
                              data-parent="#accordion" style="">
                             <div class="card-body">
                                 <!--                            <h4 class="card-title">Updates</h4>-->
                                 <ul class="bullet-line-list">
-                                    <li>
-                                        <h6>2020-2020-yillarda “Kvant Group Enterprise”MCHJ</h6>
-                                        <p>Yurist</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            3 yil oldin
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>2021-H.Q Jizzax shahar Adliya bo’limida </h6>
-                                        <p>Bosh yuriskonsult</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            2 yil oldin
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>Promotion</h6>
-                                        <p>Lorem Ipsum is simply dummy text of the printing </p>
-                                        <p class="text-muted">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            7 months ago.
-                                        </p>
-                                    </li>
+                                    <? $info = AboutEmploy::getInfo(AboutEmploy::WORK_PLACE, $models->id) ?>
+                                    <? foreach ($info as $item) { ?>
+                                        <li>
+                                            <h6><?= $item->name_uz ?></h6>
+                                            <p><?= $item->text_uz ?></p>
+                                        </li>
+                                    <? } ?>
                                 </ul>
                             </div>
                         </div>
@@ -140,23 +125,18 @@ use yii\bootstrap4\Html;
                             <div class="card-body">
                                 <!--                            <h4 class="card-title">Updates</h4>-->
                                 <ul class="bullet-line-list">
-                                    <li>
-                                        <h6>Toshkent davlat Yuridik unversiteti </h6>
-                                        <p>Bakalavr bitiruvchisi 2017-2021 yillar</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            2 yil oldin
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <h6>Toshkent davlat Yuridik unversiteti </h6>
-                                        <p>Magistratura bitiruvchisi 2024-2025 yillar</p>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            <!--                                        2 yil oldin-->
-                                        </p>
-                                    </li>
+                                    <? $info = AboutEmploy::getInfo(AboutEmploy::EDU, $models->id) ?>
 
+                                    <? foreach ($info as $item) { ?>
+                                        <li>
+                                            <h6><?= $item->name_uz ?></h6>
+                                            <p><?= $item->text_uz ?></p>
+                                            <!--                                            <p class="text-muted mb-4">-->
+                                            <!--                                                <i class="mdi mdi-clock-outline"></i>-->
+                                            <!--                                                3 yil oldin-->
+                                            <!--                                            </p>-->
+                                        </li>
+                                    <? } ?>
                                 </ul>
                             </div>
                         </div>
@@ -201,15 +181,16 @@ use yii\bootstrap4\Html;
                         <div id="collapse-4" class="collapse" role="tabpanel" aria-labelledby="heading-4"
                              data-parent="#accordion">
                             <div class="card-body">
-                                <div class="badge badge-success badge-pill m-3 ">Video montaj</div>
-                                <div class="m-2 badge badge-success badge-pill">Adobe After effec</div>
-                                <div class="m-2 badge badge-success badge-pill">Adobe Photoshop</div>
-                                <div class="m-2 badge badge-success badge-pill">Ingliz tilida erkin muloqot qilish</div>
-                                <p class="text-success">
-                                    <i class="mdi mdi-alert-octagon mr-2"></i>If the problem persists, you can
-                                    contact our
-                                    support.
-                                </p>
+                                <?
+                                $parts = preg_split('/\s+/', $models->hobby);
+                                if ($parts) {
+                                    foreach ($parts as $word) {
+                                        ?>
+                                        <h2 class="badge badge-success badge-pill mr-2"><?= $word ?></h2>
+                                        <?
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -228,13 +209,18 @@ use yii\bootstrap4\Html;
                              data-parent="#accordion">
                             <div class="card-body">
                                 <ul class="bullet-line-list">
-                                    <li>
-                                        <h6>2022-yilda 3-darajali Yurist</h6>
-                                        <p class="text-muted mb-4">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                            2 yil oldin
-                                        </p>
-                                    </li>
+                                    <? $info = AboutEmploy::getInfo(AboutEmploy::WORK_EXP,$models->id) ?>
+
+                                    <? foreach ($info as $item) { ?>
+                                        <li>
+                                            <h6><?= $item->name_uz ?></h6>
+                                            <p><?= $item->text_uz ?></p>
+                                            <!--                                            <p class="text-muted mb-4">-->
+                                            <!--                                                <i class="mdi mdi-clock-outline"></i>-->
+                                            <!--                                                3 yil oldin-->
+                                            <!--                                            </p>-->
+                                        </li>
+                                    <? } ?>
                                 </ul>
                             </div>
                         </div>
@@ -354,12 +340,9 @@ use yii\bootstrap4\Html;
                     <!--                        --><? //= Html::button('Saqlash', ['class' => 'btn btn-success mt-2']) ?>
                     <!--                    </form>-->
                     <div class="col-md-12">
-                        <?php $dynform = ActiveForm::begin([
-                            'id' => 'dynamic-form',
-                            'action' => '/lawyer/about-employ'
-                        ]); ?>
-                        <?php DynamicFormWidget::begin([
-                            'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+                        <?php $dynform = ActiveForm::begin(['id' => 'dynamic-form',
+                            'action' => '/lawyer/about-employ']); ?>
+                        <?php DynamicFormWidget::begin(['widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                             'widgetBody' => '.container-items', // required: css class selector
                             'widgetItem' => '.item', // required: css class
                             'limit' => 50, // the maximum times, an element can be cloned (default 999)
@@ -368,15 +351,12 @@ use yii\bootstrap4\Html;
                             'deleteButton' => '.remove-item', // css class
                             'model' => $about[0],
                             'formId' => 'dynamic-form',
-                            'formFields' => [
-                                'name_uz',
+                            'formFields' => ['name_uz',
                                 'name_ru',
                                 'text_ru',
                                 'text_uz',
                                 'begin_date',
-                                'end_date',
-                            ],
-                        ]); ?>
+                                'end_date',],]); ?>
                         <!--Working place -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -400,27 +380,33 @@ use yii\bootstrap4\Html;
 
                                             <div class="panel-body">
                                                 <?php if (!$item->isNewRecord) {
-                                                    echo Html::activeHiddenInput($item, "[{$i}]id");
+                                                    echo Html::activeHiddenInput($item, "[{
+                                            $i
+                                            }]id");
                                                 }
 
                                                 ?>
 
                                                 <div class="row mt-3">
                                                     <div class="col-sm-12">
-                                                        <?= $dynform->field($item, "[{$i}]key")
+                                                        <?= $dynform->field($item, "[{
+                                                    $i
+                                                    }]key")
                                                             ->dropdownList($item->getKeys())
                                                             ->label('Yo\'nalish') ?>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        <?= $dynform->field($item, "[{$i}]name_uz")
-                                                            ->textInput(['maxlength' => true, ['inputOptions' => [
-                                                                'autocomplete' => 'off']]])
+                                                        <?= $dynform->field($item, "[{
+                                                    $i
+                                                    }]name_uz")
+                                                            ->textInput(['maxlength' => true, ['inputOptions' => ['autocomplete' => 'off']]])
                                                             ->label('Ishlagan joy') ?>
                                                     </div>
                                                     <div class="col-sm-12">
-                                                        <?= $dynform->field($item, "[{$i}]text_uz")
-                                                            ->textInput(['maxlength' => true, ['inputOptions' => [
-                                                                'autocomplete' => 'off']]])
+                                                        <?= $dynform->field($item, "[{
+                                                    $i
+                                                    }]text_uz")
+                                                            ->textInput(['maxlength' => true, ['inputOptions' => ['autocomplete' => 'off']]])
                                                             ->label('Lavozim') ?>
                                                     </div>
 
@@ -436,8 +422,7 @@ use yii\bootstrap4\Html;
                         <?php DynamicFormWidget::end(); ?>
                         <div class="col-sm-12 m-0 p-0">
                             <?= $dynform->field($item, "text")
-                                ->textInput(['maxlength' => true, ['inputOptions' => [
-                                    'autocomplete' => 'off']]])
+                                ->textInput(['maxlength' => true, ['inputOptions' => ['autocomplete' => 'off']]])
                                 ->label('Hobbilar') ?>
                         </div>
                         <div class="form-group">
