@@ -21,7 +21,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
-
 }
 
 .login_form {
@@ -299,6 +298,12 @@
     left: auto;
     bottom: -100%;
     right: -4%;
+}
+.team_card{
+    -webkit-box-shadow: -1px 3px 31px -13px rgba(34, 60, 80, 0.27);
+    -moz-box-shadow: -1px 3px 31px -13px rgba(34, 60, 80, 0.27);
+    box-shadow: -1px 3px 31px -13px rgba(34, 60, 80, 0.27);
+    border-radius: 20px;
 }
 
 /*.our-team:hover .pic:before {*/

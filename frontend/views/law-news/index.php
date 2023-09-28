@@ -5,7 +5,7 @@ $models = $dataProvider->models;
 ?>
 <div class="container-fluid px-5">
 
-    <div class="title my-5">
+    <div class="title my-3">
         <h2 class="">Qonunchilik sohalari</h2>
     </div>
     <div class="row">
