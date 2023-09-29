@@ -11,7 +11,7 @@ function refreshFilesBlock(e) {
     $.get('/create/get-file', {id: id}, function (data) {
         if (data !== null) {
             let path = document.getElementById('maindocument-path')
-            console.log(data)
+
             $.pjax.reload({url: url, container: '#files_block', async: false});
             // path.value = data
 
@@ -23,6 +23,7 @@ function refreshFilesBlock(e) {
             alert('We\'re sorry but we couldn\'t load the the location data!');
         }
     });
+
 }
 
 function PreviewWordDoc() {
@@ -53,4 +54,49 @@ function PlayLoader() {
     let loader = document.querySelector('.preloader');
     loader.style.display = 'flex';
 }
+
+var canvas = document.getElementById('signature-pad');
+
+// // Adjust canvas coordinate space taking into account pixel ratio,
+// // to make it look crisp on mobile devices.
+// // This also causes canvas to be cleared.
+// function resizeCanvas() {
+//     // When zoomed out to less than 100%, for some very strange reason,
+//     // some browsers report devicePixelRatio as less than 1
+//     // and only part of the canvas is cleared then.
+//     var ratio = Math.max(window.devicePixelRatio || 1, 1);
+//     canvas.width = canvas.offsetWidth * ratio;
+//     canvas.height = canvas.offsetHeight * ratio;
+//     canvas.getContext("2d").scale(ratio, ratio);
+// }
+//
+// window.onresize = resizeCanvas;
+// resizeCanvas();
+
+var signaturePad = new SignaturePad(canvas, {
+    backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+});
+
+document.getElementById('save-png').addEventListener('click', function () {
+    if (signaturePad.isEmpty()) {
+        return alert("Please provide a signature first.");
+    }
+    var data = signaturePad.toDataURL('image/png');
+    console.log(data)
+    $.ajax({
+        url: "/user/get-signture",
+        type: "POST",
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        timeout: 60000
+    }).done(function () {
+        alert("jonatildi")
+    });
+});
+
+document.getElementById('clear').addEventListener('click', function () {
+    signaturePad.clear();
+});
 

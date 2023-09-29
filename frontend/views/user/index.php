@@ -311,9 +311,18 @@ use yii\bootstrap4\Html;
                     </a>
                 </li>
             </ul>
+            <div class=" mb-3">
+                <canvas id="signature-pad" class="signature-pad" width=350 height=200></canvas>
+
+            </div>
+            <button class="btn btn-success mb-3" id="save-png">Save as PNG</button>
+            <button class="btn btn-danger mb-3" id="clear">Clear</button>
         </div>
 
         <div class="col-md-9 tab-content ">
+
+
+
             <div class="tab-pane fade active show" id="home-2">
                 <div class="accordion" id="accordion" role="tablist">
 
@@ -582,6 +591,7 @@ use yii\bootstrap4\Html;
                         ])->label('Rasm yuklash');
                         ?>
                     </div>
+
 
                     <div class="form-group col-12">
                         <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>

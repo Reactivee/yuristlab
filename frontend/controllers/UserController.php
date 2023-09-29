@@ -22,6 +22,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -384,5 +385,30 @@ class UserController extends Controller
         }
         return false;
 
+    }
+
+    public function actionGetSignture()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $data = Yii::$app->request->post();
+
+        $bin = base64_decode($data);
+        $size = getImageSizeFromString($bin);
+        $ext = substr($size['mime'], 6);
+
+// Make sure that you save only the desired file extensions
+        if (!in_array($ext, ['png', 'gif', 'jpeg'])) {
+            die('Unsupported image type');
+        }
+        // Specify the location where you want to save the image
+        $img = Yii::getAlias('@frontend') . '/web/uploads/employ/asdasaa.png';
+
+        $img_file = $img . $ext;
+
+// Save binary data as raw data (that is, it will not remove metadata or invalid contents)
+// In this case, the PHP backdoor will be stored on the server
+        file_put_contents($img_file, $bin);
+
+        return Yii::$app->request->post();
     }
 }

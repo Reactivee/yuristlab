@@ -6,7 +6,18 @@ use kartik\select2\Select2;
 
 $group = GroupDocuments::find()->all();
 $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
+$user = Yii::$app->user->identity->employ;
+$count_lawyer = 0;
+$count_moderator = 0;
+if ($user && $user->role == \common\models\Employ::LAWYER)
+    $count_lawyer = \common\models\documents\MainDocument::find()
+        ->where(['user_id' => $user->id, 'status' => \common\models\documents\MainDocument::SIGNING])
+        ->count();
 
+if ($user && $user->role == \common\models\Employ::MODERATOR)
+    $count_moderator = \common\models\documents\MainDocument::find()
+        ->where(['user_id' => $user->id, 'status' => \common\models\documents\MainDocument::EDITED])
+        ->count();
 ?>
 
 <!-- partial:partials/_sidebar.html -->
@@ -92,6 +103,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                     <i class="mdi mdi-human-child menu-icon"></i>
                     <span class="menu-title">Xodim</span>
                     <i class="menu-arrow"></i>
+
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
@@ -109,6 +121,7 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                    aria-controls="ui-advanced">
                     <i class="mdi mdi-scale-balance menu-icon"></i>
                     <span class="menu-title">Yurist</span>
+                    <div class="badge badge-pill badge-danger"><?= $count_lawyer ?? '' ?></div>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-advanced">
@@ -166,6 +179,8 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                    aria-controls="ui-template">
                     <i class="mdi mdi-settings menu-icon"></i>
                     <span class="menu-title">Moderator</span>
+                    <div class="badge badge-pill badge-danger"><?= $count_moderator ?? '' ?></div>
+
                     <i class="menu-arrow"></i>
                 </a>
             </li>
