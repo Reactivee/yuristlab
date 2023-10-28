@@ -241,15 +241,19 @@ if (!empty($model->lawyer_conclusion_path)) {
 
             <?
             if ($model->category && !$model->conclusion_uz) {
-                $form = ActiveForm::begin();
                 if ($model->status == MainDocument::EDITED || $model->status == MainDocument::SIGNING) {
+                    $form = ActiveForm::begin();
+
                     echo $form->field($model, 'conclusion_uz')->textarea(['rows' => 6])->label('Xulosa') ?>
                     <div class="form-group">
                         <?= Html::submitButton('Xulosa saqlash', ['class' => 'btn btn-success']) ?>
                     </div>
-                <? } ?>
 
-                <?php ActiveForm::end();
+                    <?
+                    ActiveForm::end();
+                } ?>
+
+                <?php
             } ?>
         </div> <!--end row-->
     </div> <!--end card body-->
@@ -285,7 +289,9 @@ if (!empty($model->lawyer_conclusion_path)) {
                             </div>
                         </div>
                     <? } ?>
-                    <? if ($model->status == MainDocument::SIGNING) {
+                    <?
+
+                    if ($model->group->key == 'ariza' && $model->status == MainDocument::SIGNING) {
                         echo Html::a('<i class="mdi mdi-file-document mr-2"></i> Davo ariza biriktirish',
                             ['/lawyer/doc-template', 'id' => $model->id],
                             ['class' => 'btn btn-primary mt-3']) ?>
