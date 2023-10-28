@@ -66,6 +66,7 @@ $initialPreviewConfig = [];
                 <div class="col-md-4">
                     <? echo $form->field($main, 'sub_category_id')->widget(DepDrop::classname(), [
                         'type' => DepDrop::TYPE_SELECT2,
+
                         'options' => ['id' => 'sub_category_id', 'placeholder' => 'Sub kategoriya', 'class' => 'color_gray'],
                         'pluginOptions' => [
                             'depends' => ['category_id'],
@@ -144,8 +145,6 @@ $initialPreviewConfig = [];
             </div>
         </div>
     <? } ?>
-
-
 
     </div>
 
