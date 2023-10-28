@@ -1,6 +1,7 @@
 <?php
 
 use common\models\documents\GroupDocuments;
+use common\models\Employ;
 use yii\helpers\Html;
 
 $group = GroupDocuments::find()->all();
@@ -53,7 +54,13 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 
         <? } else { ?>
             <span class="font-weight-bold text-warning mx-2">Lavozim:</span>
-            <span class="font-weight-bold text-success "> <?= \common\models\Employ::getRole(Yii::$app->user->identity->employ->role); ?></span>
+
+            <span class=" text-warning "> <?= Employ::getRole(Yii::$app->user->identity->employ->role); ?>,
+            </span>
+            <? if (Yii::$app->user->identity->employ->company) { ?>
+                <span class="font-weight-bold  ml-2"> Tashkilot: </span>
+                <span class=""> <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
+            <? } ?>
 
         <? } ?>
         <ul class="navbar-nav navbar-nav-right">

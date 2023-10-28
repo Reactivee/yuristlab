@@ -1,6 +1,7 @@
 <?php
 
 use common\models\documents\MainDocument;
+use frontend\widgets\AllViewer;
 use kartik\file\FileInput;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Modal;
@@ -82,10 +83,10 @@ if (!empty($model->attach)) {
                 <? } ?>
 
                 <?
-//
-//                if (!$model->signed_lawyer && $model->status == MainDocument::BOSS_SIGNED) { ?>
-<!--                    --><?//= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
-<!--                --><?// } ?>
+                //
+                //                if (!$model->signed_lawyer && $model->status == MainDocument::BOSS_SIGNED) { ?>
+                <!--                    --><?//= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
+                <!--                --><?// } ?>
                 <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
                     <!--                    --><? //= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'ml-2 btn btn-outline-primary btn-icon-text']); ?>
                     <?= Html::a(' <i class="fas fa-trash"></i> O\'chirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2 ']) ?>
@@ -115,6 +116,7 @@ if (!empty($model->attach)) {
                     Xujjat yuborilgan !
                 </div>
             <? } ?>
+
             <? if ($model->step == MainDocument::STEP_BOSS_FINISH) { ?>
                 <div class="alert alert-fill-success" role="alert">
                     <i class="mdi mdi-alert-circle"></i>
@@ -123,145 +125,62 @@ if (!empty($model->attach)) {
             <? } ?>
 
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Xujjat kodi:
-                        <span class="text-danger"> <?= $model->code_document ?></span>
-                    </h4>
-                    <h4 class="card-title">Xujjat nomi: <span class="lead text-primary font-weight-bolder">
-                    <?= $model->name_uz ?>
-                </span></h4>
+                <?= AllViewer::widget([
+                    'model' => $model
+                ]) ?>
 
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <span class="font-weight-bold card-title">Xujjat bo'limi</span>
-                            <p class="text-success font-weight-bold card-title">
-                                <?= $model->group->name_uz ?>
-                            </p>
-                            <? if ($model->category) { ?>
-                                <span class="font-weight-bold   card-title">Xujjat turi</span>
-                                <p class="text-success font-weight-bold card-title">
-                                    <?= $model->category->name_uz ?>
-                                </p>
-                                <span class="font-weight-bold card-title">Yo'nalish</span>
-                                <p class="text-success font-weight-bold card-title">
-                                    <?= $model->subCategory->name_uz; ?>
-                                </p>
-                                <span class="font-weight-bold card-title ">Turkumi</span>
-                                <p class="text-success font-weight-bold card-title">
-                                    <?= $model->type->name_uz; ?>
-                                </p>
-                            <? } ?>
+                <div class="">
+                    <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
+                        <div class="col-md-12 mt-4">
+                            <h5 class="font-weight-bold card-title">Ilovalar</h5>
+                            <? $flag = $model->status != MainDocument::NEW ? true : false;
+                            echo FileInput::widget(['name' => 'attached',
+                                'id' => 'file_input',
+                                'options' => ['multiple' => true],
+                                'disabled' => $flag,
+                                'messageOptions' => ['class' => 'alert alert-warning'],
+                                'pluginOptions' => [
+                                    'allowedFileExtensions' => ["jpg", "png", "docx", 'doc', 'pdf'],
+                                    'uploadUrl' => Url::to(['upload-docs', 'id' => $model->id]),
+                                    'deleteUrl' => Url::to(['delete-docs']),
+                                    'previewFileType' => 'image',
+                                    'elCaptionText' => '#customCaption',
+                                    'showCancel' => false,
+                                    'showCaption' => false,
+                                    'showUpload' => false,
+                                    'maxFileSize' => 1000,
+                                    'maxFileCount' => 10,
+                                    'browseIcon' => '<i class="fas fa-upload mr-2"></i> ',
+                                    'browseLabel' => 'Fayl yuklash',
+                                    'mainClass' => 'input-group-ms',
+                                    'overwriteInitial' => true,
+                                    'initialPreview' => $initialPreviewDocs,
+                                    'initialPreviewAsData' => true,
+                                    'initialPreviewDownloadUrl' => Url::base('http') . '/frontend' . $item->path,
+                                    'previewFileIcon' => '<i class="fa fa-file"></i>',
+                                    'allowedPreviewTypes' => null, // set to empty, null or false to disable preview for all types
+                                    'initialPreviewConfig' => $initialPreviewConfigDocs,
+                                    'browseClass' => 'btn btn-success',
+                                    'uploadClass' => 'btn btn-info',
+                                    'removeClass' => 'btn btn-danger',
+                                    'removeIcon' => '<i class="fas fa-trash"></i> ',
+                                    'fileActionSettings' => [
+                                        'downloadIcon' => '<i class="fa fa-download" aria-hidden="true"></i>',
+                                        'removeIcon' => '<i class="fa fa-trash"></i>',
+                                        'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
+                                        'zoomIcon' => '<i class="fa fa-search-plus"></i>',
+                                        'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',],
+                                    'previewFileIconSettings' => [
+                                        'docx' => '<i class="fas fa-file-word"></i>',
+                                        'pdf' => '<i class="fas fa-file-word"></i>',
+                                        'xls' => '<i class="fas fa-file-word"></i>',
+                                        'doc' => '<i class="fas fa-file-word"></i>',
+                                    ],
+                                ]]);
+                            ?>
                         </div>
-                        <div class="col-md-6">
-                            <span class="font-weight-bold card-title">Xujjat Yaratilgan sana</span>
-                            <p class="text-success font-weight-bold card-title">
-                                <?= date('d-m-Y  h:i:s', $model->created_at) ?>
-                            </p>
-                            <span class="font-weight-bold card-title">Xujjat yaratgan  shaxs</span>
-                            <p class="text-warning font-weight-bold card-title">
-
-                                <?= $model->employ->first_name . ' ' . $model->employ->last_name ?>
-                            </p>
-                            <span class="font-weight-bold card-title">Status</span>
-                            <p class="text-primary font-weight-bold card-title">
-                                <?= MainDocument::getStatusNameColored($model->status); ?>
-                            </p>
-                            <? if ($model->status == MainDocument::REJECTED) { ?>
-                                <span class="font-weight-bold card-title">Yurist xulosasi</span>
-                                <br>
-                                <p class="text-white badge badge-danger badge-pill font-weight-bold card-title "><?= $model->conclusion_uz ?></p>
-                            <? } ?>
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <span class="font-weight-bold card-title">Qisqa mazmuni</span>
-                            <h4 class="text-success font-weight-bold">
-                                <?= $model->doc_about ?>
-                            </h4>
-                            <hr>
-                        </div>
-
-                        <div class="col-md-4 mt-4">
-                            <h5 class="font-weight-bold card-title">Asosiy xujjat</h5>
-                            <div class="card">
-                                <div class="card-body ">
-                                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-
-                                        <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
-                                            ['doc-template', 'id' => $model->id], ['target' => '_blank']); ?>
-                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                            <a target="_blank" href="/frontend/web<?= $model->path ?>"
-                                               class="mb-0 text-warning font-weight-bold ">
-                                                <i class="fa fa-cloud-download mr-1"></i>
-                                                Ko'chirib olish</a>
-                                            <p class="text-muted mb-1">
-                                                <?
-                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->path)) {
-                                                    $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->path);
-                                                    echo human_filesize($size, 3);
-                                                } ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
-                            <div class="col-md-12 mt-4">
-                                <h5 class="font-weight-bold card-title">Ilovalar</h5>
-                                <? $flag = $model->status != MainDocument::NEW ? true : false;
-                                echo FileInput::widget(['name' => 'attached',
-                                    'id' => 'file_input',
-                                    'options' => ['multiple' => true],
-                                    'disabled' => $flag,
-                                    'messageOptions' => ['class' => 'alert alert-warning'],
-                                    'pluginOptions' => [
-                                        'allowedFileExtensions' => ["jpg", "png", "docx", 'doc', 'pdf'],
-                                        'uploadUrl' => Url::to(['upload-docs', 'id' => $model->id]),
-                                        'deleteUrl' => Url::to(['delete-docs']),
-                                        'previewFileType' => 'image',
-                                        'elCaptionText' => '#customCaption',
-                                        'showCancel' => false,
-                                        'showCaption' => false,
-                                        'showUpload' => false,
-                                        'maxFileSize' => 1000,
-                                        'maxFileCount' => 10,
-                                        'browseIcon' => '<i class="fas fa-upload mr-2"></i> ',
-                                        'browseLabel' => 'Fayl yuklash',
-                                        'mainClass' => 'input-group-ms',
-                                        'overwriteInitial' => true,
-                                        'initialPreview' => $initialPreviewDocs,
-                                        'initialPreviewAsData' => true,
-                                        'initialPreviewDownloadUrl' => Url::base('http') . '/frontend' . $item->path,
-                                        'previewFileIcon' => '<i class="fa fa-file"></i>',
-                                        'allowedPreviewTypes' => null, // set to empty, null or false to disable preview for all types
-                                        'initialPreviewConfig' => $initialPreviewConfigDocs,
-                                        'browseClass' => 'btn btn-success',
-                                        'uploadClass' => 'btn btn-info',
-                                        'removeClass' => 'btn btn-danger',
-                                        'removeIcon' => '<i class="fas fa-trash"></i> ',
-                                        'fileActionSettings' => [
-                                            'downloadIcon' => '<i class="fa fa-download" aria-hidden="true"></i>',
-                                            'removeIcon' => '<i class="fa fa-trash"></i>',
-                                            'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
-                                            'zoomIcon' => '<i class="fa fa-search-plus"></i>',
-                                            'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',],
-                                        'previewFileIconSettings' => [
-                                            'docx' => '<i class="fas fa-file-word"></i>',
-                                            'pdf' => '<i class="fas fa-file-word"></i>',
-                                            'xls' => '<i class="fas fa-file-word"></i>',
-                                            'doc' => '<i class="fas fa-file-word"></i>',
-                                        ],
-                                    ]]);
-                                ?>
-                            </div>
-                        <? } ?>
-                    </div>
-
-                </div> <!--end row-->
+                    <? } ?>
+                </div>
                 <? if ($model->status != MainDocument::NEW || $model->status != MainDocument::REJECTED) { ?>
                     <? if ($model->attach) { ?>
 

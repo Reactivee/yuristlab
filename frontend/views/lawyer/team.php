@@ -6,7 +6,7 @@
         <?
         foreach ($dataProvider->models as $item) {
             ?>
-            <div class="col-md-11 m-auto">
+            <div class="col-md-11 ml-auto mr-auto mb-4">
                 <div class="team_card">
                     <div class="team_card card-body ">
                         <div class="d-flex align-items-center w-100 ">

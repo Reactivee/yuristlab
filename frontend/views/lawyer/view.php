@@ -127,12 +127,14 @@ if (!empty($model->lawyer_conclusion_path)) {
                     <? } ?>
 
                 </div>
+
                 <div class="col-md-12">
                     <span class="font-weight-bold card-title">Qisqa mazmuni</span>
                     <p class="text-warning font-weight-bold card-title">
                         <?= $model->doc_about ?>
                     </p>
                     <hr>
+
                     <? if ($model->conclusion_uz) { ?>
 
                         <span class="font-weight-bold card-title">Yurist xulosasi</span>
@@ -197,7 +199,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                             </div>
                         </div>
                     </div>
-                    <input type="">
+
                 </div>
 
                 <? if ($files) {
@@ -256,6 +258,7 @@ if (!empty($model->lawyer_conclusion_path)) {
                 <?php
             } ?>
         </div> <!--end row-->
+
     </div> <!--end card body-->
     <div class="card mt-4">
         <div class="card-body">
