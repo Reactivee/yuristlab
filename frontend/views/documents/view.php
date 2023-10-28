@@ -233,7 +233,7 @@ if (!empty($model->attach)) {
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                            <? echo Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                            <? echo Html::a('<img style="width: 90px" src="/images/main-file.png" alt="">',
                                                 ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']); ?>
                                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
                                                 <a target="_blank"

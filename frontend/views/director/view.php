@@ -89,32 +89,52 @@ if (!empty($model->attach)) {
                         <p class="text-success font-weight-bold card-title">
                             <?= $model->group->name_uz ?>
                         </p>
-                        <? if ($model->category) { ?>
+                    </div>
+
+                    <? if ($model->category) { ?>
+                        <div class="col-md-6">
                             <span class="font-weight-bold   card-title">Xujjat turi</span>
                             <p class="text-success font-weight-bold card-title">
                                 <?= $model->category->name_uz ?>
                             </p>
+                        </div>
+
+                    <? } ?>
+
+                    <? if ($model->category) { ?>
+                        <div class="col-md-6">
                             <span class="font-weight-bold card-title">Yo'nalish</span>
                             <p class="text-success font-weight-bold card-title">
                                 <?= $model->subCategory->name_uz; ?>
                             </p>
+                        </div>
+                    <? } ?>
+
+                    <? if ($model->category) { ?>
+                        <div class="col-md-6">
+
                             <span class="font-weight-bold card-title ">Turkumi</span>
                             <p class="text-success font-weight-bold card-title">
                                 <?= $model->type->name_uz; ?>
                             </p>
-                        <? } ?>
-                    </div>
+                        </div>
+
+                    <? } ?>
 
                     <div class="col-md-6">
                         <span class="font-weight-bold card-title">Xujjat Yaratilgan sana</span>
                         <p class="text-success font-weight-bold card-title">
                             <?= date('d-m-Y  h:i:s', $model->created_at) ?>
                         </p>
+                    </div>
+                    <div class="col-md-6">
                         <span class="font-weight-bold card-title">Xujjat yaratgan  shaxs</span>
                         <p class="text-warning font-weight-bold card-title">
 
                             <?= $model->employ->first_name . ' ' . $model->employ->last_name ?>
                         </p>
+                    </div>
+                    <div class="col-md-6">
                         <span class="font-weight-bold card-title">Status</span>
                         <p class="text-primary font-weight-bold card-title">
                             <?= MainDocument::getStatusNameColored($model->status); ?>
@@ -122,8 +142,9 @@ if (!empty($model->attach)) {
                         <? if ($model->step == MainDocument::STEP_BOSS_FINISH) { ?>
                             <span class="text-danger font-weight-bold">Jarayon yakunlangan !</span>
                         <? } ?>
-
                     </div>
+
+
                     <div class="col-md-12">
                         <span class="font-weight-bold card-title">Qisqa mazmuni</span>
                         <h3 class="text-primary font-weight-bold">
@@ -141,12 +162,12 @@ if (!empty($model->attach)) {
                     <hr>
 
                     <div class="col-md-6 mt-4">
-                        <h5 class="font-weight-bold card-title  ">Asosiy fayl</h5>
+                        <h5 class="font-weight-bold card-title">Asosiy fayl</h5>
                         <div class="card">
                             <div class="card-body ">
                                 <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                     <? if ($model->path) { ?>
-                                        <?= Html::a('<img style="width: 90px" src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="">',
+                                        <?= Html::a('<img style="width: 90px" src="/images/main-file.png" alt="">',
                                             ['/documents/doc-template', 'id' => $model->id], ['target' => '_blank']);
                                     } ?>
                                     <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
@@ -203,7 +224,7 @@ if (!empty($model->attach)) {
                                     <div class="card-body ">
                                         <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                             <? if ($model->path) { ?>
-                                                <?= Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
+                                                <?= Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
                                                     ['/frontend' . $file->path], ['target' => '_blank']);
                                             } ?>
                                             <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
@@ -249,7 +270,7 @@ if (!empty($model->attach)) {
                                 <div class="card-body ">
                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
                                         <?
-                                        echo Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
+                                        echo Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
                                             ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
                                         ?>
                                         <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
