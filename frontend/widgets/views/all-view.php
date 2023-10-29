@@ -83,7 +83,6 @@ use yii\helpers\Url;
 
         <? if ($model->status == MainDocument::REJECTED) { ?>
             <div class="col-md-6">
-
                 <span class="font-weight-bold card-title">Yurist xulosasi</span>
                 <br>
                 <p class="text-white badge badge-danger badge-pill font-weight-bold card-title "><?= $model->conclusion_uz ?></p>
@@ -91,7 +90,7 @@ use yii\helpers\Url;
 
         <? } ?>
 
-        <div class="col-md-12">
+        <div class="col-md-12 mt-3">
             <span class="font-weight-bold card-title">Qisqa mazmuni</span>
             <h4 class="text-success font-weight-bold">
                 <?= $model->doc_about ?>

@@ -145,7 +145,7 @@ if (!empty($model->attach)) {
                     </div>
 
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 mt-4">
                         <span class="font-weight-bold card-title">Qisqa mazmuni</span>
                         <h3 class="text-primary font-weight-bold">
                             <?= $model->doc_about ?>
