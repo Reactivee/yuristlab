@@ -101,7 +101,7 @@ class CreateController extends Controller
 
 //            $fileName = pathinfo($model->path, PATHINFO_FILENAME);
                 $fileExt = pathinfo($model->path, PATHINFO_EXTENSION);
-                $newName = $model->code_document . $generateName . '.docx' ;
+                $newName = $model->code_document . $generateName . '.docx';
                 $savePathDocs = $folder . $newName;
 
                 try {
@@ -122,8 +122,7 @@ class CreateController extends Controller
 
             if (!$model->save()) {
                 dd($model->errors);
-//                Yii::$app->session->setFlash('error', 'Xatolik');
-//                return $this->refresh();
+
             }
 
             $files = $model->saveFiles();
@@ -131,7 +130,6 @@ class CreateController extends Controller
             if ($files) {
                 Yii::$app->session->setFlash('success', 'Yuborildi');
                 return $this->redirect(['/documents/view/', 'id' => $model->id]);
-
             }
 
         }
@@ -149,7 +147,7 @@ class CreateController extends Controller
             if ($gr->path)
                 $model->path = $gr->path;
             $model->group_id = $gr->id;
-//            dd($model);
+
         }
 
 
@@ -191,8 +189,7 @@ class CreateController extends Controller
         return $data;
     }
 
-    public
-    function actionUpload()
+    public function actionUpload()
     {
         $request = \Yii::$app->request;
 

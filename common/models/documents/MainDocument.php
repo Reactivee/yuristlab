@@ -105,7 +105,7 @@ class MainDocument extends \yii\db\ActiveRecord
         $array = [
             self::NEW => '<div class=" badge badge-primary badge-pill">' . self::getStatusNameArr(self::NEW) . '</div>',
             self::EDITED => '<div class="badge badge-info badge-pill">' . self::getStatusNameArr(self::EDITED) . '</div>',
-            self::DELETED => '<div class="badge badge-danger badge-pill">' . self::getStatusNameArr(self::DELETED) . '/div>',
+            self::DELETED => '<div class="badge badge-danger badge-pill">' . self::getStatusNameArr(self::DELETED) . '</div>',
             self::NOTSEND => '<div class="badge badge-warning badge-pill">' . self::getStatusNameArr(self::NOTSEND) . '</div>',
             self::SUCCESS => '<div class="badge badge-success badge-pill">' . self::getStatusNameArr(self::SUCCESS) . '</div>',
             self::ERROR => '<div class="badge badge-danger badge-pill">' . self::getStatusNameArr(self::ERROR) . '</div>',
@@ -339,6 +339,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public function getGroup()
     {
+
         return $this->hasOne(GroupDocuments::className(), ['id' => 'group_id']);
     }
 
@@ -390,6 +391,10 @@ class MainDocument extends \yii\db\ActiveRecord
     {
 
         if ($this->isNewRecord) {
+
+            if (!$this->group_id) {
+                $this->group_id = $this->category->group_id;
+            }
             if (Yii::$app->user->identity->employ->company) {
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
                 $this->created_by = Yii::$app->user->identity->employ->id;

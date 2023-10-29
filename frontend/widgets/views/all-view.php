@@ -78,6 +78,7 @@ use yii\helpers\Url;
             <? if ($model->step == MainDocument::STEP_BOSS_FINISH) { ?>
                 <span class="text-danger font-weight-bold">Jarayon yakunlangan !</span>
             <? } ?>
+
         </div>
 
         <? if ($model->status == MainDocument::REJECTED) { ?>
@@ -89,7 +90,6 @@ use yii\helpers\Url;
             </div>
 
         <? } ?>
-
 
         <div class="col-md-12">
             <span class="font-weight-bold card-title">Qisqa mazmuni</span>

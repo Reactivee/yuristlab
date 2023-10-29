@@ -27,9 +27,22 @@ return [
             'class'           => 'yii\i18n\Formatter',
             'defaultTimeZone' => 'Asia/Tashkent',
         ],
+        'response' => [
+            'formatters' => [
+                'json' => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG,
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'baseUrl' => '',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
+            'enableCsrfValidation' => false,
         ],
 //        'modules' => [
 //            'gridview' => ['class' => 'kartik\grid\Module', 'downloadAction' => 'gridview/export/download'],

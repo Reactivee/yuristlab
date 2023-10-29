@@ -179,47 +179,48 @@ if (!empty($model->attach)) {
                                 ]]);
                             ?>
                         </div>
-                    <? } ?>
-                </div>
-                <? if ($model->status != MainDocument::NEW || $model->status != MainDocument::REJECTED) { ?>
-                    <? if ($model->attach) { ?>
+                    <? } else { ?>
+                        <? if ($model->attach) { ?>
 
-                        <div class="card-body">
-                            <h5 class="pl-2 font-weight-bold  card-title">Ilova faylar</h5>
-                            <div class="row">
-                                <? foreach ($model->attach as $file) { ?>
-                                    <div class="col-md-4 mt-2">
-                                        <div class="card">
-                                            <div class="card-body ">
-                                                <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                                    <? if ($model->path) { ?>
-                                                        <?= Html::a('<img style="width: 90px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTgNAULTPrkVqqr6zl4VnsjkZS7XeAURSqCYfthldXEI6QNHwaxvsqJIAu1Swe4T7bzqE&usqp=CAU" alt="">',
-                                                            ['/frontend' . $file->path], ['target' => '_blank']);
-                                                    } ?>
-                                                    <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                                        <a target="_blank" href="/frontend<?= $file->path ?>"
-                                                           class="mb-0 text-warning font-weight-bold">
-                                                            <i class="fa fa-cloud-download mr-1"></i>Ko'chirib olish</a>
-                                                        <p class="text-muted mb-1">
-                                                            <?
+                            <div class="card-body">
+                                <h5 class="pl-2 font-weight-bold  card-title">Ilova faylar</h5>
+                                <div class="row">
+                                    <? foreach ($model->attach as $file) { ?>
+                                        <div class="col-md-4 mt-2">
+                                            <div class="card">
+                                                <div class="card-body ">
+                                                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                                        <? if ($model->path) { ?>
+                                                            <?= Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
+                                                                ['/frontend' . $file->path], ['target' => '_blank']);
+                                                        } ?>
+                                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                                            <a target="_blank" href="/frontend<?= $file->path ?>"
+                                                               class="mb-0 text-warning font-weight-bold">
+                                                                <i class="fa fa-cloud-download mr-1"></i>Ko'chirib olish</a>
+                                                            <p class="text-muted mb-1">
+                                                                <?
 
-                                                            if (file_exists(Yii::getAlias('@frontend') . '/web' . $file->path)) {
-                                                                $size = filesize(Yii::getAlias('@frontend') . $file->path);
-                                                                echo human_filesize($size, 3);
-                                                            }
-                                                            ?>
-                                                        </p>
+                                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $file->path)) {
+                                                                    $size = filesize(Yii::getAlias('@frontend') . $file->path);
+                                                                    echo human_filesize($size, 3);
+                                                                }
+                                                                ?>
+                                                            </p>
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <? } ?>
+                                    <? } ?>
+                                </div>
                             </div>
-                        </div>
-                    <? }
-                } ?>
+                        <? } ?>
+                        <?
+                    } ?>
+                </div>
+
 
             </div> <!--end card body-->
             <? if ($model->lawyer_conclusion_path) { ?>
@@ -243,8 +244,10 @@ if (!empty($model->attach)) {
                                                     Ko'chirib olish</a>
                                                 <p class="text-muted mb-1">
                                                     <?
-                                                    $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
-                                                    echo human_filesize($size, 3) ?>
+                                                    if (file_exists(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path)) {
+                                                        $size = filesize(Yii::getAlias('@frontend') . '/web' . $model->lawyer_conclusion_path);
+                                                        echo human_filesize($size, 3);
+                                                    } ?>
                                                 </p>
                                             </div>
                                         </div>

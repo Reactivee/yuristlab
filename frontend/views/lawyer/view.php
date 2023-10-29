@@ -83,41 +83,57 @@ if (!empty($model->lawyer_conclusion_path)) {
 
             <hr>
             <div class="row mb-3">
-
                 <div class="col-md-6">
-
                     <span class="font-weight-bold card-title">Xujjat bo'limi</span>
                     <p class="text-success font-weight-bold card-title">
                         <?= $model->group->name_uz ?>
                     </p>
-                    <? if ($model->category) { ?>
+                </div>
+
+                <? if ($model->category) { ?>
+                    <div class="col-md-6">
                         <span class="font-weight-bold   card-title">Xujjat turi</span>
                         <p class="text-success font-weight-bold card-title">
                             <?= $model->category->name_uz ?>
                         </p>
+                    </div>
+
+                <? } ?>
+
+                <? if ($model->category) { ?>
+                    <div class="col-md-6">
                         <span class="font-weight-bold card-title">Yo'nalish</span>
                         <p class="text-success font-weight-bold card-title">
                             <?= $model->subCategory->name_uz; ?>
                         </p>
+                    </div>
+                <? } ?>
+
+                <? if ($model->category) { ?>
+                    <div class="col-md-6">
+
                         <span class="font-weight-bold card-title ">Turkumi</span>
                         <p class="text-success font-weight-bold card-title">
                             <?= $model->type->name_uz; ?>
                         </p>
-                    <? } ?>
+                    </div>
 
-
-                </div>
+                <? } ?>
 
                 <div class="col-md-6">
                     <span class="font-weight-bold card-title">Xujjat Yaratilgan sana</span>
                     <p class="text-success font-weight-bold card-title">
                         <?= date('d-m-Y  h:i:s', $model->created_at) ?>
                     </p>
+                </div>
+                <div class="col-md-6">
                     <span class="font-weight-bold card-title">Xujjat yaratgan  shaxs</span>
                     <p class="text-warning font-weight-bold card-title">
 
                         <?= $model->employ->first_name . ' ' . $model->employ->last_name ?>
                     </p>
+                </div>
+                <div class="col-md-6">
                     <span class="font-weight-bold card-title">Status</span>
                     <p class="text-primary font-weight-bold card-title">
                         <?= MainDocument::getStatusNameColored($model->status); ?>
@@ -202,43 +218,47 @@ if (!empty($model->lawyer_conclusion_path)) {
 
                 </div>
 
-                <? if ($files) {
-                    foreach ($files as $file) {
-                        ?>
-                        <div class="col-md-4 mt-4">
-                            <h5 class="font-weight-bold card-title ">Ilova faylar</h5>
-                            <div class="card">
-                                <div class="card-body ">
-                                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                        <? if ($model->path) { ?>
-                                            <?= Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
-                                                ['/frontend' . $file->path], ['target' => '_blank']);
-                                        } ?>
-                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
-                                            <a target="_blank" href="/frontend<?= $file->path ?>"
-                                               class="mb-0 text-warning font-weight-bold"> <i
-                                                        class="fa fa-cloud-download mr-1"></i>Ko'chirib olish</a>
-                                            <p class="text-muted mb-1">
-                                                <?
 
-                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $file->path)) {
-                                                    $size = filesize(Yii::getAlias('@frontend') . '/web' . $file->path);
-                                                    echo human_filesize($size, 3);
-                                                }
-                                                ?>
-                                            </p>
+            </div>
+            <!--end row-->
+            <? if ($files) { ?>
 
+                <div class="mb-4">
+                    <h5 class="font-weight-bold  card-title">Ilova faylar</h5>
+                    <div class="row">
+                        <? foreach ($files as $file) { ?>
+                            <div class="col-md-4 mt-2">
+                                <div class="card">
+                                    <div class="card-body ">
+                                        <div class="d-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                            <? if ($model->path) { ?>
+                                                <?= Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
+                                                    ['/frontend' . $file->path], ['target' => '_blank']);
+                                            } ?>
+                                            <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                                <a target="_blank" href="/frontend<?= $file->path ?>"
+                                                   class="mb-0 text-warning font-weight-bold">
+                                                    <i class="fa fa-cloud-download mr-1"></i>Ko'chirib olish</a>
+                                                <p class="text-muted mb-1">
+                                                    <?
+
+                                                    if (file_exists(Yii::getAlias('@frontend') . '/web' . $file->path)) {
+                                                        $size = filesize(Yii::getAlias('@frontend') . $file->path);
+                                                        echo human_filesize($size, 3);
+                                                    }
+                                                    ?>
+                                                </p>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <?
-                    }
-                } ?>
+                        <? } ?>
+                    </div>
+                </div>
 
-            </div>
-            <!--end row-->
+            <? } ?>
 
 
             <?

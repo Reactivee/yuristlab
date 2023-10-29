@@ -56,6 +56,34 @@ function PlayLoader() {
 }
 
 var canvas = document.getElementById('signature-pad');
+if (canvas){
+    var signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+    });
+
+    document.getElementById('save-png').addEventListener('click', function () {
+        if (signaturePad.isEmpty()) {
+            return alert("Please provide a signature first.");
+        }
+        var data = signaturePad.toDataURL('image/png');
+        console.log(data)
+        $.ajax({
+            url: "/user/get-signture",
+            type: "POST",
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout: 60000
+        }).done(function () {
+            alert("jonatildi")
+        });
+    });
+
+    document.getElementById('clear').addEventListener('click', function () {
+        signaturePad.clear();
+    });
+}
 
 // // Adjust canvas coordinate space taking into account pixel ratio,
 // // to make it look crisp on mobile devices.
@@ -73,30 +101,5 @@ var canvas = document.getElementById('signature-pad');
 // window.onresize = resizeCanvas;
 // resizeCanvas();
 
-var signaturePad = new SignaturePad(canvas, {
-    backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
-});
 
-document.getElementById('save-png').addEventListener('click', function () {
-    if (signaturePad.isEmpty()) {
-        return alert("Please provide a signature first.");
-    }
-    var data = signaturePad.toDataURL('image/png');
-    console.log(data)
-    $.ajax({
-        url: "/user/get-signture",
-        type: "POST",
-        data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        timeout: 60000
-    }).done(function () {
-        alert("jonatildi")
-    });
-});
-
-document.getElementById('clear').addEventListener('click', function () {
-    signaturePad.clear();
-});
 

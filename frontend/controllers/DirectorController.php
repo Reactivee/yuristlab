@@ -52,6 +52,7 @@ class DirectorController extends Controller
             ->select(['id', 'path'])
             ->all();
         if ($this->request->isPost && $model->load($this->request->post())) {
+
             if ($model->save())
                 Yii::$app->session->setFlash('success', 'Saqlandi');
         }
@@ -123,12 +124,21 @@ class DirectorController extends Controller
             if ($model->save()) {
                 Yii::$app->session->addFlash('success', 'Rad etildi');
                 return $this->redirect(Yii::$app->request->referrer);
-            }else{
+            } else {
                 Yii::$app->session->addFlash('error', 'Xatolik !');
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUpload()
+    {
+
+        dd(Yii::$app->request->post());
+//        if ($this->request->isPost && $model->load()) {
+//
+//        }
     }
 
 }

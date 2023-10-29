@@ -194,27 +194,30 @@ if (!empty($model->attach)) {
                                     <h4 class="card-title">Sud xulosa yuklash</h4>
                                     <div class="file-upload-wrapper">
                                         <div id="fileuploader">
-                                            <div class="ajax-upload-dragdrop">
-                                                <div class="ajax-file-upload">yuklash
+                                            <div class="">
+                                                <div class="">
                                                     <form method="POST"
-                                                          action="YOUR_FILE_UPLOAD_URL"
+                                                          action="/director/upload"
                                                           enctype="multipart/form-data"
                                                           style="margin: 0px; padding: 0px;">
                                                         <input type="file" id="ajax-upload-id-1695648520754"
                                                                name="myfile[]"
-                                                               accept="*" multiple=""
-                                                               style="position: absolute; cursor: pointer; top: 0px; width: 100%; height: 100%; left: 0px; z-index: 100; opacity: 0;">
+                                                               accept="*" multiple=""/>
+                                                        <button type="submit" class="btn btn-primary">Fayl yuklash</button>
+
                                                     </form>
+
                                                 </div>
-                                                <span>Faylni yuklang</b></span></div>
+                                                </div>
                                             <div></div>
                                         </div>
-                                        <!--                                    <div class="ajax-file-upload-container"></div>-->
+
                                     </div>
                                 </div>
                             </div>
                         <? } ?>
                     </div>
+
                     <? if ($files) {
                         foreach ($files as $file) {
                             ?>
@@ -238,9 +241,7 @@ if (!empty($model->attach)) {
                                                     if (file_exists(Yii::getAlias('@frontend') . $file->path)) {
                                                         $size = filesize(Yii::getAlias('@frontend') . $file->path);
                                                         echo human_filesize($size, 3);
-                                                    }
-
-                                                    ?>
+                                                    } ?>
                                                 </p>
                                             </div>
                                         </div>
@@ -250,7 +251,6 @@ if (!empty($model->attach)) {
                             <?
                         }
                     } ?>
-
 
                 </div>
 
@@ -273,7 +273,7 @@ if (!empty($model->attach)) {
                                         echo Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
                                             ['/frontend/web' . $model->lawyer_conclusion_path], ['target' => '_blank']);
                                         ?>
-                                        <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                        <div class="ml-sm-3">
 
                                             <a target="_blank"
                                                href="/frontend/web<?= $model->lawyer_conclusion_path ?>"
