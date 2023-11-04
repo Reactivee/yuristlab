@@ -1,3 +1,4 @@
+AOS.init();
 var plugin = $('#file-input').data('fileinput');
 
 

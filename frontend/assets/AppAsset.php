@@ -13,6 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 //        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css",
+        'https://unpkg.com/aos@2.3.1/dist/aos.css',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css',
         'vendors/jquery-toast-plugin/jquery.toast.min.css',
         'vendors/bootstrap-datepicker/bootstrap-datepicker.min.css',
@@ -28,6 +29,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js',
 //        'js/jQuery.spHtmlEditor.js',
+        'https://unpkg.com/aos@2.3.1/dist/aos.js',
         'js/webodf.js',
 //        'vendors/bootstrap-datepicker/bootstrap-datepicker.min.js',
         'vendors/js/vendor.bundle.base.js',

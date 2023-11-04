@@ -6,19 +6,21 @@
         <?
         foreach ($dataProvider->models as $item) {
             ?>
-            <div class="col-md-11 ml-auto mr-auto mb-4">
-                <div class="team_card">
+            <div data-aos="fade-up" class="col-md-11 ml-auto mr-auto mb-4">
+                <div class="team_card overflow-hidden">
                     <div class="team_card card-body ">
                         <div class="d-flex align-items-center w-100 ">
-                            <img src="/frontend/web<?= $item->photo ?>" style="width: 280px" alt="profile image">
-                            <div class="ml-3 d-flex flex-column justify-content-start h-100">
+                            <img data-aos-duration="1500" data-aos="fade-right" src="/frontend/web<?= $item->photo ?>"
+                                 style="width: 280px" alt="profile image">
+                            <div data-aos-duration="1500" data-aos="fade-left"
+                                 class="ml-3 d-flex flex-column justify-content-start h-100">
                                 <h2 class="h2 mb-0 text-black font-weight-bold mb-3"><?= $item->first_name . ' ' . $item->last_name ?></h2>
                                 <p class="text-muted mb-2"><?= $item->desc ?></p>
                                 <p class="mb-0 text-success font-weight-bold">Yurist</p>
                                 <div>
-                                    <button type="button"
-                                            class="mt-4 btn btn-inverse-secondary btn-fw d-flex align-items-center w-auto btn-fw">
-                                        To'liq korish <i class="fa fa-angle-double-right ml-2"></i></button>
+                                    <a href="/lawyer/info/<?= $item->first_name ?>"
+                                       class="mt-4 d-inline-block btn btn-inverse-secondary  align-items-center w-auto btn-fw">
+                                        To'liq korish <i class="fa fa-angle-double-right ml-2"></i></a>
                                 </div>
                             </div>
 
