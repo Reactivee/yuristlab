@@ -100,7 +100,6 @@ class DirectorController extends Controller
 
             if (!$main->save()) {
                 dd($main->errors);
-
             }
             Yii::$app->session->setFlash('success', "Yuborildi");
             return $this->redirect(Yii::$app->request->referrer);

@@ -422,17 +422,12 @@ class MainDocument extends \yii\db\ActiveRecord
             if (!$this->signed_lawyer)
                 $this->signed_lawyer = Yii::$app->user->identity->employ->id;
 
-
         }
-///        dd('stop');
 
         if ($this->oldAttributes['status'] !== $this->status && $this->status === self::BOSS_SIGNED) {
 
-
             if (!$this->category && !$this->lawyer_conclusion_path) {
-
                 $this->generateCheckOrder();
-
             }
 
             if (!$this->category && $this->lawyer_conclusion_path) {
@@ -446,9 +441,7 @@ class MainDocument extends \yii\db\ActiveRecord
 //                $this->generateCheckOrder();
 
             if ($this->lawyer_conclusion_path && $this->category) {
-
                 $this->generateCheckOrder();
-
                 $this->margeDocs();
 
             }
@@ -486,8 +479,9 @@ class MainDocument extends \yii\db\ActiveRecord
         $qrCode->writeFile(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png');
 
         $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
+        $filename = Yii::getAlias('@frontend') . '/web/' . $item->path;
 
-        $templateProcessor = new TemplateProcessor(Yii::getAlias('@frontend') . '/web/' . $item->path);
+        $templateProcessor = new TemplateProcessor($filename);
         $templateProcessor->setValue('fio', $user_name);
         $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
         $templateProcessor->setValue('code_doc', $this->code_document);
@@ -498,12 +492,10 @@ class MainDocument extends \yii\db\ActiveRecord
                 'height' => 100,
                 'ratio' => false));
 
-        $filename = Yii::getAlias('@frontend') . '/web/' . $item->path;
         $templateProcessor->saveAs($filename);
 
         if ($filename)
             chmod($filename, 0644);
-
 
         // Make sure you have `dompdf/dompdf` in your composer dependencies.
 //        Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);

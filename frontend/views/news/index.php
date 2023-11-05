@@ -47,13 +47,14 @@ $models = $dataProvider->models;
 
                 <? foreach ($category as $key => $item) { ?>
 
-                    <div class="tab-pane row d-flex mt-4 fade <?= $key == 0 ? "show active" : '' ?>" id="pills-<?= $item->id ?>"
+                    <div class="tab-pane row d-flex mt-4 fade <?= $key == 0 ? "show active" : '' ?>"
+                         id="pills-<?= $item->id ?>"
                          role="tabpanel"
                          aria-labelledby="pills-home-tab-custom">
-                        <?php foreach ($models as $news) {
+                        <?php foreach ($models as $key => $news) {
                             if ($news->category_id == $item->id) { ?>
 
-                                <div class="col-md-3 mb-4">
+                                <div class="col-md-3 mb-4" data-aos="fade-left" data-aos-delay="<?= $key + 1 ?>00">
                                     <div class="card news_card h-100">
                                         <div class="card_news_img_wrapper">
                                             <img class="card-img-top card-img_main"
