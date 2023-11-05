@@ -9,6 +9,8 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
 $user = Yii::$app->user->identity->employ;
 $count_lawyer = 0;
 $count_moderator = 0;
+$count_employ = 0;
+$count_boss = 0;
 if ($user && $user->role == \common\models\Employ::LAWYER)
     $count_lawyer = \common\models\documents\MainDocument::find()
         ->where(['user_id' => $user->id, 'status' => \common\models\documents\MainDocument::SIGNING])
@@ -18,6 +20,16 @@ if ($user && $user->role == \common\models\Employ::MODERATOR)
     $count_moderator = \common\models\documents\MainDocument::find()
         ->where(['user_id' => $user->id, 'status' => \common\models\documents\MainDocument::EDITED])
         ->count();
+if ($user && $user->role == \common\models\Employ::EMPLOY)
+
+    $count_employ = \common\models\documents\MainDocument::find()
+        ->where(['company_id' => $user->company_id, 'status' => [\common\models\documents\MainDocument::SUCCESS, \common\models\documents\MainDocument::TOBOSS]])
+        ->count();
+if ($user && $user->company->director)
+    $count_boss = \common\models\documents\MainDocument::find()
+        ->where(['company_id' => $user->company_id, 'status' => [\common\models\documents\MainDocument::TOBOSS]])
+        ->count();
+
 ?>
 
 <!-- partial:partials/_sidebar.html -->
@@ -102,6 +114,8 @@ if ($user && $user->role == \common\models\Employ::MODERATOR)
                    aria-controls="ui-basic">
                     <i class="mdi mdi-human-child menu-icon"></i>
                     <span class="menu-title">Xodim</span>
+                    <div class="badge badge-pill badge-danger"><?= $count_employ ?? '' ?></div>
+
                     <i class="menu-arrow"></i>
 
                 </a>
@@ -138,6 +152,8 @@ if ($user && $user->role == \common\models\Employ::MODERATOR)
                    aria-controls="ui-boss">
                     <i class="mdi mdi-worker menu-icon"></i>
                     <span class="menu-title">Rahbar</span>
+                    <div class="badge badge-pill badge-danger"><?= $count_boss ?? '' ?></div>
+
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="ui-boss">
@@ -180,7 +196,6 @@ if ($user && $user->role == \common\models\Employ::MODERATOR)
                     <i class="mdi mdi-settings menu-icon"></i>
                     <span class="menu-title">Moderator</span>
                     <div class="badge badge-pill badge-danger"><?= $count_moderator ?? '' ?></div>
-
                     <i class="menu-arrow"></i>
                 </a>
             </li>

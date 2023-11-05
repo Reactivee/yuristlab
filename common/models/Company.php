@@ -64,7 +64,10 @@ class Company extends \yii\db\ActiveRecord
 
     public function getDir()
     {
-        $emp = Employ::find()->all();
+
+        $emp = Employ::find()
+            ->where(['company_id'=>$this->id])
+            ->all();
         return ArrayHelper::map($emp, 'id', 'first_name');
 //        return $this->hasOne(Employ::className())
     }
