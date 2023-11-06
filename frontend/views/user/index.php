@@ -145,6 +145,42 @@ use yii\bootstrap4\Html;
                 </div>
             </div>
             <div class="d-flex align-items-center">
+                <i class="mdi mdi-phone icon-md"></i>
+                <h4 class="card-title mt-2">Telefon:</h4>
+                <div class="d-flex mt-0 align-items-center">
+                    <h5 class="p-0 ml-2 mt-1 text-muted">
+                        <?
+
+                        echo Editable::widget([
+                            'name' => 'phone',
+                            'asPopover' => true,
+                            'displayValue' => $models->phone,
+                            'format' => Editable::FORMAT_BUTTON,
+                            'editableValueOptions' => ['class' => 'text-muted'],
+                            'inputType' => Editable::INPUT_TEXTAREA,
+                            'value' => $models->phone,
+                            'header' => 'Yoshi',
+                            'size' => 'xl',
+                            'submitOnEnter' => false,
+                            'editableButtonOptions' => [
+                                'label' => '<i class="fas fa-edit"></i>',
+                            ],
+                            'submitButton' => [
+                                'icon' => '<i class="fas fa-check"></i>',
+                                'class' => 'btn btn-success',
+                                'label' => 'btn btn-success',
+                            ],
+                            'options' => [
+                                'class' => 'form-control',
+                                'rows' => 3,
+                                'placeholder' => '',
+                            ],
+                        ]);
+                        ?>
+                    </h5>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
                 <i class="mdi mdi-account icon-md"></i>
                 <h4 class="card-title mt-2">Xolati:</h4>
                 <div class="d-flex mt-0 align-items-center">

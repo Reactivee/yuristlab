@@ -112,6 +112,8 @@ class UserController extends Controller
             $search->telegram = $post['telegram'] ?? $search->telegram;
             $search->facebook = $post['facebook'] ?? $search->facebook;
             $search->other = $post['other'] ?? $search->other;
+            $search->phone = $post['phone'] ?? $search->phone;
+
             if (!$search->save()) {
                 dd($search->error);
             }

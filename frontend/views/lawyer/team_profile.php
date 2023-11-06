@@ -52,6 +52,13 @@ use yii\bootstrap4\Html;
                 </div>
             </div>
             <div class="d-flex align-items-center">
+                <i class="mdi mdi-phone icon-md "></i>
+                <h4 class="card-title mt-2">Telefon:</h4>
+                <div class="d-flex mt-0 align-items-center">
+                    <h5 class="p-0 ml-2 mt-1 text-muted"><?= $models->phone ?></h5>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
                 <i class="mdi mdi-account icon-md"></i>
                 <h4 class="card-title mt-2">Xolati:</h4>
                 <div class="d-flex mt-0 align-items-center">
@@ -83,11 +90,11 @@ use yii\bootstrap4\Html;
             <div class="tab-pane fade active show" id="home-2">
                 <div class="accordion" id="accordion" role="tablist">
 
-                    <div class="card">
+                      <div class="card">
                         <div class="card-header show active" role="tab" id="heading-1">
                             <h6 class="mb-0">
                                 <a data-toggle="collapse" href="#collapse-1" aria-expanded="false"
-                                   aria-controls="collapse-1" class="collapsed">
+                                   aria-controls="collapse-1" class="collapsed text-primary font-weight-bold">
                                     <i class="mdi mdi mdi-briefcase icon-md mr-2"></i>
                                     Ish Tajribasi
                                 </a>
@@ -113,7 +120,7 @@ use yii\bootstrap4\Html;
                     <div class="card">
                         <div class="card-header" role="tab" id="heading-2">
                             <h6 class="mb-0">
-                                <a class="collapsed" data-toggle="collapse" href="#collapse-2" aria-expanded="false"
+                                <a class="collapsed text-primary font-weight-bold" data-toggle="collapse" href="#collapse-2" aria-expanded="false"
                                    aria-controls="collapse-2">
                                     <i class="mdi mdi-school mr-2"></i>
                                     Ta'lim
@@ -171,7 +178,7 @@ use yii\bootstrap4\Html;
                     <div class="card">
                         <div class="card-header" role="tab" id="heading-4">
                             <h6 class="mb-0">
-                                <a class="collapsed" data-toggle="collapse" href="#collapse-4" aria-expanded="false"
+                                <a class="collapsed text-primary font-weight-bold" data-toggle="collapse" href="#collapse-4" aria-expanded="false"
                                    aria-controls="collapse-4">
                                     <i class="mdi mdi-gamepad-variant mr-2"></i>
                                     Mavjud ko’nikmalari (Qiziqishlar,hobbylari)
@@ -198,7 +205,7 @@ use yii\bootstrap4\Html;
                     <div class="card">
                         <div class="card-header" role="tab" id="heading-5">
                             <h6 class="mb-0">
-                                <a class="collapsed" data-toggle="collapse" href="#collapse-5" aria-expanded="false"
+                                <a class="collapsed text-primary font-weight-bold" data-toggle="collapse" href="#collapse-5" aria-expanded="false"
                                    aria-controls="collapse-5">
                                     <i class="mdi mdi-rocket icon-md mr-2"></i>
                                     Martaba darajasi:
