@@ -69,7 +69,10 @@
 }
 
 .tab-content > .active {
-    /*display: flex;*/
+    display: flex !important;
+}
+.tab-content > .fade:not(.show) {
+    display: none !important;
 }
 
 .new_doc_icon {
@@ -299,7 +302,8 @@
     bottom: -100%;
     right: -4%;
 }
-.team_card{
+
+.team_card {
     -webkit-box-shadow: -1px 3px 31px -13px rgba(34, 60, 80, 0.27);
     -moz-box-shadow: -1px 3px 31px -13px rgba(34, 60, 80, 0.27);
     box-shadow: -1px 3px 31px -13px rgba(34, 60, 80, 0.27);
@@ -435,7 +439,7 @@
 }
 
 /*User page*/
-.user_tab .nav-item .nav-link{
+.user_tab .nav-item .nav-link {
     margin-bottom: 10px;
     background: #e6e9ed;
     color: #434a54;
@@ -443,10 +447,12 @@
     cursor: pointer;
 
 }
-.user_tab .nav-item .nav-link.active{
+
+.user_tab .nav-item .nav-link.active {
     background: #410060;
     color: #ffffff;
 }
+
 @media only screen and (max-width: 990px) {
     .our-team {
         margin-bottom: 30px;

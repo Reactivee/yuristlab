@@ -173,8 +173,8 @@ if ($user && $user->company->director)
             </a>
             <div class="collapse" id="ui-news">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="/news">Index</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/law-news">Law News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/news">Yangiliklar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/law-news">Qonunchilik sohalari</a></li>
                 </ul>
             </div>
         </li>
@@ -208,7 +208,7 @@ if ($user && $user->company->director)
             </a>
             <div class="collapse" id="ui-about">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="/about">Biz haqimizda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="http://biz.yuristlab.uz/">Biz haqimizda</a></li>
                     <li class="nav-item"><a class="nav-link" href="/lawyer/lawyers/">Bizning jamoa</a></li>
                 </ul>
             </div>

@@ -43,11 +43,11 @@ $models = $dataProvider->models;
             <!---->
             <!--            </ul>-->
 
-            <div class="tab-content tab-content-custom-pill" id="pills-tabContent-custom">
+            <div class="tab-content tab-content-custom-pill overflow-hidden" id="pills-tabContent-custom">
 
                 <? foreach ($category as $key => $item) { ?>
 
-                    <div class="tab-pane row d-flex mt-4 fade <?= $key == 0 ? "show active" : '' ?>"
+                    <div class=" row mt-4 fade <?= $key == 0 ? "show active" : '' ?>"
                          id="pills-<?= $item->id ?>"
                          role="tabpanel"
                          aria-labelledby="pills-home-tab-custom">
@@ -83,6 +83,9 @@ $models = $dataProvider->models;
                 <? } ?>
 
             </div>
+
+
+
         </div>
 
 
