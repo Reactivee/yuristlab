@@ -214,6 +214,7 @@
 
 .news_card {
     position: relative;
+    transition: 0.3s all;
 }
 
 .canva_border {
