@@ -355,9 +355,7 @@ use yii\bootstrap4\Html;
             <button class="btn btn-danger mb-3" id="clear">Clear</button>
         </div>
 
-        <div class="col-md-9 tab-content ">
-
-
+        <div class="col-md-9 tab-content  user_profile">
 
             <div class="tab-pane fade active show" id="home-2">
                 <div class="accordion" id="accordion" role="tablist">

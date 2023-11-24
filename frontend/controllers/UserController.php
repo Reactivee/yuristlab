@@ -394,23 +394,32 @@ class UserController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         $data = Yii::$app->request->post();
 
-        $bin = base64_decode($data);
-        $size = getImageSizeFromString($bin);
-        $ext = substr($size['mime'], 6);
+        $data_String = array_keys($data);
+//        $bin = base64_decode($data_String[0]);
 
+
+//        $size = getImageSizeFromString($bin);
+//        dd($size);
+//        $ext = substr($size['mime'], 6);
+//        dd($ext);
 // Make sure that you save only the desired file extensions
-        if (!in_array($ext, ['png', 'gif', 'jpeg'])) {
-            die('Unsupported image type');
-        }
+//        if (!in_array($ext, ['png', 'gif', 'jpeg'])) {
+//            die('Unsupported image type');
+//        }
         // Specify the location where you want to save the image
-        $img = Yii::getAlias('@frontend') . '/web/uploads/employ/asdasaa.png';
+        $img = Yii::getAlias('@frontend') . '/web/uploads/employ/asdasaaq11kj.png';
 
-        $img_file = $img . $ext;
+        $data_uri = $data_String[0];
+        $encoded_image = explode(",", $data_uri)[1];
+        $decoded_image = base64_decode($encoded_image);
+        file_put_contents($img, $decoded_image);
+
+//        $img_file = $img;
 
 // Save binary data as raw data (that is, it will not remove metadata or invalid contents)
 // In this case, the PHP backdoor will be stored on the server
-        file_put_contents($img_file, $bin);
+//        file_put_contents($img_file, $bin);
 
-        return Yii::$app->request->post();
+        return true;
     }
 }

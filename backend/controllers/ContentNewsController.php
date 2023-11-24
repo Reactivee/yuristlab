@@ -89,7 +89,9 @@ class ContentNewsController extends Controller
                     $model->path = $folder . $generateName . ".{$ext}";
                     $file_image[0]->saveAs($path);
                 }
-
+                if ($model['oldAttributes']['path'] && !$file_image) {
+                    $model->path = $model['oldAttributes']['path'];
+                }
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -134,7 +136,9 @@ class ContentNewsController extends Controller
                 $model->path = $folder . $generateName . ".{$ext}";
                 $file_image[0]->saveAs($path);
             }
-//        dd($model);
+            if ($model['oldAttributes']['path'] && !$file_image) {
+                $model->path = $model['oldAttributes']['path'];
+            }
 
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);

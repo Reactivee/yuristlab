@@ -15,23 +15,24 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title_uz')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'title_ru')->textInput(['maxlength' => true]) ?>
+<!--    --><?//= $form->field($model, 'title_ru')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'sub_title_uz')->textarea(['rows'=>5]) ?>
-    <?= $form->field($model, 'sub_title_ru')->textarea(['rows'=>5]) ?>
+<!--    --><?//= $form->field($model, 'sub_title_ru')->textarea(['rows'=>5]) ?>
+    <?= $form->field($model, 'text_uz')->textarea(['rows'=>5]) ?>
 
     <?
-
-    echo $form->field($model, 'text_uz')->widget(Summernote::class, [
-        'clientOptions' => [
-            // ...
-        ]
-    ]);
-
-    echo $form->field($model, 'text_ru')->widget(Summernote::class, [
-        'clientOptions' => [
-            // ...
-        ]
-    ]);
+//
+//    echo $form->field($model, 'text_uz')->widget(Summernote::class, [
+//        'clientOptions' => [
+//            // ...
+//        ]
+//    ]);
+//
+//    echo $form->field($model, 'text_ru')->widget(Summernote::class, [
+//        'clientOptions' => [
+//            // ...
+//        ]
+//    ]);
 
 
     //    $form->field($model, '')->textarea(['rows' => 6])  ?>

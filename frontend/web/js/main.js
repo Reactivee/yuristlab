@@ -59,7 +59,8 @@ function PlayLoader() {
 var canvas = document.getElementById('signature-pad');
 if (canvas){
     var signaturePad = new SignaturePad(canvas, {
-        backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+        backgroundColor: 'rgb(255, 255, 255)',
+        penColor: 'rgb(0, 0, 0)'
     });
 
     document.getElementById('save-png').addEventListener('click', function () {
@@ -67,14 +68,11 @@ if (canvas){
             return alert("Please provide a signature first.");
         }
         var data = signaturePad.toDataURL('image/png');
-        console.log(data)
+
         $.ajax({
             url: "/user/get-signture",
             type: "POST",
             data: data,
-            cache: false,
-            contentType: false,
-            processData: false,
             timeout: 60000
         }).done(function () {
             alert("jonatildi")

@@ -55,7 +55,7 @@ $models = $dataProvider->models;
                             if ($news->category_id == $item->id) { ?>
 
                                 <div class="col-md-3 mb-4" data-aos="fade-left" data-aos-delay="<?= $key + 1 ?>00">
-                                    <div class="card news_card">
+                                    <a href="news/content/<?= $news->id ?>" class="card news_card">
                                         <div class="canva_border"></div>
                                         <div class="card_news_img_wrapper">
                                             <img class="card-img-top card-img_main"
@@ -63,20 +63,22 @@ $models = $dataProvider->models;
                                                  alt="<?= $news->title_uz ?>">
                                         </div>
                                         <div class="card-body_news ">
-<!--                                            <span class="btn card_category  btn-inverse-secondary btn-fw">--><?//= $news->categoryname->name_uz ?><!--</span>-->
+                                            <!--                                            <span class="btn card_category  btn-inverse-secondary btn-fw">-->
+                                            <?//= $news->categoryname->name_uz ?><!--</span>-->
                                             <h4 class="card_title mt-3"><?= $news->title_uz ?></h4>
                                             <span><? $news->created_at ?></span>
-<!--                                            <p class="card-text_news">-->
-<!--                                                --><?//= $news->sub_title_uz ?>
-<!--                                            </p>-->
-<!--                                            <a class="mt-4 btn btn-inverse-secondary d-inline-flex align-items-center"-->
-<!--                                               href="news/content/--><?//= $news->id ?><!--">-->
-<!--                                                To'liq ko'rish-->
-<!--                                                <i class="fa fa-angle-double-right ml-2"></i>-->
-<!--                                            </a>-->
+                                            <!--                                            <p class="card-text_news">-->
+                                            <!--                                                --><?//= $news->sub_title_uz ?>
+                                            <!--                                            </p>-->
+                                            <!--                                            <a class="mt-4 btn btn-inverse-secondary d-inline-flex align-items-center"-->
+                                            <!--                                               href="news/content/-->
+                                            <?//= $news->id ?><!--">-->
+                                            <!--                                                To'liq ko'rish-->
+                                            <!--                                                <i class="fa fa-angle-double-right ml-2"></i>-->
+                                            <!--                                            </a>-->
 
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             <?php }
                         } ?>
@@ -84,7 +86,6 @@ $models = $dataProvider->models;
                 <? } ?>
 
             </div>
-
 
 
         </div>
