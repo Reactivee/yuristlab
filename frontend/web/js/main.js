@@ -1,4 +1,5 @@
 AOS.init();
+Shareon.init();
 var plugin = $('#file-input').data('fileinput');
 
 

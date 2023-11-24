@@ -59,37 +59,36 @@ $bundle = yiister\gentelella\assets\Asset::register($this);
                         \yiister\gentelella\widgets\Menu::widget(
                             [
                                 "items" => [
-                                    ["label" => "News", "url" => "#", "icon" => "files-o",
+                                    ["label" => "Yangiliklar", "url" => "#", "icon" => "files-o",
                                         "items" => [
-                                            ['label' => 'New cat', 'icon' => 'text_format', 'url' => ['/category-news']],
-                                            ['label' => 'New content', 'icon' => 'file-image-o', 'url' => ['/content-news']],
+                                            ['label' => 'Kategoriya',  'url' => ['/category-news']],
+                                            ['label' => 'Malumot',  'url' => ['/content-news']],
 
                                         ],
                                     ],
-                                    ["label" => "Laws news", "url" => "#", "icon" => "files-o",
+                                    ["label" => "Qonunchilik", "url" => "#", "icon" => "files-o",
                                         "items" => [
-                                            ['label' => 'Laws Category', 'icon' => 'text_format', 'url' => ['/law-news']],
-                                            ['label' => 'Laws Content', 'icon' => 'text_format', 'url' => ['/law-content']],
+                                            ['label' => "Bo'limlar", 'icon' => 'text_format', 'url' => ['/law-news']],
+                                            ['label' => 'Content', 'icon' => 'text_format', 'url' => ['/law-content']],
                                         ],
                                     ],
-                                    ['label' => 'Category', 'icon' => 'files-o', 'url' => ['/category-documents']],
-                                    ['label' => 'Group', 'icon' => 'th-large', 'url' => ['/group-documents']],
+                                    ['label' => 'Kategoriyalar', 'icon' => 'files-o', 'url' => ['/category-documents']],
+                                    ['label' => 'Guruhlar', 'icon' => 'th-large', 'url' => ['/group-documents']],
 //                                    ['label' => 'Main Doc', 'icon' => 'files-o', 'url' => ['/main-document']],
-                                    ['label' => 'Type Category', 'icon' => 'file-o', 'url' => ['/type-document']],
+                                    ['label' => 'Kategoriya turlari', 'icon' => 'file-o', 'url' => ['/type-document']],
 
-                                    ['label' => 'Recommend category', 'icon' => 'files-o', 'url' => ['/category-recommendation']],
-                                    ['label' => 'Recommend content', 'icon' => 'files-o', 'url' => ['/content-recommendation']],
-                                    ['label' => 'Jobs', 'icon' => 'text_format', 'url' => ['/jobs']],
-                                    ['label' => 'Get job', 'icon' => 'text_format', 'url' => ['/get-job']],
+//                                    ['label' => 'Recommend category', 'icon' => 'files-o', 'url' => ['/category-recommendation']],
+//                                    ['label' => 'Recommend content', 'icon' => 'files-o', 'url' => ['/content-recommendation']],
+                                    ['label' => 'Kasblar royhati', 'icon' => 'files-o', 'url' => ['/jobs']],
+                                    ['label' => 'Xodimlar lavozimi', 'icon' => 'files-o', 'url' => ['/get-job']],
 
-                                    ["label" => "User info", "url" => "#", "icon" => "user",
+                                    ["label" => "Foydalanuvchilar", "url" => "#", "icon" => "user",
                                         "items" => [
-                                            ['label' => 'Company', 'icon' => 'text_format', 'url' => ['/company']],
+                                            ['label' => 'Tashkilot', 'icon' => 'text_format', 'url' => ['/company']],
                                             ['label' => 'Xodimlar', 'icon' => 'text_format', 'url' => ['/employ']],
                                             ['label' => 'Xodimlar haqida', 'icon' => 'text_format', 'url' => ['/about-employ']],
                                             ['label' => 'Hobby', 'icon' => 'text_format', 'url' => ['/hobbies']],
                                             ['label' => 'Tarmoqlar', 'icon' => 'text_format', 'url' => ['/social-employ']],
-
 
                                         ],
                                     ],

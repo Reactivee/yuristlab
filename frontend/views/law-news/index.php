@@ -6,11 +6,11 @@ $models = $dataProvider->models;
 <div class="container-fluid px-5">
 
     <div class="title my-3">
-        <h2 class="">Qonunchilik sohalari</h2>
+        <h1 class="">Qonunchilik sohalari</h1>
     </div>
     <div class="row">
         <? foreach ($models as $item) { ?>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card h-100">
                     <div class="card-body p-3">
                         <div class="d-flex flex-row  text-center text-sm-left align-items-center">

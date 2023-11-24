@@ -10,7 +10,7 @@
             </div>
             <h2 class="text-black news_poster_title my-4">
                 <?= $content->title_uz ?>
-                <div class="short_info d-flex align-items-center mt-3">
+                <div class="short_info d-flex align-items-center mt-4">
                     <div class="author mr-3">
                         <i class="mdi mdi-account-outline"></i>
                         <span>Name</span>
@@ -23,7 +23,15 @@
                         <i class="mdi mdi-file-document-box"></i>
                         <span>Blog</span>
                     </div>
-                    <div class="shareit"    ></div>
+                    <div class="shareit ml-3">
+                        <div class="shareon">
+                            <a class="facebook"></a>
+                            <a class="telegram"></a>
+                            <a class="twitter"></a>
+                            <a class="vkontakte"></a>
+                            <a class="whatsapp"></a>
+                        </div>
+                    </div>
                 </div>
             </h2>
         </div>

@@ -20,7 +20,7 @@ class AppAsset extends AssetBundle
         'vendors/mdi/css/materialdesignicons.min.css',
         'vendors/css/vendor.bundle.base.css',
         'css/vertical-layout-light/style.css',
-
+        'https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css',
         'css/particles.css',
 //        'css/percent-preloader.min.css',
         'css/preloader.css',
@@ -44,7 +44,7 @@ class AppAsset extends AssetBundle
 //        'js/todolist.js',
         'js/dashboard.js',
         'js/chart.js',
-//        'js/sign.js',
+        'https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js',
         'https://unpkg.com/jszip/dist/jszip.min.js',
         'js/docx-preview.js',
 //        'js/percent-preloader.min.js',

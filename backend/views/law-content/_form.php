@@ -17,21 +17,22 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title_uz')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'title_ru')->textInput(['maxlength' => true]) ?>
+    <!--    --><? //= $form->field($model, 'title_ru')->textInput(['maxlength' => true]) ?>
 
     <?
-
-    echo $form->field($model, 'text_uz')->widget(Summernote::class, [
-        'clientOptions' => [
-            // ...
-        ]
-    ]);
-
-    echo $form->field($model, 'text_ru')->widget(Summernote::class, [
-        'clientOptions' => [
-            // ...
-        ]
-    ]);
+    echo $form->field($model, 'title_uz')->textarea(['row' => 10])
+    //
+    //    echo $form->field($model, 'text_uz')->widget(Summernote::class, [
+    //        'clientOptions' => [
+    //            // ...
+    //        ]
+    //    ]);
+    //
+    //    echo $form->field($model, 'text_ru')->widget(Summernote::class, [
+    //        'clientOptions' => [
+    //            // ...
+    //        ]
+    //    ]);
     ?>
 
     <?= $form->field($model, 'status')->textInput() ?>

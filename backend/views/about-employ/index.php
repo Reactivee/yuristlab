@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name_uz',
-            'name_ru',
+//            'name_ru',
             'icon',
             'img',
             'employ_id',
