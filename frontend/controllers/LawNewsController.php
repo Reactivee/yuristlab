@@ -38,7 +38,7 @@ class LawNewsController extends Controller
     {
 
         try {
-            $news = LawContent::find()->where(['status' => 1, 'id' => $id])->one();
+            $news = LawContent::find()->where(['status' => 1, 'law_id' => $id])->all();
 
         } catch (InvalidArgumentException $e) {
             throw new NotFoundHttpException($e->getMessage());

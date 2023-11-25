@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var common\models\news\LawContentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -21,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Law Content', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php Pjax::begin(); ?>
+    <!--    --><?php //Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -30,23 +31,40 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'law_id',
+            [
+                'attribute' => 'law_id',
+                'label' => 'Xujjat bolimi',
+
+                'value' => function ($model) {
+                    return $model->law->title_uz;
+                }
+            ],
             'title_uz',
-            'title_ru',
-            'text_ru',
-            //'text_uz',
-            //'status',
-            //'image',
+            'text_uz',
+            'status',
+            [
+                'attribute' => 'image',
+                'label' => 'Xujjat',
+                'format' => 'html',
+                'value' => function ($model) {
+                    $url = '';
+                    if ($model->image) {
+                        $url = Html::a("Ko'chirib olish", $model->image);
+
+                    }
+                    return $url;
+                }
+            ],
+
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, LawContent $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
 
-    <?php Pjax::end(); ?>
+    <!--    --><?php //Pjax::end(); ?>
 
 </div>

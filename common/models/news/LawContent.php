@@ -18,6 +18,10 @@ use Yii;
  */
 class LawContent extends \yii\db\ActiveRecord
 {
+    const NEW = 1;
+    const EDITED = 2;
+    const DELETED = -1;
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +39,9 @@ class LawContent extends \yii\db\ActiveRecord
             [['law_id', 'status'], 'integer'],
             [['status'], 'required'],
             [['text_ru', 'text_uz'], 'safe'],
-            [['title_uz', 'title_ru', 'image'], 'string', 'max' => 255],
+            [['title_uz', 'title_ru'], 'string', 'max' => 255],
+            [['image',], 'safe'],
+            ['image', 'file', 'extensions' => ['pdf', 'docx', 'doc'], 'maxSize' => 300 * 300 * 1,],
         ];
     }
 
@@ -54,5 +60,21 @@ class LawContent extends \yii\db\ActiveRecord
             'status' => 'Status',
             'image' => 'Image',
         ];
+    }
+
+    public function getStatusName($status = null)
+    {
+        $array = [
+            self::NEW => 'Yangi',
+            self::DELETED => "O'chirish",
+
+        ];
+
+        return $status ? $array[$status] : $array;
+    }
+
+    public function getLaw()
+    {
+        return $this->hasOne(LawNews::className(), ['id' => 'law_id']);
     }
 }

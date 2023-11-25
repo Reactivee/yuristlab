@@ -4,9 +4,13 @@ namespace backend\controllers;
 
 use common\models\news\LawContent;
 use common\models\news\LawContentSearch;
+use common\models\news\LawNews;
+use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * LawContentController implements the CRUD actions for LawContent model.
@@ -40,7 +44,7 @@ class LawContentController extends Controller
     {
         $searchModel = new LawContentSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+//        dd($category);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -70,8 +74,27 @@ class LawContentController extends Controller
         $model = new LawContent();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+
+                $doc = $model->image = UploadedFile::getInstance($model, 'image');
+
+                if ($doc) {
+                    $folder = Yii::getAlias('@frontend') . '/web/uploads/law_docs/';
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+                    $generateName = Yii::$app->security->generateRandomString();
+                    $path = $folder . $generateName . '.' . $doc->extension;
+
+                    $doc->saveAs($path);
+                    $path = '/uploads/law_docs/' . $generateName . '.' . $doc->extension;
+                    $model->image = $path;
+                }
+                if (!$model->save()) {
+                    dd($model->errors);
+                }
+
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -93,8 +116,29 @@ class LawContentController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $doc = $model->image = UploadedFile::getInstance($model, 'image');
+
+            if ($doc) {
+                $folder = Yii::getAlias('@frontend') . '/web/uploads/law_docs/';
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $folder . $generateName . '.' . $doc->extension;
+
+                $doc->saveAs($path);
+                $path = '/uploads/law_docs/' . $generateName . '.' . $doc->extension;
+                $model->image = $path;
+            }
+            if ($model['oldAttributes']['image'] && !$doc) {
+                $model->image = $model['oldAttributes']['image'];
+            }
+            if (!$model->save()) {
+                dd($model->errors);
+            }
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
