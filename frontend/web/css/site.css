@@ -274,6 +274,13 @@
     font-size: 10px;
 }
 
+.law-news_icon {
+    position: absolute;
+    top: -34px;
+    background: white;
+    padding: 0 31px
+}
+
 .law-news_icon i {
     /*width: 70px;*/
     font-size: 60px;
