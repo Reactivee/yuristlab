@@ -92,8 +92,13 @@ class ContentNewsController extends Controller
                 if ($model['oldAttributes']['path'] && !$file_image) {
                     $model->path = $model['oldAttributes']['path'];
                 }
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id]);
+
+                if (!$model->save()) {
+                    dd($model->errors);
+                } else {
+                    Yii::$app->session->addFlash('success', 'Yaratildi');
+                    return $this->redirect(['index']);
+                }
             }
         } else {
             $model->loadDefaultValues();

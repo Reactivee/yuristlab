@@ -88,7 +88,7 @@ class NewsController extends Controller
     {
         $searchModel = new ContentNewsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-//        Yii::$app->session->setFlash('danger', 'Ochirildi');
+
         $cats = CategoryNews::find()->where(['status' => 1])->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -103,7 +103,18 @@ class NewsController extends Controller
     {
 
         try {
-            $news = ContentNews::find()->where(['status' => ContentNews::NEW, 'id' => $id])->one();
+            $news = ContentNews::find()
+                ->where(['status' => ContentNews::NEW, 'id' => $id])
+                ->one();
+            if (!$news->views) {
+                $news->views = 1;
+            } else {
+                $news->views += 1;
+            }
+
+            if (!$news->save()) {
+                dd($news->getErrors());
+            }
 
         } catch (InvalidArgumentException $e) {
             throw new NotFoundHttpException($e->getMessage());

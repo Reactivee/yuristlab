@@ -83,7 +83,10 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',
-            'baseUrl' => '/home'
+            'baseUrl' => '/home',
+            'parsers' => [
+                'application/json' => JsonParser::class,
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',

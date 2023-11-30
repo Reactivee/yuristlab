@@ -2,8 +2,10 @@
 
 namespace common\models\documents;
 
-use PhpParser\Node\Expr\Array_;
+
+use common\models\Employ;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -34,6 +36,13 @@ class ContentNews extends \yii\db\ActiveRecord
         return 'content_news';
     }
 
+//    public function behaviors()
+//    {
+//        return [
+//            TimestampBehavior::className(),
+//        ];
+//    }
+
     /**
      * {@inheritdoc}
      */
@@ -41,8 +50,8 @@ class ContentNews extends \yii\db\ActiveRecord
     {
         return [
             [['path'], 'string'],
-            [['status'], 'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'category_id'], 'integer'],
+//            [['status'], 'required'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'category_id', 'views'], 'integer'],
             [['title_uz', 'title_ru'], 'string', 'max' => 255],
             [['text_uz', 'text_ru', 'sub_title_uz', 'sub_title_ru'], 'safe']
         ];
@@ -87,5 +96,20 @@ class ContentNews extends \yii\db\ActiveRecord
     {
 
         return $this->hasOne(CategoryNews::className(), ['id' => 'category_id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if ($this->isNewRecord) {
+            $user = Yii::$app->user->identity->employ;
+            $this->created_by = $user->id;
+        }
+        return parent::beforeSave($insert);
+
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(Employ::className(), ['id' => 'created_by']);
     }
 }
