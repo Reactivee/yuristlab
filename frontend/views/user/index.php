@@ -2,14 +2,38 @@
 /** @var \common\models\Employ $models */
 
 use common\models\user\AboutEmploy;
-use kartik\date\DatePicker;
 use kartik\editable\Editable;
 use kartik\file\FileInput;
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
+use yii\helpers\Url;
 
 //dd($models);
+
+$initialPreviewConfigDocs = [];
+$initialPreviewDocs = [];
+
+if (!empty($models->photo)) {
+    array_push($initialPreviewDocs, $models->photo);
+    array_push($initialPreviewConfigDocs, [
+        'caption' => $models->photo,
+        'key' => $models->id,
+        'icon' => '<i class="fa fa-arrow-circle-right"></i>',
+    ]);
+}
+$initialPreviewConfigSign = [];
+$initialPreviewSign = [];
+
+if (!empty($models->sign)) {
+    array_push($initialPreviewSign, $models->sign);
+    array_push($initialPreviewConfigSign, [
+        'caption' => $models->sign,
+        'key' => $models->id,
+        'icon' => '<i class="fa fa-arrow-circle-right"></i>',
+    ]);
+}
+
 
 ?>
 <style>
@@ -347,12 +371,12 @@ use yii\bootstrap4\Html;
                     </a>
                 </li>
             </ul>
-            <div class=" mb-3">
-                <canvas id="signature-pad" class="signature-pad" width=350 height=200></canvas>
-
-            </div>
-            <button class="btn btn-success mb-3" id="save-png">Save as PNG</button>
-            <button class="btn btn-danger mb-3" id="clear">Clear</button>
+            <!--            <div class=" mb-3">-->
+            <!--                <canvas id="signature-pad" class="signature-pad" width=350 height=200></canvas>-->
+            <!---->
+            <!--            </div>-->
+            <!--            <button class="btn btn-success mb-3" id="save-png">Save as PNG</button>-->
+            <!--            <button class="btn btn-danger mb-3" id="clear">Clear</button>-->
         </div>
 
         <div class="col-md-9 tab-content  user_profile">
@@ -609,25 +633,104 @@ use yii\bootstrap4\Html;
                     </div>
                     <hr>
                     <div class="col-6">
-                        <?= $dynform->field($models, 'photo')->widget(FileInput::classname(), [
-                            'options' => ['accept' => 'image/*'],
+                        <? echo FileInput::widget([
+                            'name' => 'photo',
+                            'id' => 'file_input',
+                            'options' => ['multiple' => true],
+                            'messageOptions' => ['class' => 'alert alert-warning'],
                             'pluginOptions' => [
-                                'initialPreviewAsData' => true,
                                 'allowedFileExtensions' => ["jpg", "png"],
+                                'uploadUrl' => Url::to(['upload-docs', 'id' => $models->id]),
+                                'deleteUrl' => Url::to(['delete-docs']),
                                 'previewFileType' => 'image',
                                 'elCaptionText' => '#customCaption',
                                 'showCancel' => false,
                                 'showCaption' => false,
+                                'showRemove' => false,
                                 'showUpload' => false,
                                 'maxFileSize' => 1000,
-                                'browseLabel' => 'Fayl yuklash',
-                            ]
-                        ])->label('Rasm yuklash');
+                                'maxFileCount' => 1,
+                                'browseIcon' => '<i class="fas fa-upload mr-2"></i> ',
+                                'browseLabel' => 'Rasm yuklash',
+                                'mainClass' => 'input-group-ms',
+                                'overwriteInitial' => true,
+                                'initialPreview' => $initialPreviewDocs,
+                                'initialPreviewAsData' => true,
+                                'initialPreviewDownloadUrl' => Url::base('http') . '/frontend' . $models->photo,
+                                'previewFileIcon' => '<i class="fa fa-file"></i>',
+                                'allowedPreviewTypes' => null, // set to empty, null or false to disable preview for all types
+                                'initialPreviewConfig' => $initialPreviewConfigDocs,
+                                'browseClass' => 'btn btn-success',
+                                'uploadClass' => 'btn btn-info',
+                                'removeClass' => 'btn btn-danger',
+                                'removeIcon' => '<i class="fas fa-trash"></i> ',
+                                'fileActionSettings' => [
+                                    'downloadIcon' => '<i class="fa fa-download" aria-hidden="true"></i>',
+                                    'removeIcon' => '<i class="fa fa-trash"></i>',
+                                    'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
+                                    'zoomIcon' => '<i class="fa fa-search-plus"></i>',
+                                    'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',],
+                                'previewFileIconSettings' => [
+                                    'docx' => '<i class="fas fa-file-word"></i>',
+                                    'pdf' => '<i class="fas fa-file-word"></i>',
+                                    'xls' => '<i class="fas fa-file-word"></i>',
+                                    'doc' => '<i class="fas fa-file-word"></i>',
+                                ],
+                            ]]);
+
+                        ?>
+                    </div>
+                    <div class="col-6">
+                        <? echo FileInput::widget([
+                            'name' => 'sign',
+                            'id' => 'file_input_sign',
+                            'options' => ['multiple' => true],
+                            'messageOptions' => ['class' => 'alert alert-warning'],
+                            'pluginOptions' => [
+                                'allowedFileExtensions' => ["jpg", "png"],
+                                'uploadUrl' => Url::to(['upload-sign', 'id' => $models->id]),
+                                'deleteUrl' => Url::to(['delete-docs']),
+                                'previewFileType' => 'image',
+                                'elCaptionText' => '#customCaption',
+                                'showCancel' => false,
+                                'showCaption' => false,
+                                'showRemove' => false,
+                                'showUpload' => false,
+                                'maxFileSize' => 1000,
+                                'maxFileCount' => 1,
+                                'browseIcon' => '<i class="fas fa-upload mr-2"></i> ',
+                                'browseLabel' => 'Imzo yuklash',
+                                'mainClass' => 'input-group-ms',
+                                'overwriteInitial' => true,
+                                'initialPreview' => $initialPreviewSign,
+                                'initialPreviewAsData' => true,
+                                'initialPreviewDownloadUrl' => Url::base('http') . '/frontend' . $models->photo,
+                                'previewFileIcon' => '<i class="fa fa-file"></i>',
+                                'allowedPreviewTypes' => null, // set to empty, null or false to disable preview for all types
+                                'initialPreviewConfig' => $initialPreviewConfigSign,
+                                'browseClass' => 'btn btn-success',
+                                'uploadClass' => 'btn btn-info',
+                                'removeClass' => 'btn btn-danger',
+                                'removeIcon' => '<i class="fas fa-trash"></i> ',
+                                'fileActionSettings' => [
+                                    'downloadIcon' => '<i class="fa fa-download" aria-hidden="true"></i>',
+                                    'removeIcon' => '<i class="fa fa-trash"></i>',
+                                    'uploadIcon' => '<i class="fa fa-upload" aria-hidden="true"></i>',
+                                    'zoomIcon' => '<i class="fa fa-search-plus"></i>',
+                                    'rotateIcon' => '<i class="fa fa-arrow-circle-right"></i>',],
+                                'previewFileIconSettings' => [
+                                    'docx' => '<i class="fas fa-file-word"></i>',
+                                    'pdf' => '<i class="fas fa-file-word"></i>',
+                                    'xls' => '<i class="fas fa-file-word"></i>',
+                                    'doc' => '<i class="fas fa-file-word"></i>',
+                                ],
+                            ]]);
+
                         ?>
                     </div>
 
 
-                    <div class="form-group col-12">
+                    <div class="form-group col-12 mt-3">
                         <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
                     </div>
 

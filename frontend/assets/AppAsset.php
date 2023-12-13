@@ -46,12 +46,11 @@ class AppAsset extends AssetBundle
         'js/chart.js',
         'https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js',
         'https://unpkg.com/jszip/dist/jszip.min.js',
-        'js/docx-preview.js',
+//        'js/docx-preview.js',
 //        'js/percent-preloader.min.js',
         'js/jquery.preloadinator.min.js',
         'js/particles.min.js',
         'js/particles_in.js',
-        'js/stats.js',
 //        'https://code.jquery.com/jquery-3.7.0.min.js',
         'js/main.js'
     ];

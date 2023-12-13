@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use common\models\Company;
-use common\models\User;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -49,7 +47,7 @@ class Employ extends \yii\db\ActiveRecord
     {
         return [
             [['status', 'user_id', 'type', 'company_id', 'role', 'age'], 'integer'],
-            [['desc', 'address'], 'string'],
+            [['desc', 'address',], 'string'],
             [['first_name', 'last_name', 'key', 'phone', 'photo', 'login', 'passport', 'inn', 'telegram', 'instagram', 'facebook', 'other', 'hobby'], 'string', 'max' => 255],
         ];
     }
@@ -128,8 +126,6 @@ class Employ extends \yii\db\ActiveRecord
             ->all();
 
         return ArrayHelper::map($law, 'id', 'first_name');
-
-
     }
 
 }

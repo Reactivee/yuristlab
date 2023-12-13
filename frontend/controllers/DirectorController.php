@@ -10,6 +10,8 @@ use common\models\documents\MainDocumentSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\web\UploadedFile;
 
 
 /**
@@ -131,13 +133,61 @@ class DirectorController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionUpload()
+    public function actionUploadDocs($id)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
 
-        dd(Yii::$app->request->post());
+        if ($file_image = UploadedFile::getInstancesByName('attached')) {
+            if ($id) {
+                $main = MainDocument::findOne($id);
+            }
+
+            foreach ($file_image as $file) {
+
+                $folder = '/web/uploads/docs/';
+                $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                if (!file_exists($uploads_folder)) {
+                    mkdir($uploads_folder, 0777, true);
+                }
+                $ext = pathinfo($file->name, PATHINFO_EXTENSION);
+                $name = pathinfo($file->name, PATHINFO_FILENAME);
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $uploads_folder . $generateName . ".{$ext}";
+                $file->saveAs($path);
+
+                $data = [
+                    'generate_name' => $generateName,
+                    'name' => $name,
+                    'path' => $folder . $generateName . '.' . $ext
+                ];
+                $main->court_doc = $folder . $generateName . '.' . $ext;
+                $main->save();
+            }
+            return $data;
+
+        }
+        return false;
+
 //        if ($this->request->isPost && $model->load()) {
 //
 //        }
     }
+
+    public function actionDeleteDocs()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (Yii::$app->request->post()) {
+            $id = Yii::$app->request->post()['key'];
+            $files = MainDocument::findOne($id);
+            if ($files) {
+                $files->court_doc = '';
+                $files->save();
+            }
+            return true;
+        }
+        return false;
+    }
+
 
 }

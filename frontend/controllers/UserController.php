@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use common\helpers\HTML_TO_DOC;
+use common\models\documents\MainDocument;
 use common\models\Employ;
 use common\models\forms\UserForm;
+use common\models\User;
 use common\models\user\AboutEmploy;
 use common\models\user\SocialEmploy;
 use frontend\models\ResendVerificationEmailForm;
@@ -122,8 +124,8 @@ class UserController extends Controller
 
         $form = new UserForm();
         $about = AboutEmploy::find()->where(['employ_id' => $search->id])->all();
-
         $social = SocialEmploy::find()->where(['employ_id' => $search->id])->all();
+
         if (empty($about))
             $about = [new AboutEmploy()];
 
@@ -353,10 +355,11 @@ class UserController extends Controller
                 }
             }
 
-            $employ_id->load($hobby);
+//            $employ_id->load($hobby);
 
             //Rasm yuklash
             $file_image = UploadedFile::getInstances($employ_id, 'photo');
+            dd($file_image);
             if ($file_image) {
                 foreach ($file_image as $file) {
                     $folder = '/web/uploads/employ/';
@@ -375,6 +378,27 @@ class UserController extends Controller
                 $old_photo = $employ_id->oldAttributes['photo'];
                 $employ_id->photo = $old_photo;
             }
+//            //imzo yuklash
+//            $sign_image = UploadedFile::getInstances($employ_id, 'sign');
+////            dd($sign_image);
+//            if ($sign_image) {
+//                foreach ($sign_image as $file) {
+//                    $folder = '/web/uploads/sign/';
+//                    $uploads_folder = Yii::getAlias('@frontend') . $folder;
+//                    if (!file_exists($uploads_folder)) {
+//                        mkdir($uploads_folder, 0777, true);
+//                    }
+//                    $ext = pathinfo($file->name, PATHINFO_EXTENSION);
+//                    $name = pathinfo($file->name, PATHINFO_FILENAME);
+//                    $generateName = Yii::$app->security->generateRandomString();
+//                    $path = $uploads_folder . $generateName . ".{$ext}";
+//                    $file->saveAs($path);
+//                    $employ_id->sign = '/uploads/sign/' . $generateName . ".{$ext}";
+//                }
+//            } else {
+//                $old_photo = $employ_id->oldAttributes['sign'];
+//                $employ_id->sign = $old_photo;
+//            }
 
             if ($employ_id->save()) {
                 Yii::$app->session->setFlash('success', 'Saqlandi');
@@ -422,4 +446,106 @@ class UserController extends Controller
 
         return true;
     }
+
+    public function actionUploadDocs($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if ($file_image = UploadedFile::getInstancesByName('photo')) {
+            if ($id) {
+                $main = Employ::findOne($id);
+            } else {
+                return false;
+            }
+
+            foreach ($file_image as $file) {
+
+                $folder = '/web/uploads/employ/';
+                $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                if (!file_exists($uploads_folder)) {
+                    mkdir($uploads_folder, 0777, true);
+                }
+                $ext = pathinfo($file->name, PATHINFO_EXTENSION);
+                $name = pathinfo($file->name, PATHINFO_FILENAME);
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $uploads_folder . $generateName . ".{$ext}";
+                $file->saveAs($path);
+
+                $data = [
+                    'generate_name' => $generateName,
+                    'name' => $name,
+                    'path' => $folder . $generateName . '.' . $ext
+                ];
+                $main->photo = '/uploads/employ/' . $generateName . '.' . $ext;
+                $main->save();
+            }
+            return $data;
+
+        }
+        return false;
+
+//        if ($this->request->isPost && $model->load()) {
+//
+//        }
+    }
+
+
+    public function actionDeleteDocs()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (Yii::$app->request->post()) {
+            $id = Yii::$app->request->post()['key'];
+            $files = Employ::findOne($id);
+            if ($files) {
+                $files->photo = '';
+                $files->save();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function actionUploadSign($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if ($file_image = UploadedFile::getInstancesByName('sign')) {
+            if ($id) {
+                $main = Employ::findOne($id);
+            } else {
+                return false;
+            }
+
+            foreach ($file_image as $file) {
+
+                $folder = '/web/uploads/employ/';
+                $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                if (!file_exists($uploads_folder)) {
+                    mkdir($uploads_folder, 0777, true);
+                }
+                $ext = pathinfo($file->name, PATHINFO_EXTENSION);
+                $name = pathinfo($file->name, PATHINFO_FILENAME);
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $uploads_folder . $generateName . ".{$ext}";
+                $file->saveAs($path);
+
+                $data = [
+                    'generate_name' => $generateName,
+                    'name' => $name,
+                    'path' => $folder . $generateName . '.' . $ext
+                ];
+                $main->sign = '/uploads/employ/' . $generateName . '.' . $ext;
+                $main->save();
+            }
+            return $data;
+
+        }
+        return false;
+
+//        if ($this->request->isPost && $model->load()) {
+//
+//        }
+    }
+
 }

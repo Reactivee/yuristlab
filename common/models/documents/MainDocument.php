@@ -181,8 +181,7 @@ class MainDocument extends \yii\db\ActiveRecord
         return [
             [['status', 'name_uz', 'path'], 'required'],
             [['category_id', 'type_group_id', 'status', 'created_at', 'updated_at', 'created_by', 'time_begin', 'time_end', 'user_id', 'company_id', 'sub_category_id'], 'integer'],
-            [['name_uz', 'name_ru', 'code_document', 'code_conclusion'], 'string', 'max' => 255],
-
+            [['name_uz', 'name_ru', 'code_document', 'code_conclusion', 'court_doc'], 'string', 'max' => 255],
             [['doc_about', 'attached', 'path', 'files', 'deleted_files', 'conclusion_uz', 'signed_lawyer', 'group_id', 'lawyer_conclusion_path', 'step'], 'safe']
         ];
     }
@@ -236,7 +235,7 @@ class MainDocument extends \yii\db\ActiveRecord
         return true;
     }
 
-    public function saveFilesApi($file = null, $id)
+    public function saveFilesApi($file, $id)
     {
 
         $doc = new AttachedDocument();

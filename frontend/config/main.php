@@ -49,9 +49,9 @@ return [
 //        ],
         'assetManager' => [
             'bundles' => [
-                'yii\bootstrap\BootstrapAsset' => [
+//                'yii\bootstrap\BootstrapAsset' => [
 //                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
-                ],
+//                ],
                 'kartik\form\ActiveFormAsset' => [
                     'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
                 ],
@@ -99,7 +99,6 @@ return [
         ],
 
     ],
-    'params' => $params,
     'as access' => [
         'class' => 'backend\modules\admin\components\AccessControl',
         'allowActions' => [
@@ -109,4 +108,6 @@ return [
             'site/error',
         ]
     ],
+    'params' => $params,
+
 ];

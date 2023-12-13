@@ -63,6 +63,15 @@ return [
                 ],
             ],
         ],
+        'response' => [
+            'formatters' => [
+                'json' => [
+                    'class' => 'yii\web\JsonResponseFormatter',
+                    'prettyPrint' => YII_DEBUG,
+                    'encodeOptions' => JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE,
+                ],
+            ],
+        ],
         'assetManager' => [
             'bundles' => [
                 'kartik\form\ActiveFormAsset' => [
@@ -118,7 +127,6 @@ return [
         ],
 
     ],
-    'params' => $params,
     'as access' => [
         'class' => 'backend\modules\admin\components\AccessControl',
         'allowActions' => [
@@ -127,5 +135,6 @@ return [
             'site/error',
         ]
     ],
+    'params' => $params,
 
 ];

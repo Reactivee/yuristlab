@@ -147,6 +147,7 @@ if (!empty($model->attach)) {
                                     'elCaptionText' => '#customCaption',
                                     'showCancel' => false,
                                     'showCaption' => false,
+                                    'showRemove' => false,
                                     'showUpload' => false,
                                     'maxFileSize' => 1000,
                                     'maxFileCount' => 10,
