@@ -88,6 +88,7 @@ if (!empty($model->attach)) {
                 <!--                    --><?//= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-icon-text']) ?>
                 <!--                --><?// } ?>
                 <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
+                    <?= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i> Rahbarga yuborish', ['to-presign', 'id' => $model->id], ['class' => 'btn btn-outline-warning btn-icon-text']) ?>
                     <!--                    --><? //= Html::a(' <i class="mdi mdi-send btn-icon-prepend"></i>Yuristga yuborish', ['to-sign', 'id' => $model->id], ['class' => 'ml-2 btn btn-outline-primary btn-icon-text']); ?>
                     <?= Html::a(' <i class="fas fa-trash"></i> O\'chirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2 ']) ?>
                 <? } ?>
