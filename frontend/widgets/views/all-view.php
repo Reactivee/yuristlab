@@ -81,7 +81,7 @@ use yii\helpers\Url;
 
         </div>
 
-        <? if ($model->status == MainDocument::REJECTED) { ?>
+        <? if ($model->conclusion_uz) { ?>
             <div class="col-md-6">
                 <span class="font-weight-bold card-title">Yurist xulosasi</span>
                 <br>

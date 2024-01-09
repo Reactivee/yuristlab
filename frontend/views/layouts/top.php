@@ -47,18 +47,19 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
             </li>
 
         </ul>
+<!--        --><?//  dd ?>
         <? if (Yii::$app->user->identity->employ->id == Yii::$app->user->identity->employ->company->director) { ?>
-            <span class="font-weight-bold  ml-2">Tashkilot: <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
             <span class="font-weight-bold text-warning mx-2"> Lavozim:</span>
-            <span class=" font-weight-bold text-success">( Rahbar )</span>
+            <span class=" font-weight-bold text-success">Rahbar</span>
+            <span class="font-weight-bold  mx-2"> Tashkilot: </span>
+            <span class="font-weight-bold"> <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
 
         <? } else { ?>
-            <span class="font-weight-bold text-warning mx-2">Lavozim:</span>
-
-            <span class=" text-warning "> <?= Employ::getRole(Yii::$app->user->identity->employ->role); ?>,
+            <span class="font-weight-bold text-warning mx-2"> Lavozim:</span>
+            <span class="font-weight-bold"> <?= Employ::getRole(Yii::$app->user->identity->employ->role); ?>
             </span>
             <? if (Yii::$app->user->identity->employ->company) { ?>
-                <span class="font-weight-bold  ml-2"> Tashkilot: </span>
+                ,<span class="font-weight-bold  ml-2"> Tashkilot: </span>
                 <span class=""> <?= Yii::$app->user->identity->employ->company->name_uz ?></span>
             <? } ?>
 

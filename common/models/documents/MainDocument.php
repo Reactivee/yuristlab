@@ -80,6 +80,14 @@ class MainDocument extends \yii\db\ActiveRecord
         return $status ? $array[$status] : $array;
     }
 
+    public function visibleEditWord()
+    {
+        return [
+            self::NEW,
+            self::REJECTED,
+        ];
+    }
+
     public static function getStatusNameArr($status = null)
     {
         $array = [

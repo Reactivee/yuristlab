@@ -11,14 +11,22 @@ use yii\helpers\Url;
 $domen = Url::base('https');
 $permit = false;
 
-if ($model->status == MainDocument::NEW) {
+
+//dd(array_key_exists($model->status, $model->visibleEditWord()));
+$exist = in_array($model->status, $model->visibleEditWord());
+
+if ($exist) {
+    $permit = true;
+}
+
+if (Yii::$app->user->identity->employ->role == \common\models\Employ::LAWYER && $model->status == MainDocument::SIGNING) {
     $permit = true;
 }
 
 ?>
 <div class="row">
     <div class="container-fluid px-5">
-        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', ], 'action' => '/documents/doc-edit']) ?>
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data',], 'action' => '/documents/doc-edit']) ?>
 
         <?= $form->field($model, 'path')->hiddenInput()->label(false) ?>
         <? if ($permit) { ?>
@@ -37,20 +45,21 @@ if ($model->status == MainDocument::NEW) {
         <!--        </a>-->
 
 
-<!--        <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=--><?//= $domen . $model->path ?><!--'-->
-<!--                width='100%' height='900px' frameborder='0'>-->
-<!--        </iframe>-->
+        <!--        <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=-->
+        <? //= $domen . $model->path ?><!--'-->
+        <!--                width='100%' height='900px' frameborder='0'>-->
+        <!--        </iframe>-->
 
         <?php
 
-                echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
-                    'url' => $domen . $model->path,//url на ваш документ
-                    'width' => '100%',
-                    'height' => '900px',
-                    //https://geektimes.ru/post/111647/
-                    'embedded' => true,
-                    'a' => \lesha724\documentviewer\GoogleDocumentViewer::A_BI //A_V = 'v', A_GT= 'gt', A_BI = 'bi'
-                ]);
+        echo \lesha724\documentviewer\GoogleDocumentViewer::widget([
+            'url' => $domen . $model->path,//url на ваш документ
+            'width' => '100%',
+            'height' => '900px',
+            //https://geektimes.ru/post/111647/
+            'embedded' => true,
+            'a' => \lesha724\documentviewer\GoogleDocumentViewer::A_BI //A_V = 'v', A_GT= 'gt', A_BI = 'bi'
+        ]);
         ?>
     </div>
 </div>

@@ -38,14 +38,15 @@ if (!empty($model->lawyer_conclusion_path)) {
 ?>
 <div class="container-fluid p-3">
     <div class="buttons_wrap mb-3">
-        <? if ($model->status != MainDocument::SUCCESS && $model->status != MainDocument::BOSS_SIGNED) { ?>
+<!--        --><?// if ($model->status != MainDocument::SUCCESS && $model->status != MainDocument::BOSS_SIGNED) { ?>
+<!--            --><?//= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+<!--            --><?//= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
+<!--        --><?// } ?>
+        <? if ($model->status == MainDocument::SIGNING) { ?>
+                    <? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
+                    <? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
             <?= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
-
-        <? } ?>
-        <? if ($model->status == MainDocument::SUCCESS) { ?>
-            <!--        --><? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-            <!--        --><? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
         <? } ?>
 
 

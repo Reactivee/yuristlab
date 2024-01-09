@@ -235,7 +235,7 @@ $this->title = 'Documents';
 //                            $emp = Employ::findOne($model->user_id);
 //                            return Html::a($emp->first_name . ' ' . $emp->last_name, [$url], ['class' => 'btn btn-inverse-warning btn-fw']);
 //                        } else {
-                        return Html::a('Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
+                        return Html::a('<i class="fa fa-pencil mr-1"></i> Tahrirlash', [$url], ['class' => 'btn btn-inverse-secondary btn-fw']);
 //                        }
 
                     }

@@ -40,7 +40,7 @@ if (!empty($model->court_doc)) {
             <!--                --><? //= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['/director/to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
             <!--                --><? //= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
             <!--            --><? // } ?>
-            <? if ($model->status != MainDocument::BOSS_SIGNED) { ?>
+            <? if ($model->status == MainDocument::TOBOSS) { ?>
 
                 <?= Html::a(' <i class="fas fa-backward mr-2"></i> Orqaga ', ['/director/to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
 

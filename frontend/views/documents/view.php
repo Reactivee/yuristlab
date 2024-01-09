@@ -133,7 +133,7 @@ if (!empty($model->attach)) {
                     <? if ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) { ?>
                         <div class="col-md-12 mt-4">
                             <h5 class="font-weight-bold card-title">Ilovalar</h5>
-                            <? $flag = $model->status != MainDocument::NEW ? true : false;
+                            <? $flag = ($model->status == MainDocument::NEW || $model->status == MainDocument::REJECTED) ? false : true;
                             echo FileInput::widget(['name' => 'attached',
                                 'id' => 'file_input',
                                 'options' => ['multiple' => true],

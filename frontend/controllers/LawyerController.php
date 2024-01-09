@@ -97,7 +97,7 @@ class LawyerController extends Controller
 
         if ($model) {
             $model->status = MainDocument::REJECTED;
-
+            $model->user_id = null;
             if ($model->save()) {
                 Yii::$app->session->addFlash('success', 'Rad etildi');
                 return $this->redirect(Yii::$app->request->referrer);
@@ -358,8 +358,8 @@ class LawyerController extends Controller
             Model::loadMultiple($about, Yii::$app->request->post());
             $deleted = AboutEmploy::deleteAll(['id' => $oldIDs]);
 
-            foreach ($posts as $key =>   $item) {
-                if(isset($item['name_uz'])){
+            foreach ($posts as $key => $item) {
+                if (isset($item['name_uz'])) {
                     $new_info = new AboutEmploy();
 
                     $new_info->key = $item->key;

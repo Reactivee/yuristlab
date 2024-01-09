@@ -367,7 +367,8 @@ class DocumentsController extends Controller
         $res = file_put_contents($localFilePath, $fileContent);
         if ($res) {
             Yii::$app->session->setFlash('success', "Xujjat Saqlandi");
-            return $this->redirect(['/documents/view/', 'id' => $main_doc->id]);
+//            return $this->redirect(['/documents/view/', 'id' => $main_doc->id]);
+            return $this->redirect(Yii::$app->request->referrer);
 
         }
         TelegramBotErrorSender::widget(['error' => $localFilePath, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
