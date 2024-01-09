@@ -3,6 +3,11 @@
 $models = $dataProvider->models;
 
 ?>
+<style>
+    .tab-content > .active {
+        display: flex;
+    }
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -47,7 +52,7 @@ $models = $dataProvider->models;
 
                 <? foreach ($category as $key => $item) { ?>
 
-                    <div class=" row mt-4 fade <?= $key == 0 ? "show active" : '' ?>"
+                    <div class="row mt-4 fade <?= $key == 0 ? "show active" : '' ?>"
                          id="pills-<?= $item->id ?>"
                          role="tabpanel"
                          aria-labelledby="pills-home-tab-custom">
