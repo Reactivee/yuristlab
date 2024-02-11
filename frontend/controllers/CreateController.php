@@ -122,7 +122,6 @@ class CreateController extends Controller
 
             if (!$model->save()) {
                 dd($model->errors);
-
             }
 
             $files = $model->saveFiles();
