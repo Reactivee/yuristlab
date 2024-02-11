@@ -331,7 +331,6 @@ class UserController extends Controller
     {
         if (Yii::$app->request->post()) {
 
-
             $employ_id = Yii::$app->user->identity->employ;
 
             if (!$employ_id) return false;
@@ -359,7 +358,7 @@ class UserController extends Controller
 
             //Rasm yuklash
             $file_image = UploadedFile::getInstances($employ_id, 'photo');
-            dd($file_image);
+
             if ($file_image) {
                 foreach ($file_image as $file) {
                     $folder = '/web/uploads/employ/';
