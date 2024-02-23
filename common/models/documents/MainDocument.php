@@ -488,18 +488,24 @@ class MainDocument extends \yii\db\ActiveRecord
         $img = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $this->code_document . '.png';
         $filename = Yii::getAlias('@frontend') . '/web/' . $item->path;
 
-        $templateProcessor = new TemplateProcessor($filename);
-        $templateProcessor->setValue('fio', $user_name);
-        $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
-        $templateProcessor->setValue('code_doc', $this->code_document);
-        $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
-        $templateProcessor->setImageValue('qr',
-            array('path' => $img,
-                'width' => 100,
-                'height' => 100,
-                'ratio' => false));
+        try {
+            $templateProcessor = new TemplateProcessor($filename);
 
-        $templateProcessor->saveAs($filename);
+            $templateProcessor->setValue('fio', $user_name);
+            $templateProcessor->setValue('date', date('d-m-Y H:i:s', $this->updated_at));
+            $templateProcessor->setValue('code_doc', $this->code_document);
+            $templateProcessor->setValue('code_conclusion', $this->code_conclusion);
+            $templateProcessor->setImageValue('qr',
+                array('path' => $img,
+                    'width' => 100,
+                    'height' => 100,
+                    'ratio' => false));
+
+            $templateProcessor->saveAs($filename);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
 
         if ($filename)
             chmod($filename, 0644);
