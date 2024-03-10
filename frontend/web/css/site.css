@@ -7,6 +7,11 @@
     height: 100%;
 }
 
+/*header*/
+.nav-tabs.home-tab .nav-item .nav-link {
+    padding: 20px 10px;
+}
+
 /*Login page*/
 .login_wrapper {
     padding: 100px 200px;

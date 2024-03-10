@@ -5,6 +5,7 @@
 /** @var string $content */
 
 use common\models\documents\MainDocument;
+use common\models\Employ;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap4\Html;
@@ -66,17 +67,39 @@ AppAsset::register($this);
                     <div class="d-sm-flex justify-content-between align-items-center border-bottom">
 
                         <ul class="nav nav-tabs home-tab" role="tablist">
-                            <? foreach (MainDocument::getStatusNameArr() as $key => $item) { ?>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= $status_id == $key ? 'active' : '' ?>"
-                                       id="Dashboards-tab"
-                                       href="/documents/all/?status=<?= $key ?>"
-                                       aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
-                                        <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>"><?= MainDocument::getByStatusDocuments($key) ?? '' ?></span>
-                                    </a>
-                                </li>
 
-                            <? } ?>
+                            <?
+                            if (Yii::$app->user->identity->employ->role == Employ::LAWYER) {
+                                foreach (MainDocument::getStatusNameArrLawyer() as $key => $item) { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link <?= $status_id == $key ? 'active' : '' ?>"
+                                           id="Dashboards-tab"
+                                           href="/documents/all/?status=<?= $key ?>"
+                                           aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
+                                            <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>">
+                                            <?= MainDocument::getByStatusDocuments($key) ?? '' ?>
+                                        </span>
+                                        </a>
+                                    </li>
+                                    <?
+                                }
+                            } else {
+                                foreach (MainDocument::getStatusNameArr() as $key => $item) { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link <?= $status_id == $key ? 'active' : '' ?>"
+                                           id="Dashboards-tab"
+                                           href="/documents/all/?status=<?= $key ?>"
+                                           aria-controls="Dashboards-1" aria-selected="false"><?= $item ?>
+                                            <span class=" ml-2<?= MainDocument::getStatusNameColorRound($key) ?>">
+                                            <?= MainDocument::getByStatusDocuments($key) ?? '' ?>
+                                        </span>
+                                        </a>
+                                    </li>
+                                    <?
+                                }
+                            }
+                            ?>
+
                         </ul>
 
 

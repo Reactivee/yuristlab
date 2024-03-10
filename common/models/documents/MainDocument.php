@@ -107,6 +107,21 @@ class MainDocument extends \yii\db\ActiveRecord
         return $status ? $array[$status] : $array;
     }
 
+    public static function getStatusNameArrLawyer($status = null)
+    {
+        $array = [
+            self::SIGNING => "Yangi",
+            self::SUCCESS => "Ijobiy xulosa",
+            self::REJECTED => "Rad etilgan",
+            self::TOBOSS => "Rahbar imzosi kutilmoqda",
+            self::BOSS_SIGNED => "Rahbar tomonidan imzolandi",
+            self::DELETED => "O'chirilgan",
+        ];
+
+        return $status ? $array[$status] : $array;
+    }
+
+
     public static function getStatusNameColored($status = null)
     {
 
@@ -156,7 +171,7 @@ class MainDocument extends \yii\db\ActiveRecord
             self::SUCCESS => " badge badge-pill badge-outline-success",
             self::ERROR => " badge badge-pill badge-outline-warning",
             self::REJECTED => " badge badge-pill badge-outline-warning",
-            self::SIGNING => " badge badge-pill badge-outline-success",
+            self::SIGNING => " badge badge-pill badge-outline-primary",
             self::SIGNED => "badge badge-pill badge-outline-primary",
             self::BOSS_SIGNED => "badge badge-pill badge-outline-success",
             self::TOBOSS => "badge badge-pill badge-outline-warning",
@@ -473,7 +488,6 @@ class MainDocument extends \yii\db\ActiveRecord
         if (!file_exists($uploads_folder)) {
             mkdir($uploads_folder, 0777, true);
         }
-
         \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
         $domen = Url::base('https');
         $link = $domen . '/documents/d?id=' . $this->code_document;
@@ -502,8 +516,8 @@ class MainDocument extends \yii\db\ActiveRecord
                     'ratio' => false));
 
             $templateProcessor->saveAs($filename);
-        } catch (\Exception $e) {
-            dd($e);
+        }catch (\Exception $e){
+                dd($e);
         }
 
 
