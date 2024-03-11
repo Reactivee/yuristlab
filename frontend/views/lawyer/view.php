@@ -38,13 +38,13 @@ if (!empty($model->lawyer_conclusion_path)) {
 ?>
 <div class="container-fluid p-3">
     <div class="buttons_wrap mb-3">
-<!--        --><?// if ($model->status != MainDocument::SUCCESS && $model->status != MainDocument::BOSS_SIGNED) { ?>
-<!--            --><?//= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
-<!--            --><?//= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
-<!--        --><?// } ?>
+        <!--        --><? // if ($model->status != MainDocument::SUCCESS && $model->status != MainDocument::BOSS_SIGNED) { ?>
+        <!--            --><? //= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
+        <!--            --><? //= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
+        <!--        --><? // } ?>
         <? if ($model->status == MainDocument::SIGNING) { ?>
-                    <? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
-                    <? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
+            <? //= Html::button(' <i class="fas fa-pencil mr-2"></i> Imzolash', ['type' => 'submit', 'class' => 'btn btn-outline-success btn-icon-text']) ?>
+            <? //= Html::a(' <i class="fas fa-trash"></i> Ochirish', ['delete', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-icon-text ml-2']) ?>
             <?= Html::a(' <i class="fas fa-pencil"></i> Imzolash ', ['to-sign', 'id' => $model->id], ['class' => 'btn btn-outline-success mr-3']) ?>
             <?= Html::a(' <i class="fas fa-backward mr-2"></i> Rad etish ', ['to-resign', 'id' => $model->id], ['class' => 'btn btn-outline-primary btn-danger ']) ?>
         <? } ?>
@@ -211,13 +211,45 @@ if (!empty($model->lawyer_conclusion_path)) {
                                         }
                                         ?>
                                     </p>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+                <?
+                if ($model->court_doc) {
+                    ?>
+                    <div class="col-md-4 mt-4">
+<!--                        <h5 class="font-weight-bold card-title">Asosiy fayl</h5>-->
+                        <h4 class="card-title font-weight-bold">Sud xulosa</h4>
+
+                        <div class="card">
+                            <div class="card-body ">
+                                <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                    <? if ($model->path) { ?>
+                                        <?= Html::a('<img style="width: 90px" src="/images/main-file.png" alt="">',
+                                            ['/documents/doc-court', 'id' => $model->id], ['target' => '_blank']);
+                                    } ?>
+                                    <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                        <a target="_blank" href="/frontend/web<?= $model->path ?>"
+                                           class="mb-0 text-warning font-weight-bold"> <i
+                                                    class="fa fa-cloud-download mr-1"></i>Ko'chirib olish</a>
+                                        <p class="text-muted mb-1">
+                                            <?
+                                            if (file_exists(Yii::getAlias('@frontend') . $model->court_doc)) {
+                                                $size = filesize(Yii::getAlias('@frontend') . $model->court_doc);
+                                                echo human_filesize($size, 3);
+                                            }
+                                            ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <? } ?>
+
 
 
             </div>

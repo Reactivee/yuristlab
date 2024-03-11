@@ -451,6 +451,15 @@ class DocumentsController extends Controller
             'model' => $doc
         ]);
     }
+    public function actionDocCourt($id)
+    {
+
+        $doc = MainDocument::findOne($id);
+
+        return $this->render('doc-view-court', [
+            'model' => $doc
+        ]);
+    }
 
     public function actionDocTemplate_old($id)
     {

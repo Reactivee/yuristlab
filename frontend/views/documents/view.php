@@ -192,7 +192,7 @@ if (!empty($model->attach)) {
                                             <div class="card">
                                                 <div class="card-body ">
                                                     <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
-                                                        <? if ($model->path) { ?>
+                                                        <? if ($file->path) { ?>
                                                             <?= Html::a('<img style="width: 90px" src="/images/add.png" alt="">',
                                                                 ['/frontend' . $file->path], ['target' => '_blank']);
                                                         } ?>
@@ -203,8 +203,8 @@ if (!empty($model->attach)) {
                                                             <p class="text-muted mb-1">
                                                                 <?
 
-                                                                if (file_exists(Yii::getAlias('@frontend') . '/web' . $file->path)) {
-                                                                    $size = filesize(Yii::getAlias('@frontend') . $file->path);
+                                                                if (file_exists(Yii::getAlias('@frontend') . $file->path)) {
+                                                                    $size = filesize(Yii::getAlias('@frontend') .  $file->path);
                                                                     echo human_filesize($size, 3);
                                                                 }
                                                                 ?>
