@@ -114,7 +114,7 @@ class TypeDocumentController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $oldPath = $model->path;
         if ($this->request->isPost && $model->load($this->request->post())) {
             $doc = $model->path = UploadedFile::getInstance($model, 'path');
 
@@ -129,7 +129,8 @@ class TypeDocumentController extends Controller
                 $doc->saveAs($path);
                 $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
                 $model->path = $path;
-
+            } else {
+                $model->path = $oldPath;
             }
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Saqlandi');
