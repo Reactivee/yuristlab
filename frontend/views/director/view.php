@@ -188,7 +188,8 @@ if (!empty($model->court_doc)) {
                         </div>
                     </div>
                     <div class="col-7">
-                        <? if ($model->step == MainDocument::STEP_BOSS_FINISH && $model->group_id == 4) { ?>
+                        <?
+                        if ($model->step == MainDocument::STEP_BOSS_FINISH && $model->group->key == 'ariza') { ?>
                             <div class="">
                                 <h4 class=" mt-3 card-title">Sud xulosa yuklash</h4>
                                 <?
