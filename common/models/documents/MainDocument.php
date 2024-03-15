@@ -903,7 +903,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $generateName = Yii::$app->security->generateRandomString() . uniqid();
         $fileExt = pathinfo($this->path, PATHINFO_EXTENSION);
-        $newName = $generateName . '.' . $fileExt;
+        $newName =  'aaaaaaaaaaaaaaaaa.' . $fileExt;
         $template_doc = Yii::getAlias('@frontend') . '/web/' . Yii::$app->user->identity->employ->company->template_doc;
         $path = Yii::getAlias('@frontend') . '/web/' . $this->path;
 
@@ -918,7 +918,7 @@ class MainDocument extends \yii\db\ActiveRecord
         ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
 
         $this->path = '/uploads/docs/' . $newName;
-
+//        dd($this->path);
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
         if ($filename)
             chmod($filename, 0777);
