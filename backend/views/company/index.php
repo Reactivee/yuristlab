@@ -43,8 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'key',
 //            'logo',
             'address',
-            //'type',
-            'official',
+            'template_doc',
             //'desc:ntext',
             //'status',
             [

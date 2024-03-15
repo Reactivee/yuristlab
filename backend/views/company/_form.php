@@ -1,5 +1,6 @@
 <?php
 
+use kartik\file\FileInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -18,17 +19,28 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'logo')->textInput(['maxlength' => true]) ?>
+<!--    --><?//= $form->field($model, 'logo')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
+<!--    --><?//= $form->field($model, 'type')->textInput() ?>
 
     <?= $form->field($model, 'official')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'desc')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'director')->dropDownList($model->getDir()) ?>
+
+    <?=
+    $form->field($model, 'template_doc')->widget(FileInput::classname(), [
+        'id' => 'template_doc',
+        'options' => ['accept' => 'docx/*'],
+        'pluginOptions' => [
+            'showCaption' => false,
+        ]
+    ])->label(false);
+    ?>
+
 
     <?= $form->field($model, 'status')->textInput() ?>
 

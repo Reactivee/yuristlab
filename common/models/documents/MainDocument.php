@@ -15,6 +15,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "main_document".
@@ -411,8 +412,8 @@ class MainDocument extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-
         if ($this->isNewRecord) {
+
 
             if (!$this->group_id) {
                 $this->group_id = $this->category->group_id;
@@ -421,6 +422,7 @@ class MainDocument extends \yii\db\ActiveRecord
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
                 $this->created_by = Yii::$app->user->identity->employ->id;
                 $this->generateDocCode();
+                $this->margeMainDocToCompanyTemplate();
 
             } else {
                 return false;
@@ -516,8 +518,8 @@ class MainDocument extends \yii\db\ActiveRecord
                     'ratio' => false));
 
             $templateProcessor->saveAs($filename);
-        }catch (\Exception $e){
-                dd($e);
+        } catch (\Exception $e) {
+            dd($e);
         }
 
 
@@ -894,8 +896,32 @@ class MainDocument extends \yii\db\ActiveRecord
         $section->addText($phpWord_2);
 
         $phpWord->save(Yii::getAlias('@frontend') . '/web/uploads/docs/tested.docx');
+    }
 
+    public function margeMainDocToCompanyTemplate()
+    {
 
+        $generateName = Yii::$app->security->generateRandomString() . uniqid();
+        $fileExt = pathinfo($this->path, PATHINFO_EXTENSION);
+        $newName = $generateName . '.' . $fileExt;
+        $template_doc = Yii::getAlias('@frontend') . '/web/' . Yii::$app->user->identity->employ->company->template_doc;
+        $path = Yii::getAlias('@frontend') . '/web/' . $this->path;
+
+        if (!file_exists($template_doc) || !file_exists($path)) {
+            throw new NotFoundHttpException('Kerakli fayllar yetarli emas');
+        }
+
+        $dm = new DocxMerge();
+        $marged = $dm->merge([
+            $template_doc,
+            $path,
+        ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
+
+        $this->path = '/uploads/docs/' . $newName;
+
+        $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+        if ($filename)
+            chmod($filename, 0777);
     }
 
 

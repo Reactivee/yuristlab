@@ -2,33 +2,26 @@
 
 namespace frontend\controllers;
 
-use common\helpers\HTML_TO_DOC;
 use common\models\documents\AttachedDocument;
 use common\models\documents\GroupDocuments;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 use common\models\documents\TypeDocuments;
-use common\models\forms\CreateDocForm;
 use common\widgets\TelegramBotErrorSender;
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
+
+use DocxMerge\DocxMerge;
 use Google\Service\Drive;
+use PhpOffice\PhpWord\PhpWord;
 use Yii;
-use yii\base\InvalidArgumentException;
 use yii\helpers\Url;
 use yii\httpclient\Client;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
+use PhpOffice\PhpWord\IOFactory;
 
 /**
  * Site controller
@@ -451,6 +444,7 @@ class DocumentsController extends Controller
             'model' => $doc
         ]);
     }
+
     public function actionDocCourt($id)
     {
 

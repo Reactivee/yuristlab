@@ -38,6 +38,7 @@ class Company extends \yii\db\ActiveRecord
         return [
             [['type', 'director', 'status'], 'integer'],
             [['desc'], 'string'],
+            [['template_doc'], 'file', 'extensions' => 'docx', 'maxSize' => 1024 * 1024 * 2],
             [['name_uz', 'name_ru', 'key', 'logo', 'address', 'official'], 'string', 'max' => 255],
         ];
     }
@@ -66,7 +67,7 @@ class Company extends \yii\db\ActiveRecord
     {
 
         $emp = Employ::find()
-            ->where(['company_id'=>$this->id])
+            ->where(['company_id' => $this->id])
             ->all();
         return ArrayHelper::map($emp, 'id', 'first_name');
 //        return $this->hasOne(Employ::className())

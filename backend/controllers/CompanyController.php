@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\models\Company;
 use common\models\CompanySearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CompanyController implements the CRUD actions for Company model.
@@ -70,7 +72,28 @@ class CompanyController extends Controller
         $model = new Company();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+
+                $doc = $model->template_doc = UploadedFile::getInstance($model, 'template_doc');
+
+                if ($doc) {
+                    $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+                    $generateName = Yii::$app->security->generateRandomString();
+                    $path = $folder . $generateName . '.' . $doc->extension;
+
+                    $doc->saveAs($path);
+                    $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
+                    $model->template_doc = $path;
+                }
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Saqlandi');
+                }else{
+                    Yii::$app->session->setFlash('error', 'Xatolik');
+                }
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -92,8 +115,31 @@ class CompanyController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldPath = $model->template_doc;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post()) ) {
+
+            $doc = $model->template_doc = UploadedFile::getInstance($model, 'template_doc');
+
+            if ($doc) {
+                $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                $generateName = Yii::$app->security->generateRandomString();
+                $path = $folder . $generateName . '.' . $doc->extension;
+
+                $doc->saveAs($path);
+                $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
+                $model->template_doc = $path;
+            } else {
+                $model->template_doc = $oldPath;
+            }
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Saqlandi');
+            }else{
+                Yii::$app->session->setFlash('error', 'Xatolik');
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
