@@ -422,8 +422,7 @@ class MainDocument extends \yii\db\ActiveRecord
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
                 $this->created_by = Yii::$app->user->identity->employ->id;
                 $this->generateDocCode();
-//                $this->margeMainDocToCompanyTemplate();
-
+                $this->margeMainDocToCompanyTemplate();
             } else {
                 return false;
             }
@@ -920,6 +919,7 @@ class MainDocument extends \yii\db\ActiveRecord
         $this->path = '/uploads/docs/' . $newName;
 
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
+        unlink($path);
         if ($filename)
             chmod($filename, 0777);
     }

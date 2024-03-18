@@ -11,8 +11,6 @@ use yii\helpers\Url;
 $domen = Url::base('https');
 $permit = false;
 
-
-//dd(array_key_exists($model->status, $model->visibleEditWord()));
 $exist = in_array($model->status, $model->visibleEditWord());
 
 if ($exist) {
