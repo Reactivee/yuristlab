@@ -35,8 +35,6 @@
     "kartik-v/yii2-widget-select2": "*",
     "skeeks/yii2-slug-behavior": "*",
     "kartik-v/yii2-editors": "*",
-    "symfony/dom-crawler": "2.8",
-    "symfony/css-selector": "2.8",
     "wbraganca/yii2-dynamicform": "2.0.1",
     "kartik-v/yii2-widget-depdrop": "^1.0",
     "2amigos/yii2-gallery-widget": "^1.1",
@@ -76,7 +74,8 @@
     "dompdf/dompdf": "^2.0",
     "kartik-v/yii2-mpdf": "*",
     "ncjoes/office-converter": "^1.0",
-    "kartik-v/yii2-widget-datepicker": "*"
+    "kartik-v/yii2-widget-datepicker": "*",
+    "docxmerge/docxmerge-php": "^1.3"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

@@ -8,20 +8,16 @@ use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
 use common\models\documents\TypeDocuments;
 use common\widgets\TelegramBotErrorSender;
-
-use DocxMerge\DocxMerge;
 use Google\Service\Drive;
-use PhpOffice\PhpWord\PhpWord;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\httpclient\Client;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UploadedFile;
-use PhpOffice\PhpWord\IOFactory;
 
 /**
  * Site controller
@@ -306,9 +302,7 @@ class DocumentsController extends Controller
 
             if ($response->isOk) {
                 $doc = json_decode($response->content);
-
                 TelegramBotErrorSender::widget(['error' => $response->content, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
-
             }
         }
         return $this->render('doc-edit', [

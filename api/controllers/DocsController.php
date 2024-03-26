@@ -3,22 +3,15 @@
 namespace api\controllers;
 
 use common\widgets\TelegramBotErrorSender;
-use Google\Exception;
-use GuzzleHttp\Exception\GuzzleException;
-use PhpParser\Node\Expr\Array_;
-use Yii;
-
-use yii\rest\Controller;
-use yii\web\Response;
 use Google\Client;
-use Google\Service\Drive;
 use Google\Service\Docs;
-use yii\helpers\FileHelper;
+use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
 use Ramsey\Uuid\Uuid;
+use Yii;
+use yii\helpers\FileHelper;
+use yii\rest\Controller;
 use yii\web\UploadedFile;
-
-use GuzzleHttp\Client as HttpClient;
 
 
 class DocsController extends Controller
@@ -441,7 +434,7 @@ class DocsController extends Controller
                 $fileContent = $exportFileContent->getBody()->getContents();
                 // Save the file to a local directory
                 $localFilePath = $savePathFromDrive;
-                file_put_contents($localFilePath, $fileContent);
+//                file_put_contents($localFilePath, $fileContent);
 
                 // Add permissions
                 $permission = new Drive\Permission();

@@ -438,10 +438,6 @@ if (!empty($models->sign)) {
                                         <li>
                                             <h6><?= $item->name_uz ?></h6>
                                             <p><?= $item->text_uz ?></p>
-                                            <!--                                            <p class="text-muted mb-4">-->
-                                            <!--                                                <i class="mdi mdi-clock-outline"></i>-->
-                                            <!--                                                3 yil oldin-->
-                                            <!--                                            </p>-->
                                         </li>
                                     <? } ?>
                                 </ul>
@@ -468,10 +464,6 @@ if (!empty($models->sign)) {
                                         <li>
                                             <h6><?= $item->name_uz ?></h6>
                                             <p><?= $item->text_uz ?></p>
-                                            <!--                                            <p class="text-muted mb-4">-->
-                                            <!--                                                <i class="mdi mdi-clock-outline"></i>-->
-                                            <!--                                                3 yil oldin-->
-                                            <!--                                            </p>-->
                                         </li>
                                     <? } ?>
                                 </ul>

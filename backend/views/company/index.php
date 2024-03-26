@@ -1,10 +1,10 @@
 <?php
 
 use common\models\Company;
-use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
@@ -41,7 +41,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 //            'key',
-//            'logo',
+
+            [
+                'attribute' => 'logo',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::img($model->logo, ['width' => 100]);
+                }
+            ],
             'address',
             'template_doc',
             //'desc:ntext',

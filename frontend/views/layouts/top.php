@@ -18,11 +18,6 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <ul class="navbar-nav mr-lg-2">
             <li class="nav-item d-none d-sm-block dropdown arrow-none">
-                <!--                <button type="button" class="btn btn-success btn-icon-text dropdown-toggle" data-toggle="dropdown"-->
-                <!--                        id="profileDropdown6" aria-expanded="false">-->
-                <!--                    <i class="mdi mdi-plus-circle btn-icon-prepend"></i>-->
-                <!--                    Yangi xujjat qo'shish-->
-                <!--                </button>-->
                 <div class="dropdown-menu dropdown-menu-left navbar-dropdown" aria-labelledby="profileDropdown6">
 
                     <!--                    <a class="dropdown-item text-primary">-->
@@ -73,11 +68,11 @@ $arr_group = \yii\helpers\ArrayHelper::map($group, 'id', 'name_uz');
                     <img src="<?= Yii::$app->user->identity->employ->photo ?? '' ?>" alt="profile"/>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <?php echo Html::a('<i class="mdi mdi-settings"></i> Settings ',
+                    <?php echo Html::a('<i class="mdi mdi-settings"></i> Sozlamalar ',
                         ['/user/index',], ['class' => 'dropdown-item text-primary']) ?>
-                    <?php echo Html::a('<i class="mdi mdi-message"></i> Message ',
-                        ['/user/index',], ['class' => 'dropdown-item text-primary']) ?>
-                    <?php echo Html::a('<i class="fas fa-sign-out"></i>Sign out',
+                    <!--                    --><?php //echo Html::a('<i class="mdi mdi-message"></i> Xabarlar ',
+                    //                        ['/user/index',], ['class' => 'dropdown-item text-primary']) ?>
+                    <?php echo Html::a('<i class="fas fa-sign-out"></i>Chiqish',
                         ['/site/logout'], ['data-method' => 'POST', 'class' => 'dropdown-item text-primary']) ?>
                 </div>
             </li>

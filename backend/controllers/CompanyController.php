@@ -5,9 +5,9 @@ namespace backend\controllers;
 use common\models\Company;
 use common\models\CompanySearch;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -90,7 +90,7 @@ class CompanyController extends Controller
                 }
                 if ($model->save()) {
                     Yii::$app->session->setFlash('success', 'Saqlandi');
-                }else{
+                } else {
                     Yii::$app->session->setFlash('error', 'Xatolik');
                 }
 
@@ -115,29 +115,38 @@ class CompanyController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $oldPath = $model->template_doc;
+//        $oldPath = $model->template_doc;
+        $oldLogo = $model->logo;
 
-        if ($this->request->isPost && $model->load($this->request->post()) ) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
 
-            $doc = $model->template_doc = UploadedFile::getInstance($model, 'template_doc');
+//            $doc = $model->template_doc = UploadedFile::getInstance($model, 'template_doc');
+            $logo = $model->logo = UploadedFile::getInstance($model, 'logo');
 
-            if ($doc) {
-                $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
-                if (!file_exists($folder)) {
-                    mkdir($folder, 0777, true);
+            if ($logo) {
+//                $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
+                $logo_folder = Yii::getAlias('@frontend') . '/web/uploads/logo/';
+                if (!file_exists($logo_folder)) {
+//                    mkdir($folder, 0777, true);
+                    mkdir($logo_folder, 0777, true);
                 }
                 $generateName = Yii::$app->security->generateRandomString();
-                $path = $folder . $generateName . '.' . $doc->extension;
+//                $path = $folder . $generateName . '.' . $doc->extension;
+                $logo_path = $logo_folder . $generateName . '.' . $logo->extension;
 
-                $doc->saveAs($path);
-                $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
-                $model->template_doc = $path;
+//                $doc->saveAs($path);
+                $logo->saveAs($logo_path);
+//                $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
+                $logo_path = '/uploads/logo/' . $generateName . '.' . $logo->extension;
+//                $model->template_doc = $path;
+                $model->logo = $logo_path;
             } else {
-                $model->template_doc = $oldPath;
+//                $model->template_doc = $oldPath;
+                $model->logo = $oldLogo;
             }
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Saqlandi');
-            }else{
+            } else {
                 Yii::$app->session->setFlash('error', 'Xatolik');
             }
             return $this->redirect(['view', 'id' => $model->id]);

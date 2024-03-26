@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -37,7 +36,7 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             [['type', 'director', 'status'], 'integer'],
-            [['desc'], 'string'],
+            [['desc', 'post', 'bank', 'schot', 'mfo', 'stir'], 'string'],
             [['template_doc'], 'file', 'extensions' => 'docx', 'maxSize' => 1024 * 1024 * 2],
             [['name_uz', 'name_ru', 'key', 'logo', 'address', 'official'], 'string', 'max' => 255],
         ];

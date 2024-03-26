@@ -17,36 +17,54 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name_ru')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
-<!--    --><?//= $form->field($model, 'logo')->textInput(['maxlength' => true]) ?>
+    <!--    --><? //= $form->field($model, 'logo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'address')->textInput(['maxlength' => true])->label('Manzil') ?>
 
-<!--    --><?//= $form->field($model, 'type')->textInput() ?>
+    <!--    --><? //= $form->field($model, 'type')->textInput()->label('Turi') ?>
+    <?= $form->field($model, 'post')->textInput()->label('Pochta') ?>
+    <?= $form->field($model, 'bank')->textInput()->label('Bank nomi') ?>
+    <?= $form->field($model, 'schot')->textInput()->label('Bank hisob') ?>
+    <?= $form->field($model, 'mfo')->textInput()->label('MFO') ?>
+    <?= $form->field($model, 'stir')->textInput()->label('STIR') ?>
 
-    <?= $form->field($model, 'official')->textInput(['maxlength' => true]) ?>
+    <!--    --><? //= $form->field($model, 'official')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'desc')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'director')->dropDownList($model->getDir()) ?>
+    <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
-    <?=
-    $form->field($model, 'template_doc')->widget(FileInput::classname(), [
-        'id' => 'template_doc',
-        'options' => ['accept' => 'docx/*'],
-        'pluginOptions' => [
-            'showCaption' => false,
-        ]
-    ])->label(false);
-    ?>
+    <!--        --><? //=
+    //        $form->field($model, 'template_doc')->widget(FileInput::classname(), [
+    //            'id' => 'template_doc',
+    //            'options' => ['accept' => 'docx/*'],
+    //            'pluginOptions' => [
+    //                'showCaption' => false,
+    //            ]
+    //        ])->label(false);
+    //        ?>
 
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="col-md-6">
+        <?=
+        $form->field($model, 'logo')->widget(FileInput::classname(), [
+            'id' => 'template_doc',
+            'options' => ['accept' => 'png/*'],
+            'pluginOptions' => [
+                'showCaption' => false,
+            ]
+        ])->label('Logotip');
+        ?>
+        <div class="form-group mt-4">
+            <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
+        </div>
     </div>
+
+
+    <!--    --><? //= $form->field($model, 'status')->textInput() ?>
+
+
 
     <?php ActiveForm::end(); ?>
 

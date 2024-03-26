@@ -4,9 +4,7 @@ namespace common\models\documents;
 
 use common\models\Company;
 use common\models\Employ;
-use common\models\User;
 use DocxMerge\DocxMerge;
-use NcJoes\OfficeConverter\OfficeConverter;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Settings;
@@ -414,7 +412,9 @@ class MainDocument extends \yii\db\ActiveRecord
     {
         if ($this->isNewRecord) {
 
-
+//            $this->margeMainDocToCompanyTemplate();
+//            $this->makeOrientedDoc();
+//            dd('stop');
             if (!$this->group_id) {
                 $this->group_id = $this->category->group_id;
             }
@@ -422,7 +422,6 @@ class MainDocument extends \yii\db\ActiveRecord
                 $this->company_id = Yii::$app->user->identity->employ->company->id;
                 $this->created_by = Yii::$app->user->identity->employ->id;
                 $this->generateDocCode();
-                $this->margeMainDocToCompanyTemplate();
             } else {
                 return false;
             }
@@ -877,7 +876,7 @@ class MainDocument extends \yii\db\ActiveRecord
         dd('asd');
     }
 
-    public function whriteWordDoc()
+    public function writeWordDoc()
     {
         $word = Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template-boss.docx';
         $word_2 = Yii::getAlias('@frontend') . '/web/uploads/templates/sign-template.docx';
@@ -901,6 +900,7 @@ class MainDocument extends \yii\db\ActiveRecord
     {
 
         $generateName = Yii::$app->security->generateRandomString() . uniqid();
+        $generateName2 = Yii::$app->security->generateRandomString() . uniqid();
         $fileExt = pathinfo($this->path, PATHINFO_EXTENSION);
         $newName = $generateName . '.' . $fileExt;
         $template_doc = Yii::getAlias('@frontend') . '/web/' . Yii::$app->user->identity->employ->company->template_doc;
@@ -916,12 +916,100 @@ class MainDocument extends \yii\db\ActiveRecord
             $path,
         ], Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName);
 
-        $this->path = '/uploads/docs/' . $newName;
+        /*Temp files*/
+//        $folder = '/web/uploads/temp/';
+//        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+//        if (!file_exists($uploads_folder)) {
+//            mkdir($uploads_folder, 0777, true);
+//        }
+//        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
+
+        rename(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName, Yii::getAlias('@frontend') . '/web/uploads/docs/1111' . $generateName2 . '.docx');
+        $this->path = '/uploads/docs/1111' . $generateName2 . '.docx';
 
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
-        unlink($path);
-        if ($filename)
-            chmod($filename, 0777);
+
+//        unlink($path);
+//        if ($filename)
+//            chmod($filename, 0777);
+
+    }
+
+    public function reSaveDocument()
+    {
+//        // Create a PHPWord object for the source file
+//        $phpWord = IOFactory::load(Yii::getAlias('@frontend') . '/web' . $this->path);
+//
+//        $section = $phpWord->addSection();
+////         Save the contents to the destination file
+//        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+//        $objWriter->save(Yii::getAlias('@frontend') . '/web' . $this->path);
+//        dd($this);
+    }
+
+    public function makePurePdf()
+    {
+        $apiKey = "hcsdhSxcqVmTkrXjgbCfneyEQ3QnrG";
+        $docxmerge = new Docxmerge($apiKey, "default", "https://api.docxmerge.com");
+        $fp = fopen(Yii::getAlias('@frontend') . '/web/uploads/docs/test.pdf', "w");
+
+        $docxmerge->renderUrl(
+            $fp,
+            'https://yuristlab.uz/uploads/templates/6sML1Iq_ynFbgxrGvzXkUUhl47DuYXuS.docx',
+            array(
+                "name" => "James bond",
+                "logo" => "https://docxmerge.com/assets/android-chrome-512x512.png"
+            ),
+            "pdf"
+        );
+    }
+
+    public function makeOrientedDoc()
+    {
+        $generateName = Yii::$app->security->generateRandomString() . uniqid();
+        $company = Yii::$app->user->identity->employ->company;
+
+        $company_name = $company->name_uz;
+        $address = $company->address;
+        $type = $company->type;
+        $stir = $company->stir;
+        $mfo = $company->mfo;
+        $schot = $company->schot;
+        $bank = $company->bank;
+        $post = $company->post;
+
+
+        $path = Yii::getAlias('@frontend') . '/web/' . $this->path;
+        $logo_path = Yii::getAlias('@frontend') . '/web/' . $company->logo;
+
+        $folder = '/web/uploads/temp/';
+        $uploads_folder = Yii::getAlias('@frontend') . $folder;
+
+        if (!file_exists($uploads_folder)) {
+            mkdir($uploads_folder, 0777, true);
+        }
+        if (!file_exists($path) && !file_exists($logo_path)) {
+            throw new NotFoundHttpException('Kerakli fayl yetarli emas');
+        }
+
+        $templateProcessor = new TemplateProcessor($path);
+        $templateProcessor->setValue('company_name', $company_name);
+        $templateProcessor->setValue('type', $type);
+        $templateProcessor->setValue('address', $address);
+        $templateProcessor->setValue('post', $post);
+        $templateProcessor->setValue('bank', $bank);
+        $templateProcessor->setValue('schot', $schot);
+        $templateProcessor->setValue('mfo', $mfo);
+        $templateProcessor->setValue('stir', $stir);
+        $templateProcessor->setImageValue('logo',
+            array('path' => $logo_path,
+                'width' => 200,
+                'height' => 100,
+                'ratio' => true));
+
+        $templateProcessor->saveAs($path);
+
+        chmod($path, 0777);
     }
 
 
