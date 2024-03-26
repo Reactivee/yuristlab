@@ -413,7 +413,7 @@ class MainDocument extends \yii\db\ActiveRecord
         if ($this->isNewRecord) {
 
 //            $this->margeMainDocToCompanyTemplate();
-//            $this->makeOrientedDoc();
+            $this->makeOrientedDoc();
 //            dd('stop');
             if (!$this->group_id) {
                 $this->group_id = $this->category->group_id;
@@ -991,23 +991,27 @@ class MainDocument extends \yii\db\ActiveRecord
         if (!file_exists($path) && !file_exists($logo_path)) {
             throw new NotFoundHttpException('Kerakli fayl yetarli emas');
         }
+        try {
+            $templateProcessor = new TemplateProcessor($path);
+            $templateProcessor->setValue('company_name', $company_name);
+            $templateProcessor->setValue('type', $type);
+            $templateProcessor->setValue('address', $address);
+            $templateProcessor->setValue('post', $post);
+            $templateProcessor->setValue('bank', $bank);
+            $templateProcessor->setValue('schot', $schot);
+            $templateProcessor->setValue('mfo', $mfo);
+            $templateProcessor->setValue('stir', $stir);
+            $templateProcessor->setImageValue('logo',
+                array('path' => $logo_path,
+                    'width' => 200,
+                    'height' => 100,
+                    'ratio' => true));
 
-        $templateProcessor = new TemplateProcessor($path);
-        $templateProcessor->setValue('company_name', $company_name);
-        $templateProcessor->setValue('type', $type);
-        $templateProcessor->setValue('address', $address);
-        $templateProcessor->setValue('post', $post);
-        $templateProcessor->setValue('bank', $bank);
-        $templateProcessor->setValue('schot', $schot);
-        $templateProcessor->setValue('mfo', $mfo);
-        $templateProcessor->setValue('stir', $stir);
-        $templateProcessor->setImageValue('logo',
-            array('path' => $logo_path,
-                'width' => 200,
-                'height' => 100,
-                'ratio' => true));
+            $templateProcessor->saveAs($path);
+        } catch (\Exception $e) {
+            dd($e);
+        }
 
-        $templateProcessor->saveAs($path);
 
         chmod($path, 0777);
     }
