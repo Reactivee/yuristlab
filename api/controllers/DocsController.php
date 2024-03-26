@@ -434,7 +434,7 @@ class DocsController extends Controller
                 $fileContent = $exportFileContent->getBody()->getContents();
                 // Save the file to a local directory
                 $localFilePath = $savePathFromDrive;
-//                file_put_contents($localFilePath, $fileContent);
+                file_put_contents($localFilePath, $fileContent);
 
                 // Add permissions
                 $permission = new Drive\Permission();
