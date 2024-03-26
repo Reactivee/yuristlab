@@ -971,7 +971,7 @@ class MainDocument extends \yii\db\ActiveRecord
 
         $company_name = $company->name_uz;
         $address = $company->address;
-        $type = $company->type;
+        $type = $company->description;
         $stir = $company->stir;
         $mfo = $company->mfo;
         $schot = $company->schot;
