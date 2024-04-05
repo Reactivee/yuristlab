@@ -7,18 +7,15 @@ use common\models\documents\CategoryDocuments;
 use common\models\documents\GroupDocuments;
 use common\models\documents\MainDocument;
 use common\models\documents\TypeDocuments;
-use common\models\forms\CreateDocForm;
-
 use Google\Client;
 use Google\Service\Docs;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
 use Ramsey\Uuid\Uuid;
 use Yii;
-
-use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
@@ -142,6 +139,7 @@ class CreateController extends Controller
         }
 
         if ($doc) {
+
             $gr = GroupDocuments::findOne($doc);
             if ($gr->path)
                 $model->path = $gr->path;
@@ -372,9 +370,18 @@ class CreateController extends Controller
     public function actionGetFile($id)
     {
 ////        Yii::$app->response->format = Response::FORMAT_JSON;
-        $doc = TypeDocuments::findOne($id);
+//        $company_id = Yii::$app->user->identity->employ->company->id;
 //
+//        $category = CompanyTemplates::find()
+//            ->where(['category_id' => $id, 'company_id' => $company_id])
+//            ->one();
+//        if ($category)
+//            return $category->path;
+
+        $doc = TypeDocuments::findOne($id);
         if (!$doc->path) return false;
+        return $doc->path;
+
 //
 //        $templateFile = Yii::getAlias('@frontend') . '/web/' . $doc->path;
 //        $fileName = uniqid() . '.' . $doc->path;
@@ -388,7 +395,6 @@ class CreateController extends Controller
 //        try {
 //            $res_save = file_put_contents($savePathDocs, $content);
 //            if ($res_save) {
-        return $doc->path;
 //                return '/uploads/docs/' . $newName;
 //            }
 //

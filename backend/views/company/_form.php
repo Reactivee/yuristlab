@@ -36,16 +36,18 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'director')->dropDownList($model->getDir()) ?>
     <?= $form->field($model, 'key')->textInput(['maxlength' => true]) ?>
 
-    <!--        --><? //=
-    //        $form->field($model, 'template_doc')->widget(FileInput::classname(), [
-    //            'id' => 'template_doc',
-    //            'options' => ['accept' => 'docx/*'],
-    //            'pluginOptions' => [
-    //                'showCaption' => false,
-    //            ]
-    //        ])->label(false);
-    //        ?>
 
+    <div class="col-md-6">
+        <?=
+        $form->field($model, 'template_doc')->widget(FileInput::classname(), [
+            'id' => 'template_doc',
+            'options' => ['accept' => 'docx/*'],
+            'pluginOptions' => [
+                'showCaption' => false,
+            ]
+        ])->label('shablon yuklash');
+        ?>
+    </div>
     <div class="col-md-6">
         <?=
         $form->field($model, 'logo')->widget(FileInput::classname(), [
@@ -56,11 +58,11 @@ use yii\widgets\ActiveForm;
             ]
         ])->label('Logotip');
         ?>
-        <div class="form-group mt-4">
-            <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
-        </div>
-    </div>
 
+    </div>
+    <div class="form-group my-4">
+        <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
+    </div>
 
     <!--    --><? //= $form->field($model, 'status')->textInput() ?>
 

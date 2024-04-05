@@ -115,33 +115,33 @@ class CompanyController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-//        $oldPath = $model->template_doc;
+        $oldPath = $model->template_doc;
         $oldLogo = $model->logo;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
 
-//            $doc = $model->template_doc = UploadedFile::getInstance($model, 'template_doc');
-            $logo = $model->logo = UploadedFile::getInstance($model, 'logo');
+            $doc = $model->template_doc = UploadedFile::getInstance($model, 'template_doc');
+//            $logo = $model->logo = UploadedFile::getInstance($model, 'logo');
 
-            if ($logo) {
-//                $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
-                $logo_folder = Yii::getAlias('@frontend') . '/web/uploads/logo/';
-                if (!file_exists($logo_folder)) {
-//                    mkdir($folder, 0777, true);
-                    mkdir($logo_folder, 0777, true);
+            if ($doc) {
+                $folder = Yii::getAlias('@frontend') . '/web/uploads/templates/';
+//                $logo_folder = Yii::getAlias('@frontend') . '/web/uploads/logo/';
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+//                    mkdir($logo_folder, 0777, true);
                 }
                 $generateName = Yii::$app->security->generateRandomString();
-//                $path = $folder . $generateName . '.' . $doc->extension;
-                $logo_path = $logo_folder . $generateName . '.' . $logo->extension;
+                $path = $folder . $generateName . '.' . $doc->extension;
+//                $logo_path = $logo_folder . $generateName . '.' . $logo->extension;
 
-//                $doc->saveAs($path);
-                $logo->saveAs($logo_path);
-//                $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
-                $logo_path = '/uploads/logo/' . $generateName . '.' . $logo->extension;
-//                $model->template_doc = $path;
-                $model->logo = $logo_path;
+                $doc->saveAs($path);
+//                $logo->saveAs($logo_path);
+                $path = '/uploads/templates/' . $generateName . '.' . $doc->extension;
+//                $logo_path = '/uploads/logo/' . $generateName . '.' . $logo->extension;
+                $model->template_doc = $path;
+//                $model->logo = $logo_path;
             } else {
-//                $model->template_doc = $oldPath;
+                $model->template_doc = $oldPath;
                 $model->logo = $oldLogo;
             }
             if ($model->save()) {

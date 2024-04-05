@@ -5,7 +5,6 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var common\models\CompanySearch $searchModel */
@@ -22,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Company', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php Pjax::begin(); ?>
+    <!--    --><?php //Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
@@ -41,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 //            'key',
+            'address',
 
             [
                 'attribute' => 'logo',
@@ -49,8 +49,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Html::img($model->logo, ['width' => 100]);
                 }
             ],
-            'address',
-            'template_doc',
+            [
+                'attribute' => 'template_doc',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::a('File', $model->template_doc);
+                }
+            ],
+
             //'desc:ntext',
             //'status',
             [
@@ -62,6 +68,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?php Pjax::end(); ?>
+    <!--    --><?php //Pjax::end(); ?>
 
 </div>

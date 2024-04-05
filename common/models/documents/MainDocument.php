@@ -413,7 +413,6 @@ class MainDocument extends \yii\db\ActiveRecord
         if ($this->isNewRecord) {
 
 //            $this->margeMainDocToCompanyTemplate();
-            $this->makeOrientedDoc();
 //            dd('stop');
             if (!$this->group_id) {
                 $this->group_id = $this->category->group_id;
@@ -467,6 +466,7 @@ class MainDocument extends \yii\db\ActiveRecord
                 $this->margeDocs();
 
             }
+
         }
 
         return parent::beforeSave($insert);
@@ -907,7 +907,7 @@ class MainDocument extends \yii\db\ActiveRecord
         $path = Yii::getAlias('@frontend') . '/web/' . $this->path;
 
         if (!file_exists($template_doc) || !file_exists($path)) {
-            throw new NotFoundHttpException('Kerakli fayllar yetarli emas');
+            throw new NotFoundHttpException('Kerakli fayllar mavjud emas');
         }
 
         $dm = new DocxMerge();
@@ -924,14 +924,12 @@ class MainDocument extends \yii\db\ActiveRecord
 //        }
 //        \PhpOffice\PhpWord\Settings::setTempDir($uploads_folder);
 
-        rename(Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName, Yii::getAlias('@frontend') . '/web/uploads/docs/1111' . $generateName2 . '.docx');
-        $this->path = '/uploads/docs/1111' . $generateName2 . '.docx';
-
+        $this->path = '/uploads/docs/' . $newName;
+        $this->save();
         $filename = Yii::getAlias('@frontend') . '/web/uploads/docs/' . $newName;
-
 //        unlink($path);
-//        if ($filename)
-//            chmod($filename, 0777);
+        if ($filename)
+            chmod($filename, 0777);
 
     }
 
@@ -991,8 +989,14 @@ class MainDocument extends \yii\db\ActiveRecord
         if (!file_exists($path) && !file_exists($logo_path)) {
             throw new NotFoundHttpException('Kerakli fayl yetarli emas');
         }
+
         try {
             $templateProcessor = new TemplateProcessor($path);
+            $templateProcessor->setImageValue('logo',
+                array('path' => $logo_path,
+                    'width' => 200,
+                    'height' => 100,
+                    'ratio' => true));
             $templateProcessor->setValue('company_name', $company_name);
             $templateProcessor->setValue('type', $type);
             $templateProcessor->setValue('address', $address);
@@ -1001,19 +1005,14 @@ class MainDocument extends \yii\db\ActiveRecord
             $templateProcessor->setValue('schot', $schot);
             $templateProcessor->setValue('mfo', $mfo);
             $templateProcessor->setValue('stir', $stir);
-            $templateProcessor->setImageValue('logo',
-                array('path' => $logo_path,
-                    'width' => 200,
-                    'height' => 100,
-                    'ratio' => true));
 
             $templateProcessor->saveAs($path);
+
         } catch (\Exception $e) {
             dd($e);
         }
-
-
         chmod($path, 0777);
+        return true;
     }
 
 

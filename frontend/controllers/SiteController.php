@@ -2,22 +2,25 @@
 
 namespace frontend\controllers;
 
-use common\helpers\HTML_TO_DOC;
+use common\models\CompanyTemplates;
+use common\models\documents\GroupDocuments;
+use common\models\documents\TypeDocuments;
 use common\models\Employ;
+use common\models\LoginForm;
+use DocxMerge\DocxMerge;
+use frontend\models\ContactForm;
+use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\ResetPasswordForm;
+use frontend\models\SignupForm;
 use frontend\models\VerifyEmailForm;
 use PhpOffice\PhpWord\IOFactory;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 
 /**
  * Site controller
@@ -466,5 +469,55 @@ class SiteController extends Controller
 // Output the PDF
         $mpdf->Output(Yii::getAlias('@frontend') . '/web/uploads/docs/test.pdf', \Mpdf\Output\Destination::FILE);
         dd('asd');
+    }
+
+    public function actionGenerate()
+    {
+        $template_doc = Yii::getAlias('@frontend') . '/web' . Yii::$app->user->identity->employ->company->template_doc;
+        $company_id = Yii::$app->user->identity->employ->company->id;
+
+        $group = GroupDocuments::find()->all();
+        $sub_category = TypeDocuments::find()->all();
+
+        foreach ($sub_category as $item) {
+            try {
+                $date = date('d.m.Y.H.i.s');
+                $path = Yii::getAlias('@frontend') . '/web' . $item->path;
+                $generateName = uniqid() . '-' . $date;
+                if (!file_exists($path)) {
+                    continue;
+                }
+
+                $fileExt = pathinfo($item->path, PATHINFO_EXTENSION);
+                $newName = $generateName . '.' . $fileExt;
+
+                $folder = '/web/uploads/company-templates/' . $company_id;
+                $uploads_folder = Yii::getAlias('@frontend') . $folder;
+                if (!file_exists($uploads_folder)) {
+                    mkdir($uploads_folder, 0777, true);
+                }
+                $new_path = Yii::getAlias('@frontend') . $folder . '/' . $newName;
+                $dm = new DocxMerge();
+                $marged = $dm->merge([
+                    $template_doc,
+                    $path,
+                ], $new_path);
+
+                $templates = CompanyTemplates::find()
+                    ->where(['category_id' => $item->id, 'company_id' => $company_id])
+                    ->one();
+
+                if (!$templates)
+                    $templates = new CompanyTemplates();
+                $templates->path = $folder . '/' . $newName;
+                $templates->category_id = $item->id;
+                $templates->company_id = $company_id;
+                $templates->save();
+            } catch (\Exception $e) {
+                dd($e);
+            }
+
+
+        }
     }
 }

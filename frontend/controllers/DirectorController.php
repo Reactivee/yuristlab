@@ -6,7 +6,6 @@ namespace frontend\controllers;
 use common\models\documents\AttachedDocument;
 use common\models\documents\MainDocument;
 use common\models\documents\MainDocumentSearch;
-
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -93,18 +92,25 @@ class DirectorController extends Controller
     {
         $main = MainDocument::find()->where(['id' => $id])->one();
 
+
         if ($main) {
-            $main->status = MainDocument::BOSS_SIGNED;
-            $main->step = MainDocument::STEP_EMPLOYER;
 
-            if ($main->signed_lawyer)
-                $main->step = MainDocument::STEP_BOSS_FINISH;
+            try {
+                $main->status = MainDocument::BOSS_SIGNED;
+                $main->step = MainDocument::STEP_EMPLOYER;
 
-            if (!$main->save()) {
-                dd($main->errors);
+                if ($main->signed_lawyer)
+                    $main->step = MainDocument::STEP_BOSS_FINISH;
+
+                if (!$main->save()) {
+                    dd($main->errors);
+                }
+                $marge_logo = $main->margeMainDocToCompanyTemplate();
+                Yii::$app->session->setFlash('success', "Imzolandi !");
+                return $this->redirect(Yii::$app->request->referrer);
+            } catch (\Exception $exception) {
+                dd($exception);
             }
-            Yii::$app->session->setFlash('success', "Yuborildi");
-            return $this->redirect(Yii::$app->request->referrer);
 
         } else {
             Yii::$app->session->setFlash('error', "Xujjat topilmadi");
