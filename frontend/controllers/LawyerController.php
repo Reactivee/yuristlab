@@ -101,7 +101,6 @@ class LawyerController extends Controller
             if ($model->save()) {
                 Yii::$app->session->addFlash('success', 'Rad etildi');
                 return $this->redirect(Yii::$app->request->referrer);
-
             }
         }
         throw new NotFoundHttpException('The requested page does not exist.');
@@ -109,7 +108,7 @@ class LawyerController extends Controller
 
     public function actionToSign($id)
     {
-//        dd('asd')
+
         $model = MainDocument::find()->where(['id' => $id])->one();
 
         if ($model) {
@@ -156,7 +155,6 @@ class LawyerController extends Controller
 
         if (empty($about))
             $about = [new AboutEmploy()];
-
 
         return $this->render('team_profile', [
             'models' => $search,

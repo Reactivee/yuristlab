@@ -461,4 +461,16 @@ class DocsController extends Controller
 
         return 'This Request Method not found!';
     }
+
+    public function actionAmo()
+    {
+        $res = Yii::$app->request->post();
+        $request = \Yii::$app->request;
+
+//        dd($res);
+
+        TelegramBotErrorSender::widget(['error' => $res, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+
+    }
 }
