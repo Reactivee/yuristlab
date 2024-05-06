@@ -464,77 +464,31 @@ class DocsController extends Controller
 
     public function actionAmo()
     {
-        // Получаем данные из хука
-        $json = file_get_contents('php://input');
-        $data = json_decode($json, true);
-        TelegramBotErrorSender::widget(['error' => $data, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
-//        dd($data);
-
-        print_r($data);
-
         $res = Yii::$app->request->post();
-        $request = \Yii::$app->request;
+        // Формируем текст примечания
+        $note_text = '';
 
+        if ($res['leads']['add'] || $res['contacts']['add']) {
+//            dd('asd');
+            $card = $res['contacts']['add'] ? $res['contacts']['add'][0] : $res['leads']['add'][0];
+//        dd($card);
+            $note_text = "Создана карточка: " . $card['name'] . "\n";
+            $note_text .= "Ответственный: " . $card['responsible_user_id'] . "\n";
+            $note_text .= "Время добавления: " . date("Y - m - d H:i:s", $card['last_modified']);
+        } else {
+            $card = $res['contacts']['update'] ? $res['contacts']['update'][0] : $res['leads']['update'][0];
 
-// Получаем данные из хука
-        $json = file_get_contents('php://input');
-        $data = json_decode($json, true);
-
-// Функция для добавления примечания к карточке
-        function add_note_to_card($event_data)
-        {
-            // Проверяем, получен ли хук на создание карточки
-            if ($event_data['event'] == 'add') {
-                $card_data = $event_data['data']['card'];
-                $note_text = "Создана карточка: " . $card_data['name'] . "\n";
-                $note_text .= "Ответственный: " . $card_data['responsible_user_name'] . "\n";
-                $note_text .= "Время создания: " . date("Y-m-d H:i:s");
-            } // Проверяем, получен ли хук на изменение карточки
-            elseif ($event_data['event'] == 'update') {
-                $card_data = $event_data['data']['card'];
-                $note_text = "Изменения в карточке: " . $card_data['name'] . "\n";
-                foreach ($card_data['custom_fields'] as $field) {
-                    $note_text .= $field['name'] . ": " . $field['values'][0]['value'] . "\n";
-                }
-                $note_text .= "Время изменения: " . date("Y-m-d H:i:s");
-            } else {
-                return "Unsupported event type";
-            }
-
-            // Данные для добавления примечания
-            $note_data = array(
-                "element_id" => $card_data['id'],
-                "element_type" => 2, // 2 - тип "карточка"
-                "text" => $note_text
-            );
-
-            // Отправка запроса к API AmoCRM для добавления примечания
-            $add_note_url = "https://idadajoninomjonov.amocrm.ru/api/v4/leads";
-            $headers = array(
-                "Authorization: Bearer yBAvKpobn8xJk9rDIJAgWfmYauaoSDHAxGZiMb50NhfvbfH9qyBIkz7J9cp1qRxG",
-                "Content-Type: application/json"
-            );
-            $ch = curl_init($add_note_url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($note_data));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            $response = curl_exec($ch);
-            curl_close($ch);
-
-            if ($response) {
-                return "Примечание успешно добавлено";
-            } else {
-                return "Ошибка при добавлении примечания";
-            }
+            $note_text = "Изменения в карточке:" . $card['name'] . "\n";
+            $note_text .= "Время изменения: " . date("Y - m - d H:i:s", $card['last_modified']);
         }
 
-// Вызываем функцию с данными из хука
-        $result = add_note_to_card($data);
-        echo $result;
+        // Save data to a text file
+        $file = 'webhook_data.txt';
+        $current = file_get_contents($file);
+        $current .= $note_text . "\n\n";
+        file_put_contents($file, $current);
 
-
-        TelegramBotErrorSender::widget(['error' => $res, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+//        TelegramBotErrorSender::widget(['error' => $res, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
 
     }

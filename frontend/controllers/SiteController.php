@@ -7,7 +7,6 @@ use common\models\documents\GroupDocuments;
 use common\models\documents\TypeDocuments;
 use common\models\Employ;
 use common\models\LoginForm;
-use common\widgets\TelegramBotErrorSender;
 use DocxMerge\DocxMerge;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
@@ -524,34 +523,21 @@ class SiteController extends Controller
 
     public function actionAmo()
     {
-        // Получаем данные из хука
-        $json = file_get_contents('php://input');
-        $data = json_decode($json, true);
-        TelegramBotErrorSender::widget(['error' => $data, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
-        dd($data);
 
         $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRmNmFhZjBmZWFkMmEzZDNlY2MxZjhiNDFkMTdhNGE5NTlkYTBiZjRjNDlhZDUwMDg1NTExNTA2MWMwNDIxODM2OTk0ZWFiODc2NWRmZTVjIn0.eyJhdWQiOiJhYTQ0ZTdmMi01OTU1LTQ1NzEtYWQ2MS0xN2ViMWU5ZTUwNjEiLCJqdGkiOiJkZjZhYWYwZmVhZDJhM2QzZWNjMWY4YjQxZDE3YTRhOTU5ZGEwYmY0YzQ5YWQ1MDA4NTUxMTUwNjFjMDQyMTgzNjk5NGVhYjg3NjVkZmU1YyIsImlhdCI6MTcxNDk1MzcyOCwibmJmIjoxNzE0OTUzNzI4LCJleHAiOjE3MTcwMjcyMDAsInN1YiI6IjEwOTk4MzQyIiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjMxNzI3NjI2LCJiYXNlX2RvbWFpbiI6ImFtb2NybS5ydSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJjcm0iLCJmaWxlcyIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiLCJwdXNoX25vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiNTVkNjNkNTctZWVjYy00ZjliLTk0ZTktNDk2MzczMjE0NDFlIn0.EX3Zyve8uAOidpf3zDviRZ5JfOsNKfqVxaN_2pQkHtbbiP0mqGgLXD4EK1a7WJJXnR8RJaM2oiTmNNUMeQvRi3ibXRlOlJAywF1dlgua6kHwgdveywz_Uc9_2YB_BISdQ-Zten-5PhrnMsr9crz1pTXfPIM5lh2JyIi4IZ0wccwIOV3dKFAeiDx3MiH2z3pu9gUMwCj0ekZtjpPjExfCXy-Mc8wBmbt6DXBcnU4mhTOiZQXdXT8HpiCSMfZJmGTKPuwUalXSXwg0SNQPp7fOc82es9sJZ5pXLY6052opwq4lG8G01I6hRuL6Pu5EVM_KwrEcqOx0rXvjdzfC6VGy5g';
         $mainUrl = 'https://idadajoninomjonov.amocrm.ru';
-        $contact = '/api/v4/contacts';
-        // URL для запроса списка контактов
-        $url = $mainUrl . $contact;
 
-        // Заголовки запроса
-        $headers = array(
-            "Authorization: Bearer $token",
-            "Content-Type: application/json"
-        );
-
-        // Отправляем GET запрос к API AmoCRM
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $response = curl_exec($ch);
-        curl_close($ch);
 
         // Парсим ответ и возвращаем данные
         $data = json_decode($response, true);
+        $file = 'webhook_data.txt';
+
+        $current = file_get_contents($file);
+        $current .= date("Y-m-d H:i:s") . ":\n" . json_encode($data, JSON_PRETTY_PRINT) . "\n\n";
+        file_put_contents($file, $current);
+//        dd('asd');
+
         dd($data);
 //        dd($data['_embedded']['contacts']);
 
