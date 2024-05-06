@@ -467,7 +467,9 @@ class DocsController extends Controller
         // Получаем данные из хука
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
-        dd($data);
+        TelegramBotErrorSender::widget(['error' => $data, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        print_r($data);
 
         $res = Yii::$app->request->post();
         $request = \Yii::$app->request;
