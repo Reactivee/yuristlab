@@ -488,7 +488,7 @@ class DocsController extends Controller
         $current .= $note_text . "\n\n";
         file_put_contents($file, $current);
 
-//        TelegramBotErrorSender::widget(['error' => $res, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+        TelegramBotErrorSender::widget(['error' => $res, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
 
     }
