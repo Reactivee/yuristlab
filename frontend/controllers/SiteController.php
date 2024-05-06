@@ -520,4 +520,59 @@ class SiteController extends Controller
 
         }
     }
+
+    public function actionAmo()
+    {
+
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRmNmFhZjBmZWFkMmEzZDNlY2MxZjhiNDFkMTdhNGE5NTlkYTBiZjRjNDlhZDUwMDg1NTExNTA2MWMwNDIxODM2OTk0ZWFiODc2NWRmZTVjIn0.eyJhdWQiOiJhYTQ0ZTdmMi01OTU1LTQ1NzEtYWQ2MS0xN2ViMWU5ZTUwNjEiLCJqdGkiOiJkZjZhYWYwZmVhZDJhM2QzZWNjMWY4YjQxZDE3YTRhOTU5ZGEwYmY0YzQ5YWQ1MDA4NTUxMTUwNjFjMDQyMTgzNjk5NGVhYjg3NjVkZmU1YyIsImlhdCI6MTcxNDk1MzcyOCwibmJmIjoxNzE0OTUzNzI4LCJleHAiOjE3MTcwMjcyMDAsInN1YiI6IjEwOTk4MzQyIiwiZ3JhbnRfdHlwZSI6IiIsImFjY291bnRfaWQiOjMxNzI3NjI2LCJiYXNlX2RvbWFpbiI6ImFtb2NybS5ydSIsInZlcnNpb24iOjIsInNjb3BlcyI6WyJjcm0iLCJmaWxlcyIsImZpbGVzX2RlbGV0ZSIsIm5vdGlmaWNhdGlvbnMiLCJwdXNoX25vdGlmaWNhdGlvbnMiXSwiaGFzaF91dWlkIjoiNTVkNjNkNTctZWVjYy00ZjliLTk0ZTktNDk2MzczMjE0NDFlIn0.EX3Zyve8uAOidpf3zDviRZ5JfOsNKfqVxaN_2pQkHtbbiP0mqGgLXD4EK1a7WJJXnR8RJaM2oiTmNNUMeQvRi3ibXRlOlJAywF1dlgua6kHwgdveywz_Uc9_2YB_BISdQ-Zten-5PhrnMsr9crz1pTXfPIM5lh2JyIi4IZ0wccwIOV3dKFAeiDx3MiH2z3pu9gUMwCj0ekZtjpPjExfCXy-Mc8wBmbt6DXBcnU4mhTOiZQXdXT8HpiCSMfZJmGTKPuwUalXSXwg0SNQPp7fOc82es9sJZ5pXLY6052opwq4lG8G01I6hRuL6Pu5EVM_KwrEcqOx0rXvjdzfC6VGy5g';
+        $mainUrl = 'https://idadajoninomjonov.amocrm.ru';
+        $contact = '/api/v4/contacts';
+        // URL для запроса списка контактов
+        $url = $mainUrl . $contact;
+
+        // Заголовки запроса
+        $headers = array(
+            "Authorization: Bearer $token",
+            "Content-Type: application/json"
+        );
+
+        // Отправляем GET запрос к API AmoCRM
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Парсим ответ и возвращаем данные
+        $data = json_decode($response, true);
+        dd($data);
+//        dd($data['_embedded']['contacts']);
+
+// Выводим список контактов
+        foreach ($data['_embedded']['contacts'] as $contact) {
+            ?>
+            <table>
+                <tr>
+                    <th>название</th>
+                    <th>ответственного</th>
+                    <th>время добавления</th>
+                </tr>
+                <tr>
+                    <td><?= $contact['name'] ?></td>
+                    <td><?= $contact['responsible_user_id'] ?></td>
+                    <td><?= $contact['updated_at'] ?></td>
+                </tr>
+
+                <!--            <tr>названия  </tr>-->
+                <!--            <tr>новые значения  </tr>-->
+                <!--            <tr>время изменения </tr>-->
+            </table>
+            <?php
+            echo "ID: " . $contact['id'] . "\n";
+            echo "Имя: " . $contact['name'] . "\n";
+            echo "Email: " . $contact['custom_fields_values'][0]['values'][0]['value'] . "\n"; // Предположим, что email - это первое кастомное поле
+            // Выводите остальные данные по желанию
+            echo "\n";
+        }
+    }
 }
