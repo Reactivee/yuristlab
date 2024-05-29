@@ -14,6 +14,7 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\VerifyEmailForm;
+use GuzzleHttp\Client;
 use PhpOffice\PhpWord\IOFactory;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -519,6 +520,40 @@ class SiteController extends Controller
 
 
         }
+    }
+
+    public function actionAzure()
+    {
+
+
+        $tenantId = '0f987270-7ace-44c8-89ae-8bf0f3f17c05';
+        $clientId = 'aead409e-84b7-4108-bc88-a8f4242e2d97';
+        $clientSecret = 'd468caa1-a8e7-481f-b56d-16cb34ac7596';
+        $token = 'EwBoA8l6BAAUbDba3x2OMJElkF7gJ4z/VbCPEz0AAfyF4CFsCndS7TdnhDu2/zlBlslz428jE6LcVIvEKTs7FoqGZ+9iLlk9JXuY4H/6gxe4340njEVgJfLa0Utr9QOQywCbrvduM7HoTqe/H8bJrxfDomHGKhyxGdSOSocJ+6W8560Jt7JF4eFbUsUBJjXwWzwavZJirNnuGWTJmH0aeFUNIOrMxvC6NzDN2SuexrqFB4l1ESH6zYv33tpRr/px2IfYwXM2X2ICU1WW7S4Q3+dtK/ds2UFPK4s+NGaRlFc7VYG05E5gNTOXF7R+mNlJviyLlo7EijRwx9ECfH/VPJv05TaSIKpxXKTmOfC2WLpsNPyvWRf3QI4Yu2vUNpoDZgAACM6UVJKzFyj/OAKD47WBoVpcQyGEooQ0QdsEC/Lkcipecp90WA/Aa4OzGElE51vtruISIIKdJ197uFmEHonKrdZs/6WLkbOVhVtDQTeOp+QMh2QywJpfjOU80AYfegEgagQLRXW00qBKa3U2Fo71h73w7qf+m+/yc8TSuDhAI1iRysSQVAk1dlNK7UiBhalTaa773uTc7+aCfEbXsfmex0zqCQdQPt1Zgqr8rLRJuJZC2pAeYFmvXgYoHnA0uNyKKw9dydkyRm62SwNsz4pjI+IJtHWaiyIQ7rkXuPmkudcR/V5a8XbNOTxlgctal8WJgEAD4HDtEetx7bSriElX3P9VzKJwbvoIcUnHT7NZ0E6VzZQ+IigkKfEJb3JQuvT99hY8ET7PKJcmPuU/Nn+OX3tcKPcUp/yfc9C0zzUXYrBHlL9Kz+ZADYomm/lwtsbjnp1nJY4qLYFSIpeDVHq6pGMN4Bu3iphLIvEDWZgevYNgDLXkTYFgw9hQJogpNmmnF/gv980ZQw6DanfpZV7dba1epUt0KXvltMf0r8u9fepuvM/0FPy49sYnrhECyUsZzdWTmIjyp8NIheK9NlfbNdadsMyPEhBL4NguLR0tsABsmvySc3zmMhPWe8OGLRw4kGCt/+sL5MmOa3M4B9nA376VVwBaRr2qGWOp41ZGe+xm3f5/pi2bITXPlP2eOUszLD7xYxfSYmZ3gy7OnXX9AV0OIvNXsysiOz5pzs3yRlEh+INwdkQsSID5sN9A/9CVAH4bfAI=';
+
+        $client = new Client();
+        $url = "https://login.microsoftonline.com/{$tenantId}/oauth2/v2.0/token";
+
+        try {
+            $response = $client->post($url, [
+                'form_params' => [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $clientId,
+                    'client_secret' => $clientSecret,
+//                    'scope' => 'Files.ReadWrite.All',
+                ],
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+            dd($data);
+            return $data['access_token'];
+        } catch (\Exception $e) {
+            dd($e);
+
+            Yii::error('Error obtaining access token: ' . $e->getMessage());
+            return false;
+        }
+
     }
 
     public function actionAmo()

@@ -481,6 +481,10 @@ class DocsController extends Controller
             $note_text = "Изменения в карточке:" . $card['name'] . "\n";
             $note_text .= "Время изменения: " . date("Y - m - d H:i:s", $card['last_modified']);
         }
+//    sekret:4ab86605-e798-4629-9c08-d7834e9a4419
+//    client:b6756517-ada8-4199-8c4b-d656a6d93266
+//    object:d9790263-5262-4348-a1b6-1c2c084eebba
+//    tenant:0f987270-7ace-44c8-89ae-8bf0f3f17c05
 
         // Save data to a text file
         $file = 'webhook_data.txt';
