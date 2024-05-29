@@ -25,16 +25,16 @@
         "ext-gd": "*",
         "ext-simplexml": "*",
         "khanamiryan/qrcode-detector-decoder": "^1.0",
-                "php": ">=7.3"
-            },
-            "require-dev": {
-                "codeception/codeception": "*",
-                "codeception/module-asserts": "^1.1",
-                "codeception/module-filesystem": "^1.0",
-                "codeception/module-yii2": "^1.0",
-                "codeception/specify": "^0.4.3",
-                "codeception/verify": "^0.3.1",
-                "friendsofphp/php-cs-fixer": "^2.3",
+        "php": ">=7.3"
+      },
+      "require-dev": {
+        "codeception/codeception": "*",
+        "codeception/module-asserts": "^1.1",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/module-yii2": "^1.0",
+        "codeception/specify": "^0.4.3",
+        "codeception/verify": "^0.3.1",
+        "friendsofphp/php-cs-fixer": "^2.3",
                 "phpmd/phpmd": "@stable",
                 "roave/security-advisories": "dev-master",
                 "scrutinizer/ocular": "~1.1",
@@ -404,13 +404,13 @@
             "description": "AdminLTE - admin control panel and dashboard that's based on Bootstrap 4",
             "homepage": "https://adminlte.io/",
             "keywords": [
-                "JS",
-                "admin",
-                "back-end",
-                "css",
-                "less",
-                "responsive",
-                "template",
+              "JS",
+              "admin",
+              "back-end",
+              "css",
+              "less",
+              "responsive",
+              "template",
               "theme",
               "web"
             ],
@@ -580,16 +580,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/5a91b62b9d37cee635bbf8d553f4546057250bee",
-                "reference": "5a91b62b9d37cee635bbf8d553f4546057250bee",
-                "shasum": ""
-            },
-            "require": {
-                "ext-iconv": "*",
-                "php": "^5.4|^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8"
-            },
+        "reference": "5a91b62b9d37cee635bbf8d553f4546057250bee",
+        "shasum": ""
+      },
+      "require": {
+        "ext-iconv": "*",
+        "php": "^5.4|^7.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^4.8"
+      },
             "suggest": {
                 "ext-gd": "to generate QR code images"
             },
@@ -1482,16 +1482,16 @@
         "phenx/php-font-lib": ">=0.5.4 <1.0.0",
         "phenx/php-svg-lib": ">=0.3.3 <1.0.0",
         "php": "^7.1 || ^8.0"
-            },
-            "require-dev": {
-                "ext-json": "*",
-                "ext-zip": "*",
-                "mockery/mockery": "^1.3",
-                "phpunit/phpunit": "^7.5 || ^8 || ^9",
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "suggest": {
-                "ext-gd": "Needed to process images",
+      },
+      "require-dev": {
+        "ext-json": "*",
+        "ext-zip": "*",
+        "mockery/mockery": "^1.3",
+        "phpunit/phpunit": "^7.5 || ^8 || ^9",
+        "squizlabs/php_codesniffer": "^3.5"
+      },
+      "suggest": {
+        "ext-gd": "Needed to process images",
                 "ext-gmagick": "Improves image processing performance",
                 "ext-imagick": "Improves image processing performance",
                 "ext-zlib": "Needed for pdf stream compression"
@@ -3402,16 +3402,16 @@
             "keywords": [
                 "activefield",
                 "activeform",
-                "extension",
-                "field",
-                "form",
-                "widget",
-                "yii2"
+              "extension",
+              "field",
+              "form",
+              "widget",
+              "yii2"
             ],
-            "support": {
-                "issues": "https://github.com/kartik-v/yii2-widget-activeform/issues",
-              "source": "https://github.com/kartik-v/yii2-widget-activeform/tree/v1.6.4"
-            },
+          "support": {
+            "issues": "https://github.com/kartik-v/yii2-widget-activeform/issues",
+            "source": "https://github.com/kartik-v/yii2-widget-activeform/tree/v1.6.4"
+          },
           "funding": [
             {
               "url": "https://opencollective.com/yii2-widgets",
@@ -3444,16 +3444,16 @@
         }
       },
       "autoload": {
-                "psr-4": {
-                    "kartik\\date\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
+        "psr-4": {
+          "kartik\\date\\": "src"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "BSD-3-Clause"
+      ],
+      "authors": [
+        {
                     "name": "Kartik Visweswaran",
                     "email": "kartikv2@gmail.com",
                     "homepage": "http://www.krajee.com/"
@@ -4696,16 +4696,16 @@
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Mark Dorison",
-                    "email": "mark@chromatichq.com"
-                },
-                {
-                    "name": "Kristofer Widholm",
-                    "email": "kristofer@chromatichq.com"
-                }
-            ],
+          "authors": [
+            {
+              "name": "Mark Dorison",
+              "email": "mark@chromatichq.com"
+            },
+            {
+              "name": "Kristofer Widholm",
+              "email": "kristofer@chromatichq.com"
+            }
+          ],
           "description": "Trait to allow support of different psr/log versions.",
           "support": {
             "issues": "https://github.com/mpdf/psr-log-aware-trait/issues",
@@ -4790,16 +4790,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
-                "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1 || ^8.0"
-            },
-            "conflict": {
-                "doctrine/collections": "<1.6.8",
-                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
-            },
+        "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^7.1 || ^8.0"
+      },
+      "conflict": {
+        "doctrine/collections": "<1.6.8",
+        "doctrine/common": "<2.13.3 || >=3,<3.2.2"
+      },
             "require-dev": {
                 "doctrine/collections": "^1.6.8",
                 "doctrine/common": "^2.13.3 || ^3.2.2",
@@ -6251,16 +6251,16 @@
                     "homepage": "http://xoops.hypweb.net"
                 },
                 {
-                    "name": "Community contributions",
-                    "homepage": "https://github.com/Studio-42/elFinder/contributors"
+                  "name": "Community contributions",
+                  "homepage": "https://github.com/Studio-42/elFinder/contributors"
                 }
             ],
-            "description": "File manager for web",
-            "homepage": "http://elfinder.org",
-            "support": {
-                "issues": "https://github.com/Studio-42/elFinder/issues",
-                "source": "https://github.com/Studio-42/elFinder/tree/2.1.62"
-            },
+          "description": "File manager for web",
+          "homepage": "http://elfinder.org",
+          "support": {
+            "issues": "https://github.com/Studio-42/elFinder/issues",
+            "source": "https://github.com/Studio-42/elFinder/tree/2.1.62"
+          },
           "funding": [
             {
               "url": "https://github.com/nao-pon",
@@ -6345,16 +6345,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
-                "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "2.5-dev"
+        "reference": "e8b495ea28c1d97b5e0c121748d6f9b53d075c66",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=7.1"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-main": "2.5-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -6386,14 +6386,14 @@
                 "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.2"
             },
             "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                  "type": "github"
-                },
+              {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+              },
+              {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+              },
               {
                 "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                 "type": "tidelift"
@@ -6481,16 +6481,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/5dcc00e03413f05c1e7900090927bb7247cb0aac",
-                "reference": "5dcc00e03413f05c1e7900090927bb7247cb0aac",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/deprecation-contracts": "^2.1|^3",
-                "symfony/event-dispatcher-contracts": "^2|^3",
-                "symfony/polyfill-php80": "^1.16"
-            },
-            "conflict": {
+        "reference": "5dcc00e03413f05c1e7900090927bb7247cb0aac",
+        "shasum": ""
+      },
+      "require": {
+        "php": ">=7.2.5",
+        "symfony/deprecation-contracts": "^2.1|^3",
+        "symfony/event-dispatcher-contracts": "^2|^3",
+        "symfony/polyfill-php80": "^1.16"
+      },
+      "conflict": {
                 "symfony/dependency-injection": "<4.4"
             },
             "provide": {
@@ -7520,16 +7520,16 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arvi Võime",
-                    "email": "avoime@gmail.com"
-                }
-            ],
-            "description": "Google Maps Yii2 wrapper",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Arvi Võime",
+              "email": "avoime@gmail.com"
+            }
+          ],
+          "description": "Google Maps Yii2 wrapper",
           "keywords": [
             "extension",
             "yii2"
@@ -7601,16 +7601,16 @@
       "dist": {
         "type": "zip",
         "url": "https://api.github.com/repos/yii2mod/yii2-google-maps-markers/zipball/d776b0b176302c4d6cd4ee52044d1a620af29a46",
-                "reference": "d776b0b176302c4d6cd4ee52044d1a620af29a46",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "*"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.0"
-            },
-            "type": "yii2-extension",
+        "reference": "d776b0b176302c4d6cd4ee52044d1a620af29a46",
+        "shasum": ""
+      },
+      "require": {
+        "yiisoft/yii2": "*"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "~2.0"
+      },
+      "type": "yii2-extension",
             "autoload": {
                 "psr-4": {
                     "yii2mod\\google\\maps\\markers\\": ""
@@ -10858,16 +10858,16 @@
         },
         "type": "library",
         "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Finder\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
+          "psr-4": {
+            "Symfony\\Component\\Finder\\": ""
+          },
+          "exclude-from-classmap": [
+            "/Tests/"
+          ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+          "MIT"
             ],
             "authors": [
                 {

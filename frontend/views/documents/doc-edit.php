@@ -34,12 +34,8 @@ $fileName = pathinfo($model->path, PATHINFO_FILENAME);
         <!--            <button id="upload">Upload doc File</button>-->
         <!--        </p>-->
         <!--        --><? //= dd($doc)?>
-        <!--        <iframe id="iframe" style="width: 100%; height: 900px"-->
-        <!--                src="https://docs.google.com/document/d/-->
-        <? //= $doc ?><!--/edit?usp=sharing&amp;widget=true&amp;headers=false">-->
-        <!--        </iframe>-->
         <iframe id="iframe" style="width: 100%; height: 900px"
-                src="https://view.officeapps.live.com/op/view.aspx?src=<?= $doc ?>">
+                src="https://docs.google.com/document/d/<?= $doc ?>/edit?usp=sharing&amp;widget=true&amp;headers=false">
         </iframe>
 
     </div>
