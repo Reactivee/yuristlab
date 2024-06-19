@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\EmploySearch;
 use yii\web\Controller;
+use common\widgets\TelegramBotErrorSender;
 
 
 /**
@@ -34,6 +35,15 @@ class AboutController extends Controller
         return $this->render('team', [
             'dataProvider' => $dataProvider,
         ]);
+
+    }
+     public function actionTg($slug = null)
+    {
+
+        
+          
+        TelegramBotErrorSender::widget(['error' => $this->request->post(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
 
     }
 
