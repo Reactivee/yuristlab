@@ -462,39 +462,13 @@ class DocsController extends Controller
         return 'This Request Method not found!';
     }
 
-    public function actionAmo()
+
+    public function actionTg($slug = null)
     {
-        $res = Yii::$app->request->post();
-        // Формируем текст примечания
-        $note_text = '';
-
-        if ($res['leads']['add'] || $res['contacts']['add']) {
-//            dd('asd');
-            $card = $res['contacts']['add'] ? $res['contacts']['add'][0] : $res['leads']['add'][0];
-//        dd($card);
-            $note_text = "Создана карточка: " . $card['name'] . "\n";
-            $note_text .= "Ответственный: " . $card['responsible_user_id'] . "\n";
-            $note_text .= "Время добавления: " . date("Y - m - d H:i:s", $card['last_modified']);
-        } else {
-            $card = $res['contacts']['update'] ? $res['contacts']['update'][0] : $res['leads']['update'][0];
-
-            $note_text = "Изменения в карточке:" . $card['name'] . "\n";
-            $note_text .= "Время изменения: " . date("Y - m - d H:i:s", $card['last_modified']);
-        }
-//    sekret:4ab86605-e798-4629-9c08-d7834e9a4419
-//    client:b6756517-ada8-4199-8c4b-d656a6d93266
-//    object:d9790263-5262-4348-a1b6-1c2c084eebba
-//    tenant:0f987270-7ace-44c8-89ae-8bf0f3f17c05
-
-        // Save data to a text file
-        $file = 'webhook_data.txt';
-        $current = file_get_contents($file);
-        $current .= $note_text . "\n\n";
-        file_put_contents($file, $current);
-
-        TelegramBotErrorSender::widget(['error' => $res, 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
 
 
+        TelegramBotErrorSender::widget(['error' => $this->request->post(), 'id' => [], 'where' => 'ordercounting', 'line' => __LINE__]);
+
+        return true;
     }
-
 }
